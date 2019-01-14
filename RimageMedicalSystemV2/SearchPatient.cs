@@ -56,6 +56,7 @@ namespace RimageMedicalSystemV2
                     //// 굽기 정보
                     BurnOrderedInfoEntity orderInfo = new BurnOrderedInfoEntity();
                     orderInfo.patDate = DateTime.Now.ToString("yyyy-MM-dd");
+                    orderInfo.LocalShareFolder = sdir.Name;
                     orderInfo.patFolder = sdir.Name;
                     orderInfo.patFolderFullPath = sdir.FullName;
 

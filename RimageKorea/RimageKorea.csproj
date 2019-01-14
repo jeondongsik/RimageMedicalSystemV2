@@ -98,6 +98,7 @@
     <Compile Include="CheckPing.cs" />
     <Compile Include="CmdExecute.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="ConfigEntity.cs" />
     <Compile Include="CreateOrderXml.cs" />
     <Compile Include="CurrentState.cs" />
     <Compile Include="DESHasher.cs" />

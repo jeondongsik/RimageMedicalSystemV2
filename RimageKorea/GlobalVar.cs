@@ -129,5 +129,10 @@ namespace RimageKorea
         /// 굽기 프로그램 종료 확인 파일명
         /// </summary>
         public const string BURN_JOB_END_FL = "RMDS_EXIT.txt";
+
+        /// <summary>
+        /// 환경설정값
+        /// </summary>
+        public static ConfigEntity configEntity = null;
     }
 }
