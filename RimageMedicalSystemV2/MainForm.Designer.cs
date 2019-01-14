@@ -1,0 +1,905 @@
+﻿namespace RimageMedicalSystemV2
+{
+    partial class MainForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.grpPatInfo = new DevExpress.XtraEditors.GroupControl();
+            this.ucPatients11 = new RimageMedicalSystemV2.ucPatients1();
+            this.ucPatients21 = new RimageMedicalSystemV2.ucPatients2();
+            this.grpServerList = new DevExpress.XtraEditors.GroupControl();
+            this.Server5 = new DevExpress.XtraEditors.LabelControl();
+            this.Server4 = new DevExpress.XtraEditors.LabelControl();
+            this.Server3 = new DevExpress.XtraEditors.LabelControl();
+            this.Server2 = new DevExpress.XtraEditors.LabelControl();
+            this.Server1 = new DevExpress.XtraEditors.LabelControl();
+            this.btnSearch = new DevExpress.XtraEditors.SimpleButton();
+            this.btnBurn = new DevExpress.XtraEditors.SimpleButton();
+            this.btnClear = new DevExpress.XtraEditors.SimpleButton();
+            this.btnPatientDelete = new DevExpress.XtraEditors.SimpleButton();
+            this.btnOrderedList = new DevExpress.XtraEditors.SimpleButton();
+            this.btnReport = new DevExpress.XtraEditors.SimpleButton();
+            this.grpBurningList = new DevExpress.XtraEditors.GroupControl();
+            this.gcBurninglist = new DevExpress.XtraGrid.GridControl();
+            this.gvBurninglist = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColNo = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColBurnDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColPatientNo = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColPatientName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColState = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColProgress = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColStatus = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColOrderID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridQuantity = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColMedia = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColSize = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColServer = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
+            this.txtStatusView = new System.Windows.Forms.TextBox();
+            this.buttonRetry = new DevExpress.XtraEditors.SimpleButton();
+            this.txtMessages = new DevExpress.XtraEditors.MemoEdit();
+            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.lblDriveStatus = new DevExpress.XtraEditors.LabelControl();
+            this.grpServerState = new DevExpress.XtraEditors.GroupControl();
+            this.txtBin2Discs = new DevExpress.XtraEditors.TextEdit();
+            this.txtBin4Discs = new DevExpress.XtraEditors.TextEdit();
+            this.txtBin1Discs = new DevExpress.XtraEditors.TextEdit();
+            this.txtBin3Discs = new DevExpress.XtraEditors.TextEdit();
+            this.txtRetansferRibbons = new DevExpress.XtraEditors.TextEdit();
+            this.txtCMYRibbons = new DevExpress.XtraEditors.TextEdit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+            this.tmrBinCheker = new System.Windows.Forms.Timer(this.components);
+            this.tmrHookChecker = new System.Windows.Forms.Timer(this.components);
+            this.tmrDownloadChecker = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
+            this.grpPatInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
+            this.grpServerList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grpBurningList)).BeginInit();
+            this.grpBurningList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gcBurninglist)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gvBurninglist)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
+            this.panelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMessages.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
+            this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grpServerState)).BeginInit();
+            this.grpServerState.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin2Discs.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin4Discs.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin1Discs.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin3Discs.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRetansferRibbons.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCMYRibbons.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // grpPatInfo
+            // 
+            this.grpPatInfo.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.grpPatInfo.AppearanceCaption.Options.UseFont = true;
+            this.grpPatInfo.Controls.Add(this.ucPatients11);
+            this.grpPatInfo.Controls.Add(this.ucPatients21);
+            this.grpPatInfo.Location = new System.Drawing.Point(12, 61);
+            this.grpPatInfo.Name = "grpPatInfo";
+            this.grpPatInfo.Size = new System.Drawing.Size(821, 232);
+            this.grpPatInfo.TabIndex = 1;
+            this.grpPatInfo.Text = "환자 정보";
+            // 
+            // ucPatients11
+            // 
+            this.ucPatients11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucPatients11.Location = new System.Drawing.Point(2, 22);
+            this.ucPatients11.LookAndFeel.SkinName = "Sharp Plus";
+            this.ucPatients11.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.ucPatients11.Name = "ucPatients11";
+            this.ucPatients11.Size = new System.Drawing.Size(817, 208);
+            this.ucPatients11.TabIndex = 1;
+            this.ucPatients11.TabStop = false;
+            // 
+            // ucPatients21
+            // 
+            this.ucPatients21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucPatients21.Location = new System.Drawing.Point(2, 22);
+            this.ucPatients21.LookAndFeel.SkinName = "Sharp Plus";
+            this.ucPatients21.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.ucPatients21.Name = "ucPatients21";
+            this.ucPatients21.Size = new System.Drawing.Size(817, 208);
+            this.ucPatients21.TabIndex = 0;
+            this.ucPatients21.TabStop = false;
+            // 
+            // grpServerList
+            // 
+            this.grpServerList.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpServerList.AppearanceCaption.Options.UseFont = true;
+            this.grpServerList.Controls.Add(this.Server5);
+            this.grpServerList.Controls.Add(this.Server4);
+            this.grpServerList.Controls.Add(this.Server3);
+            this.grpServerList.Controls.Add(this.Server2);
+            this.grpServerList.Controls.Add(this.Server1);
+            this.grpServerList.Location = new System.Drawing.Point(839, 61);
+            this.grpServerList.Name = "grpServerList";
+            this.grpServerList.Size = new System.Drawing.Size(157, 232);
+            this.grpServerList.TabIndex = 2;
+            this.grpServerList.Text = "서버 목록";
+            // 
+            // Server5
+            // 
+            this.Server5.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server5.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x162;
+            this.Server5.Appearance.Options.UseFont = true;
+            this.Server5.Appearance.Options.UseImage = true;
+            this.Server5.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server5.AppearanceHovered.Options.UseBorderColor = true;
+            this.Server5.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server5.AppearancePressed.Options.UseBorderColor = true;
+            this.Server5.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.Server5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            this.Server5.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.Server5.Location = new System.Drawing.Point(8, 187);
+            this.Server5.Name = "Server5";
+            this.Server5.Size = new System.Drawing.Size(140, 34);
+            this.Server5.TabIndex = 4;
+            this.Server5.Text = "000.000.000.000";
+            // 
+            // Server4
+            // 
+            this.Server4.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server4.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x161;
+            this.Server4.Appearance.Options.UseFont = true;
+            this.Server4.Appearance.Options.UseImage = true;
+            this.Server4.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server4.AppearanceHovered.Options.UseBorderColor = true;
+            this.Server4.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server4.AppearancePressed.Options.UseBorderColor = true;
+            this.Server4.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.Server4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            this.Server4.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.Server4.Location = new System.Drawing.Point(8, 147);
+            this.Server4.Name = "Server4";
+            this.Server4.Size = new System.Drawing.Size(140, 34);
+            this.Server4.TabIndex = 3;
+            this.Server4.Text = "000.000.000.000";
+            // 
+            // Server3
+            // 
+            this.Server3.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server3.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
+            this.Server3.Appearance.Options.UseFont = true;
+            this.Server3.Appearance.Options.UseImage = true;
+            this.Server3.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server3.AppearanceHovered.Options.UseBorderColor = true;
+            this.Server3.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server3.AppearancePressed.Options.UseBorderColor = true;
+            this.Server3.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.Server3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            this.Server3.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.Server3.Location = new System.Drawing.Point(8, 107);
+            this.Server3.Name = "Server3";
+            this.Server3.Size = new System.Drawing.Size(140, 34);
+            this.Server3.TabIndex = 2;
+            this.Server3.Text = "000.000.000.000";
+            // 
+            // Server2
+            // 
+            this.Server2.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server2.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.cancel_16x16;
+            this.Server2.Appearance.Options.UseFont = true;
+            this.Server2.Appearance.Options.UseImage = true;
+            this.Server2.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server2.AppearanceHovered.Options.UseBorderColor = true;
+            this.Server2.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server2.AppearancePressed.Options.UseBorderColor = true;
+            this.Server2.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.Server2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            this.Server2.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.Server2.Location = new System.Drawing.Point(8, 67);
+            this.Server2.Name = "Server2";
+            this.Server2.Size = new System.Drawing.Size(140, 34);
+            this.Server2.TabIndex = 1;
+            this.Server2.Text = "000.000.000.000";
+            // 
+            // Server1
+            // 
+            this.Server1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server1.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.highpriority_16x16;
+            this.Server1.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Server1.Appearance.Options.UseFont = true;
+            this.Server1.Appearance.Options.UseImage = true;
+            this.Server1.Appearance.Options.UseImageAlign = true;
+            this.Server1.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server1.AppearanceHovered.Options.UseBorderColor = true;
+            this.Server1.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server1.AppearancePressed.Options.UseBorderColor = true;
+            this.Server1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.Server1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
+            this.Server1.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.Server1.Location = new System.Drawing.Point(8, 27);
+            this.Server1.Name = "Server1";
+            this.Server1.Size = new System.Drawing.Size(140, 34);
+            this.Server1.TabIndex = 0;
+            this.Server1.Text = "[1] 000.000.000.000";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.Appearance.Options.UseFont = true;
+            this.btnSearch.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.ImageOptions.Image")));
+            this.btnSearch.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btnSearch.Location = new System.Drawing.Point(12, 11);
+            this.btnSearch.LookAndFeel.SkinName = "London Liquid Sky";
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(139, 43);
+            this.btnSearch.TabIndex = 3;
+            this.btnSearch.Text = "조회하기";
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnBurn
+            // 
+            this.btnBurn.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBurn.Appearance.Options.UseFont = true;
+            this.btnBurn.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnBurn.ImageOptions.Image")));
+            this.btnBurn.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btnBurn.Location = new System.Drawing.Point(157, 12);
+            this.btnBurn.LookAndFeel.SkinName = "London Liquid Sky";
+            this.btnBurn.Name = "btnBurn";
+            this.btnBurn.Size = new System.Drawing.Size(158, 43);
+            this.btnBurn.TabIndex = 4;
+            this.btnBurn.Text = "CD/DVD 버닝";
+            this.btnBurn.Click += new System.EventHandler(this.btnBurn_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Appearance.Options.UseFont = true;
+            this.btnClear.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClear.ImageOptions.Image")));
+            this.btnClear.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btnClear.Location = new System.Drawing.Point(321, 12);
+            this.btnClear.LookAndFeel.SkinName = "London Liquid Sky";
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(139, 43);
+            this.btnClear.TabIndex = 5;
+            this.btnClear.Text = "화면 정리";
+            // 
+            // btnPatientDelete
+            // 
+            this.btnPatientDelete.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPatientDelete.Appearance.Options.UseFont = true;
+            this.btnPatientDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPatientDelete.ImageOptions.Image")));
+            this.btnPatientDelete.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btnPatientDelete.Location = new System.Drawing.Point(466, 12);
+            this.btnPatientDelete.LookAndFeel.SkinName = "London Liquid Sky";
+            this.btnPatientDelete.Name = "btnPatientDelete";
+            this.btnPatientDelete.Size = new System.Drawing.Size(152, 43);
+            this.btnPatientDelete.TabIndex = 6;
+            this.btnPatientDelete.Text = "환자정보 삭제";
+            // 
+            // btnOrderedList
+            // 
+            this.btnOrderedList.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnOrderedList.Appearance.Options.UseFont = true;
+            this.btnOrderedList.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderedList.ImageOptions.Image")));
+            this.btnOrderedList.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btnOrderedList.Location = new System.Drawing.Point(696, 12);
+            this.btnOrderedList.LookAndFeel.SkinName = "London Liquid Sky";
+            this.btnOrderedList.Name = "btnOrderedList";
+            this.btnOrderedList.Size = new System.Drawing.Size(155, 43);
+            this.btnOrderedList.TabIndex = 7;
+            this.btnOrderedList.Text = "버닝내역(재굽기)";
+            // 
+            // btnReport
+            // 
+            this.btnReport.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReport.Appearance.Options.UseFont = true;
+            this.btnReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.ImageOptions.Image")));
+            this.btnReport.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btnReport.Location = new System.Drawing.Point(857, 12);
+            this.btnReport.LookAndFeel.SkinName = "London Liquid Sky";
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(139, 43);
+            this.btnReport.TabIndex = 8;
+            this.btnReport.Text = "보고서";
+            // 
+            // grpBurningList
+            // 
+            this.grpBurningList.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBurningList.AppearanceCaption.Options.UseFont = true;
+            this.grpBurningList.Controls.Add(this.gcBurninglist);
+            this.grpBurningList.Location = new System.Drawing.Point(12, 299);
+            this.grpBurningList.Name = "grpBurningList";
+            this.grpBurningList.Size = new System.Drawing.Size(984, 239);
+            this.grpBurningList.TabIndex = 9;
+            this.grpBurningList.Text = "CD/DVD 버닝 목록";
+            // 
+            // gcBurninglist
+            // 
+            this.gcBurninglist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gcBurninglist.Location = new System.Drawing.Point(2, 22);
+            this.gcBurninglist.MainView = this.gvBurninglist;
+            this.gcBurninglist.Name = "gcBurninglist";
+            this.gcBurninglist.Size = new System.Drawing.Size(980, 215);
+            this.gcBurninglist.TabIndex = 2;
+            this.gcBurninglist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gvBurninglist});
+            // 
+            // gvBurninglist
+            // 
+            this.gvBurninglist.Appearance.HeaderPanel.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvBurninglist.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gvBurninglist.Appearance.HeaderPanel.Options.UseTextOptions = true;
+            this.gvBurninglist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gvBurninglist.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvBurninglist.Appearance.Row.Options.UseFont = true;
+            this.gvBurninglist.Appearance.Row.Options.UseTextOptions = true;
+            this.gvBurninglist.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gvBurninglist.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvBurninglist.Appearance.ViewCaption.Options.UseFont = true;
+            this.gvBurninglist.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColNo,
+            this.gridColBurnDate,
+            this.gridColPatientNo,
+            this.gridColPatientName,
+            this.gridColState,
+            this.gridColProgress,
+            this.gridColStatus,
+            this.gridColOrderID,
+            this.gridQuantity,
+            this.gridColMedia,
+            this.gridColSize,
+            this.gridColServer});
+            this.gvBurninglist.GridControl = this.gcBurninglist;
+            this.gvBurninglist.Name = "gvBurninglist";
+            this.gvBurninglist.OptionsBehavior.Editable = false;
+            this.gvBurninglist.OptionsBehavior.ReadOnly = true;
+            this.gvBurninglist.OptionsCustomization.AllowColumnMoving = false;
+            this.gvBurninglist.OptionsCustomization.AllowFilter = false;
+            this.gvBurninglist.OptionsCustomization.AllowSort = false;
+            this.gvBurninglist.OptionsView.ColumnAutoWidth = false;
+            this.gvBurninglist.OptionsView.ShowGroupPanel = false;
+            this.gvBurninglist.OptionsView.ShowIndicator = false;
+            this.gvBurninglist.RowHeight = 25;
+            // 
+            // gridColNo
+            // 
+            this.gridColNo.Caption = "번호";
+            this.gridColNo.Name = "gridColNo";
+            this.gridColNo.Visible = true;
+            this.gridColNo.VisibleIndex = 0;
+            this.gridColNo.Width = 45;
+            // 
+            // gridColBurnDate
+            // 
+            this.gridColBurnDate.Caption = "날짜";
+            this.gridColBurnDate.Name = "gridColBurnDate";
+            this.gridColBurnDate.Visible = true;
+            this.gridColBurnDate.VisibleIndex = 1;
+            this.gridColBurnDate.Width = 80;
+            // 
+            // gridColPatientNo
+            // 
+            this.gridColPatientNo.Caption = "환자번호";
+            this.gridColPatientNo.FieldName = "ReturnDate";
+            this.gridColPatientNo.Name = "gridColPatientNo";
+            this.gridColPatientNo.Visible = true;
+            this.gridColPatientNo.VisibleIndex = 2;
+            this.gridColPatientNo.Width = 90;
+            // 
+            // gridColPatientName
+            // 
+            this.gridColPatientName.Caption = "환자명";
+            this.gridColPatientName.FieldName = "WareHousingDate";
+            this.gridColPatientName.Name = "gridColPatientName";
+            this.gridColPatientName.Visible = true;
+            this.gridColPatientName.VisibleIndex = 3;
+            this.gridColPatientName.Width = 110;
+            // 
+            // gridColState
+            // 
+            this.gridColState.Caption = "진행상태";
+            this.gridColState.FieldName = "BrandName";
+            this.gridColState.Name = "gridColState";
+            this.gridColState.Visible = true;
+            this.gridColState.VisibleIndex = 4;
+            this.gridColState.Width = 150;
+            // 
+            // gridColProgress
+            // 
+            this.gridColProgress.Caption = "진행율(%)";
+            this.gridColProgress.FieldName = "StoreName";
+            this.gridColProgress.Name = "gridColProgress";
+            this.gridColProgress.Visible = true;
+            this.gridColProgress.VisibleIndex = 5;
+            this.gridColProgress.Width = 70;
+            // 
+            // gridColStatus
+            // 
+            this.gridColStatus.Caption = "상태";
+            this.gridColStatus.FieldName = "ModelName";
+            this.gridColStatus.Name = "gridColStatus";
+            this.gridColStatus.Visible = true;
+            this.gridColStatus.VisibleIndex = 6;
+            this.gridColStatus.Width = 65;
+            // 
+            // gridColOrderID
+            // 
+            this.gridColOrderID.Caption = "출력번호";
+            this.gridColOrderID.FieldName = "SerialNumber";
+            this.gridColOrderID.Name = "gridColOrderID";
+            this.gridColOrderID.Visible = true;
+            this.gridColOrderID.VisibleIndex = 7;
+            this.gridColOrderID.Width = 120;
+            // 
+            // gridQuantity
+            // 
+            this.gridQuantity.Caption = "수량";
+            this.gridQuantity.FieldName = "HandleTypeName";
+            this.gridQuantity.Name = "gridQuantity";
+            this.gridQuantity.Visible = true;
+            this.gridQuantity.VisibleIndex = 8;
+            this.gridQuantity.Width = 50;
+            // 
+            // gridColMedia
+            // 
+            this.gridColMedia.Caption = "미디어";
+            this.gridColMedia.Name = "gridColMedia";
+            this.gridColMedia.Visible = true;
+            this.gridColMedia.VisibleIndex = 9;
+            this.gridColMedia.Width = 60;
+            // 
+            // gridColSize
+            // 
+            this.gridColSize.Caption = "크기";
+            this.gridColSize.Name = "gridColSize";
+            this.gridColSize.Visible = true;
+            this.gridColSize.VisibleIndex = 10;
+            this.gridColSize.Width = 70;
+            // 
+            // gridColServer
+            // 
+            this.gridColServer.Caption = "서버";
+            this.gridColServer.Name = "gridColServer";
+            this.gridColServer.Visible = true;
+            this.gridColServer.VisibleIndex = 11;
+            this.gridColServer.Width = 45;
+            // 
+            // panelControl2
+            // 
+            this.panelControl2.Controls.Add(this.txtStatusView);
+            this.panelControl2.Controls.Add(this.buttonRetry);
+            this.panelControl2.Controls.Add(this.txtMessages);
+            this.panelControl2.Location = new System.Drawing.Point(12, 544);
+            this.panelControl2.Name = "panelControl2";
+            this.panelControl2.Size = new System.Drawing.Size(475, 186);
+            this.panelControl2.TabIndex = 11;
+            // 
+            // txtStatusView
+            // 
+            this.txtStatusView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(69)))), ((int)(((byte)(84)))));
+            this.txtStatusView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtStatusView.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStatusView.ForeColor = System.Drawing.Color.White;
+            this.txtStatusView.Location = new System.Drawing.Point(5, 51);
+            this.txtStatusView.MaxLength = 2147483647;
+            this.txtStatusView.Multiline = true;
+            this.txtStatusView.Name = "txtStatusView";
+            this.txtStatusView.ReadOnly = true;
+            this.txtStatusView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtStatusView.Size = new System.Drawing.Size(465, 130);
+            this.txtStatusView.TabIndex = 54;
+            this.txtStatusView.TabStop = false;
+            // 
+            // buttonRetry
+            // 
+            this.buttonRetry.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton7.ImageOptions.Image")));
+            this.buttonRetry.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.buttonRetry.Location = new System.Drawing.Point(5, 6);
+            this.buttonRetry.Name = "buttonRetry";
+            this.buttonRetry.Size = new System.Drawing.Size(20, 39);
+            this.buttonRetry.TabIndex = 2;
+            // 
+            // txtMessages
+            // 
+            this.txtMessages.Location = new System.Drawing.Point(31, 6);
+            this.txtMessages.Name = "txtMessages";
+            this.txtMessages.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMessages.Properties.Appearance.Options.UseFont = true;
+            this.txtMessages.Size = new System.Drawing.Size(439, 39);
+            this.txtMessages.TabIndex = 0;
+            this.txtMessages.TabStop = false;
+            // 
+            // panelControl1
+            // 
+            this.panelControl1.Controls.Add(this.lblDriveStatus);
+            this.panelControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelControl1.Location = new System.Drawing.Point(0, 736);
+            this.panelControl1.Name = "panelControl1";
+            this.panelControl1.Size = new System.Drawing.Size(1008, 25);
+            this.panelControl1.TabIndex = 13;
+            // 
+            // lblDriveStatus
+            // 
+            this.lblDriveStatus.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDriveStatus.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblDriveStatus.Appearance.Options.UseFont = true;
+            this.lblDriveStatus.Appearance.Options.UseForeColor = true;
+            this.lblDriveStatus.Location = new System.Drawing.Point(15, 5);
+            this.lblDriveStatus.Name = "lblDriveStatus";
+            this.lblDriveStatus.Size = new System.Drawing.Size(469, 15);
+            this.lblDriveStatus.TabIndex = 17;
+            this.lblDriveStatus.Text = "Current Save Drive : D:\\ [전체용량 - 222.66GB] [사용량 : 133.23G, 잔여량 : 89.43G]";
+            // 
+            // grpServerState
+            // 
+            this.grpServerState.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpServerState.AppearanceCaption.Options.UseFont = true;
+            this.grpServerState.Controls.Add(this.txtBin2Discs);
+            this.grpServerState.Controls.Add(this.txtBin4Discs);
+            this.grpServerState.Controls.Add(this.txtBin1Discs);
+            this.grpServerState.Controls.Add(this.txtBin3Discs);
+            this.grpServerState.Controls.Add(this.txtRetansferRibbons);
+            this.grpServerState.Controls.Add(this.txtCMYRibbons);
+            this.grpServerState.Controls.Add(this.label7);
+            this.grpServerState.Controls.Add(this.label5);
+            this.grpServerState.Controls.Add(this.label4);
+            this.grpServerState.Controls.Add(this.label3);
+            this.grpServerState.Controls.Add(this.label2);
+            this.grpServerState.Controls.Add(this.label1);
+            this.grpServerState.Location = new System.Drawing.Point(491, 544);
+            this.grpServerState.Name = "grpServerState";
+            this.grpServerState.Size = new System.Drawing.Size(503, 135);
+            this.grpServerState.TabIndex = 14;
+            this.grpServerState.Text = "서버 상태 정보";
+            // 
+            // txtBin2Discs
+            // 
+            this.txtBin2Discs.Location = new System.Drawing.Point(409, 31);
+            this.txtBin2Discs.Name = "txtBin2Discs";
+            this.txtBin2Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin2Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin2Discs.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtBin2Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtBin2Discs.Properties.ReadOnly = true;
+            this.txtBin2Discs.Size = new System.Drawing.Size(84, 22);
+            this.txtBin2Discs.TabIndex = 135;
+            this.txtBin2Discs.TabStop = false;
+            // 
+            // txtBin4Discs
+            // 
+            this.txtBin4Discs.Location = new System.Drawing.Point(409, 64);
+            this.txtBin4Discs.Name = "txtBin4Discs";
+            this.txtBin4Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin4Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin4Discs.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtBin4Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtBin4Discs.Properties.ReadOnly = true;
+            this.txtBin4Discs.Size = new System.Drawing.Size(84, 22);
+            this.txtBin4Discs.TabIndex = 134;
+            this.txtBin4Discs.TabStop = false;
+            // 
+            // txtBin1Discs
+            // 
+            this.txtBin1Discs.Location = new System.Drawing.Point(168, 30);
+            this.txtBin1Discs.Name = "txtBin1Discs";
+            this.txtBin1Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin1Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin1Discs.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtBin1Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtBin1Discs.Properties.ReadOnly = true;
+            this.txtBin1Discs.Size = new System.Drawing.Size(84, 22);
+            this.txtBin1Discs.TabIndex = 133;
+            this.txtBin1Discs.TabStop = false;
+            // 
+            // txtBin3Discs
+            // 
+            this.txtBin3Discs.Location = new System.Drawing.Point(168, 64);
+            this.txtBin3Discs.Name = "txtBin3Discs";
+            this.txtBin3Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin3Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin3Discs.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtBin3Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtBin3Discs.Properties.ReadOnly = true;
+            this.txtBin3Discs.Size = new System.Drawing.Size(84, 22);
+            this.txtBin3Discs.TabIndex = 132;
+            this.txtBin3Discs.TabStop = false;
+            // 
+            // txtRetansferRibbons
+            // 
+            this.txtRetansferRibbons.Location = new System.Drawing.Point(409, 98);
+            this.txtRetansferRibbons.Name = "txtRetansferRibbons";
+            this.txtRetansferRibbons.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtRetansferRibbons.Properties.Appearance.Options.UseFont = true;
+            this.txtRetansferRibbons.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtRetansferRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtRetansferRibbons.Properties.ReadOnly = true;
+            this.txtRetansferRibbons.Size = new System.Drawing.Size(84, 22);
+            this.txtRetansferRibbons.TabIndex = 131;
+            this.txtRetansferRibbons.TabStop = false;
+            // 
+            // txtCMYRibbons
+            // 
+            this.txtCMYRibbons.EditValue = "0";
+            this.txtCMYRibbons.Location = new System.Drawing.Point(168, 100);
+            this.txtCMYRibbons.Name = "txtCMYRibbons";
+            this.txtCMYRibbons.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtCMYRibbons.Properties.Appearance.Options.UseFont = true;
+            this.txtCMYRibbons.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtCMYRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtCMYRibbons.Properties.ReadOnly = true;
+            this.txtCMYRibbons.Size = new System.Drawing.Size(84, 22);
+            this.txtCMYRibbons.TabIndex = 130;
+            this.txtCMYRibbons.TabStop = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label7.Location = new System.Drawing.Point(267, 69);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(136, 12);
+            this.label7.TabIndex = 129;
+            this.label7.Text = "· Bin4 Discs Remaining";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.Location = new System.Drawing.Point(258, 103);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(145, 12);
+            this.label5.TabIndex = 128;
+            this.label5.Text = "· ITS Ribbons Remaining";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.Location = new System.Drawing.Point(8, 103);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(154, 12);
+            this.label4.TabIndex = 127;
+            this.label4.Text = "· CMY Ribbons Remaining";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.Location = new System.Drawing.Point(8, 69);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(136, 12);
+            this.label3.TabIndex = 126;
+            this.label3.Text = "· Bin3 Discs Remaining";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.Location = new System.Drawing.Point(267, 36);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(136, 12);
+            this.label2.TabIndex = 125;
+            this.label2.Text = "· Bin2 Discs Remaining";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Location = new System.Drawing.Point(8, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 12);
+            this.label1.TabIndex = 124;
+            this.label1.Text = "· Bin1 Discs Remaining";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(493, 685);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(265, 45);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            // 
+            // labelControl11
+            // 
+            this.labelControl11.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl11.Appearance.ForeColor = System.Drawing.Color.Silver;
+            this.labelControl11.Appearance.Options.UseFont = true;
+            this.labelControl11.Appearance.Options.UseForeColor = true;
+            this.labelControl11.Location = new System.Drawing.Point(773, 714);
+            this.labelControl11.Name = "labelControl11";
+            this.labelControl11.Size = new System.Drawing.Size(217, 15);
+            this.labelControl11.TabIndex = 16;
+            this.labelControl11.Text = "@ CD/DVD Publishing & Printing System";
+            // 
+            // tmrBinCheker
+            // 
+            this.tmrBinCheker.Interval = 180000;
+            this.tmrBinCheker.Tick += new System.EventHandler(this.tmrBinCheker_Tick);
+            // 
+            // tmrHookChecker
+            // 
+            this.tmrHookChecker.Interval = 300;
+            this.tmrHookChecker.Tick += new System.EventHandler(this.tmrHookChecker_Tick);
+            // 
+            // tmrDownloadChecker
+            // 
+            this.tmrDownloadChecker.Interval = 5000;
+            this.tmrDownloadChecker.Tick += new System.EventHandler(this.tmrDownloadChecker_Tick);
+            // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.WorkerSupportsCancellation = true;
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // MainForm
+            // 
+            this.Appearance.Options.UseFont = true;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.Controls.Add(this.labelControl11);
+            this.Controls.Add(this.grpServerState);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.panelControl1);
+            this.Controls.Add(this.panelControl2);
+            this.Controls.Add(this.grpBurningList);
+            this.Controls.Add(this.btnReport);
+            this.Controls.Add(this.btnOrderedList);
+            this.Controls.Add(this.btnPatientDelete);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnBurn);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.grpServerList);
+            this.Controls.Add(this.grpPatInfo);
+            this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.LookAndFeel.SkinName = "Sharp Plus";
+            this.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.MaximizeBox = false;
+            this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Rimage Medical Disc System";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).EndInit();
+            this.grpPatInfo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).EndInit();
+            this.grpServerList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grpBurningList)).EndInit();
+            this.grpBurningList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gcBurninglist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gvBurninglist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
+            this.panelControl2.ResumeLayout(false);
+            this.panelControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMessages.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
+            this.panelControl1.ResumeLayout(false);
+            this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grpServerState)).EndInit();
+            this.grpServerState.ResumeLayout(false);
+            this.grpServerState.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin2Discs.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin4Discs.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin1Discs.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBin3Discs.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRetansferRibbons.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCMYRibbons.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private DevExpress.XtraEditors.GroupControl grpPatInfo;
+        private DevExpress.XtraEditors.GroupControl grpServerList;
+        private DevExpress.XtraEditors.SimpleButton btnSearch;
+        private DevExpress.XtraEditors.SimpleButton btnBurn;
+        private DevExpress.XtraEditors.SimpleButton btnClear;
+        private DevExpress.XtraEditors.SimpleButton btnPatientDelete;
+        private DevExpress.XtraEditors.SimpleButton btnOrderedList;
+        private DevExpress.XtraEditors.SimpleButton btnReport;
+        private DevExpress.XtraEditors.GroupControl grpBurningList;
+        private DevExpress.XtraEditors.PanelControl panelControl2;
+        private DevExpress.XtraEditors.PanelControl panelControl1;
+        private DevExpress.XtraEditors.LabelControl Server5;
+        private DevExpress.XtraEditors.LabelControl Server4;
+        private DevExpress.XtraEditors.LabelControl Server3;
+        private DevExpress.XtraEditors.LabelControl Server2;
+        private DevExpress.XtraEditors.LabelControl Server1;
+        private DevExpress.XtraGrid.GridControl gcBurninglist;
+        private DevExpress.XtraGrid.Views.Grid.GridView gvBurninglist;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColNo;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColBurnDate;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColPatientNo;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColPatientName;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColState;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColProgress;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColStatus;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColOrderID;
+        private DevExpress.XtraGrid.Columns.GridColumn gridQuantity;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColMedia;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColSize;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColServer;
+        private DevExpress.XtraEditors.MemoEdit txtMessages;
+        private DevExpress.XtraEditors.SimpleButton buttonRetry;
+        private DevExpress.XtraEditors.GroupControl grpServerState;
+        private DevExpress.XtraEditors.TextEdit txtBin2Discs;
+        private DevExpress.XtraEditors.TextEdit txtBin4Discs;
+        private DevExpress.XtraEditors.TextEdit txtBin1Discs;
+        private DevExpress.XtraEditors.TextEdit txtBin3Discs;
+        private DevExpress.XtraEditors.TextEdit txtRetansferRibbons;
+        private DevExpress.XtraEditors.TextEdit txtCMYRibbons;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private DevExpress.XtraEditors.LabelControl labelControl11;
+        private DevExpress.XtraEditors.LabelControl lblDriveStatus;
+        private ucPatients2 ucPatients21;
+        private ucPatients1 ucPatients11;
+        public System.Windows.Forms.TextBox txtStatusView;
+        private System.Windows.Forms.Timer tmrBinCheker;
+        private System.Windows.Forms.Timer tmrHookChecker;
+        private System.Windows.Forms.Timer tmrDownloadChecker;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.Windows.Forms.ImageList imageList1;
+    }
+}
+

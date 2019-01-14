@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FDD964CA-3FE9-4545-8DAE-246C33FB3886}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RimageKorea</RootNamespace>
+    <AssemblyName>RimageKorea</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EvilDICOM">
+      <HintPath>..\RimageDlls\EvilDICOM.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RimageDlls\Json.Net\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Rimage.Client.Api">
+      <HintPath>..\RimageDlls\Rimage.Client.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Rimage.Rapid.Api">
+      <HintPath>..\RimageDlls\Rimage.Rapid.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="YUHS">
+      <HintPath>..\RimageDlls\YUHS.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlertDialog.cs" />
+    <Compile Include="BurnOrderedInfoEntity.cs" />
+    <Compile Include="CheckFiles.cs" />
+    <Compile Include="CheckLicense.cs" />
+    <Compile Include="CheckPing.cs" />
+    <Compile Include="CmdExecute.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="CreateOrderXml.cs" />
+    <Compile Include="CurrentState.cs" />
+    <Compile Include="DESHasher.cs" />
+    <Compile Include="Dialog.cs" />
+    <Compile Include="DicomDirReader.cs" />
+    <Compile Include="DiscData.cs" />
+    <Compile Include="DiscStatusForDisplay.cs" />
+    <Compile Include="DriveInfoEntity.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="ErrorDialog.cs" />
+    <Compile Include="ErrorInfo.cs" />
+    <Compile Include="ErrorLog.cs" />
+    <Compile Include="ExecuteWhenStart.cs" />
+    <Compile Include="FileControl.cs" />
+    <Compile Include="FrmCheckPatientForMerge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCheckPatientForMerge.Designer.cs">
+      <DependentUpon>FrmCheckPatientForMerge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetMyIP.cs" />
+    <Compile Include="NetInfo.cs" />
+    <Compile Include="GetPatientInfoFromMDB.cs" />
+    <Compile Include="GetPatientInfoFromMDB2.cs" />
+    <Compile Include="GetPatientInfoFromTextFile.cs" />
+    <Compile Include="GetPatientInfoFromTomtech.cs" />
+    <Compile Include="GetPatientInfoFromYUHS.cs" />
+    <Compile Include="GetPatientNameFromDB.cs" />
+    <Compile Include="GetPatientNameFromSocket.cs" />
+    <Compile Include="GetServerMode.cs" />
+    <Compile Include="GetXmlValues.cs" />
+    <Compile Include="GlobalVar.cs" />
+    <Compile Include="JsonParser.cs" />
+    <Compile Include="KillProcess.cs" />
+    <Compile Include="ListViewItemComparer.cs" />
+    <Compile Include="LogDelete.cs" />
+    <Compile Include="MediaDiscResult.cs" />
+    <Compile Include="PalySound.cs" />
+    <Compile Include="PatientInfoEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomOrderNumber.cs" />
+    <Compile Include="ReadNumber.cs" />
+    <Compile Include="RimageServerInfo.cs" />
+    <Compile Include="ServerInfo.cs" />
+    <Compile Include="SortedList.cs" />
+    <Compile Include="TimeOutSocket.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="WebUtils.cs" />
+    <Compile Include="Worker.cs" />
+    <Compile Include="XMLParser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CONINFO.DAT">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="CONTPSVR.DAT">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Program.Version" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmCheckPatientForMerge.resx">
+      <DependentUpon>FrmCheckPatientForMerge.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DicomReader\DicomReader.csproj">
+      <Project>{f7549231-50ef-4f6f-a769-e42b1bfba9ed}</Project>
+      <Name>DicomReader</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

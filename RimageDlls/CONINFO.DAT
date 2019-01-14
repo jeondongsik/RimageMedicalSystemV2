@@ -1,0 +1,7 @@
+﻿DataBaseType = "Oracle"
+DataSource = "MEDIS"
+UserID = "rimage"
+UserPass = "image001"
+TableName = "TBLLINK_PATIENT"
+PatientNameColumn = "patname"
+PatientIDColumn = "patid"

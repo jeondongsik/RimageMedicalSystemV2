@@ -1,0 +1,6 @@
+﻿UsageSocket = "Y"
+ServerD = "119.7.7.135"
+ServerT = "119.7.7.105"
+ServerP = "119.6.6.33"
+Port = "21505"
+CurrentTarget = "ServerP"
