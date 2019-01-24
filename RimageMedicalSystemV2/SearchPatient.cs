@@ -22,9 +22,8 @@ namespace RimageMedicalSystemV2
         /// <param name="dvdMaxSize"></param>
         /// <param name="autoLoaderMediaType"></param>
         /// <returns></returns>
-        public static BurnOrderedInfoEntity Get(DirectoryInfo sdir, string existDicomDir, string folderPattern, 
-            Dictionary<string, string> DBConnInfo, string cdMaxSize, string dvdMaxSize, string autoLoaderMediaType, 
-            string disableMultiPatient, string checkFile = "")
+        public static BurnOrderedInfoEntity Get(string programPath, DirectoryInfo sdir,
+            Dictionary<string, string> DBConnInfo, string autoLoaderMediaType, string checkFile = "")
         {
             try
             {
@@ -38,6 +37,7 @@ namespace RimageMedicalSystemV2
                 bool isMdb = false;
                 bool isNoDicom = false;
                 bool isText = false;
+                bool isINI = false;
 
                 ////root에 checkFile ("end.txt") 파일이 존재하는지 체크하자.
                 if (checkFile != "")
@@ -72,7 +72,7 @@ namespace RimageMedicalSystemV2
                     int patCount = 0;
 
                     //// DicomDir 파일이 존재하는지 체크
-                    if (existDicomDir == "Y")
+                    if (GlobalVar.configEntity.ExistDicomDir == "Y")
                     {
                         //DicomDir 파일이 존재하지 않으면 Pass
                         if (!(File.Exists(Path.Combine(sdir.FullName, "DICOMDIR")) || File.Exists(Path.Combine(sdir.FullName, mdbFileName))))
@@ -125,6 +125,22 @@ namespace RimageMedicalSystemV2
                         #endregion
                     }
 
+                    //// 환자명 정보가 담긴 파일이 존재하면 거기서 정보를 가져오자
+                    if (File.Exists(Path.Combine(sdir.FullName, GlobalVar.CD_INFO_FILE)))
+                    {
+                        GetPatientInfoFromTextFile cls = new GetPatientInfoFromTextFile();
+                        cls.GetInfo(Path.Combine(sdir.FullName, GlobalVar.CD_INFO_FILE));
+
+                        pID = cls.ID;
+                        pName = cls.Name;
+                        pSex = cls.Sex;
+
+                        if (Utils.IsHangul(cls.Name) == false)
+                            pName = string.Empty;
+
+                        isText = true;
+                    }
+
                     //// DICOMDIR 파일에서 읽기
                     isDicom = false;
                     isNoDicom = false;
@@ -135,27 +151,30 @@ namespace RimageMedicalSystemV2
                         dicomdirInfo = new Dictionary<string, string>();
                         List<string> dicImgList = null;
                         PatientList patInfor = null;
-                        dicomdirInfo = GetPatient(sdir.FullName, disableMultiPatient, out dicImgList, out patInfor, out patList);
-                        
-                        orderInfo.patNo = dicomdirInfo["ID"];
-                        orderInfo.patName = dicomdirInfo["Name"];
-                        orderInfo.patSex = dicomdirInfo["SexKr"];
-                        orderInfo.patAge = dicomdirInfo["Age"];
-                        orderInfo.patBirtyDay = dicomdirInfo["BirthDay"];
-                        orderInfo.Modality = dicomdirInfo["Modality"];
-                        orderInfo.StudyDescription = dicomdirInfo["StudyDesc"];
-                        orderInfo.DicomDescription = dicomdirInfo["DicomDesc"];
-                        orderInfo.StudyModality = dicomdirInfo["StudyModality"];
-                        orderInfo.Count = Convert.ToInt32(dicomdirInfo["PatientCount"]);
-                        orderInfo.patList = patList;
-                        orderInfo.DicomImgList = dicImgList;
+                        dicomdirInfo = GetPatient(sdir.FullName, GlobalVar.configEntity.DisableMultiPatient, out dicImgList, out patInfor, out patList);
 
-                        isDicom = true;
+                        if (dicomdirInfo != null && dicomdirInfo["Result"] != "NotFound")
+                        {
+                            orderInfo.patNo = dicomdirInfo["ID"];
+                            orderInfo.patName = dicomdirInfo["Name"];
+                            orderInfo.patSex = dicomdirInfo["SexKr"];
+                            orderInfo.patAge = dicomdirInfo["Age"];
+                            orderInfo.patBirtyDay = dicomdirInfo["BirthDay"];
+                            orderInfo.Modality = dicomdirInfo["Modality"];
+                            orderInfo.StudyDescription = dicomdirInfo["StudyDesc"];
+                            orderInfo.DicomDescription = dicomdirInfo["DicomDesc"];
+                            orderInfo.StudyModality = dicomdirInfo["StudyModality"];
+                            orderInfo.Count = Convert.ToInt32(dicomdirInfo["PatientCount"]);
+                            orderInfo.patList = patList;
+                            orderInfo.DicomImgList = dicImgList;
+
+                            isDicom = true;
+                        }
                         #endregion
                     }
                     else
                     {
-                        //DicomDir 파일이 없을 시 폴더명에서 환자아이디, 이름만 가져온다.
+                        //// DicomDir 파일이 없을 시 폴더명에서 환자아이디, 이름만 가져온다.
                         if (sdir.Name.Contains("_"))
                         {
                             try
@@ -170,7 +189,7 @@ namespace RimageMedicalSystemV2
                         }
                     }
 
-                    ////MDB파일에서 가져온 데이터가 있으면 대체.
+                    //// MDB파일에서 가져온 데이터가 있으면 대체.
                     if (isMdb == true)
                     {                        
                         orderInfo.patNo = (string.IsNullOrWhiteSpace(pID)) ? orderInfo.patNo : pID;
@@ -181,7 +200,15 @@ namespace RimageMedicalSystemV2
                         orderInfo.patList = (pList == null) ? orderInfo.patList : pList;
                     }
 
-                    //Studyinfo.ini에서 환자아이디,명,나이를 가져올 경우
+                    //// TextFile에서 가져온 데이터가 있으면 대체
+                    if (isText == true)
+                    {
+                        orderInfo.patNo = (string.IsNullOrWhiteSpace(pID)) ? orderInfo.patNo : pID;
+                        orderInfo.patName = (string.IsNullOrWhiteSpace(pName)) ? orderInfo.patName : pName;
+                        orderInfo.patSex = (string.IsNullOrWhiteSpace(pSex)) ? orderInfo.patSex : pSex;
+                    }
+
+                    //// Studyinfo.ini에서 환자아이디,명,나이를 가져올 경우
                     if (File.Exists(Path.Combine(sdir.FullName, "Studyinfo.ini")))
                     {
                         /* [Studyinfo]
@@ -209,14 +236,17 @@ namespace RimageMedicalSystemV2
                                     orderInfo.patSex = arrTxt[1];
                                 }
                             }
+
+                            isINI = true;
                         }
                         catch { }
                     }
 
-                    ////DicomDir 없이 환자명을 가져온 경우에는 건너뛴다.
-                    if (isNoDicom == false)
+                    //// DicomDir 없이 환자명을 가져온 경우에는 건너뛴다.
+                    //// INI 파일에서 가져온 경우, 
+                    if (!isNoDicom)
                     {
-                        switch (folderPattern)
+                        switch (GlobalVar.configEntity.FolderPattern)
                         {
                             case "1": //날짜_환자번호_환자명
                                 orderInfo.patName = sdir.Name.Substring(sdir.Name.LastIndexOf("_") + 1);
@@ -238,17 +268,49 @@ namespace RimageMedicalSystemV2
                                 orderInfo.patName = sdir.Name.Substring(sdir.Name.IndexOf("(") + 1, sdir.Name.Length - sdir.Name.IndexOf("(") - 2);
                                 orderInfo.patName = orderInfo.patName.Replace("(", "").Replace(")", "");
                                 break;
+                            case "3":
+                                //YUHS - 세브란스에서 dll 제공
+                                //신촌 세브란스 병원
+                                orderInfo.patName = GetPatientInfoFromYUHS.GetName(orderInfo.patNo);
+                                break;
                             case "4":
                                 ////환자명을 영문에서 한글로 : 병원 DB에서 조회한다..
                                 if (isDicom == true && isMdb == false)
                                 {
                                     ////Dicom정보를 가져왔을 때 - mdb에서 가져왔을 경우에는 제외
                                     string name = GetPatientNameFromDB.GetName(orderInfo.patNo, DBConnInfo);
-                                    if (string.IsNullOrWhiteSpace(name) == false)
+                                    if (!string.IsNullOrWhiteSpace(name))
                                     {
                                         orderInfo.patName = name;
                                     }
                                 }
+                                break;
+                            case "5":
+                                //// 소켓연결로 환자명을 가져오게 설정된 경우 소켓연결정보 파일이 존재할 경우에만 실행.
+                                if (File.Exists(Path.Combine(programPath, GlobalVar.SOCKET_CON_FILE)))
+                                {
+                                    Dictionary<string, string> socketCon = GetPatientNameFromDB.GetDBConn(Path.Combine(programPath, GlobalVar.SOCKET_CON_FILE));
+
+                                    if (socketCon != null && socketCon["UsageSocket"] == "Y")
+                                    {
+                                        //// 소켓통신으로 환자명을 가져온다.
+                                        Dictionary<string, string> socketPatInfo = GetPatientNameFromSocket.GetName(orderInfo.patNo, socketCon);
+                                        if (socketPatInfo["PRSG_RSLT_DVSN_CD"] == "1")
+                                        {
+                                            orderInfo.patName = socketPatInfo["PTNT_NM"].Trim();
+                                        }
+                                    }
+                                }
+                                break;
+                            case "6":
+                                //// Tomtech-아산병원초음파
+                                GetPatientInfoFromTomtech clsTT = new GetPatientInfoFromTomtech();
+                                clsTT.GetInfo(sdir.FullName);
+
+                                if (!string.IsNullOrWhiteSpace(clsTT.ID))
+                                    orderInfo.patNo = clsTT.ID;
+                                if (string.IsNullOrWhiteSpace(orderInfo.patName))
+                                    orderInfo.patName = clsTT.Name;
                                 break;
                             default:
                                 break;
@@ -258,7 +320,7 @@ namespace RimageMedicalSystemV2
                     orderInfo.patName = Utils.ReplaceSpecialWord(orderInfo.patName);
                     orderInfo.patName = orderInfo.patName.Replace(",", ".");
 
-                    //연구용 자료일 경우
+                    //// 연구용 자료일 경우
                     if (orderInfo.patNo.Contains("UNKNOWN") || string.IsNullOrWhiteSpace(orderInfo.patNo))
                     {
                         orderInfo.patNo = "NA" + DateTime.Now.ToString("ddhhmmss") + "RD";
@@ -274,12 +336,12 @@ namespace RimageMedicalSystemV2
                     orderInfo.mediSize = fldLen.ToString() + " Mbyte";
 
                     //// 사이즈별 미디어 선택
-                    if (orderInfo.FolderSize > Convert.ToInt64(dvdMaxSize))
+                    if (orderInfo.FolderSize > Convert.ToInt64(GlobalVar.configEntity.CDMaxSize))
                     {
                         orderInfo.mediType = "DVDR-DL";     //DVDR-DL
                     }
-                    else if (orderInfo.FolderSize > Convert.ToInt64(cdMaxSize) &&
-                             orderInfo.FolderSize <= Convert.ToInt64(dvdMaxSize))
+                    else if (orderInfo.FolderSize > Convert.ToInt64(GlobalVar.configEntity.CDMaxSize) &&
+                             orderInfo.FolderSize <= Convert.ToInt64(GlobalVar.configEntity.DvdMaxSize))
                     {
                         orderInfo.mediType = "DVDR";     //DVDR
                     }
@@ -297,7 +359,7 @@ namespace RimageMedicalSystemV2
                     {
                         orderInfo.mediType = "DVDR";     //DVD
 
-                        if (orderInfo.FolderSize > Convert.ToInt64(dvdMaxSize))
+                        if (orderInfo.FolderSize > Convert.ToInt64(GlobalVar.configEntity.DvdMaxSize))
                         {
                             orderInfo.mediType = "DVDR-DL";     //DVDR-DL
                         }

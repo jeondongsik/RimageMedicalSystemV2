@@ -17,6 +17,16 @@ namespace RimageMedicalSystemV2
     /// </summary>
     public partial class ucPatients1 : DevExpress.XtraEditors.XtraUserControl
     {
+        BurnOrderedInfoEntity _orderInfo;
+        /// <summary>
+        /// 굽기 명령 정보
+        /// </summary>
+        public BurnOrderedInfoEntity OrderInfo
+        {
+            get { return this._orderInfo; }
+            set { this._orderInfo = value; }
+        }
+
         public ucPatients1()
         {
             InitializeComponent();

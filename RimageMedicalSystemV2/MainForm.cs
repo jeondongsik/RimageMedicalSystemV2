@@ -319,7 +319,14 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            if (GlobalVar.configEntity.programType == "1")
+            {
+                this.SearchPatient1();
+            }
+            else
+            {
+                this.SearchPatient2();
+            }
         }
         
         /// <summary>
@@ -336,7 +343,16 @@ namespace RimageMedicalSystemV2
 
                 this.txtStatusView.AppendText("환자정보를 가져오고 있습니다.\r\n");
 
+                BurnOrderedInfoEntity orderInfo = SearchPatient.Get(Application.StartupPath, new DirectoryInfo(this.dicomCDFolder), this.DBConnInfo, this.AutoLoaderMediaType);
 
+                if (orderInfo != null)
+                {
+
+                }
+                else
+                {
+                    this.ErrMsgShow("DICOMDIR 파일을 읽을 수 없거나 환자정보가 없습니다.", "Rimage Error Message");
+                }
             }
             catch { }
             finally
@@ -350,7 +366,20 @@ namespace RimageMedicalSystemV2
         /// </summary>
         private void SearchPatient2()
         {
+            this.Cursor = Cursors.WaitCursor;
 
+            try
+            {
+                //// 컨트롤 초기화                
+                this.txtStatusView.AppendText("환자정보를 가져오고 있습니다.\r\n");
+
+
+            }
+            catch { }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
 
         /// <summary>
@@ -1017,9 +1046,7 @@ namespace RimageMedicalSystemV2
         {
             
         }
-
-
-
+        
         /// <summary>
         /// --데이터 파일이 저장되는 Drive 용량 보여주기--
         /// </summary>
@@ -1434,6 +1461,9 @@ namespace RimageMedicalSystemV2
         }
     }
 
+    /// <summary>
+    /// 윈도우 이벤트 메시지 구조체
+    /// </summary>
     public struct COPYDATASTRUCT
     {
         public IntPtr dwData;
