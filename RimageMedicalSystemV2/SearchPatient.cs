@@ -37,6 +37,7 @@ namespace RimageMedicalSystemV2
                 bool isDicom = false;
                 bool isMdb = false;
                 bool isNoDicom = false;
+                bool isText = false;
 
                 ////root에 checkFile ("end.txt") 파일이 존재하는지 체크하자.
                 if (checkFile != "")
@@ -68,8 +69,9 @@ namespace RimageMedicalSystemV2
                     Dictionary<string, string> pList = null;
                     Dictionary<string, string> dicomdirInfo = null;
                     Dictionary<string, string> patList = null;
+                    int patCount = 0;
 
-                    //DicomDir 파일이 존재하는지 체크
+                    //// DicomDir 파일이 존재하는지 체크
                     if (existDicomDir == "Y")
                     {
                         //DicomDir 파일이 존재하지 않으면 Pass
@@ -77,7 +79,7 @@ namespace RimageMedicalSystemV2
                             return null;
                     }
 
-                    //MDB 파일에서 읽기
+                    //// MDB 파일이 존재하면 우선 MDB파일에서 정보를 가져온다.
                     isMdb = false;
                     if (File.Exists(Path.Combine(sdir.FullName, mdbFileName)))
                     {
@@ -92,11 +94,12 @@ namespace RimageMedicalSystemV2
                             pName = dicomdirInfo["Name"];
                             pSex = dicomdirInfo["SexKr"];
                             pAge = dicomdirInfo["Age"];
+
+                            pList = cls.PatientLST;
+                            patCount = cls.PatientCount;
+
+                            isMdb = true;
                         }
-
-                        pList = cls.PatientLST;
-
-                        isMdb = true;
                         #endregion
                     }
                     else if (File.Exists(Path.Combine(sdir.FullName, mdbFileNameMaro)))    //Maro형태에서..
@@ -113,15 +116,16 @@ namespace RimageMedicalSystemV2
                             pSex = dicomdirInfo["SexKr"];
                             pAge = dicomdirInfo["Age"];
                             pModality = dicomdirInfo["Modality"];
+
+                            pList = cls2.PatientLST;
+                            patCount = cls2.PatientCount;
+
+                            isMdb = true;
                         }
-
-                        pList = cls2.PatientLST;
-
-                        isMdb = true;
                         #endregion
                     }
 
-                    ////DICOMDIR 파일에서 읽기
+                    //// DICOMDIR 파일에서 읽기
                     isDicom = false;
                     isNoDicom = false;
                     if (File.Exists(Path.Combine(sdir.FullName, "DICOMDIR")))
