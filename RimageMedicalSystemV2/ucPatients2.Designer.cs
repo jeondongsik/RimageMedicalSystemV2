@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucPatients2));
             this.gcPatientlist = new DevExpress.XtraGrid.GridControl();
             this.gvPatientlist = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColBurnDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -36,29 +35,30 @@
             this.gridColPatientName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColGender = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridQuantity = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoQuantity = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.gridColMedia = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoMediatype = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.gridColSize = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColCancel = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-            this.repositoryItemComboBox2 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-            this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.repoPicDel = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
             ((System.ComponentModel.ISupportInitialize)(this.gcPatientlist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvPatientlist)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoQuantity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoMediatype)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoPicDel)).BeginInit();
             this.SuspendLayout();
             // 
             // gcPatientlist
             // 
             this.gcPatientlist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gcPatientlist.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gcPatientlist.Location = new System.Drawing.Point(0, 0);
             this.gcPatientlist.MainView = this.gvPatientlist;
             this.gcPatientlist.Name = "gcPatientlist";
             this.gcPatientlist.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemComboBox1,
-            this.repositoryItemComboBox2,
-            this.repositoryItemButtonEdit1});
+            this.repoQuantity,
+            this.repoMediatype,
+            this.repoPicDel});
             this.gcPatientlist.Size = new System.Drawing.Size(817, 208);
             this.gcPatientlist.TabIndex = 3;
             this.gcPatientlist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -96,10 +96,12 @@
             this.gvPatientlist.OptionsView.ShowGroupPanel = false;
             this.gvPatientlist.OptionsView.ShowIndicator = false;
             this.gvPatientlist.RowHeight = 25;
+            this.gvPatientlist.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.gvPatientlist_RowCellClick);
             // 
             // gridColBurnDate
             // 
             this.gridColBurnDate.Caption = "날짜";
+            this.gridColBurnDate.FieldName = "patDate";
             this.gridColBurnDate.Name = "gridColBurnDate";
             this.gridColBurnDate.Visible = true;
             this.gridColBurnDate.VisibleIndex = 0;
@@ -108,6 +110,7 @@
             // gridColPatientNo
             // 
             this.gridColPatientNo.Caption = "환자번호";
+            this.gridColPatientNo.FieldName = "patNo";
             this.gridColPatientNo.Name = "gridColPatientNo";
             this.gridColPatientNo.Visible = true;
             this.gridColPatientNo.VisibleIndex = 1;
@@ -116,7 +119,7 @@
             // gridColPatientName
             // 
             this.gridColPatientName.Caption = "환자명";
-            this.gridColPatientName.FieldName = "WareHousingDate";
+            this.gridColPatientName.FieldName = "patName";
             this.gridColPatientName.Name = "gridColPatientName";
             this.gridColPatientName.Visible = true;
             this.gridColPatientName.VisibleIndex = 2;
@@ -125,7 +128,7 @@
             // gridColGender
             // 
             this.gridColGender.Caption = "성별";
-            this.gridColGender.FieldName = "BrandName";
+            this.gridColGender.FieldName = "patSex";
             this.gridColGender.Name = "gridColGender";
             this.gridColGender.Visible = true;
             this.gridColGender.VisibleIndex = 3;
@@ -133,23 +136,54 @@
             // gridQuantity
             // 
             this.gridQuantity.Caption = "수량";
-            this.gridQuantity.ColumnEdit = this.repositoryItemComboBox1;
+            this.gridQuantity.ColumnEdit = this.repoQuantity;
+            this.gridQuantity.FieldName = "copies";
             this.gridQuantity.Name = "gridQuantity";
             this.gridQuantity.Visible = true;
             this.gridQuantity.VisibleIndex = 4;
             // 
+            // repoQuantity
+            // 
+            this.repoQuantity.AutoHeight = false;
+            this.repoQuantity.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoQuantity.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"});
+            this.repoQuantity.Name = "repoQuantity";
+            this.repoQuantity.ReadOnly = true;
+            // 
             // gridColMedia
             // 
             this.gridColMedia.Caption = "미디어";
-            this.gridColMedia.ColumnEdit = this.repositoryItemComboBox2;
+            this.gridColMedia.ColumnEdit = this.repoMediatype;
+            this.gridColMedia.FieldName = "mediType";
             this.gridColMedia.Name = "gridColMedia";
             this.gridColMedia.Visible = true;
             this.gridColMedia.VisibleIndex = 5;
             this.gridColMedia.Width = 100;
             // 
+            // repoMediatype
+            // 
+            this.repoMediatype.AutoHeight = false;
+            this.repoMediatype.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoMediatype.Items.AddRange(new object[] {
+            "CDR",
+            "DVDR",
+            "DVDR-DL"});
+            this.repoMediatype.Name = "repoMediatype";
+            this.repoMediatype.ReadOnly = true;
+            // 
             // gridColSize
             // 
             this.gridColSize.Caption = "크기";
+            this.gridColSize.FieldName = "mediSize";
             this.gridColSize.Name = "gridColSize";
             this.gridColSize.Visible = true;
             this.gridColSize.VisibleIndex = 6;
@@ -158,35 +192,17 @@
             // gridColCancel
             // 
             this.gridColCancel.Caption = "취소";
-            this.gridColCancel.ColumnEdit = this.repositoryItemButtonEdit1;
+            this.gridColCancel.ColumnEdit = this.repoPicDel;
             this.gridColCancel.Name = "gridColCancel";
             this.gridColCancel.Visible = true;
             this.gridColCancel.VisibleIndex = 7;
             this.gridColCancel.Width = 55;
             // 
-            // repositoryItemComboBox1
+            // repoPicDel
             // 
-            this.repositoryItemComboBox1.AutoHeight = false;
-            this.repositoryItemComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemComboBox1.Name = "repositoryItemComboBox1";
-            // 
-            // repositoryItemComboBox2
-            // 
-            this.repositoryItemComboBox2.AutoHeight = false;
-            this.repositoryItemComboBox2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemComboBox2.Name = "repositoryItemComboBox2";
-            // 
-            // repositoryItemButtonEdit1
-            // 
-            this.repositoryItemButtonEdit1.Appearance.Options.UseTextOptions = true;
-            this.repositoryItemButtonEdit1.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.repositoryItemButtonEdit1.AutoHeight = false;
-            this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.repositoryItemButtonEdit1.ContextImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("repositoryItemButtonEdit1.ContextImageOptions.Image")));
-            this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
+            this.repoPicDel.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.cancel_16x161;
+            this.repoPicDel.Appearance.Options.UseImage = true;
+            this.repoPicDel.Name = "repoPicDel";
             // 
             // ucPatients2
             // 
@@ -199,17 +215,14 @@
             this.Size = new System.Drawing.Size(817, 208);
             ((System.ComponentModel.ISupportInitialize)(this.gcPatientlist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvPatientlist)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoQuantity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoMediatype)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoPicDel)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private DevExpress.XtraGrid.GridControl gcPatientlist;
-        private DevExpress.XtraGrid.Views.Grid.GridView gvPatientlist;
         private DevExpress.XtraGrid.Columns.GridColumn gridColBurnDate;
         private DevExpress.XtraGrid.Columns.GridColumn gridColPatientNo;
         private DevExpress.XtraGrid.Columns.GridColumn gridColPatientName;
@@ -218,8 +231,10 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColMedia;
         private DevExpress.XtraGrid.Columns.GridColumn gridColSize;
         private DevExpress.XtraGrid.Columns.GridColumn gridColCancel;
-        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox1;
-        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox2;
-        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repoQuantity;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repoMediatype;
+        public DevExpress.XtraGrid.GridControl gcPatientlist;
+        public DevExpress.XtraGrid.Views.Grid.GridView gvPatientlist;
+        private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repoPicDel;
     }
 }

@@ -57,5 +57,27 @@ namespace RimageKorea
             }
             catch { return true; }
         }
+
+        /// <summary>
+        /// 다운로드 완료를 감지하기 위한 파일이 존재하는지 체크
+        /// </summary>
+        /// <param name="dirInfo">체크할파일이 있는 폴더</param>
+        /// <param name="checkFileName">체크파일명</param>
+        /// <returns></returns>
+        public static bool CheckFileExists(DirectoryInfo dirInfo, string checkFileName)
+        {
+            bool retVal = false;
+
+            foreach (FileInfo fi in dirInfo.GetFiles())
+            {
+                if (fi.Name.Equals(checkFileName))
+                {
+                    retVal = true;
+                    break;
+                }
+            }
+
+            return retVal;
+        }
     }
 }

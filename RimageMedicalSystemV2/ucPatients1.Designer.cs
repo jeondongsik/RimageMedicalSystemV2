@@ -80,6 +80,7 @@
             // 
             // cbMedia
             // 
+            this.cbMedia.EditValue = "CDR";
             this.cbMedia.Location = new System.Drawing.Point(609, 3);
             this.cbMedia.Name = "cbMedia";
             this.cbMedia.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -106,6 +107,7 @@
             // 
             // cbCopies
             // 
+            this.cbCopies.EditValue = "1";
             this.cbCopies.Location = new System.Drawing.Point(475, 3);
             this.cbCopies.Name = "cbCopies";
             this.cbCopies.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -226,15 +228,15 @@
 
         private DevExpress.XtraEditors.PanelControl panelControl4;
         private DevExpress.XtraEditors.LabelControl labelControl5;
-        private DevExpress.XtraEditors.ComboBoxEdit cbMedia;
         private DevExpress.XtraEditors.LabelControl labelControl4;
-        private DevExpress.XtraEditors.ComboBoxEdit cbCopies;
-        private DevExpress.XtraEditors.TextEdit txtDataLength;
         private DevExpress.XtraEditors.LabelControl labelControl3;
-        private DevExpress.XtraEditors.TextEdit txtPatientName;
         private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.TextEdit txtPatientID;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private System.Windows.Forms.TreeView treeView1;
+        public DevExpress.XtraEditors.ComboBoxEdit cbCopies;
+        public DevExpress.XtraEditors.TextEdit txtPatientName;
+        public DevExpress.XtraEditors.TextEdit txtPatientID;
+        public DevExpress.XtraEditors.ComboBoxEdit cbMedia;
+        public DevExpress.XtraEditors.TextEdit txtDataLength;
     }
 }

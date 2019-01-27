@@ -153,6 +153,8 @@ namespace RimageMedicalSystemV2
                         PatientList patInfor = null;
                         dicomdirInfo = GetPatient(sdir.FullName, GlobalVar.configEntity.DisableMultiPatient, out dicImgList, out patInfor, out patList);
 
+                        orderInfo.PatInfor = patInfor;
+
                         if (dicomdirInfo != null && dicomdirInfo["Result"] != "NotFound")
                         {
                             orderInfo.patNo = dicomdirInfo["ID"];

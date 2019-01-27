@@ -151,5 +151,36 @@ namespace RimageKorea
         /// Dicom Image 목록
         /// </summary>
         public List<string> DicomImgList { get; set; }
+
+        /// <summary>
+        /// 환자정보가 위치한 폴더 (로컬)
+        /// </summary>
+        public string DicomCDFolder { get; set; }
+
+        /// <summary>
+        /// DicomDir에 포함된 환장 정보
+        /// </summary>
+        public PatientList PatInfor { get; set; }
+
+        /// <summary>
+        /// 진행상태
+        /// </summary>
+        public string Progress { get; set; }
+        /// <summary>
+        /// 진행률(%)
+        /// </summary>
+        public string ProcessingRate { get; set; }
+        /// <summary>
+        /// 굽기 상태
+        /// </summary>
+        public string BurnState { get; set; }
+        /// <summary>
+        /// 출력번호
+        /// </summary>
+        public string OrderId { get; set; }
+        /// <summary>
+        /// 서버번호
+        /// </summary>
+        public string ServerNo { get; set; }
     }
 }
