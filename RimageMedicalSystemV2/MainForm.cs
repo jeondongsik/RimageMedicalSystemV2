@@ -514,13 +514,177 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnBurn_Click(object sender, EventArgs e)
         {
+            if (!this.EnableServerConnect())
+                return;
+
             if (GlobalVar.configEntity.programType == "1")
             {
-
+                this.ReadyBurn1();
             }
             else
             {
 
+            }
+        }
+
+        /// <summary>
+        /// 굽기 전 사전 작업 - ProgramType1
+        /// </summary>
+        public void ReadyBurn1()
+        {
+            try
+            {
+                DialogResult result = System.Windows.Forms.DialogResult.Yes;
+                var orderInfo = this.ucPatients11.OrderInfo;
+                orderInfo.patListForMerge = orderInfo.patList;
+
+                //// 환자정보가 2개 이상일 때는 무조건 창을 띄운다. => 환경설정값 체크 추가
+                if (orderInfo.patList != null && orderInfo.patList.Count > 1 && GlobalVar.configEntity.PopUpSelPatInfoYN == "Y")
+                {
+                    //// 상위에서 이름을 바꿀수 있으므로 정보를 다시 넣어보자.
+                    if (orderInfo.patList.ContainsKey(this.ucPatients11.txtPatientID.Text))
+                        orderInfo.patList[this.ucPatients11.txtPatientID.Text] = this.ucPatients11.txtPatientName.Text;
+
+                    FrmCheckPatientForMerge frm = new FrmCheckPatientForMerge();
+                    frm.SetPatientList(orderInfo.patList);
+                    result = frm.ShowDialog();
+
+                    if (result == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        orderInfo.patListForMerge = frm.PatientList;
+                        foreach (KeyValuePair<string, string> kvp in orderInfo.patListForMerge)
+                        {
+                            this.ucPatients11.txtPatientID.Text = kvp.Key;
+                            this.ucPatients11.txtPatientName.Text = kvp.Value;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    this.txtMessages.Text = "굽기 준비중입니다. 잠시만 기다려 주세요.";
+
+                    if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
+                    {
+                        //// Process Kill - Deit_Burn.exe
+                        KillProcess.DelProcess("Deit_Burn");
+                        Thread.Sleep(500);
+                        KillProcess.DelProcess("Deit_Burn");
+
+                        if (this.backgroundWorker4.IsBusy == false)
+                            this.backgroundWorker4.RunWorkerAsync("Deit_Burn");
+                    }
+                    else
+                    {
+                        this.StartBurning(true);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 폴더이름을 바꾸고 굽기 실행
+        /// </summary>
+        private void StartBurning(bool isPossible)
+        {
+            if (isPossible)
+            {
+                ////다운로드 폴더이름을 환자정보를 포함한 신규이름으로 변경
+                ////다운로드 폴더명으로 폴더 생성
+                string pNm = this.ucPatients11.txtPatientName.Text;
+                if (string.IsNullOrWhiteSpace(pNm))
+                    pNm = this.ucPatients11.OrderInfo.patName.Replace(" ", "");
+                pNm = Utils.ReplaceSpecialWord(pNm);
+                pNm = pNm.Replace(",", ".");
+
+                //// 파일복사 후 굽기진행 설정이면
+                if (GlobalVar.configEntity.FileCopyYN.Equals("Y"))
+                {
+                    //// 파일을 복사한 후에 굽기 실행일 경우
+                    //// 환자명으로 폴더 생성
+                    this.ucPatients11.OrderInfo.patFolder = FileControl.CreatePatientFolder(this.ucPatients11.OrderInfo.patNo, pNm);
+                    ////this.burnCDAfterCopyFiles();  //다운받은 데이터를 공유폴더로 이동시킨다.
+                }
+                else
+                {
+                    try
+                    {
+                        //// 폴더명을 변경한 후 굽기 명령을 보낼 경우
+                        this.ucPatients11.OrderInfo.patFolder = FileControl.ChangeDownloadFolderToPatientFolder(this.ucPatients11.OrderInfo.patNo, pNm);
+
+                        Thread.Sleep(300);
+                        //굽기명령을 보낸다.
+                        ////this.AddItemAndBurnOrder();
+                    }
+                    catch (Exception ex)
+                    {
+                        this.ErrMsgShow("폴더명에 허용되지 않는 문자열이 있습니다.\r\n환자명에서 특수문자를 삭제한 후 다시 시도하세요.\r\n" + ex.Message, "Rimage Message : ChangeDownloadFolderToPatientFolder", ex);
+                    }
+                    finally
+                    {
+                        this.Cursor = Cursors.Default;
+                    }
+                }
+            }
+            else
+            {
+                ErrMsgShow("다른 프로세스에 의해 사용중이므로 폴더명을 바꿀 수 없습니다.", "Rimage Message : ChangeDownloadFolderToPatientFolder");
+            }
+        }
+
+        /// <summary>
+        /// 굽기 전 사전 작업 - ProgramType2
+        /// </summary>
+        public void ReadyBurn2()
+        {
+
+        }
+
+        /// <summary>
+        /// CD 굽기
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        public void StartBurn(BurnOrderedInfoEntity orderInfo)
+        {
+
+        }
+
+        /// <summary>
+        /// 선택한 서버가 연결이 가능한지 먼저 체크
+        /// </summary>
+        /// <returns></returns>
+        public bool EnableServerConnect()
+        {
+            try
+            {
+                //// 서버를 선택했는지 먼저 체크한다.
+                if (this.NowSeletedServer == null)
+                {
+                    MessageBox.Show("먼저 굽기를 실행할 서버를 선택하세요.", "Rimage Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                //// 핑체크
+                if (CheckPing.TestPing(this.NowSeletedServer.IP))
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("서버 ({0})에 연결되어 있지 않습니다.\r\n네트워크 상태 또는 서버 상태를 확인한 후 \"서버연결 버튼\"을 클릭하여 서버에 연결하세요.\r\n또는 다른 서버를 선택하세요.", this.NowSeletedServer.IP), "Rimage Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -1590,6 +1754,44 @@ namespace RimageMedicalSystemV2
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 백그라운드에서 지정된 Process 죽이기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (backgroundWorker4.CancellationPending)
+            {
+                e.Cancel = true;
+                backgroundWorker4.ReportProgress(0);
+                return;
+            }
+
+            string pName = e.Argument as string;
+
+            bool ret = KillProcess.IsProcess(pName, 0);
+
+            e.Result = ret;
+        }
+
+        private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (backgroundWorker4.IsBusy)
+                backgroundWorker4.CancelAsync();
+
+            bool? result = e.Result as Nullable<Boolean>;
+
+            if (result != null)
+            {
+                this.StartBurning(!result.Value);
+            }
+            else
+            {
+                ErrMsgShow("다른 프로세스에 의해 사용중이므로 폴더명을 바꿀 수 없습니다.", "Rimage Message : ChangeDownloadFolderToPatientFolder");
+            }
         }
     }
 

@@ -985,5 +985,109 @@ namespace RimageKorea
             }
             catch { }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="patID"></param>
+        /// <param name="patName"></param>
+        /// <returns></returns>
+        public static string CreatePatientFolder(string patNo, string patName)
+        {
+            string patientFolderName = string.Format("{0}_{1}_{2}", DateTime.Now.ToString("yyyyMMdd"), patNo, patName);
+
+            try
+            {
+                string fld = Path.Combine(GlobalVar.configEntity.LocalShareFolder, patientFolderName);
+                DirectoryInfo dri = new DirectoryInfo(fld);
+
+                if (dri.Exists)
+                {
+                    string fld_new = "";
+
+                    if (patName.Contains("("))
+                    {
+                        int s = patName.IndexOf("(", 0);
+                        int e = patName.IndexOf(")", 0);
+                        string no = patName.Substring(s + 1, (e - s - 1));
+                        int i = Convert.ToInt16(no);
+
+                        fld_new = patName.Replace("(" + no + ")", "(" + (i + 1).ToString() + ")");
+                    }
+                    else
+                    {
+                        fld_new = patName + "(1)";
+                    }
+
+                    patientFolderName = string.Format("{0}_{1}_{2}", DateTime.Now.ToString("yyyyMMdd"), patNo, fld_new);
+                    CreatePatientFolder(patNo, fld_new);
+                }
+                else
+                {
+                    dri.Create();
+                }
+            }
+            catch { throw; }
+
+            return patientFolderName;
+        }
+
+        /// <summary>
+        /// 다운로드 폴더명 바꾸기 => 다운로드 폴더 -> 환자명
+        /// </summary>
+        /// <param name="patName"></param>
+        public static string ChangeDownloadFolderToPatientFolder(string patNo, string patName)
+        {
+            ////변경후폴더명
+            string patientFolderName = string.Format("MC_{0}_{1}_{2}", DateTime.Now.ToString("yyyyMMdd"), patNo, patName);
+            try
+            {
+                string fld = Path.Combine(GlobalVar.configEntity.LocalShareFolder, patientFolderName);
+                DirectoryInfo dri = new DirectoryInfo(fld);
+
+                if (dri.Exists)
+                {
+                    string fld_new = "";
+
+                    if (patName.Contains("("))
+                    {
+                        int s = patName.IndexOf("(", 0);
+                        int e = patName.IndexOf(")", 0);
+                        string no = patName.Substring(s + 1, (e - s - 1));
+                        int i = Convert.ToInt16(no);
+
+                        fld_new = patName.Replace("(" + no + ")", "(" + (i + 1).ToString() + ")");
+                    }
+                    else
+                    {
+                        fld_new = patName + "(1)";
+                    }
+                                        
+                    patientFolderName = string.Format("MC_{0}_{1}_{2}", DateTime.Now.ToString("yyyyMMdd"), patNo, fld_new);
+                    ChangeDownloadFolderToPatientFolder(patNo, fld_new);
+                }
+                else
+                {
+                    DirectoryInfo downFld = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
+                    downFld.MoveTo(fld);
+
+                    DirectoryInfo downFld2 = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
+                    if (downFld2.Exists)
+                    {
+                        FileControl.ClearDirectory(downFld2.FullName);
+                    }
+                    else
+                    {
+                        downFld2.Create();
+                    }
+                }
+
+                return patientFolderName;
+            }
+            catch
+            {                
+                throw;
+            }
+        }
     }
 }
