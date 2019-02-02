@@ -111,5 +111,48 @@ namespace RimageMedicalSystemV2
             }
             catch { }
         }
+
+        /// <summary>
+        /// 선택한 환자 가져오기
+        /// </summary>
+        /// <returns></returns>
+        public BurnOrderedInfoEntity GetSelectedPatient()
+        {
+            if (this.gvPatientlist.SelectedRowsCount > 0)
+            {
+                return this.GetSelectedPatient(this.gvPatientlist.FocusedRowHandle);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 해당 인덱스의 환자 정보 반환
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
+        public BurnOrderedInfoEntity GetSelectedPatient(int rowIndex)
+        {
+            if (this._patInfoList != null && this._patInfoList.Count > 0)
+            {
+                return this._patInfoList[rowIndex];
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 선택한 Row의 인덱스 배열 반환
+        /// </summary>
+        /// <returns></returns>
+        public int[] GetSelectedRows()
+        {
+            if (this.gvPatientlist.SelectedRowsCount > 0)
+            {                
+                return this.gvPatientlist.GetSelectedRows();
+            }
+
+            return null;
+        }
     }
 }

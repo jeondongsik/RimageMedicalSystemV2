@@ -46,7 +46,7 @@ namespace RimageMedicalSystemV2
             this.cbMedia.SelectedIndex = 0;
             this.treeView1.Nodes.Clear();
 
-            this._orderInfo = null;
+            //// this._orderInfo = null;
         }
 
         /// <summary>

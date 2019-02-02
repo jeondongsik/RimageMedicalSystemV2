@@ -139,9 +139,12 @@ namespace RimageMedicalSystemV2
         int nowRemainCD4 = 0;
         /***********************************************************/
 
-        Dictionary<string, string> idic = null;
-        Dictionary<string, string> mdic = null;
-        Dictionary<string, string> odic = null;
+        /// <summary>
+        /// 굽기 폴더 경로 저장
+        /// </summary>
+        ////Dictionary<string, string> idic = null;
+        ////Dictionary<string, string> mdic = null;
+        ////Dictionary<string, string> odic = null;
         List<string> lstFolderToDelete = new List<string>();     //삭제해야할 폴더 목록
 
         public const int WM_CLOSE = 0x0010; //닫기
@@ -175,7 +178,7 @@ namespace RimageMedicalSystemV2
         /// <summary>
         /// 굽기 목록 Datasource
         /// </summary>
-        List<BurnOrderedInfoEntity> _orderInfoList = null;
+        List<BurnOrderedInfoEntity> _BurningList = null;
         #endregion
 
         public MainForm()
@@ -193,10 +196,7 @@ namespace RimageMedicalSystemV2
                 this.systemListenerDel = new SysExecption(GetSysExecption);
                 this.serverStatusDel = new ServerStatus(GetServerConfig);
                 this.burningTraceDel = new BurningTrace(GetOrderStatus);
-
-                this.idic = new Dictionary<string, string>();
-                this.mdic = new Dictionary<string, string>();
-                this.odic = new Dictionary<string, string>();
+                                
                 this.dicWhnd = new Dictionary<string, int>();
                 this.dicWhndNexus = new Dictionary<string, int>();
                 this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
@@ -275,6 +275,7 @@ namespace RimageMedicalSystemV2
 
                 this.Text += "  " + DateTime.Now.ToString("yyyy년 MM월 dd일");
 
+                //// 드라이브 정보
                 this.SetDriveInfo();
 
                 //// 폴더 생성
@@ -289,6 +290,7 @@ namespace RimageMedicalSystemV2
                     this.btnOrderedList.Visible = false;
                 }
 
+                //// 로그 삭제
                 this.DeleteLog();
 
                 //// 다운로드 폴더 체크하여 없으면 생성하자
@@ -296,6 +298,10 @@ namespace RimageMedicalSystemV2
                 {
                     Directory.CreateDirectory(GlobalVar.configEntity.DicomDownloadFolder);
                 }
+
+                //// 굽기목록 DataSource 지정
+                this._BurningList = new List<BurnOrderedInfoEntity>();
+                this.gcBurninglist.DataSource = this._BurningList;
 
                 //// 로그 체크 시작
                 this.burnProcessChecker = new BurnProgressChecker(this);
@@ -462,7 +468,7 @@ namespace RimageMedicalSystemV2
                         if (burnAablity && seekTarget)
                         {
                             //// 현재 굽기 실행중인지 체크한다.
-                            if (this._orderInfoList != null && this._orderInfoList.Count > 0)
+                            if (this._BurningList != null && this._BurningList.Count > 0)
                             {
                                 patExists = this.ExistsBurningItem(sdir.Name);
                             }
@@ -499,7 +505,7 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                if (this._orderInfoList.Any(o => o.patFolder == foldername))
+                if (this._BurningList.Any(o => o.patFolder == foldername))
                     return true;
             }
             catch { }
@@ -523,7 +529,7 @@ namespace RimageMedicalSystemV2
             }
             else
             {
-
+                this.ReadyBurn2();
             }
         }
 
@@ -582,7 +588,7 @@ namespace RimageMedicalSystemV2
                     }
                     else
                     {
-                        this.StartBurning(true);
+                        this.ChageNameAndOrderBurning(true);
                     }
                 }
             }
@@ -592,7 +598,7 @@ namespace RimageMedicalSystemV2
         /// <summary>
         /// 폴더이름을 바꾸고 굽기 실행
         /// </summary>
-        private void StartBurning(bool isPossible)
+        private void ChageNameAndOrderBurning(bool isPossible)
         {
             if (isPossible)
             {
@@ -610,7 +616,9 @@ namespace RimageMedicalSystemV2
                     //// 파일을 복사한 후에 굽기 실행일 경우
                     //// 환자명으로 폴더 생성
                     this.ucPatients11.OrderInfo.patFolder = FileControl.CreatePatientFolder(this.ucPatients11.OrderInfo.patNo, pNm);
-                    ////this.burnCDAfterCopyFiles();  //다운받은 데이터를 공유폴더로 이동시킨다.
+
+                    //// 다운받은 데이터를 공유폴더로 이동시킨다.
+                    this.BurnCDAfterCopyFiles();
                 }
                 else
                 {
@@ -620,8 +628,8 @@ namespace RimageMedicalSystemV2
                         this.ucPatients11.OrderInfo.patFolder = FileControl.ChangeDownloadFolderToPatientFolder(this.ucPatients11.OrderInfo.patNo, pNm);
 
                         Thread.Sleep(300);
-                        //굽기명령을 보낸다.
-                        ////this.AddItemAndBurnOrder();
+                        //// 굽기명령을 보낸다.
+                        this.StartBurn(this.ucPatients11.OrderInfo);
                     }
                     catch (Exception ex)
                     {
@@ -642,9 +650,62 @@ namespace RimageMedicalSystemV2
         /// <summary>
         /// 굽기 전 사전 작업 - ProgramType2
         /// </summary>
-        public void ReadyBurn2()
+        /// <param name="autoExe">true : 자동실행시, false : 수동실행시 (Default)</param>
+        public void ReadyBurn2(bool autoExe = false)
         {
+            //// 수동모드일 경우에는 메시지 박스 경고 처리
+            if (this.ucPatients21.PatientInfoList == null)
+            {
+                if (!autoExe)
+                    MessageBox.Show("조회된 환자정보가 없습니다.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                return;
+            }
+            if (this.ucPatients21.PatientInfoList.Count == 0)
+            {
+                if (!autoExe)
+                    MessageBox.Show("조회된 환자정보가 없습니다.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+            if (!autoExe && this.ucPatients21.gvPatientlist.SelectedRowsCount == 0)
+            {
+                MessageBox.Show("환자를 선택하세요.\r\n선택된 환자가 없습니다.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //// 조회된 환자 목록을 돌면서 굽기 실행한다.///////////////////////////////////////////////
+            int idx = 0;
+            foreach (BurnOrderedInfoEntity orderInfo in this.ucPatients21.PatientInfoList)
+            {
+                if (!autoExe)
+                {
+                    //// 수동모드일 경우 선택한 Row만 굽기 진행한다.
+                    if (!this.ucPatients21.gvPatientlist.IsRowSelected(idx))
+                    {
+                        continue;
+                    }
+                }
+
+                //// 자동일 경우 현재 진행중이거나 완료된 상태인건 건너뛴다.
+                if (autoExe)
+                {
+                    //// 현재 굽기 실행중인지 체크한다.
+                    if (this._BurningList != null && this._BurningList.Count > 0)
+                    {
+                        if (this.ExistsBurningItem(orderInfo.patFolder))
+                            continue;
+                    }
+
+                    //// 굽기완료된 폴더인지 체크(burn.end 파일체크)
+                    if (CheckFiles.CheckFileExists(new DirectoryInfo(orderInfo.patFolderFullPath), GlobalVar.BURN_CHK_FL_NM))
+                    {
+                        continue;
+                    }
+                }
+
+
+            }
         }
 
         /// <summary>
@@ -653,7 +714,311 @@ namespace RimageMedicalSystemV2
         /// <param name="orderInfo"></param>
         public void StartBurn(BurnOrderedInfoEntity orderInfo)
         {
+            int j = 1;
 
+            if (this._BurningList == null)
+            {
+                this._BurningList = new List<BurnOrderedInfoEntity>();
+            }
+
+            j = this._BurningList.Count + 1;
+
+            try
+            {
+                bool burn = true;
+
+                //// 체크파일이 있으면 체크한다.
+                if (!CheckFiles.Exists(Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder)))
+                {
+                    this.ErrMsgShow("환자폴더에 필수파일이 존재하지 않습니다.\r\n환자폴더를 체크하세요.", "Rimage Message");
+                    burn = false;
+                }
+
+                if (burn == true)
+                {
+                    orderInfo.No = j;
+                    orderInfo.StartDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    orderInfo.patName = this.ucPatients11.txtPatientName.Text;
+                    orderInfo.copies = Convert.ToInt32(this.ucPatients11.cbCopies.EditValue);
+                    orderInfo.mediType = Convert.ToString(this.ucPatients11.cbMedia.EditValue);                    
+                    orderInfo.TargetServer = this.NowSeletedServer.ShallowCopy();
+                    orderInfo.BurnPatientKind = (orderInfo.patListForMerge != null && orderInfo.patListForMerge.Count > 1) ? "Y" : "N";
+                    orderInfo.patFolderFullPath = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
+
+                    orderInfo.OrderId = string.Format("{0}_{1}_{2}{3}", Utils.ReplaceSpecialWord(orderInfo.patName).Replace(" ", "").Trim(), orderInfo.patNo, DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
+                    orderInfo.patDate = DateTime.Now.ToShortDateString();
+                    orderInfo.Progress = "Submitted for Imaging";
+                    orderInfo.ProcessingRate = "0 %";
+                    orderInfo.BurnState = "대기";
+                    orderInfo.ServerNo = string.Format("[{0}]", this.NowSeletedServer.No);
+                    orderInfo.Sort = 0;
+
+                    if (this._BurningList.Count == 0)
+                        this._BurningList.Add(orderInfo);
+                    else 
+                        this._BurningList.Insert(0, orderInfo);
+
+                    this.gcBurninglist.RefreshDataSource();
+
+                    if (GlobalVar.configEntity.programType == "1")
+                        this.ucPatients11.Clear();
+
+                    ///////////////////////////////////////////////////////////////////////////////////////                    
+                    orderInfo.StartDateTime = Utils.GetNowTime();
+                    orderInfo.JobPath = GlobalVar.configEntity.ServerNetworkDrive + orderInfo.patFolder;
+
+                    if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
+                    {
+                        //// 8.Deit pacs인 경우
+                        orderInfo.JobPath = GlobalVar.configEntity.ServerNetworkDrive + orderInfo.patFolder + "\\DICOMCD";
+                    }
+
+                    if (GlobalVar.configEntity.ServerType.Equals("R"))
+                    {
+                        //// 원격 서버일 경우
+                        orderInfo.MegPath = GlobalVar.configEntity.MergeFileServerFolder.Replace("ServerIP", orderInfo.TargetServer.IP);
+                        orderInfo.MegFilePath = GlobalVar.configEntity.MergeFileFolder.Replace("ServerIP", orderInfo.TargetServer.IP);
+                    }
+                    else
+                    {
+                        //// 로컬 서버일 경우
+                        orderInfo.MegPath = GlobalVar.configEntity.MergeFileServerFolder;
+                        orderInfo.MegFilePath = GlobalVar.configEntity.MergeFileFolder;
+                    }
+
+                    //// 머지파일 Fullpath
+                    orderInfo.MegPath = string.Format("{0}{1}{2}{3}.txt", orderInfo.MegPath,
+                        Utils.ReplaceSpecialWord(orderInfo.patNo), DateTime.Now.ToString("MMddHHmmss"),
+                        DateTime.Now.Millisecond.ToString().PadLeft(3, '0'));
+
+                    //// 머지파일 생성
+                    if (GlobalVar.configEntity.UseLabelPrint)
+                    {
+                        if (!string.IsNullOrWhiteSpace(orderInfo.patAge))
+                        {
+                            orderInfo.patSex = string.Format("{0}/{1}", orderInfo.patSex, orderInfo.patAge);
+                        }
+
+                        try
+                        {
+                            //// 여러환자 정보일 때..
+                            if (orderInfo.BurnPatientKind.Equals("Y"))
+                                FileControl.CreateMergeFile(orderInfo.MegPath, orderInfo.patListForMerge, orderInfo.patDate);
+                            else
+                                FileControl.CreateMergeFile(orderInfo.MegFilePath, GlobalVar.configEntity.MergePrint, orderInfo.patFolder, orderInfo.patDate
+                                    , orderInfo.patNo, orderInfo.patName, orderInfo.patSex, orderInfo.StudyModality, orderInfo.Modality,
+                                    orderInfo.patName, orderInfo.MegPath, "", this.DBConnInfo);
+                        }
+                        catch { }
+
+                        //// 머지파일 다시 체크 - 파일이 존재하지 않는다면 다시 생성
+                        if (!File.Exists(orderInfo.MegPath))
+                        {
+                            try
+                            {
+                                //// 여러환자 정보일 때..
+                                if (orderInfo.BurnPatientKind.Equals("Y") == true)
+                                    FileControl.CreateMergeFile(orderInfo.MegPath, orderInfo.patListForMerge, orderInfo.patDate);
+                                else
+                                    FileControl.CreateMergeFile(orderInfo.MegFilePath, GlobalVar.configEntity.MergePrint, orderInfo.patFolder, orderInfo.patDate
+                                    , orderInfo.patNo, orderInfo.patName, orderInfo.patSex, orderInfo.StudyModality, orderInfo.Modality,
+                                    orderInfo.patName, orderInfo.MegPath, "", this.DBConnInfo);
+                            }
+                            catch (Exception ex)
+                            {
+                                this.ErrMsgShow("MergeFile 생성 에러\r\n" + ex.Message, "Rimage Message : createMergeFile", ex);
+                                return;
+                            }
+                        }
+                    }
+
+                    //// 굽기 주문 보낸다./////////////////////////////////////////////////////////////////////////////
+                    string RimageSystemFolder = string.Empty;
+                    try
+                    {
+                        if (GlobalVar.configEntity.ServerType.Equals("R"))
+                            RimageSystemFolder = string.Format("\\\\{0}\\Rimage", orderInfo.TargetServer.IP);
+                        else
+                            RimageSystemFolder = this.RimageSystemFolderPath;   //CSystemManager.GetInstance().GetUncSystemFolder();
+                    }
+                    catch (Exception me)
+                    {                        
+                        MessageBox.Show(me.Message, "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    try
+                    {
+                        DiscData discOrder;
+                        discOrder = new DiscData();
+
+                        discOrder.MyProperty = 1;
+                        discOrder.ClientID = this.ClientId;
+                        discOrder.OrderID = orderInfo.OrderId;
+                        discOrder.VolumeName = GlobalVar.configEntity.HospitalName;
+                        discOrder.ParentFolder = orderInfo.JobPath;
+                        discOrder.Copies = orderInfo.copies.ToString();
+                        discOrder.MediaType = orderInfo.mediType;
+                        discOrder.OrderStatus = "Submitted for Imaging";
+                        discOrder.ImagePath = RimageSystemFolder + "\\" + discOrder.OrderID + ".img";
+                        discOrder.EditListPath = RimageSystemFolder + "\\EditList\\" + discOrder.OrderID + ".xml";
+                        discOrder.UseLabelPrint = GlobalVar.configEntity.UseLabelPrint;
+
+                        string labelFileName = string.Empty;
+                        if (GlobalVar.configEntity.ServerType.Equals("R"))
+                        {
+                            if (orderInfo.mediType.Equals("CDR"))
+                                labelFileName = GlobalVar.configEntity.CDLabelFile.Replace("ServerIP", orderInfo.TargetServer.IP);
+                            else
+                                labelFileName = GlobalVar.configEntity.DVDLabelFile.Replace("ServerIP", orderInfo.TargetServer.IP);
+                        }
+                        else
+                        {
+                            if (orderInfo.mediType.Equals("CDR"))
+                                labelFileName = GlobalVar.configEntity.CDLabelFile;
+                            else
+                                labelFileName = GlobalVar.configEntity.DVDLabelFile;
+                        }
+
+                        //// Multi 환자일 경우
+                        if (orderInfo.BurnPatientKind.Equals("Y"))
+                        {
+                            FileInfo fi = new FileInfo(labelFileName);
+                            labelFileName = fi.FullName.Replace(fi.Name, GlobalVar.COMBO_LabelFile);
+
+                            discOrder.MultiPatientYN = "Y";
+                        }
+
+                        discOrder.LabelName = labelFileName;
+                        discOrder.MergeName = orderInfo.MegPath;
+                        
+                        //// EditList 파일 생성
+                        string editListXml = "";
+                        editListXml = FileControl.createEditListXml(orderInfo.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
+                        FileControl.createEditListFile(editListXml, discOrder.EditListPath);
+
+                        //// EditList 파일이 없으면 다시 생성
+                        if (!File.Exists(discOrder.EditListPath))
+                        {
+                            editListXml = FileControl.createEditListXml(orderInfo.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
+                            FileControl.createEditListFile(editListXml, discOrder.EditListPath);
+                        }
+
+                        string imageXml = CreateOrderXml.CreateImageOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
+                        string productionXml = CreateOrderXml.CreateProductionOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
+                        discOrder.ProductionOrderPath = Path.Combine(AppDirectory, discOrder.OrderID + ".pOrd");
+                        
+                        OrderTracking.SaveProducitonFile(productionXml, discOrder.ProductionOrderPath);
+
+                        discOrder.Durable = "false";
+
+                        OrderTracking.AddOrder(discOrder);
+                        
+                        //////////////////////////////////////////////////////////////////////////////////////////
+                        //// 오더정보를 JSON 파일로 변경하여 저장한다.
+                        orderInfo.OrderXml = imageXml;
+                        orderInfo.DiscOrder = discOrder;
+                        FileControl.CreateOrderJsonFile(orderInfo.OrderId, JsonParser.ConvertToJsonString(orderInfo));
+
+                        //// 굽기 프로그램을 실행한다.
+                        Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O_{0}_{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
+
+                        this.UpdateBurningGrid(orderInfo.OrderId, "Submitted for Imaging", "", "굽기");
+
+                        //// 복사 신청서 인쇄 - 환경설정에 따라, 멀티환자가 아닐경우에만.
+                        if (GlobalVar.configEntity.AutoPrintApp.Equals("Y") && orderInfo.BurnPatientKind.Equals("N"))
+                        {
+                            xFormReport report = new xFormReport();
+                            report.PrintCopyRequestForm(orderInfo.patNo, orderInfo.patName, orderInfo.StudyModality);
+                            report.Dispose();
+                        }
+
+                        this.txtStatusView.AppendText(string.Format("[{0}]으로 굽기주문 전송하였습니다.\r\n", orderInfo.TargetServer.IP));
+
+                        RimageKorea.ErrorLog.TraceWrite(this, string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Cursor = Cursors.Default;
+                        ErrMsgShow("굽기 명령 실행 중 에러 발생\r\n" + ex.Message, "Rimage Message : Submit_Order", ex);
+                    }
+
+                    this.Cursor = Cursors.Default;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Cursor = Cursors.Default;
+                this.ErrMsgShow("굽기 명령 실행 중 에러 발생\r\n" + ex.Message, "Rimage Message : BurningOrder", ex);
+            }
+        }
+
+        /// <summary>
+        /// 굽기 목록 상태값 업데이트
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="progress"></param>
+        /// <param name="percent"></param>
+        /// <param name="state"></param>
+        private void UpdateBurningGrid(string orderId, string progress, string percent, string state)
+        {
+            if (this._BurningList != null)
+            {
+                if (this._BurningList.Any(o => o.OrderId == orderId))
+                {
+                    var oInfo = this._BurningList.Where(b => b.OrderId == orderId).First();
+
+                    if (progress != "")
+                        oInfo.Progress = progress;
+                    if (percent != "")
+                        oInfo.ProcessingRate = percent;
+                    if (state != "")
+                        oInfo.BurnState = state;
+
+                    this.gcBurninglist.RefreshDataSource();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 복사할 대상 디렉토리 정보를 이용하여 폴더를 생성한 후 파일을 복사한다.
+        /// </summary>
+        public void BurnCDAfterCopyFiles()
+        {
+            this.checkCopying = true;
+            this.copyFileLen = 0;
+            DirectoryInfo dirInfo = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
+
+            try
+            {
+                if (dirInfo.Exists)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+
+                    if (this.backgroundWorker1.IsBusy == false)
+                    {
+                        Worker cls = new Worker();
+                        cls.srcDir = dirInfo;
+                        cls.DicomDownloadFolder = GlobalVar.configEntity.DicomDownloadFolder;
+                        cls.LocalShareFolder = GlobalVar.configEntity.LocalShareFolder;
+                        cls.patientFolderName = this.patientFolderName;
+                        cls.startupPath = Application.StartupPath;
+
+                        this.backgroundWorker1.RunWorkerAsync(cls);
+                    }
+                    else
+                    {
+                        this.Cursor = Cursors.Default;
+                        MessageBox.Show("파일복사가 진행되고 있습니다. 잠시 후 다시 시도하세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Cursor = Cursors.Default;
+                this.checkCopying = false;
+                this.ErrMsgShow("굽기 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", ex);
+            }
         }
 
         /// <summary>
@@ -692,179 +1057,179 @@ namespace RimageMedicalSystemV2
         /// 서버 설정값 가져오기
         /// </summary>
         public void GetConfig()
-    {
-        try
         {
-            if (GlobalVar.configEntity == null)
+            try
             {
-                GlobalVar.configEntity = new ConfigEntity();
-            }
-
-            AppDirectory = Application.StartupPath;
-            Config cf = new Config(AppDirectory);
-
-            this.LastHostIP = cf._HostIP;
-            this.LastHostName = cf._HostName;
-            this.LastHostPort = cf._HostPort;
-                                
-            GlobalVar.configEntity.programType = cf._programType;
-
-            //서버목록을 불러온다.
-            if (File.Exists(this.ServerListFile))
-            {
-                DataSet dsServerList = new DataSet();           //서버목록
-                dsServerList.ReadXml(this.ServerListFile);
-                this.ServerList = new List<ServerInfo>();
-
-                foreach (DataRow dr in dsServerList.Tables[0].Rows)
+                if (GlobalVar.configEntity == null)
                 {
-                    ServerInfo srvInfo = new ServerInfo();
-                    srvInfo.No = dr["No"].ToString();
-                    srvInfo.IP = dr["IP"].ToString();
-                    srvInfo.Name = dr["Name"].ToString();
-                    srvInfo.Port = dr["Port"].ToString();
+                    GlobalVar.configEntity = new ConfigEntity();
+                }
 
+                AppDirectory = Application.StartupPath;
+                Config cf = new Config(AppDirectory);
+
+                this.LastHostIP = cf._HostIP;
+                this.LastHostName = cf._HostName;
+                this.LastHostPort = cf._HostPort;
+                                
+                GlobalVar.configEntity.programType = cf._programType;
+
+                //서버목록을 불러온다.
+                if (File.Exists(this.ServerListFile))
+                {
+                    DataSet dsServerList = new DataSet();           //서버목록
+                    dsServerList.ReadXml(this.ServerListFile);
+                    this.ServerList = new List<ServerInfo>();
+
+                    foreach (DataRow dr in dsServerList.Tables[0].Rows)
+                    {
+                        ServerInfo srvInfo = new ServerInfo();
+                        srvInfo.No = dr["No"].ToString();
+                        srvInfo.IP = dr["IP"].ToString();
+                        srvInfo.Name = dr["Name"].ToString();
+                        srvInfo.Port = dr["Port"].ToString();
+
+                        this.ServerList.Add(srvInfo);
+                    }
+                }
+                else
+                {
+                    this.ServerList = new List<ServerInfo>();
+                    ServerInfo srvInfo = new ServerInfo();
+                    srvInfo.No = "1";
+                    srvInfo.IP = cf._HostIP;
+                    srvInfo.Name = cf._HostName;
+                    srvInfo.Port = cf._HostPort;
                     this.ServerList.Add(srvInfo);
                 }
-            }
-            else
-            {
-                this.ServerList = new List<ServerInfo>();
-                ServerInfo srvInfo = new ServerInfo();
-                srvInfo.No = "1";
-                srvInfo.IP = cf._HostIP;
-                srvInfo.Name = cf._HostName;
-                srvInfo.Port = cf._HostPort;
-                this.ServerList.Add(srvInfo);
-            }
 
-            //// 서버목록 바인딩
-            this.SetServerList();
+                //// 서버목록 바인딩
+                this.SetServerList();
 
-            //// 마지막 선택했던 서버가 선택되도록 처리                
-            //// 핑체크만 한다.                
-            if (CheckPing.TestPing(this.LastHostIP))
-            {
-                this.NowSeletedServer = this.GetServerInfo(this.LastHostIP);
-                this.SelectServerLabel(this.LastHostIP, true);
-            }
-            else
-            {
-                this.SelectServerLabel(this.LastHostIP, false);
-            }
-
-            GlobalVar.configEntity.LocalShareFolder = cf._LocalShareFolder;
-            GlobalVar.configEntity.CDLabelFile = cf._CDLabelFile;
-            GlobalVar.configEntity.DVDLabelFile = cf._DVDLabelFile;
-            GlobalVar.configEntity.MergeFileFolder = cf._MergeFileFolder;
-            GlobalVar.configEntity.MergeFileServerFolder = cf._MergeFileServerFolder;
-            GlobalVar.configEntity.ServerNetworkDrive = cf._ServerNetworkDrive;
-            GlobalVar.configEntity.DicomDownloadFolder = cf._DicomDownloadFolder;
-            GlobalVar.configEntity.HospitalName = cf._HospitalName;
-            GlobalVar.configEntity.LogFilePath = cf._LogFilePath;
-            GlobalVar.configEntity.LabelPrint = cf._LabelPrint;
-            GlobalVar.configEntity.MergePrint = cf._MergePrint;
-            if (GlobalVar.configEntity.MergePrint.Length != 7)
-            {
-                if (GlobalVar.configEntity.MergePrint.Length == 6)
-                    GlobalVar.configEntity.MergePrint += "N";
+                //// 마지막 선택했던 서버가 선택되도록 처리                
+                //// 핑체크만 한다.                
+                if (CheckPing.TestPing(this.LastHostIP))
+                {
+                    this.NowSeletedServer = this.GetServerInfo(this.LastHostIP);
+                    this.SelectServerLabel(this.LastHostIP, true);
+                }
                 else
-                    GlobalVar.configEntity.MergePrint = "YYNYNNN";
+                {
+                    this.SelectServerLabel(this.LastHostIP, false);
+                }
+
+                GlobalVar.configEntity.LocalShareFolder = cf._LocalShareFolder;
+                GlobalVar.configEntity.CDLabelFile = cf._CDLabelFile;
+                GlobalVar.configEntity.DVDLabelFile = cf._DVDLabelFile;
+                GlobalVar.configEntity.MergeFileFolder = cf._MergeFileFolder;
+                GlobalVar.configEntity.MergeFileServerFolder = cf._MergeFileServerFolder;
+                GlobalVar.configEntity.ServerNetworkDrive = cf._ServerNetworkDrive;
+                GlobalVar.configEntity.DicomDownloadFolder = cf._DicomDownloadFolder;
+                GlobalVar.configEntity.HospitalName = cf._HospitalName;
+                GlobalVar.configEntity.LogFilePath = cf._LogFilePath;
+                GlobalVar.configEntity.LabelPrint = cf._LabelPrint;
+                GlobalVar.configEntity.MergePrint = cf._MergePrint;
+                if (GlobalVar.configEntity.MergePrint.Length != 7)
+                {
+                    if (GlobalVar.configEntity.MergePrint.Length == 6)
+                        GlobalVar.configEntity.MergePrint += "N";
+                    else
+                        GlobalVar.configEntity.MergePrint = "YYNYNNN";
+                }
+
+                GlobalVar.configEntity.CDMaxSize = cf._CDMaxSize;
+                if (GlobalVar.configEntity.CDMaxSize.Length < 4 && GlobalVar.configEntity.CDMaxSize != "")
+                {
+                    GlobalVar.configEntity.CDMaxSize = (Convert.ToInt32(GlobalVar.configEntity.CDMaxSize) * 1024 * 1024).ToString();
+                }
+
+                GlobalVar.configEntity.CDRemainQty = Convert.ToInt32(cf._CDRemainQty);
+                GlobalVar.configEntity.RibbonRemainQty = Convert.ToInt32(cf._RibbonRemainQty);
+                GlobalVar.configEntity.BinCheckTime = Convert.ToInt32(cf._BinCheckTime);
+                GlobalVar.configEntity.AutoExecute = cf._AutoExecute;
+                GlobalVar.configEntity.AutoExecuteHookingType = cf._AutoExecuteHookingType;
+                GlobalVar.configEntity.ReportView = cf._ReportView;
+                GlobalVar.configEntity.DelType = cf._DelType;
+                GlobalVar.configEntity.AutoCloseType = cf._AutoCloseType;
+                GlobalVar.configEntity.DeleteAfterBurn = (String.IsNullOrWhiteSpace(cf._DeleteAfterBurn)) ? "0" : cf._DeleteAfterBurn;
+                GlobalVar.configEntity.DownloadCheckbyFileName = (String.IsNullOrWhiteSpace(cf._DownloadCheckbyFileName)) ? "N" : cf._DownloadCheckbyFileName;
+                GlobalVar.configEntity.DelFolderWhenClose = (String.IsNullOrWhiteSpace(cf._DelFolderWhenClose)) ? "Y" : cf._DelFolderWhenClose;
+                GlobalVar.configEntity.RetentionPeriod = (String.IsNullOrWhiteSpace(cf._RetentionPeriod)) ? 1 : Convert.ToInt32(cf._RetentionPeriod);
+                GlobalVar.configEntity.MsgBoxShow = cf._MsgBoxShow;
+                GlobalVar.configEntity.ProgramCaption = cf._ProgramCaption;
+                GlobalVar.configEntity.BurnPatientKind = cf._BurnPatientKind;
+                GlobalVar.configEntity.FolderPattern = cf._FolderPattern;
+
+                GlobalVar.configEntity.PopUpAlamYN = (String.IsNullOrWhiteSpace(cf._PopUpAlamYN)) ? "Y" : cf._PopUpAlamYN;
+                GlobalVar.configEntity.PopUpKeepTime = (String.IsNullOrWhiteSpace(cf._PopUpKeepTime)) ? "20" : cf._PopUpKeepTime;
+                GlobalVar.configEntity.PopUpSelPatInfoYN = (String.IsNullOrWhiteSpace(cf._PopUpSelPatInfoYN)) ? "Y" : cf._PopUpSelPatInfoYN;
+
+                GlobalVar.configEntity.HookSleepTime1 = Convert.ToInt32((String.IsNullOrWhiteSpace(cf._HookSleepTime1) ? "3000" : cf._HookSleepTime1));
+                GlobalVar.configEntity.HookSleepTime2 = Convert.ToInt32((String.IsNullOrWhiteSpace(cf._HookSleepTime2) ? "5000" : cf._HookSleepTime2));
+
+                GlobalVar.configEntity.ManualExeBtnView = (String.IsNullOrWhiteSpace(cf._ManualExeBtnView)) ? "N" : cf._ManualExeBtnView;
+
+                GlobalVar.configEntity.CloseConfirm = (String.IsNullOrWhiteSpace(cf._CloseConfirm)) ? "N" : cf._CloseConfirm;
+                GlobalVar.configEntity.SoundAlam = (String.IsNullOrWhiteSpace(cf._SoundAlam)) ? "N" : cf._SoundAlam;
+
+                GlobalVar.configEntity.FileCopyYN = (String.IsNullOrWhiteSpace(cf._FileCopyYN)) ? "N" : cf._FileCopyYN;
+                GlobalVar.configEntity.ErrorPupupUse = (String.IsNullOrWhiteSpace(cf._ErrorPupupUse)) ? "Y" : cf._ErrorPupupUse;
+                GlobalVar.configEntity.AutoPrintApp = (String.IsNullOrWhiteSpace(cf._AutoPrintApp)) ? "N" : cf._AutoPrintApp;
+                GlobalVar.configEntity.DeleteInJobFolder = (String.IsNullOrWhiteSpace(cf._DeleteInJobFolder)) ? "N" : cf._DeleteInJobFolder;
+
+                //// 다운체크파일명을 전역변수에 저장
+                GlobalVar.DOWN_CHK_FL_NM = (string.IsNullOrWhiteSpace(cf._DownCheckFileName)) ? "end.txt" : cf._DownCheckFileName;
+                GlobalVar.configEntity.DownCheckFileName = (string.IsNullOrWhiteSpace(cf._DownCheckFileName)) ? "end.txt" : cf._DownCheckFileName;
+
+                //// 다중환자 사용 안함 
+                GlobalVar.configEntity.DisableMultiPatient = (string.IsNullOrWhiteSpace(cf._DisableMultiPatient)) ? "N" : cf._DisableMultiPatient;
+                GlobalVar.configEntity.DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
+
+                if (cf._CDPrintYN == "N")
+                    GlobalVar.configEntity.UseLabelPrint = false;
+                else
+                    GlobalVar.configEntity.UseLabelPrint = true;
+
+                if (cf._MsgBoxShow == "Y" || string.IsNullOrWhiteSpace(GlobalVar.configEntity.MsgBoxShow))
+                    GlobalVar.configEntity.MsgBoxShow = "3";
+
+                GlobalVar.configEntity.ServerType = (String.IsNullOrWhiteSpace(cf._ServerType)) ? "R" : cf._ServerType;
+
+                this.MyIP = GetMyIP.MyIP();
+                this.ClientId = GlobalVar.configEntity.ServerType + this.MyIP.Replace(".", "_") + "_" + DateTime.Now.ToString("ddHHmmss") + RimageKorea.RandomOrderNumber.GetNewOrderNumber2();
+
+                if (GlobalVar.configEntity.ServerType.Equals("L"))
+                {
+                    DirectoryInfo di = new DirectoryInfo(GlobalVar.configEntity.MergeFileFolder);
+                    this.RimageSystemFolderPath = di.Parent.FullName;
+                }
+
+                //DB접속정보
+                this.DBConnInfo = GetPatientNameFromDB.GetDBConn(Path.Combine(Application.StartupPath, GlobalVar.DBCONN_FILE_NAME));
+
+                //환자정보가 위치한 폴더
+                this.dicomCDFolder = GlobalVar.configEntity.DicomDownloadFolder;
+                if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
+                {
+                    //8.Deit pacs인 경우
+                    this.dicomCDFolder = GlobalVar.configEntity.DicomDownloadFolder + "\\DICOMCD";
+                }
+
+                this.HookingTimestamp = DateTime.Now.AddSeconds(-10);
+
+                //// 폴더사이즈체크시간
+                if (!string.IsNullOrWhiteSpace(cf._FolderSizeCheckTime))
+                {
+                    if (!int.TryParse(cf._FolderSizeCheckTime, out GlobalVar.FolderSizeCheckTime))
+                        GlobalVar.FolderSizeCheckTime = 5;
+                }
             }
-
-            GlobalVar.configEntity.CDMaxSize = cf._CDMaxSize;
-            if (GlobalVar.configEntity.CDMaxSize.Length < 4 && GlobalVar.configEntity.CDMaxSize != "")
+            catch (Exception ex)
             {
-                GlobalVar.configEntity.CDMaxSize = (Convert.ToInt32(GlobalVar.configEntity.CDMaxSize) * 1024 * 1024).ToString();
-            }
-
-            GlobalVar.configEntity.CDRemainQty = Convert.ToInt32(cf._CDRemainQty);
-            GlobalVar.configEntity.RibbonRemainQty = Convert.ToInt32(cf._RibbonRemainQty);
-            GlobalVar.configEntity.BinCheckTime = Convert.ToInt32(cf._BinCheckTime);
-            GlobalVar.configEntity.AutoExecute = cf._AutoExecute;
-            GlobalVar.configEntity.AutoExecuteHookingType = cf._AutoExecuteHookingType;
-            GlobalVar.configEntity.ReportView = cf._ReportView;
-            GlobalVar.configEntity.DelType = cf._DelType;
-            GlobalVar.configEntity.AutoCloseType = cf._AutoCloseType;
-            GlobalVar.configEntity.DeleteAfterBurn = (String.IsNullOrWhiteSpace(cf._DeleteAfterBurn)) ? "0" : cf._DeleteAfterBurn;
-            GlobalVar.configEntity.DownloadCheckbyFileName = (String.IsNullOrWhiteSpace(cf._DownloadCheckbyFileName)) ? "N" : cf._DownloadCheckbyFileName;
-            GlobalVar.configEntity.DelFolderWhenClose = (String.IsNullOrWhiteSpace(cf._DelFolderWhenClose)) ? "Y" : cf._DelFolderWhenClose;
-            GlobalVar.configEntity.RetentionPeriod = (String.IsNullOrWhiteSpace(cf._RetentionPeriod)) ? 1 : Convert.ToInt32(cf._RetentionPeriod);
-            GlobalVar.configEntity.MsgBoxShow = cf._MsgBoxShow;
-            GlobalVar.configEntity.ProgramCaption = cf._ProgramCaption;
-            GlobalVar.configEntity.BurnPatientKind = cf._BurnPatientKind;
-            GlobalVar.configEntity.FolderPattern = cf._FolderPattern;
-
-            GlobalVar.configEntity.PopUpAlamYN = (String.IsNullOrWhiteSpace(cf._PopUpAlamYN)) ? "Y" : cf._PopUpAlamYN;
-            GlobalVar.configEntity.PopUpKeepTime = (String.IsNullOrWhiteSpace(cf._PopUpKeepTime)) ? "20" : cf._PopUpKeepTime;
-            GlobalVar.configEntity.PopUpSelPatInfoYN = (String.IsNullOrWhiteSpace(cf._PopUpSelPatInfoYN)) ? "Y" : cf._PopUpSelPatInfoYN;
-
-            GlobalVar.configEntity.HookSleepTime1 = Convert.ToInt32((String.IsNullOrWhiteSpace(cf._HookSleepTime1) ? "3000" : cf._HookSleepTime1));
-            GlobalVar.configEntity.HookSleepTime2 = Convert.ToInt32((String.IsNullOrWhiteSpace(cf._HookSleepTime2) ? "5000" : cf._HookSleepTime2));
-
-            GlobalVar.configEntity.ManualExeBtnView = (String.IsNullOrWhiteSpace(cf._ManualExeBtnView)) ? "N" : cf._ManualExeBtnView;
-
-            GlobalVar.configEntity.CloseConfirm = (String.IsNullOrWhiteSpace(cf._CloseConfirm)) ? "N" : cf._CloseConfirm;
-            GlobalVar.configEntity.SoundAlam = (String.IsNullOrWhiteSpace(cf._SoundAlam)) ? "N" : cf._SoundAlam;
-
-            GlobalVar.configEntity.FileCopyYN = (String.IsNullOrWhiteSpace(cf._FileCopyYN)) ? "N" : cf._FileCopyYN;
-            GlobalVar.configEntity.ErrorPupupUse = (String.IsNullOrWhiteSpace(cf._ErrorPupupUse)) ? "Y" : cf._ErrorPupupUse;
-            GlobalVar.configEntity.AutoPrintApp = (String.IsNullOrWhiteSpace(cf._AutoPrintApp)) ? "N" : cf._AutoPrintApp;
-            GlobalVar.configEntity.DeleteInJobFolder = (String.IsNullOrWhiteSpace(cf._DeleteInJobFolder)) ? "N" : cf._DeleteInJobFolder;
-
-            //// 다운체크파일명을 전역변수에 저장
-            GlobalVar.DOWN_CHK_FL_NM = (string.IsNullOrWhiteSpace(cf._DownCheckFileName)) ? "end.txt" : cf._DownCheckFileName;
-            GlobalVar.configEntity.DownCheckFileName = (string.IsNullOrWhiteSpace(cf._DownCheckFileName)) ? "end.txt" : cf._DownCheckFileName;
-
-            //// 다중환자 사용 안함 
-            GlobalVar.configEntity.DisableMultiPatient = (string.IsNullOrWhiteSpace(cf._DisableMultiPatient)) ? "N" : cf._DisableMultiPatient;
-            GlobalVar.configEntity.DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
-
-            if (cf._CDPrintYN == "N")
-                GlobalVar.configEntity.UseLabelPrint = false;
-            else
-                GlobalVar.configEntity.UseLabelPrint = true;
-
-            if (cf._MsgBoxShow == "Y" || string.IsNullOrWhiteSpace(GlobalVar.configEntity.MsgBoxShow))
-                GlobalVar.configEntity.MsgBoxShow = "3";
-
-            GlobalVar.configEntity.ServerType = (String.IsNullOrWhiteSpace(cf._ServerType)) ? "R" : cf._ServerType;
-
-            this.MyIP = GetMyIP.MyIP();
-            this.ClientId = GlobalVar.configEntity.ServerType + this.MyIP.Replace(".", "_") + "_" + DateTime.Now.ToString("ddHHmmss") + RimageKorea.RandomOrderNumber.GetNewOrderNumber2();
-
-            if (GlobalVar.configEntity.ServerType.Equals("L"))
-            {
-                DirectoryInfo di = new DirectoryInfo(GlobalVar.configEntity.MergeFileFolder);
-                this.RimageSystemFolderPath = di.Parent.FullName;
-            }
-
-            //DB접속정보
-            this.DBConnInfo = GetPatientNameFromDB.GetDBConn(Path.Combine(Application.StartupPath, GlobalVar.DBCONN_FILE_NAME));
-
-            //환자정보가 위치한 폴더
-            this.dicomCDFolder = GlobalVar.configEntity.DicomDownloadFolder;
-            if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
-            {
-                //8.Deit pacs인 경우
-                this.dicomCDFolder = GlobalVar.configEntity.DicomDownloadFolder + "\\DICOMCD";
-            }
-
-            this.HookingTimestamp = DateTime.Now.AddSeconds(-10);
-
-            //// 폴더사이즈체크시간
-            if (!string.IsNullOrWhiteSpace(cf._FolderSizeCheckTime))
-            {
-                if (!int.TryParse(cf._FolderSizeCheckTime, out GlobalVar.FolderSizeCheckTime))
-                    GlobalVar.FolderSizeCheckTime = 5;
+                ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
+                ErrMsgShow("환경설정값 가져오기 에러\r\n" + ex.Message, "Rimage Message : GetConfig", ex);
             }
         }
-        catch (Exception ex)
-        {
-            ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
-            ErrMsgShow("환경설정값 가져오기 에러\r\n" + ex.Message, "Rimage Message : GetConfig", ex);
-        }
-    }
 
         /// <summary>
         /// 메시지 박스 Clear
@@ -1786,11 +2151,173 @@ namespace RimageMedicalSystemV2
 
             if (result != null)
             {
-                this.StartBurning(!result.Value);
+                this.ChageNameAndOrderBurning(!result.Value);
             }
             else
             {
                 ErrMsgShow("다른 프로세스에 의해 사용중이므로 폴더명을 바꿀 수 없습니다.", "Rimage Message : ChangeDownloadFolderToPatientFolder");
+            }
+        }
+
+        /// <summary>
+        /// 파일복사 비동기 처리
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                BackgroundWorker worker = sender as BackgroundWorker;
+                Worker cls = e.Argument as Worker;
+                e.Result = 0;
+                cls.ExecJob(worker, e);
+            }
+            catch (Exception ex)
+            {
+                this.txtMessages.Text = ex.ToString();
+                RimageKorea.ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
+            }
+        }
+
+        /// <summary>
+        /// 파일복사 진행상황 보여주기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            CurrentState state = e.UserState as CurrentState;
+            this.txtStatusView.AppendText(state.retMessage);
+        }
+
+        /// <summary>
+        /// 파일복사 완료 후 처리
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.txtStatusView.AppendText("Error: " + e.Error.Message + "\r\n");
+            }
+            else if (e.Cancelled)
+            {
+                this.txtStatusView.AppendText("Copying files canceled.\r\n");
+            }
+            else
+            {
+                this.txtStatusView.AppendText("Finished copying files.\r\n");
+            }
+
+            CurrentState state = e.Result as CurrentState;
+            this.copyFileLen = state.fileSize;
+
+            this.backgroundWorker1.CancelAsync();
+
+            //제대로 복사되었는지 다시 체크 후 굽기 명령 보냄.
+            this.RecheckCDAfterCopyFiles();
+        }
+
+        /// <summary>
+        /// 파일을 복사한 후 제대로 복사했는지 체크 후 굽기명령을 보낸다.
+        /// </summary>
+        public void RecheckCDAfterCopyFiles()
+        {
+            this.checkCopying = true;
+            DirectoryInfo dirInfo = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
+            bool dicomDirCheck = true;
+            string errMsg = "";
+
+            try
+            {
+                if (dirInfo.Exists)
+                {
+                    //// 여기서 이동한 폴더에 있는 DicomDir정보를 다시 조회한다.
+                    //// 환자정보 가져오기
+                    List<string> imgList = new List<string>();
+                    Dictionary<string, string> patList = new Dictionary<string, string>();
+                    PatientList patInfor = null;
+                    Dictionary<string, string> dicomdirInfo = SearchPatient.GetPatient(Path.Combine(GlobalVar.configEntity.LocalShareFolder, this.ucPatients11.OrderInfo.patFolder), 
+                        GlobalVar.configEntity.DisableMultiPatient, out imgList, out patInfor, out patList);
+
+                    if (dicomdirInfo == null)
+                    {
+                        dicomDirCheck = false;
+                        errMsg = "버닝할 환자번호가 조회된 환자번호와 일치하지 않습니다. 데이터를 재전송하세요.\r\n";
+                    }
+                    else
+                    {
+                        //// 연구용인 경우는 그냥 패스..
+                        //// this.patientName = "연구용자료";                        
+                        if (this.ucPatients11.OrderInfo.patNo.Trim().StartsWith("NA") || dicomdirInfo["ID"].Trim().Equals("") || this.ucPatients11.OrderInfo.patName.Equals("연구용자료"))
+                        {
+                            dicomDirCheck = true;
+                        }
+                        else
+                        {
+                            //// 제출용(1명이상의환자일 때 패스..)
+                            if (this.ucPatients11.OrderInfo.patList != null && this.ucPatients11.OrderInfo.patList.Count > 1)
+                            {
+                                dicomDirCheck = true;
+                            }
+                            else
+                            {
+                                if (this.ucPatients11.OrderInfo.patNo.Trim() != dicomdirInfo["ID"].Trim())
+                                {
+                                    dicomDirCheck = false;
+                                    errMsg = "버닝할 환자번호가 조회된 환자번호와 일치하지 않습니다. 데이터를 재전송하세요.\r\n";
+                                }
+                                else
+                                {
+                                    dicomDirCheck = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (dicomDirCheck == true)
+                {
+                    this.txtStatusView.Clear();
+
+                    //// 굽기 명령을 보낸다.
+                    this.checkCopying = false;
+                    this.StartBurn(this.ucPatients11.OrderInfo);
+
+                    //// Nexus인 경우 첫번째창도 닫아준다.
+                    try
+                    {
+                        if (null != this.dicWhndNexus && true == this.dicWhndNexus.ContainsKey("Window1"))
+                        {
+                            if (this.dicWhndNexus["Window1"] != 0)
+                            {
+                                SendMessage((IntPtr)this.dicWhndNexus["Window1"], WM_CLOSE, 0, 0);
+                                this.dicWhndNexus["Window1"] = 0;
+                            }
+                        }
+                    }
+                    catch { }
+                }
+                else
+                {
+                    this.Cursor = Cursors.Default;
+                    this.txtStatusView.AppendText(errMsg);
+
+                    MessageBox.Show(errMsg, "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                this.checkCopying = false;
+            }
+            catch (Exception ex)
+            {
+                this.ErrMsgShow("굽기 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", ex);
+            }
+            finally
+            {
+                this.checkCopying = false;
+                this.Cursor = Cursors.Default;
             }
         }
     }

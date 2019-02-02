@@ -135,6 +135,7 @@
             this.txtDataLength.Properties.Appearance.Options.UseFont = true;
             this.txtDataLength.Properties.Appearance.Options.UseTextOptions = true;
             this.txtDataLength.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtDataLength.Properties.ReadOnly = true;
             this.txtDataLength.Size = new System.Drawing.Size(84, 22);
             this.txtDataLength.TabIndex = 5;
             this.txtDataLength.TabStop = false;

@@ -117,7 +117,7 @@ namespace RimageKorea
         /// <param name="patientName"></param>
         /// <param name="megPath">머지파일FullPath</param>
         /// <param name="studyDate"></param>
-        public static void createMergeFile(string MergeFileFolder, string MergePrint, string patFolder, string patDate, string patNo, string patName, string patSex,
+        public static void CreateMergeFile(string MergeFileFolder, string MergePrint, string patFolder, string patDate, string patNo, string patName, string patSex,
             string studyModality, string modality = "", string patientName = "", string megPath = "", string studyDate = "", Dictionary<string, string> dbInfo = null)
         {
             //string path = MergeFileFolder + patFolder + ".txt";
@@ -212,7 +212,7 @@ namespace RimageKorea
         /// <param name="megPath"></param>
         /// <param name="dicPatList"></param>
         /// <param name="patDate"></param>
-        public static void createMergeFile(string megPath, Dictionary<string, string> dicPatList, string patDate)
+        public static void CreateMergeFile(string megPath, Dictionary<string, string> dicPatList, string patDate)
         {
             if (null == dicPatList) return;
 
@@ -987,7 +987,7 @@ namespace RimageKorea
         }
 
         /// <summary>
-        /// 
+        /// 환자폴더 생성
         /// </summary>
         /// <param name="patID"></param>
         /// <param name="patName"></param>

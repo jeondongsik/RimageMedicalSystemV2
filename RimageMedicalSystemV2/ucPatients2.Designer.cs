@@ -92,6 +92,7 @@
             this.gvPatientlist.OptionsCustomization.AllowColumnMoving = false;
             this.gvPatientlist.OptionsCustomization.AllowFilter = false;
             this.gvPatientlist.OptionsCustomization.AllowSort = false;
+            this.gvPatientlist.OptionsSelection.MultiSelect = true;
             this.gvPatientlist.OptionsView.ColumnAutoWidth = false;
             this.gvPatientlist.OptionsView.ShowGroupPanel = false;
             this.gvPatientlist.OptionsView.ShowIndicator = false;

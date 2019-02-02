@@ -385,7 +385,7 @@ namespace RimageMedicalSystemV2
         /// <param name="dirInfo"></param>
         /// <param name="checkFileName"></param>
         /// <returns>true : 굽기실행가능</returns>
-        private static bool CheckFileExists(DirectoryInfo dirInfo, string checkFileName)
+        public static bool CheckFileExists(DirectoryInfo dirInfo, string checkFileName)
         {
             bool retVal = false;
 
@@ -409,7 +409,7 @@ namespace RimageMedicalSystemV2
         /// <param name="patInfor"></param>
         /// <param name="patList"></param>
         /// <returns></returns>
-        private static Dictionary<string, string> GetPatient(string srcFolder, string disableMultiPatient, out List<string> imgFiles, out PatientList patInfor, out Dictionary<string, string> patList)
+        public static Dictionary<string, string> GetPatient(string srcFolder, string disableMultiPatient, out List<string> imgFiles, out PatientList patInfor, out Dictionary<string, string> patList)
         {
             imgFiles = null;
             patList = null;

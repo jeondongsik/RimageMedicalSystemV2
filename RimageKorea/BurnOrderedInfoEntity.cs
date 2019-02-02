@@ -12,6 +12,10 @@ namespace RimageKorea
     public class BurnOrderedInfoEntity
     {
         /// <summary>
+        /// 번호
+        /// </summary>
+        public int No { get; set; }
+        /// <summary>
         /// 굽기 시작 일시
         /// </summary>
         public string StartDateTime { get; set; }
@@ -120,7 +124,7 @@ namespace RimageKorea
         /// </summary>
         public FolderInfo ImgFiles { get; set; }
         /// <summary>
-        /// 
+        /// 환자정보가 위치한 네트웤 폴더 (내 PC의 네트웍 경로)
         /// </summary>
         public string JobPath { get; set; }
         /// <summary>
@@ -182,5 +186,9 @@ namespace RimageKorea
         /// 서버번호
         /// </summary>
         public string ServerNo { get; set; }
+        /// <summary>
+        /// 정렬번호
+        /// </summary>
+        public int Sort { get; set; }
     }
 }
