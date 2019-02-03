@@ -647,7 +647,7 @@ namespace RMDS
         private bool SubmitOrder(string OrderXML)
         {
             try
-            {                
+            {
                 COrderDescription imgOrder = COrderManager.GetInstance().SubmitDurableOrder(OrderXML, (IOrderStatusListener)(new OrderListener(this)));
             }
             catch (CMsgConnectFailedException me)

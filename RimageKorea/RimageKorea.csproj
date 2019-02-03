@@ -136,6 +136,12 @@
     <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="LogDelete.cs" />
     <Compile Include="MediaDiscResult.cs" />
+    <Compile Include="NotifyWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotifyWindow.Designer.cs">
+      <DependentUpon>NotifyWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="PalySound.cs" />
     <Compile Include="PatientInfoEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

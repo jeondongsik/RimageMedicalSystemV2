@@ -28,8 +28,18 @@ namespace RimageReport
     /// </summary>
     public partial class xFormReport : DevExpress.XtraEditors.XtraForm
     {
-        private List<ServerInfo> _serverList;    //서버목록
+        /// <summary>
+        /// 서버목록
+        /// </summary>
+        private List<ServerInfo> _serverList;
+        /// <summary>
+        /// RimageWeb 주소
+        /// </summary>
         private string _webAddress = string.Empty;
+        /// <summary>
+        /// 현재 선택된 서버
+        /// </summary>
+        private ServerInfo _nowSelectedServer;
 
         /// <summary>
         /// 웹주소
@@ -47,12 +57,25 @@ namespace RimageReport
             get { return _serverList; }
             set { _serverList = value; }
         }
+        /// <summary>
+        /// 현재 선택된 서버
+        /// </summary>
+        public ServerInfo NowServerInfo
+        {
+            get { return _nowSelectedServer; }
+            set { _nowSelectedServer = value; }
+        }
 
         public xFormReport()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// load Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void xFormReport_Load(object sender, EventArgs e)
         {
             this.dateEditFrom.EditValue = DateTime.Now.AddMonths(-1).Date;
@@ -60,8 +83,10 @@ namespace RimageReport
 
             this.gridMonth.Tag = DateTime.Now.Year.ToString();
             this.gridDays.Tag = DateTime.Now.Month.ToString().PadLeft(2, '0');
-            
-            this.BindingData(this.GetData());            
+
+            this._webAddress = string.Format("http://{0}/RimageWeb", this._nowSelectedServer.IP);
+
+            this.BindingData(this.GetData());
         }
 
         /// <summary>

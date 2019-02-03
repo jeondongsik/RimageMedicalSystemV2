@@ -179,6 +179,10 @@ namespace RimageKorea
         /// </summary>
         public string BurnState { get; set; }
         /// <summary>
+        /// 굽기 완료 여부
+        /// </summary>
+        public string Finish { get; set; }
+        /// <summary>
         /// 출력번호
         /// </summary>
         public string OrderId { get; set; }
@@ -190,5 +194,10 @@ namespace RimageKorea
         /// 정렬번호
         /// </summary>
         public int Sort { get; set; }
+
+        /// <summary>
+        /// 글자색상
+        /// </summary>
+        public string ForeColor { get; set; }
     }
 }

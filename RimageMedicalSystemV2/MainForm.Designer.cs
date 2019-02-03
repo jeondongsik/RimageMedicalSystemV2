@@ -89,6 +89,7 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
+            this.btnCancelBurning = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -299,6 +300,7 @@
             this.btnClear.Size = new System.Drawing.Size(139, 43);
             this.btnClear.TabIndex = 5;
             this.btnClear.Text = "화면 정리";
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnPatientDelete
             // 
@@ -312,6 +314,8 @@
             this.btnPatientDelete.Size = new System.Drawing.Size(152, 43);
             this.btnPatientDelete.TabIndex = 6;
             this.btnPatientDelete.Text = "환자정보 삭제";
+            this.btnPatientDelete.Visible = false;
+            this.btnPatientDelete.Click += new System.EventHandler(this.btnPatientDelete_Click);
             // 
             // btnOrderedList
             // 
@@ -325,6 +329,7 @@
             this.btnOrderedList.Size = new System.Drawing.Size(155, 43);
             this.btnOrderedList.TabIndex = 7;
             this.btnOrderedList.Text = "버닝내역(재굽기)";
+            this.btnOrderedList.Click += new System.EventHandler(this.btnOrderedList_Click);
             // 
             // btnReport
             // 
@@ -338,6 +343,7 @@
             this.btnReport.Size = new System.Drawing.Size(139, 43);
             this.btnReport.TabIndex = 8;
             this.btnReport.Text = "보고서";
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // grpBurningList
             // 
@@ -535,6 +541,7 @@
             this.buttonRetry.Name = "buttonRetry";
             this.buttonRetry.Size = new System.Drawing.Size(20, 39);
             this.buttonRetry.TabIndex = 2;
+            this.buttonRetry.Click += new System.EventHandler(this.buttonRetry_Click);
             // 
             // txtMessages
             // 
@@ -542,6 +549,7 @@
             this.txtMessages.Name = "txtMessages";
             this.txtMessages.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMessages.Properties.Appearance.Options.UseFont = true;
+            this.txtMessages.Properties.ReadOnly = true;
             this.txtMessages.Size = new System.Drawing.Size(439, 39);
             this.txtMessages.TabIndex = 0;
             this.txtMessages.TabStop = false;
@@ -791,6 +799,14 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // backgroundWorker3
+            // 
+            this.backgroundWorker3.WorkerReportsProgress = true;
+            this.backgroundWorker3.WorkerSupportsCancellation = true;
+            this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker3_DoWork);
+            this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker3_ProgressChanged);
+            this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker3_RunWorkerCompleted);
+            // 
             // backgroundWorker4
             // 
             this.backgroundWorker4.WorkerReportsProgress = true;
@@ -798,11 +814,27 @@
             this.backgroundWorker4.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker4_DoWork);
             this.backgroundWorker4.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker4_RunWorkerCompleted);
             // 
+            // btnCancelBurning
+            // 
+            this.btnCancelBurning.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelBurning.Appearance.Options.UseFont = true;
+            this.btnCancelBurning.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.cancel_32x32;
+            this.btnCancelBurning.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.btnCancelBurning.Location = new System.Drawing.Point(466, 12);
+            this.btnCancelBurning.LookAndFeel.SkinName = "London Liquid Sky";
+            this.btnCancelBurning.Name = "btnCancelBurning";
+            this.btnCancelBurning.Size = new System.Drawing.Size(139, 43);
+            this.btnCancelBurning.TabIndex = 17;
+            this.btnCancelBurning.Text = "굽기 취소";
+            this.btnCancelBurning.Visible = false;
+            this.btnCancelBurning.Click += new System.EventHandler(this.btnCancelBurning_Click);
+            // 
             // MainForm
             // 
             this.Appearance.Options.UseFont = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.Controls.Add(this.btnCancelBurning);
             this.Controls.Add(this.labelControl11);
             this.Controls.Add(this.grpServerState);
             this.Controls.Add(this.pictureBox1);
@@ -890,7 +922,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColMedia;
         private DevExpress.XtraGrid.Columns.GridColumn gridColSize;
         private DevExpress.XtraGrid.Columns.GridColumn gridColServer;
-        private DevExpress.XtraEditors.MemoEdit txtMessages;
         private DevExpress.XtraEditors.SimpleButton buttonRetry;
         private DevExpress.XtraEditors.GroupControl grpServerState;
         private DevExpress.XtraEditors.TextEdit txtBin2Discs;
@@ -919,6 +950,8 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.ComponentModel.BackgroundWorker backgroundWorker3;
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
+        public DevExpress.XtraEditors.MemoEdit txtMessages;
+        private DevExpress.XtraEditors.SimpleButton btnCancelBurning;
     }
 }
 

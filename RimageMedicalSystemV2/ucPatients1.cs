@@ -18,7 +18,7 @@ namespace RimageMedicalSystemV2
     /// 굽기 타입 1
     /// </summary>
     public partial class ucPatients1 : DevExpress.XtraEditors.XtraUserControl
-    {
+    {        
         BurnOrderedInfoEntity _orderInfo;
         /// <summary>
         /// 굽기 명령 정보
@@ -298,6 +298,38 @@ namespace RimageMedicalSystemV2
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 조회된 환자 파일 삭제
+        /// </summary>
+        public void DeletePatientFiles(MainForm mainForm)
+        {
+            DirectoryInfo directory = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
+
+            try
+            {
+                if (directory.Exists)
+                {
+                    FileInfo[] files = directory.GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+                        file.Delete();
+                        mainForm.txtStatusView.AppendText(file.Name + " deleted.\r\n");
+                    }
+
+                    DirectoryInfo[] dirs = directory.GetDirectories();
+                    foreach (DirectoryInfo dri in dirs)
+                    {
+                        dri.Delete(true);
+                        mainForm.txtStatusView.AppendText(dri.Name + " deleted.\r\n");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("파일 삭제중 에러가 발생하였습니다.\r\n수동으로 삭제하여 주세요.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

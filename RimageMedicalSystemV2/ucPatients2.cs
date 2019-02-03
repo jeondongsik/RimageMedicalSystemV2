@@ -13,7 +13,7 @@ using System.IO;
 namespace RimageMedicalSystemV2
 {
     public partial class ucPatients2 : DevExpress.XtraEditors.XtraUserControl
-    {                
+    {
         List<BurnOrderedInfoEntity> _patInfoList = new List<BurnOrderedInfoEntity>();
         /// <summary>
         /// 조회된 환자 목록
@@ -27,7 +27,7 @@ namespace RimageMedicalSystemV2
         public ucPatients2()
         {
             InitializeComponent();
-                        
+
             this.gcPatientlist.DataSource = this._patInfoList;
         }
 
@@ -65,7 +65,7 @@ namespace RimageMedicalSystemV2
                     if (e.Column == this.gridColPatientNo || e.Column == this.gridColPatientName)
                     {
                         //// 굽기 실행
-                        
+
                     }
 
                     if (e.Column == this.gridColCancel)
@@ -148,11 +148,30 @@ namespace RimageMedicalSystemV2
         public int[] GetSelectedRows()
         {
             if (this.gvPatientlist.SelectedRowsCount > 0)
-            {                
+            {
                 return this.gvPatientlist.GetSelectedRows();
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 조회된 폴더목록에서 삭제한다.
+        /// </summary>
+        /// <param name="idx"></param>
+        public void RemoveAtList(int idx)
+        {
+            this._patInfoList.RemoveAt(idx);
+            this.gcPatientlist.RefreshDataSource();
+        }
+
+        /// <summary>
+        /// 조회된 환자중 선택한 환자폴더를 삭제한다.
+        /// </summary>
+        /// <param name="mainForm"></param>
+        public void DeletePatientFiles(MainForm mainForm)
+        {
+
         }
     }
 }
