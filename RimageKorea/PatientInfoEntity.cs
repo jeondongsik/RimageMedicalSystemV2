@@ -6,6 +6,7 @@ using System.Text;
 
 namespace RimageKorea
 {
+    [Serializable]
     public class PatientList
     {
         /// <summary>
@@ -25,6 +26,7 @@ namespace RimageKorea
     /// <summary>
     /// DicomDir에 포함된 환자정보
     /// </summary>
+    [Serializable]
     public class PatientInfoEntity
     {
         /// <summary>
@@ -57,6 +59,7 @@ namespace RimageKorea
     /// <summary>
     /// 환자 기본 정보
     /// </summary>
+    [Serializable]
     public class PatientBaseInfo
     {
         string _id;
@@ -210,6 +213,7 @@ namespace RimageKorea
     /// <summary>
     /// 환자의 Record 정보
     /// </summary>
+    [Serializable]
     public class PatientRecordInfo
     {
         /// <summary>

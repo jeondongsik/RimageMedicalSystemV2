@@ -8,6 +8,7 @@ using System.Xml;
 
 namespace RimageKorea
 {
+    [Serializable]
     public class FolderInfo
     {
         public long FolderSize { get; set; }

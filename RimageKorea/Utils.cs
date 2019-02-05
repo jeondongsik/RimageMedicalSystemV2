@@ -15,8 +15,11 @@ namespace RimageKorea
         /// <returns></returns>
         public static string ReplaceSpecialWord(string orgString)
         {
+            if (string.IsNullOrEmpty(orgString))
+                return string.Empty;
+
             string returnStr = "";
-                        
+
             returnStr = orgString.Replace("\\", "");
             returnStr = returnStr.Replace((char)27, ' ');
             returnStr = returnStr.Replace("/", "");
@@ -42,6 +45,9 @@ namespace RimageKorea
         /// <returns></returns>
         public static string ReplacePatientName(string ogrName)
         {
+            if (string.IsNullOrEmpty(ogrName))
+                return string.Empty;
+
             string returnStr = "";
 
             returnStr = ogrName.Replace((char)27, ' ');
@@ -67,6 +73,9 @@ namespace RimageKorea
         /// <returns></returns>
         public static string ReturnModality(string orgString, int cnt)
         {
+            if (string.IsNullOrEmpty(orgString))
+                return string.Empty;
+
             string returnStr = "";
             string[] arrStr = null;
             string[] arrChg = new string[cnt + 1];
@@ -94,6 +103,9 @@ namespace RimageKorea
         /// <returns></returns>
         public static string[] SplitByString(string testString, string split)
         {
+            if (string.IsNullOrEmpty(testString))
+                return null;
+
             int offset = 0;
             int index = 0;
             int[] offsets = new int[testString.Length + 1];

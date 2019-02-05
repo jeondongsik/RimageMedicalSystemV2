@@ -7,6 +7,7 @@ using System.Xml.Schema;
 
 namespace RimageKorea
 {
+    [Serializable]
     public class DiscData
     {
         public DiscData()

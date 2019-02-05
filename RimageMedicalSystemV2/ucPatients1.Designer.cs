@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelControl4 = new DevExpress.XtraEditors.PanelControl();
+            this.pnlPatInfoArea = new DevExpress.XtraEditors.PanelControl();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.cbMedia = new DevExpress.XtraEditors.ComboBoxEdit();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
@@ -40,33 +40,36 @@
             this.txtPatientID = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).BeginInit();
-            this.panelControl4.SuspendLayout();
+            this.pnlImgArea = new DevExpress.XtraEditors.PanelControl();
+            ((System.ComponentModel.ISupportInitialize)(this.pnlPatInfoArea)).BeginInit();
+            this.pnlPatInfoArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbMedia.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbCopies.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDataLength.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPatientName.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPatientID.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pnlImgArea)).BeginInit();
+            this.pnlImgArea.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panelControl4
+            // pnlPatInfoArea
             // 
-            this.panelControl4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.panelControl4.Controls.Add(this.labelControl5);
-            this.panelControl4.Controls.Add(this.cbMedia);
-            this.panelControl4.Controls.Add(this.labelControl4);
-            this.panelControl4.Controls.Add(this.cbCopies);
-            this.panelControl4.Controls.Add(this.txtDataLength);
-            this.panelControl4.Controls.Add(this.labelControl3);
-            this.panelControl4.Controls.Add(this.txtPatientName);
-            this.panelControl4.Controls.Add(this.labelControl2);
-            this.panelControl4.Controls.Add(this.txtPatientID);
-            this.panelControl4.Controls.Add(this.labelControl1);
-            this.panelControl4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelControl4.Location = new System.Drawing.Point(0, 0);
-            this.panelControl4.Name = "panelControl4";
-            this.panelControl4.Size = new System.Drawing.Size(817, 31);
-            this.panelControl4.TabIndex = 128;
+            this.pnlPatInfoArea.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.pnlPatInfoArea.Controls.Add(this.labelControl5);
+            this.pnlPatInfoArea.Controls.Add(this.cbMedia);
+            this.pnlPatInfoArea.Controls.Add(this.labelControl4);
+            this.pnlPatInfoArea.Controls.Add(this.cbCopies);
+            this.pnlPatInfoArea.Controls.Add(this.txtDataLength);
+            this.pnlPatInfoArea.Controls.Add(this.labelControl3);
+            this.pnlPatInfoArea.Controls.Add(this.txtPatientName);
+            this.pnlPatInfoArea.Controls.Add(this.labelControl2);
+            this.pnlPatInfoArea.Controls.Add(this.txtPatientID);
+            this.pnlPatInfoArea.Controls.Add(this.labelControl1);
+            this.pnlPatInfoArea.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlPatInfoArea.Location = new System.Drawing.Point(0, 0);
+            this.pnlPatInfoArea.Name = "pnlPatInfoArea";
+            this.pnlPatInfoArea.Size = new System.Drawing.Size(817, 31);
+            this.pnlPatInfoArea.TabIndex = 128;
             // 
             // labelControl5
             // 
@@ -194,40 +197,51 @@
             // 
             this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(81)))), ((int)(((byte)(97)))));
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeView1.ForeColor = System.Drawing.Color.White;
             this.treeView1.FullRowSelect = true;
-            this.treeView1.Location = new System.Drawing.Point(0, 31);
+            this.treeView1.Location = new System.Drawing.Point(7, 5);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(817, 177);
+            this.treeView1.Size = new System.Drawing.Size(803, 165);
             this.treeView1.TabIndex = 129;
+            // 
+            // pnlImgArea
+            // 
+            this.pnlImgArea.Controls.Add(this.treeView1);
+            this.pnlImgArea.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlImgArea.Location = new System.Drawing.Point(0, 31);
+            this.pnlImgArea.Name = "pnlImgArea";
+            this.pnlImgArea.Padding = new System.Windows.Forms.Padding(5, 3, 5, 5);
+            this.pnlImgArea.Size = new System.Drawing.Size(817, 177);
+            this.pnlImgArea.TabIndex = 130;
             // 
             // ucPatients1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.panelControl4);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.pnlImgArea);
+            this.Controls.Add(this.pnlPatInfoArea);
             this.LookAndFeel.SkinName = "Sharp Plus";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Name = "ucPatients1";
             this.Size = new System.Drawing.Size(817, 208);
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl4)).EndInit();
-            this.panelControl4.ResumeLayout(false);
-            this.panelControl4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pnlPatInfoArea)).EndInit();
+            this.pnlPatInfoArea.ResumeLayout(false);
+            this.pnlPatInfoArea.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbMedia.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbCopies.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDataLength.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPatientName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPatientID.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pnlImgArea)).EndInit();
+            this.pnlImgArea.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private DevExpress.XtraEditors.PanelControl panelControl4;
+        private DevExpress.XtraEditors.PanelControl pnlPatInfoArea;
         private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.LabelControl labelControl3;
@@ -239,5 +253,6 @@
         public DevExpress.XtraEditors.TextEdit txtPatientID;
         public DevExpress.XtraEditors.ComboBoxEdit cbMedia;
         public DevExpress.XtraEditors.TextEdit txtDataLength;
+        private DevExpress.XtraEditors.PanelControl pnlImgArea;
     }
 }

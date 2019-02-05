@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using Rimage.Client.Api;
@@ -9,6 +10,7 @@ namespace RimageKorea
     /// <summary>
     /// 환자의 굽기 명령 정보
     /// </summary>
+    [Serializable]
     public class BurnOrderedInfoEntity
     {
         /// <summary>
@@ -199,5 +201,9 @@ namespace RimageKorea
         /// 글자색상
         /// </summary>
         public string ForeColor { get; set; }
+        /// <summary>
+        /// 삭제 아이콘
+        /// </summary>
+        public Image DeleteIcon { get; set; }
     }
 }

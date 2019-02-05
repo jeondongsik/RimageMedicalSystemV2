@@ -196,7 +196,7 @@ namespace RimageMedicalSystemV2
                 this.systemListenerDel = new SysExecption(GetSysExecption);
                 this.serverStatusDel = new ServerStatus(GetServerConfig);
                 this.burningTraceDel = new BurningTrace(GetOrderStatus);
-                                
+                
                 this.dicWhnd = new Dictionary<string, int>();
                 this.dicWhndNexus = new Dictionary<string, int>();
                 this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
@@ -262,8 +262,6 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                this.tmrDownloadChecker.Stop();
-
                 if (string.IsNullOrWhiteSpace(GlobalVar.configEntity.ProgramCaption) == true)
                     this.Text = GlobalVar.PRODUCT_NAME;
                 else
@@ -275,7 +273,6 @@ namespace RimageMedicalSystemV2
 
                 this.Text += "  " + DateTime.Now.ToString("yyyy년 MM월 dd일");
 
-                //// 드라이브 정보
                 this.SetDriveInfo();
 
                 //// 폴더 생성
@@ -290,24 +287,22 @@ namespace RimageMedicalSystemV2
                     this.btnOrderedList.Visible = false;
                 }
 
-                //// 로그 삭제
-                this.DeleteLog();
+                //this.DeleteLog();
 
-                //// 다운로드 폴더 체크하여 없으면 생성하자
-                if (false == string.IsNullOrWhiteSpace(GlobalVar.configEntity.DicomDownloadFolder) && false == Directory.Exists(GlobalVar.configEntity.DicomDownloadFolder))
+                //// 다운로드 폴더 체크하여 없으면 생성하자 - ProgramType1인 경우
+                if (GlobalVar.configEntity.programType == "1")
                 {
-                    Directory.CreateDirectory(GlobalVar.configEntity.DicomDownloadFolder);
+                    if (!string.IsNullOrWhiteSpace(GlobalVar.configEntity.DicomDownloadFolder) && !Directory.Exists(GlobalVar.configEntity.DicomDownloadFolder))
+                    {
+                        Directory.CreateDirectory(GlobalVar.configEntity.DicomDownloadFolder);
+                    }
+                }
+                else
+                {
+                    this.ucPatients21.FrmParent = this;
                 }
 
-                //// 굽기목록 DataSource 지정
-                this._BurningList = new List<BurnOrderedInfoEntity>();
                 this.gcBurninglist.DataSource = this._BurningList;
-
-                //// 버튼 Visible
-                if (GlobalVar.configEntity.programType == "1")
-                    this.btnPatientDelete.Visible = true;
-                else
-                    this.btnCancelBurning.Visible = true;
 
                 //// 로그 체크 시작
                 this.burnProcessChecker = new BurnProgressChecker(this);
@@ -316,6 +311,10 @@ namespace RimageMedicalSystemV2
             catch (Exception ex)
             {
                 ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
+            }
+            finally
+            {
+                this.grpPatInfo.Focus();
             }
         }
 
@@ -326,7 +325,16 @@ namespace RimageMedicalSystemV2
         {
             //// UserControl 에서 초기화
             if (GlobalVar.configEntity.programType == "1")
-                ucPatients11.Clear();
+            {
+                this.ucPatients11.Clear();
+                this.ucPatients11.Visible = true;
+            }
+            else
+            {
+                this.ucPatients21.Visible = true;
+            }
+
+            this._BurningList = new List<BurnOrderedInfoEntity>();
         }
 
         /// <summary>
@@ -361,10 +369,11 @@ namespace RimageMedicalSystemV2
                 this.txtStatusView.AppendText("환자정보를 가져오고 있습니다.\r\n");
 
                 BurnOrderedInfoEntity orderInfo = SearchPatient.Get(Application.StartupPath, new DirectoryInfo(this.dicomCDFolder), this.DBConnInfo, this.AutoLoaderMediaType);
-                orderInfo.DicomCDFolder = this.dicomCDFolder;
-
+                
                 if (orderInfo != null)
                 {
+                    orderInfo.DicomCDFolder = this.dicomCDFolder;
+
                     this.ucPatients11.OrderInfo = orderInfo;
                     this.ucPatients11.ShowPatientInfo();
 
@@ -441,9 +450,7 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                DirectoryInfo dri = new DirectoryInfo(GlobalVar.configEntity.LocalShareFolder);
-                bool burnAablity = true;
-                bool seekTarget = true;
+                DirectoryInfo dri = new DirectoryInfo(GlobalVar.configEntity.LocalShareFolder);                
                 bool patExists = false;
 
                 if (dri.Exists)
@@ -455,44 +462,28 @@ namespace RimageMedicalSystemV2
 
                     foreach (DirectoryInfo sdir in dri.GetDirectories())
                     {
-                        ////root에 checkFile ("end.txt") 파일이 존재하는지 체크하자.
-                        if (checkFile != "")
+                        //// 현재 굽기 실행중인지 체크한다.
+                        if (this._BurningList != null && this._BurningList.Count > 0)
                         {
-                            burnAablity = CheckFiles.CheckFileExists(sdir, checkFile);
+                            patExists = this.ExistsBurningItem(sdir.Name);
                         }
 
-                        ////이미 조회된 목록에 존재하는지 체크
-                        if (this.ucPatients21.ExistSameInfoInGrid(sdir.Name))
-                            continue;
-
-                        if (burnAablity)
-                        {
-                            //굽기완료된 폴더인지 체크(burn.end 파일체크)
-                            seekTarget = CheckFiles.CheckFileExists(sdir, GlobalVar.BURN_CHK_FL_NM);
-                        }
-
-                        if (burnAablity && seekTarget)
-                        {
-                            //// 현재 굽기 실행중인지 체크한다.
-                            if (this._BurningList != null && this._BurningList.Count > 0)
-                            {
-                                patExists = this.ExistsBurningItem(sdir.Name);
-                            }
-                        }
-                        
                         if (!patExists)
                         {
-                            BurnOrderedInfoEntity orderInfo = SearchPatient.Get(Application.StartupPath, new DirectoryInfo(this.dicomCDFolder), this.DBConnInfo, this.AutoLoaderMediaType);
-                            orderInfo.DicomCDFolder = this.dicomCDFolder;
+                            BurnOrderedInfoEntity orderInfo = SearchPatient.Get(Application.StartupPath, sdir, this.DBConnInfo, this.AutoLoaderMediaType, checkFile);
 
-                            this.ucPatients21.PatientInfoList.Insert(0, orderInfo);
-                            this.ucPatients21.gcPatientlist.RefreshDataSource();
+                            if (orderInfo != null)
+                            {
+                                orderInfo.DicomCDFolder = sdir.FullName;
 
-                            this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
+                                this.ucPatients21.PatientInfoList.Insert(0, orderInfo);
+                                this.ucPatients21.gcPatientlist.DataSource = this.ucPatients21.PatientInfoList;
+                                this.ucPatients21.gcPatientlist.RefreshDataSource();
+
+                                this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
+                            }
                         }
 
-                        burnAablity = true;
-                        seekTarget = true;
                         patExists = false;
                     }
 
@@ -714,48 +705,12 @@ namespace RimageMedicalSystemV2
                     }
                 }
 
-                bool blContinue = true;
-
-                if (orderInfo.patList.ContainsKey(orderInfo.patNo) == true)
-                    orderInfo.patList[orderInfo.patNo] = orderInfo.patName;
-
-                Dictionary<string, string> dicPatListMerge = orderInfo.patList;
-                //// 환자정보가 2개 이상일 때는 무조건 창을 띄운다. => 환경설정값 체크 추가
-                //// 다중환자사용안함이면 건너뜀
-                if (orderInfo.patList != null && orderInfo.patList.Count > 1 && GlobalVar.configEntity.PopUpSelPatInfoYN == "Y" && GlobalVar.configEntity.DisableMultiPatient == "N")
-                {
-                    dicPatListMerge = this.GetCheckPatientList(orderInfo.patList);
-                    if (dicPatListMerge == null)
-                        blContinue = false;
-                    else
-                        blContinue = true;
-                }
-
-                if (!blContinue)
-                {
-                    continue;
-                }
-
-                //// 등록된 환자가 여러건일 경우
-                if (orderInfo.patList.Count > 1 && GlobalVar.configEntity.DisableMultiPatient == "N")
-                {
-                    foreach (KeyValuePair<string, string> kvp in dicPatListMerge)
-                    {
-                        orderInfo.patNo = kvp.Key;
-                        orderInfo.patName = kvp.Value;
-                        break;
-                    }
-                }
-
-                //// 다중굽기 여부
-                orderInfo.BurnPatientKind = "N";
-                orderInfo.patListForMerge = dicPatListMerge;
-
                 //// 굽기 시작
-                this.StartBurn(orderInfo);
-
-                //// 조회목록에서 삭제
-                this.ucPatients21.RemoveAtList(idx);
+                if (this.StartBurn(orderInfo))
+                {
+                    //// 조회목록에서 삭제
+                    this.ucPatients21.RemoveAtList(idx);
+                }
 
                 idx++;
             }
@@ -793,7 +748,7 @@ namespace RimageMedicalSystemV2
         /// CD 굽기
         /// </summary>
         /// <param name="orderInfo"></param>
-        public void StartBurn(BurnOrderedInfoEntity orderInfo)
+        public bool StartBurn(BurnOrderedInfoEntity orderInfo)
         {
             int j = 1;
 
@@ -810,24 +765,64 @@ namespace RimageMedicalSystemV2
                 if (!CheckFiles.Exists(Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder)))
                 {
                     this.ErrMsgShow("환자폴더에 필수파일이 존재하지 않습니다.\r\n환자폴더를 체크하세요.", "Rimage Message");
-                    return;
+                    return false;
                 }
 
+                //// 다중 환자 체크
+                bool blContinue = true;
+
+                if (orderInfo.patList.ContainsKey(orderInfo.patNo) == true)
+                    orderInfo.patList[orderInfo.patNo] = orderInfo.patName;
+
+                Dictionary<string, string> dicPatListMerge = orderInfo.patList;
+                //// 환자정보가 2개 이상일 때는 무조건 창을 띄운다. => 환경설정값 체크 추가
+                //// 다중환자사용안함이면 건너뜀
+                if (orderInfo.patList != null && orderInfo.patList.Count > 1 && GlobalVar.configEntity.PopUpSelPatInfoYN == "Y" && GlobalVar.configEntity.DisableMultiPatient == "N")
+                {
+                    dicPatListMerge = this.GetCheckPatientList(orderInfo.patList);
+                    if (dicPatListMerge == null)
+                        blContinue = false;
+                    else
+                        blContinue = true;
+                }
+
+                if (!blContinue)
+                {
+                    return false;
+                }
+
+                //// 등록된 환자가 여러건일 경우
+                if (orderInfo.patList.Count > 1 && GlobalVar.configEntity.DisableMultiPatient == "N")
+                {
+                    foreach (KeyValuePair<string, string> kvp in dicPatListMerge)
+                    {
+                        orderInfo.patNo = kvp.Key;
+                        orderInfo.patName = kvp.Value;
+                        break;
+                    }
+                }
+                orderInfo.patListForMerge = dicPatListMerge;
+                
                 orderInfo.No = j;
-                orderInfo.StartDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");                
+                orderInfo.StartDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
                 orderInfo.TargetServer = this.NowSeletedServer.ShallowCopy();
 
                 //// 다중환자 사용일 경우에만 체크
                 if (GlobalVar.configEntity.DisableMultiPatient == "N")
                 {
                     if (orderInfo.patListForMerge != null && orderInfo.patListForMerge.Count > 1)
+                    {
                         orderInfo.BurnPatientKind = "Y";
+                        orderInfo.Count = orderInfo.patListForMerge.Count;
+                    }
                     else
+                    {
                         orderInfo.BurnPatientKind = "N";
+                        orderInfo.Count = 1;
+                    }
                 }
                 orderInfo.patFolderFullPath = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
-                orderInfo.Count = orderInfo.patListForMerge.Count;
-
+                
                 orderInfo.OrderId = string.Format("{0}_{1}_{2}{3}", Utils.ReplaceSpecialWord(orderInfo.patName).Replace(" ", "").Trim(), orderInfo.patNo, DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
                 orderInfo.patDate = DateTime.Now.ToShortDateString();
                 orderInfo.Progress = "Submitted for Imaging";
@@ -835,13 +830,6 @@ namespace RimageMedicalSystemV2
                 orderInfo.BurnState = "대기";
                 orderInfo.ServerNo = string.Format("[{0}]", this.NowSeletedServer.No);
                 orderInfo.Sort = 0;
-
-                if (this._BurningList.Count == 0)
-                    this._BurningList.Add(orderInfo);
-                else
-                    this._BurningList.Insert(0, orderInfo);
-
-                this.gcBurninglist.RefreshDataSource();
 
                 if (GlobalVar.configEntity.programType == "1")
                     this.ucPatients11.Clear();
@@ -910,7 +898,7 @@ namespace RimageMedicalSystemV2
                         catch (Exception ex)
                         {
                             this.ErrMsgShow("MergeFile 생성 에러\r\n" + ex.Message, "Rimage Message : createMergeFile", ex);
-                            return;
+                            return false;
                         }
                     }
                 }
@@ -927,7 +915,7 @@ namespace RimageMedicalSystemV2
                 catch (Exception me)
                 {
                     MessageBox.Show(me.Message, "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return false;
                 }
 
                 try
@@ -1005,6 +993,15 @@ namespace RimageMedicalSystemV2
                     //// 굽기 프로그램을 실행한다.
                     Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O_{0}_{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
 
+                    //// 그리드에 추가한다.
+                    if (this._BurningList.Count == 0)
+                        this._BurningList.Add(orderInfo);
+                    else
+                        this._BurningList.Insert(0, orderInfo);
+
+                    this.gcBurninglist.RefreshDataSource();
+                    this.gvBurninglist.RefreshData();
+
                     this.UpdateBurningGrid(orderInfo.OrderId, "Submitted for Imaging", "", "굽기");
  
                     //// 복사 신청서 인쇄 - 환경설정에 따라, 멀티환자가 아닐경우에만.
@@ -1032,6 +1029,8 @@ namespace RimageMedicalSystemV2
                 this.Cursor = Cursors.Default;
                 this.ErrMsgShow("굽기 명령 실행 중 에러 발생\r\n" + ex.Message, "Rimage Message : BurningOrder", ex);
             }
+
+            return true;
         }
 
         /// <summary>
@@ -1057,13 +1056,31 @@ namespace RimageMedicalSystemV2
                         oInfo.BurnState = state;
 
                     this.gcBurninglist.RefreshDataSource();
+                    this.gvBurninglist.RefreshData();
                 }
             }
         }
 
+        /// <summary>
+        /// 굽기 목록 상태값 업데이트
+        /// </summary>
+        /// <param name="trace"></param>
         private void UpdateBurningGrid(DiscStatusForDisplay trace)
         {
+            if (this._BurningList != null)
+            {
+                if (this._BurningList.Any(o => o.OrderId == trace.OrderID))
+                {
+                    var oInfo = this._BurningList.Where(b => b.OrderId == trace.OrderID).First();
 
+                    oInfo.Progress = trace.StateString;
+                    oInfo.ProcessingRate = string.Format("{0} %", trace.PercentCompleted);
+                    oInfo.BurnState = trace.ResultMessage;
+
+                    this.gcBurninglist.RefreshDataSource();
+                    this.gvBurninglist.RefreshData();
+                }
+            }
         }
 
         /// <summary>
@@ -1215,6 +1232,8 @@ namespace RimageMedicalSystemV2
                 GlobalVar.configEntity.LogFilePath = cf._LogFilePath;
                 GlobalVar.configEntity.LabelPrint = cf._LabelPrint;
                 GlobalVar.configEntity.MergePrint = cf._MergePrint;
+                GlobalVar.configEntity.CDPrintYN = cf._CDPrintYN;
+
                 if (GlobalVar.configEntity.MergePrint.Length != 7)
                 {
                     if (GlobalVar.configEntity.MergePrint.Length == 6)
@@ -1245,29 +1264,26 @@ namespace RimageMedicalSystemV2
                 GlobalVar.configEntity.ProgramCaption = cf._ProgramCaption;
                 GlobalVar.configEntity.BurnPatientKind = cf._BurnPatientKind;
                 GlobalVar.configEntity.FolderPattern = cf._FolderPattern;
-
                 GlobalVar.configEntity.PopUpAlamYN = (String.IsNullOrWhiteSpace(cf._PopUpAlamYN)) ? "Y" : cf._PopUpAlamYN;
                 GlobalVar.configEntity.PopUpKeepTime = (String.IsNullOrWhiteSpace(cf._PopUpKeepTime)) ? "20" : cf._PopUpKeepTime;
                 GlobalVar.configEntity.PopUpSelPatInfoYN = (String.IsNullOrWhiteSpace(cf._PopUpSelPatInfoYN)) ? "Y" : cf._PopUpSelPatInfoYN;
-
                 GlobalVar.configEntity.HookSleepTime1 = Convert.ToInt32((String.IsNullOrWhiteSpace(cf._HookSleepTime1) ? "3000" : cf._HookSleepTime1));
                 GlobalVar.configEntity.HookSleepTime2 = Convert.ToInt32((String.IsNullOrWhiteSpace(cf._HookSleepTime2) ? "5000" : cf._HookSleepTime2));
-
                 GlobalVar.configEntity.ManualExeBtnView = (String.IsNullOrWhiteSpace(cf._ManualExeBtnView)) ? "N" : cf._ManualExeBtnView;
-
                 GlobalVar.configEntity.CloseConfirm = (String.IsNullOrWhiteSpace(cf._CloseConfirm)) ? "N" : cf._CloseConfirm;
                 GlobalVar.configEntity.SoundAlam = (String.IsNullOrWhiteSpace(cf._SoundAlam)) ? "N" : cf._SoundAlam;
-
                 GlobalVar.configEntity.FileCopyYN = (String.IsNullOrWhiteSpace(cf._FileCopyYN)) ? "N" : cf._FileCopyYN;
                 GlobalVar.configEntity.ErrorPupupUse = (String.IsNullOrWhiteSpace(cf._ErrorPupupUse)) ? "Y" : cf._ErrorPupupUse;
                 GlobalVar.configEntity.AutoPrintApp = (String.IsNullOrWhiteSpace(cf._AutoPrintApp)) ? "N" : cf._AutoPrintApp;
                 GlobalVar.configEntity.DeleteInJobFolder = (String.IsNullOrWhiteSpace(cf._DeleteInJobFolder)) ? "N" : cf._DeleteInJobFolder;
+                GlobalVar.configEntity.ExistDicomDir = (String.IsNullOrWhiteSpace(cf._ExistDicomDir)) ? "N" : cf._ExistDicomDir;
+                GlobalVar.configEntity.FolderSizeCheckTime = (String.IsNullOrWhiteSpace(cf._FolderSizeCheckTime)) ? "3" : cf._FolderSizeCheckTime;
 
                 //// 다운체크파일명을 전역변수에 저장
                 GlobalVar.DOWN_CHK_FL_NM = (string.IsNullOrWhiteSpace(cf._DownCheckFileName)) ? "end.txt" : cf._DownCheckFileName;
                 GlobalVar.configEntity.DownCheckFileName = (string.IsNullOrWhiteSpace(cf._DownCheckFileName)) ? "end.txt" : cf._DownCheckFileName;
 
-                //// 다중환자 사용 안함 
+                //// 다중환자
                 GlobalVar.configEntity.DisableMultiPatient = (string.IsNullOrWhiteSpace(cf._DisableMultiPatient)) ? "N" : cf._DisableMultiPatient;
                 GlobalVar.configEntity.DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
 
@@ -1718,9 +1734,9 @@ namespace RimageMedicalSystemV2
                     int i = 1;
                     foreach (var srv in this.ServerList)
                     {
-                        Label lbl = this.grpServerList.Controls.Find(string.Format("Server{0}", i.ToString()), false)[0] as Label;
-                        lbl.Text = string.Format("[{0}] {1}", srv.No, srv.IP);                        
-                        lbl.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
+                        LabelControl lbl = this.grpServerList.Controls.Find(string.Format("Server{0}", i.ToString()), false)[0] as LabelControl;
+                        lbl.Text = string.Format("[{0}] {1}", srv.No, srv.IP);
+                        lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
                         lbl.Tag = srv;
 
                         i++;
@@ -1728,7 +1744,7 @@ namespace RimageMedicalSystemV2
                 }
                 else
                 {
-                    MessageBox.Show("등록된 서버가 없습니다.\r\n환경설정에서 서버를 등록해 주세요!", "Rimage Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("등록된 서버가 없습니다.\r\n환경설정에서 서버를 등록해 주세요!", "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch { }
@@ -2071,7 +2087,7 @@ namespace RimageMedicalSystemV2
 
                     if (ctrl.Tag == null)
                     {
-                        lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x162;
+                        lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
                         lbl.Appearance.BorderColor = Color.FromArgb(105, 105, 105);
                         continue;
                     }
@@ -2092,7 +2108,7 @@ namespace RimageMedicalSystemV2
                     }
                     else
                     {
-                        lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x162;
+                        lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
                         lbl.Appearance.BorderColor = Color.FromArgb(105, 105, 105);
                     }
                 }
@@ -3071,6 +3087,160 @@ namespace RimageMedicalSystemV2
             frm.NowServerInfo = this.NowSeletedServer;
             frm.ShowDialog();
             frm.Dispose();
+        }
+
+        /// <summary>
+        /// 프로그램 종료시 처리..
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.DialogResult result = System.Windows.Forms.DialogResult.OK;
+
+            if (GlobalVar.configEntity.CloseConfirm.Equals("Y"))
+            {
+                result = MessageBox.Show("프로그램을 종료하겠습니까?", "Rimage Message", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            }
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                if (GlobalVar.configEntity.DelFolderWhenClose.Equals("Y"))
+                {
+                    MessageBox.Show("다운받은 환자데이터를 삭제합니다.\r\n이 작업은 몇 분간의 시간이 걸릴 수 있습니다.\r\n작업이 완료된 후 프로그램이 종료될 때까지 기다려주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.ClearDicomFolder();
+                }
+
+                this.ClearImgFiles();
+                this.KillBurnPrograms();
+
+                ErrorLog.TraceWrite(this, "-- Program Exit --", Application.StartupPath);
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// 환자 폴더 정리
+        /// </summary>
+        private void ClearDicomFolder()
+        {
+            try
+            {
+                DirectoryInfo dir1 = new DirectoryInfo(GlobalVar.configEntity.LocalShareFolder);
+                DirectoryInfo dir2 = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
+
+                //// 다운로드 안..
+                if (dir2.Exists)
+                {
+                    foreach (DirectoryInfo subDir2 in dir2.GetDirectories())
+                    {
+                        if (subDir2.Exists)
+                        {
+                            FileControl.DeleteFolder(subDir2.FullName, false);
+                        }
+                    }
+
+                    foreach (FileInfo fl in dir2.GetFiles())
+                    {
+                        if (fl.Exists)
+                        {
+                            fl.Delete();
+                        }
+                    }
+                }
+
+                //// 공유폴더 안..
+                if (dir1.Exists)
+                {
+                    string pattern = "*";
+
+                    //Deit_Pacs인 경우..
+                    if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
+                        pattern = "MC_*";
+
+                    foreach (DirectoryInfo subDir1 in dir1.GetDirectories(pattern))
+                    {
+                        if (subDir1.Exists)
+                        {
+                            if (subDir1.FullName != dir2.FullName)
+                            {
+                                if (GlobalVar.configEntity.DelType.Equals("0"))
+                                    FileControl.DeleteFolder(subDir1.FullName, false);
+                                else
+                                    FileControl.DeleteFolder(subDir1.FullName, true);
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 서버에 있는 img 파일 삭제
+        /// </summary>
+        private void ClearImgFiles()
+        {
+            string response = "";
+            string webaddress = "";
+            webaddress = "http://" + this.NowSeletedServer.IP + "/RimageWeb/imgFileDelete.aspx";
+            //webaddress = "http://localhost:4557/RimageWeb/imgFileDelete.aspx";
+
+            try
+            {
+                using (WebClient webc = new WebClient())
+                {
+                    NameValueCollection nvcol = new NameValueCollection();
+
+                    byte[] ResponseByte = webc.UploadValues(webaddress, nvcol);
+                    response = Encoding.UTF8.GetString(ResponseByte);
+
+                    webc.Dispose();
+                }
+            }
+            catch
+            {
+                //
+            }
+        }
+
+        /// <summary>
+        /// 실행중인 굽기 프로그램이 존재하는지 체크 후 모두 종료
+        /// </summary>
+        private void KillBurnPrograms()
+        {
+
+        }
+
+        /// <summary>
+        /// 서버 버튼 클릭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ServerButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LabelControl lable = sender as LabelControl;
+                if (lable.Tag != null)
+                {
+                    ServerInfo srv = lable.Tag as ServerInfo;
+
+                    if (CheckPing.TestPing(srv.IP))
+                    {
+                        this.SelectServerLabel(srv.IP, true);
+                    }
+                    else
+                    {
+                        this.SelectServerLabel(srv.IP, false);
+                    }
+                }
+            }
+            catch { }
         }
     }
 

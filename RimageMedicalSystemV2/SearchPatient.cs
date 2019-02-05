@@ -30,29 +30,31 @@ namespace RimageMedicalSystemV2
                 string mdbFileName = "PiView.mdb";
                 string mdbFileNameMaro = @"Viewer\Export.mdb";
 
-                bool burnAablity = true;
-                bool seekTarget = true;
-
+                bool existCheckFile = true;
+                bool isBurnEnd = true;
+                bool existPatInfoFile = true;
                 bool isDicom = false;
                 bool isMdb = false;
                 bool isNoDicom = false;
                 bool isText = false;
                 bool isINI = false;
 
-                ////root에 checkFile ("end.txt") 파일이 존재하는지 체크하자.
+                //// root에 checkFile ("end.txt") 파일이 존재하는지 체크하자.
                 if (checkFile != "")
                 {
-                    burnAablity = CheckFileExists(sdir, checkFile);
+                    existCheckFile = CheckFileExists(sdir, checkFile);
                 }
 
-                if (burnAablity)
+                //// 다운로드 완료 파일로 체크시 파일이 존재할 경우 (기본은 true) 
+                if (existCheckFile)
                 {
-                    //굽기완료된 폴더인지 체크(burn.end 파일체크)
-                    seekTarget = CheckFileExists(sdir, GlobalVar.BURN_CHK_FL_NM);
+                    //// 굽기완료된 폴더인지 체크(burn.end 파일체크)
+                    //// 완료된 상태이면 True
+                    isBurnEnd = CheckFileExists(sdir, GlobalVar.BURN_CHK_FL_NM);
                 }
 
-                //// 조회조건 모두 통과시
-                if (burnAablity && seekTarget)
+                //// 조회조건 모두 통과시 (
+                if (existCheckFile && !isBurnEnd)
                 {
                     //// 굽기 정보
                     BurnOrderedInfoEntity orderInfo = new BurnOrderedInfoEntity();
@@ -60,6 +62,9 @@ namespace RimageMedicalSystemV2
                     orderInfo.LocalShareFolder = sdir.Name;
                     orderInfo.patFolder = sdir.Name;
                     orderInfo.patFolderFullPath = sdir.FullName;
+                    orderInfo.DeleteIcon = global::RimageMedicalSystemV2.Properties.Resources.close_16x16;
+                    orderInfo.copies = 1;
+                    orderInfo.BurnPatientKind = "N";
 
                     string pID = string.Empty;
                     string pName = string.Empty;
@@ -74,8 +79,22 @@ namespace RimageMedicalSystemV2
                     //// DicomDir 파일이 존재하는지 체크
                     if (GlobalVar.configEntity.ExistDicomDir == "Y")
                     {
-                        //DicomDir 파일이 존재하지 않으면 Pass
-                        if (!(File.Exists(Path.Combine(sdir.FullName, "DICOMDIR")) || File.Exists(Path.Combine(sdir.FullName, mdbFileName))))
+                        //// 환자정보가 담긴 파일이 존재하지 않을 경우 Pass 
+                        if (File.Exists(Path.Combine(sdir.FullName, "DICOMDIR")) ||
+                            File.Exists(Path.Combine(sdir.FullName, mdbFileName)) ||
+                            File.Exists(Path.Combine(sdir.FullName, mdbFileNameMaro)) ||
+                            File.Exists(Path.Combine(sdir.FullName, GlobalVar.CD_INFO_FILE)) ||
+                            File.Exists(Path.Combine(sdir.FullName, GlobalVar.CD_STUDY_INFO_FILE)))
+                        {
+                            existPatInfoFile = true;
+                        }
+                        else
+                        {
+                            existPatInfoFile = false;
+                        }
+
+                        //// 존재하지 않으면 Pass
+                        if (!existPatInfoFile)
                             return null;
                     }
 

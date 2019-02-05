@@ -143,16 +143,16 @@
     <None Include="Resources\add_16x16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add_16x161.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\add_16x162.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\cancel_16x161.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cancel_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close_16x161.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

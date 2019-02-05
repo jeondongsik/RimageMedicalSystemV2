@@ -14,7 +14,9 @@ namespace RimageMedicalSystemV2
 {
     public partial class ucPatients2 : DevExpress.XtraEditors.XtraUserControl
     {
-        List<BurnOrderedInfoEntity> _patInfoList = new List<BurnOrderedInfoEntity>();
+        List<BurnOrderedInfoEntity> _patInfoList = null;
+        MainForm _mainForm = null;
+
         /// <summary>
         /// 조회된 환자 목록
         /// </summary>
@@ -23,11 +25,20 @@ namespace RimageMedicalSystemV2
             get { return this._patInfoList; }
             set { this._patInfoList = value; }
         }
+        /// <summary>
+        /// 부모폼
+        /// </summary>
+        public MainForm FrmParent
+        {
+            get { return this._mainForm; }
+            set { this._mainForm = value; }
+        }
 
         public ucPatients2()
         {
             InitializeComponent();
 
+            this._patInfoList = new List<BurnOrderedInfoEntity>();
             this.gcPatientlist.DataSource = this._patInfoList;
         }
 
@@ -65,7 +76,10 @@ namespace RimageMedicalSystemV2
                     if (e.Column == this.gridColPatientNo || e.Column == this.gridColPatientName)
                     {
                         //// 굽기 실행
-
+                        if (this._mainForm != null)
+                        {
+                            this._mainForm.StartBurn(this._patInfoList[this.gvPatientlist.GetDataSourceRowIndex(e.RowHandle)]);
+                        }
                     }
 
                     if (e.Column == this.gridColCancel)

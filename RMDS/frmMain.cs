@@ -711,10 +711,9 @@ namespace RMDS
                 statusDisp.ProcessID = this.processID.ToString();
                 statusDisp.OrderID = this.burnOrderInfo.DiscOrder.OrderID;
                 statusDisp.ServerIP = this.burnOrderInfo.TargetServer.IP;
-                statusDisp.Status = orderInfo.Status;
-                statusDisp.StatusType = statusType.Trim();
-                statusDisp.Stage = orderInfo.Stage;
-                statusDisp.State = orderInfo.State;
+                statusDisp.Status = orderInfo.Status;               //// IN_PROCESS
+                statusDisp.StatusType = statusType.Trim();          //// Imaging
+                statusDisp.Stage = orderInfo.Stage;                 //// IN_PROCESS                
                 statusDisp.DeviceCurrentState = orderInfo.DeviceCurrentState;
                 statusDisp.Finish = "N";
                 statusDisp.ResultCode = "1";

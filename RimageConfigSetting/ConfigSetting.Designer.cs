@@ -159,6 +159,9 @@
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPageBaseInfo = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.label51 = new System.Windows.Forms.Label();
+            this.textBox_DvdMaxSize = new System.Windows.Forms.TextBox();
+            this.label52 = new System.Windows.Forms.Label();
             this.btnAppBottomImageDelete = new System.Windows.Forms.Button();
             this.button_logfileDelete = new System.Windows.Forms.Button();
             this.pictureAppBottomImage = new DevExpress.XtraEditors.PictureEdit();
@@ -187,9 +190,6 @@
             this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
             this.checkBoxDisableMultiPatient = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoPrintApp = new System.Windows.Forms.CheckBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.textBox_DvdMaxSize = new System.Windows.Forms.TextBox();
-            this.label52 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServerList)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -1549,6 +1549,35 @@
             this.groupControl2.TabIndex = 1;
             this.groupControl2.Text = "병원 정보";
             // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(561, 76);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(74, 15);
+            this.label51.TabIndex = 29;
+            this.label51.Text = "바이트(Byte)";
+            // 
+            // textBox_DvdMaxSize
+            // 
+            this.textBox_DvdMaxSize.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.textBox_DvdMaxSize.ForeColor = System.Drawing.Color.Black;
+            this.textBox_DvdMaxSize.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.textBox_DvdMaxSize.Location = new System.Drawing.Point(404, 72);
+            this.textBox_DvdMaxSize.Name = "textBox_DvdMaxSize";
+            this.textBox_DvdMaxSize.Size = new System.Drawing.Size(154, 23);
+            this.textBox_DvdMaxSize.TabIndex = 27;
+            this.textBox_DvdMaxSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(309, 75);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(88, 15);
+            this.label52.TabIndex = 28;
+            this.label52.Text = "· DVD최대용량";
+            // 
             // btnAppBottomImageDelete
             // 
             this.btnAppBottomImageDelete.Location = new System.Drawing.Point(554, 112);
@@ -1642,7 +1671,7 @@
             // 
             this.simpleButtonDelete.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.simpleButtonDelete.Appearance.Options.UseFont = true;
-            this.simpleButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonDelete.Image")));
+            this.simpleButtonDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonDelete.ImageOptions.Image")));
             this.simpleButtonDelete.Location = new System.Drawing.Point(594, 100);
             this.simpleButtonDelete.Name = "simpleButtonDelete";
             this.simpleButtonDelete.Size = new System.Drawing.Size(85, 35);
@@ -1654,7 +1683,7 @@
             // 
             this.simpleButtonAdd.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.simpleButtonAdd.Appearance.Options.UseFont = true;
-            this.simpleButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonAdd.Image")));
+            this.simpleButtonAdd.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonAdd.ImageOptions.Image")));
             this.simpleButtonAdd.Location = new System.Drawing.Point(496, 100);
             this.simpleButtonAdd.Name = "simpleButtonAdd";
             this.simpleButtonAdd.Size = new System.Drawing.Size(92, 35);
@@ -1938,35 +1967,6 @@
             this.checkBoxAutoPrintApp.Text = "굽기 완료 후 복사 신청서(발급내역) 자동 인쇄";
             this.checkBoxAutoPrintApp.UseVisualStyleBackColor = true;
             // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(561, 76);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(74, 15);
-            this.label51.TabIndex = 29;
-            this.label51.Text = "바이트(Byte)";
-            // 
-            // textBox_DvdMaxSize
-            // 
-            this.textBox_DvdMaxSize.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBox_DvdMaxSize.ForeColor = System.Drawing.Color.Black;
-            this.textBox_DvdMaxSize.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox_DvdMaxSize.Location = new System.Drawing.Point(404, 72);
-            this.textBox_DvdMaxSize.Name = "textBox_DvdMaxSize";
-            this.textBox_DvdMaxSize.Size = new System.Drawing.Size(154, 23);
-            this.textBox_DvdMaxSize.TabIndex = 27;
-            this.textBox_DvdMaxSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(309, 75);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(88, 15);
-            this.label52.TabIndex = 28;
-            this.label52.Text = "· DVD최대용량";
-            // 
             // ConfigSetting
             // 
             this.Appearance.Options.UseFont = true;
@@ -1983,6 +1983,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ConfigSetting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rimage Medical Disc System 환경설정";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigSetting_FormClosing);
             this.Load += new System.EventHandler(this.ConfigSetting_Load);

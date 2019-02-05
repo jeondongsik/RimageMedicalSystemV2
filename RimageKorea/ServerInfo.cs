@@ -8,6 +8,7 @@ namespace RimageKorea
     /// <summary>
     /// 서버 정보
     /// </summary>
+    [Serializable]
     public class ServerInfo
     {
         /// <summary>

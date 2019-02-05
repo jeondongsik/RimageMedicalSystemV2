@@ -87,13 +87,18 @@
             this.gridColCancel});
             this.gvPatientlist.GridControl = this.gcPatientlist;
             this.gvPatientlist.Name = "gvPatientlist";
-            this.gvPatientlist.OptionsBehavior.Editable = false;
-            this.gvPatientlist.OptionsBehavior.ReadOnly = true;
             this.gvPatientlist.OptionsCustomization.AllowColumnMoving = false;
+            this.gvPatientlist.OptionsCustomization.AllowColumnResizing = false;
             this.gvPatientlist.OptionsCustomization.AllowFilter = false;
+            this.gvPatientlist.OptionsCustomization.AllowGroup = false;
             this.gvPatientlist.OptionsCustomization.AllowSort = false;
+            this.gvPatientlist.OptionsDetail.EnableMasterViewMode = false;
+            this.gvPatientlist.OptionsDetail.ShowDetailTabs = false;
+            this.gvPatientlist.OptionsDetail.SmartDetailExpand = false;
             this.gvPatientlist.OptionsSelection.MultiSelect = true;
             this.gvPatientlist.OptionsView.ColumnAutoWidth = false;
+            this.gvPatientlist.OptionsView.ShowDetailButtons = false;
+            this.gvPatientlist.OptionsView.ShowGroupExpandCollapseButtons = false;
             this.gvPatientlist.OptionsView.ShowGroupPanel = false;
             this.gvPatientlist.OptionsView.ShowIndicator = false;
             this.gvPatientlist.RowHeight = 25;
@@ -104,6 +109,8 @@
             this.gridColBurnDate.Caption = "날짜";
             this.gridColBurnDate.FieldName = "patDate";
             this.gridColBurnDate.Name = "gridColBurnDate";
+            this.gridColBurnDate.OptionsColumn.AllowEdit = false;
+            this.gridColBurnDate.OptionsColumn.ReadOnly = true;
             this.gridColBurnDate.Visible = true;
             this.gridColBurnDate.VisibleIndex = 0;
             this.gridColBurnDate.Width = 100;
@@ -113,6 +120,8 @@
             this.gridColPatientNo.Caption = "환자번호";
             this.gridColPatientNo.FieldName = "patNo";
             this.gridColPatientNo.Name = "gridColPatientNo";
+            this.gridColPatientNo.OptionsColumn.AllowEdit = false;
+            this.gridColPatientNo.OptionsColumn.ReadOnly = true;
             this.gridColPatientNo.Visible = true;
             this.gridColPatientNo.VisibleIndex = 1;
             this.gridColPatientNo.Width = 120;
@@ -122,17 +131,22 @@
             this.gridColPatientName.Caption = "환자명";
             this.gridColPatientName.FieldName = "patName";
             this.gridColPatientName.Name = "gridColPatientName";
+            this.gridColPatientName.OptionsColumn.AllowEdit = false;
+            this.gridColPatientName.OptionsColumn.ReadOnly = true;
             this.gridColPatientName.Visible = true;
             this.gridColPatientName.VisibleIndex = 2;
-            this.gridColPatientName.Width = 150;
+            this.gridColPatientName.Width = 155;
             // 
             // gridColGender
             // 
             this.gridColGender.Caption = "성별";
             this.gridColGender.FieldName = "patSex";
             this.gridColGender.Name = "gridColGender";
+            this.gridColGender.OptionsColumn.AllowEdit = false;
+            this.gridColGender.OptionsColumn.ReadOnly = true;
             this.gridColGender.Visible = true;
             this.gridColGender.VisibleIndex = 3;
+            this.gridColGender.Width = 80;
             // 
             // gridQuantity
             // 
@@ -157,7 +171,7 @@
             "6",
             "7"});
             this.repoQuantity.Name = "repoQuantity";
-            this.repoQuantity.ReadOnly = true;
+            this.repoQuantity.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             // 
             // gridColMedia
             // 
@@ -167,7 +181,7 @@
             this.gridColMedia.Name = "gridColMedia";
             this.gridColMedia.Visible = true;
             this.gridColMedia.VisibleIndex = 5;
-            this.gridColMedia.Width = 100;
+            this.gridColMedia.Width = 110;
             // 
             // repoMediatype
             // 
@@ -179,13 +193,15 @@
             "DVDR",
             "DVDR-DL"});
             this.repoMediatype.Name = "repoMediatype";
-            this.repoMediatype.ReadOnly = true;
+            this.repoMediatype.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             // 
             // gridColSize
             // 
             this.gridColSize.Caption = "크기";
             this.gridColSize.FieldName = "mediSize";
             this.gridColSize.Name = "gridColSize";
+            this.gridColSize.OptionsColumn.AllowEdit = false;
+            this.gridColSize.OptionsColumn.ReadOnly = true;
             this.gridColSize.Visible = true;
             this.gridColSize.VisibleIndex = 6;
             this.gridColSize.Width = 110;
@@ -194,22 +210,27 @@
             // 
             this.gridColCancel.Caption = "취소";
             this.gridColCancel.ColumnEdit = this.repoPicDel;
+            this.gridColCancel.FieldName = "DeleteIcon";
             this.gridColCancel.Name = "gridColCancel";
+            this.gridColCancel.OptionsColumn.AllowEdit = false;
+            this.gridColCancel.OptionsColumn.ReadOnly = true;
             this.gridColCancel.Visible = true;
             this.gridColCancel.VisibleIndex = 7;
-            this.gridColCancel.Width = 55;
+            this.gridColCancel.Width = 40;
             // 
             // repoPicDel
             // 
-            this.repoPicDel.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.cancel_16x161;
+            this.repoPicDel.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.close_16x161;
             this.repoPicDel.Appearance.Options.UseImage = true;
+            this.repoPicDel.AppearanceReadOnly.Image = global::RimageMedicalSystemV2.Properties.Resources.close_16x16;
+            this.repoPicDel.AppearanceReadOnly.Options.UseImage = true;
             this.repoPicDel.Name = "repoPicDel";
             // 
             // ucPatients2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.gcPatientlist);
+            this.DoubleBuffered = true;
             this.LookAndFeel.SkinName = "Sharp Plus";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Name = "ucPatients2";
