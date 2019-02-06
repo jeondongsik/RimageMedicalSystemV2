@@ -64,9 +64,7 @@ namespace RimageKorea
 
                 return JsonConvert.DeserializeObject<BurnOrderedInfoEntity>(json);
             }
-            catch { }
-
-            return null;
+            catch { throw; }
         }
 
         /// <summary>

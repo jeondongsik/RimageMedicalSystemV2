@@ -136,11 +136,11 @@ namespace RMDS
         public frmMain(string[] args) : this()
         {
             if (args != null && args.Length > 0)
-            {
-                //// 명령구분 : S[서버설정값], O[굽기명령]
+            {                
+                //// 명령구분 : S[서버설정값], O[굽기명령]                
                 try
                 {
-                    string[] arrArgs = args[0].Split('_');
+                    string[] arrArgs = args[0].Split('|');
 
                     if (arrArgs[0].Equals("S"))
                     {
@@ -153,9 +153,9 @@ namespace RMDS
                     }
                     else
                     {
-                        //// 굽기 명령 실행  
+                        //// 굽기 명령 실행
                         this.OrderType = arrArgs[0];
-                        this.orderID = args[1];
+                        this.orderID = arrArgs[1];
                         this.CallFormHandle = new IntPtr(Convert.ToInt32(arrArgs[2]));
                     }
                 }
@@ -176,45 +176,14 @@ namespace RMDS
             //// 메인프로그램에 메시지 전송한다.
             this.SendWinMessage("BURN_SRT");
 
-            //// 명령정보 읽어오기
-            try
+            //// 서버 설정-상태 정보 가져오기일 경우
+            if (this.OrderType.Equals("S"))
             {
-                this.orderFilePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderID));
-                this.orderTracePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, this.orderID);
-
-                //// OrderID로 폴더를 생성한다.
-                if (!Directory.Exists(this.orderTracePath))
+                try
                 {
-                    Directory.CreateDirectory(orderTracePath);
-                }
-
-                //// 저장된 경로에서 파일을 읽어온다.
-                this.burnOrderInfo = JsonParser.ConvertToBurnOrderedInfoEntityFromFile(this.orderID);
-
-                if (this.burnOrderInfo == null)
-                {
-                    //// 명령정보 찾을 수 없음.
-                    //// 로그 남김
-                    //// 프로그램 종료
-                    ErrorInfo err = new ErrorInfo();
-                    err.Code = "8888";
-                    err.Message = "굽기명령정보를 찾을 수 없습니다.\r\n다시 시도하세요!";
-                    err.Description = "굽기명령 파일 미생성";
-
-                    this.WriteErrLog(err);
-
-                    //// 프로그램 종료
-                    this.ApplicationExit(EnumExitType.Fail);
-                }
-                else
-                {
-                    //// 서버 정보 
-                    this.ServerIP = this.burnOrderInfo.TargetServer.IP;
-                    this.ServerName = this.burnOrderInfo.TargetServer.Name;
-                    this.ServerPort = this.burnOrderInfo.TargetServer.Port;
-
                     //// 서버IP로 폴더 생성
-                    this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.burnOrderInfo.TargetServer.IP));
+                    this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.ServerIP));
+
                     //// 폴더가 없으면 생성
                     if (!Directory.Exists(this.serverLogPath))
                     {
@@ -228,22 +197,87 @@ namespace RMDS
                         this.ApplicationExit(EnumExitType.Fail);
                     }
 
-                    if (this.OrderType.Equals("S"))
+                    //// 서버 설정/상태 가져오기
+                    this.GetServerConfig();
+
+                    //// 서버 상태 가져오기
+                    this.GetServerStatus();
+
+                    //// 메인프로그램에 메시지 전송한다.
+                    this.SendWinMessage("SRV_END");
+
+                    //// 프로그램 종료
+                    this.ApplicationExit(EnumExitType.Success);
+                }
+                catch (Exception ex)
+                {
+                    ErrorInfo err = new ErrorInfo();
+                    err.Code = "9999";
+                    err.Message = ex.Message;
+                    err.Description = ex.ToString();
+                    this.WriteErrLog(err);
+
+                    //// 메인프로그램에 메시지 전송한다.
+                    this.SendWinMessage("ERROR");
+
+                    //// 프로그램 종료
+                    this.ApplicationExit(EnumExitType.Fail);
+                }
+            }
+            else
+            {
+                //// 명령정보 읽어오기
+                try
+                {
+                    this.orderFilePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderID));
+                    this.orderTracePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, this.orderID);
+
+                    //// OrderID로 폴더를 생성한다.
+                    if (!Directory.Exists(this.orderTracePath))
                     {
-                        //// 서버 설정/상태 가져오기
-                        this.GetServerConfig();
+                        Directory.CreateDirectory(orderTracePath);
+                    }
 
-                        //// 서버 상태 가져오기
-                        this.GetServerStatus();
+                    //// 저장된 경로에서 파일을 읽어온다.
+                    this.burnOrderInfo = JsonParser.ConvertToBurnOrderedInfoEntityFromFile(this.orderID);
 
-                        //// 메인프로그램에 메시지 전송한다.
-                        this.SendWinMessage("SRV_END");
+                    if (this.burnOrderInfo == null)
+                    {
+                        //// 명령정보 찾을 수 없음.
+                        //// 로그 남김
+                        //// 프로그램 종료
+                        ErrorInfo err = new ErrorInfo();
+                        err.Code = "8888";
+                        err.Message = "굽기명령정보를 찾을 수 없습니다.\r\n다시 시도하세요!";
+                        err.Description = "굽기명령 파일 미생성";
+
+                        this.WriteErrLog(err);
 
                         //// 프로그램 종료
-                        this.ApplicationExit(EnumExitType.Success);
+                        this.ApplicationExit(EnumExitType.Fail);
                     }
                     else
                     {
+                        //// 서버 정보 
+                        this.ServerIP = this.burnOrderInfo.TargetServer.IP;
+                        this.ServerName = this.burnOrderInfo.TargetServer.Name;
+                        this.ServerPort = this.burnOrderInfo.TargetServer.Port;
+
+                        //// 서버IP로 폴더 생성
+                        this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.burnOrderInfo.TargetServer.IP));
+                        //// 폴더가 없으면 생성
+                        if (!Directory.Exists(this.serverLogPath))
+                        {
+                            Directory.CreateDirectory(this.serverLogPath);
+                        }
+
+                        //// 서버 접속
+                        if (!this.ConnectServer())
+                        {
+                            //// 서버에 접속되지 않으므로 프로그램 종료
+                            this.ApplicationExit(EnumExitType.Fail);
+                        }
+
                         //// 굽기 명령 전송
                         if (!this.SubmitOrder())
                         {
@@ -252,21 +286,21 @@ namespace RMDS
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                ErrorInfo err = new ErrorInfo();
-                err.Code = "9999";
-                err.Message = ex.Message;
-                err.Description = ex.ToString();
-                this.WriteErrLog(err);
+                catch (Exception ex)
+                {
+                    ErrorInfo err = new ErrorInfo();
+                    err.Code = "9999";
+                    err.Message = ex.Message;
+                    err.Description = ex.ToString();
+                    this.WriteErrLog(err);
 
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                    //// 메인프로그램에 메시지 전송한다.
+                    this.SendWinMessage("ERROR");
 
-                //// 프로그램 종료
-                this.ApplicationExit(EnumExitType.Fail);
-            }
+                    //// 프로그램 종료
+                    this.ApplicationExit(EnumExitType.Fail);
+                }
+            } 
         }
 
         /// <summary>

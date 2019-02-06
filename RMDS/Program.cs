@@ -12,10 +12,7 @@ namespace RMDS
         /// </summary>
         [STAThread]
         static void Main(string[] args)
-        {
-            ////args = new string[1];
-            ////args[0] = "성길순_38678794_17123132692";
-
+        {            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain(args));

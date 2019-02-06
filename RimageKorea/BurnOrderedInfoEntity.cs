@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Rimage.Client.Api;
+using Newtonsoft.Json;
 
 namespace RimageKorea
 {
@@ -100,7 +101,7 @@ namespace RimageKorea
         /// <summary>
         /// EditList
         /// </summary>
-        public List<string> EditList { get; set; }
+        public string EditListXml { get; set; }
         /// <summary>
         /// 결과값
         /// </summary>
@@ -204,6 +205,12 @@ namespace RimageKorea
         /// <summary>
         /// 삭제 아이콘
         /// </summary>
+        [JsonIgnore]
         public Image DeleteIcon { get; set; }
+        /// <summary>
+        /// 다시 굽기 아이콘
+        /// </summary>
+        [JsonIgnore]
+        public Image RetryIcon { get; set; }
     }
 }

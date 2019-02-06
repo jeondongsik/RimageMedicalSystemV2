@@ -852,7 +852,7 @@ namespace RimageMedicalSystemV2
                 }
                 else
                 {
-                    //// 로컬 서버일 경우
+                    //// 로컬 서버일 경우 : 로컬경로 그대로 설정하면 됨.
                     orderInfo.MegPath = GlobalVar.configEntity.MergeFileServerFolder;
                     orderInfo.MegFilePath = GlobalVar.configEntity.MergeFileFolder;
                 }
@@ -964,15 +964,17 @@ namespace RimageMedicalSystemV2
                     discOrder.MergeName = orderInfo.MegPath;
 
                     //// EditList 파일 생성
-                    string editListXml = FileControl.createEditListXml(orderInfo.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
+                    string editListXml = FileControl.createEditListXml(orderInfo.ImgFiles.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
                     FileControl.createEditListFile(editListXml, discOrder.EditListPath);
 
                     //// EditList 파일이 없으면 다시 생성
                     if (!File.Exists(discOrder.EditListPath))
                     {
-                        editListXml = FileControl.createEditListXml(orderInfo.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
+                        editListXml = FileControl.createEditListXml(orderInfo.ImgFiles.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
                         FileControl.createEditListFile(editListXml, discOrder.EditListPath);
                     }
+
+                    orderInfo.EditListXml = editListXml;
 
                     string imageXml = CreateOrderXml.CreateImageOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
                     string productionXml = CreateOrderXml.CreateProductionOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
@@ -990,9 +992,6 @@ namespace RimageMedicalSystemV2
                     orderInfo.DiscOrder = discOrder;
                     FileControl.CreateOrderJsonFile(orderInfo.OrderId, JsonParser.ConvertToJsonString(orderInfo));
 
-                    //// 굽기 프로그램을 실행한다.
-                    Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O_{0}_{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
-
                     //// 그리드에 추가한다.
                     if (this._BurningList.Count == 0)
                         this._BurningList.Add(orderInfo);
@@ -1003,7 +1002,13 @@ namespace RimageMedicalSystemV2
                     this.gvBurninglist.RefreshData();
 
                     this.UpdateBurningGrid(orderInfo.OrderId, "Submitted for Imaging", "", "굽기");
- 
+
+                    //// 파일 생성이 완료된 후  프로그램 실행을 위해 1초 쉰다.
+                    Thread.Sleep(1000);
+
+                    //// 굽기 프로그램을 실행한다.
+                    Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
+
                     //// 복사 신청서 인쇄 - 환경설정에 따라, 멀티환자가 아닐경우에만.
                     if (GlobalVar.configEntity.AutoPrintApp.Equals("Y") && orderInfo.BurnPatientKind.Equals("N"))
                     {
@@ -2185,7 +2190,7 @@ namespace RimageMedicalSystemV2
                 }
 
                 if (exeOK)
-                    Process.Start(GlobalVar.BURM_PROGRAM, string.Format("S_{0}_{1}_{2}_{3}", this.NowSeletedServer.IP, this.NowSeletedServer.Name, this.NowSeletedServer.Port, this.Handle.ToInt32().ToString()));
+                    Process.Start(GlobalVar.BURM_PROGRAM, string.Format("S|{0}|{1}|{2}|{3}", this.NowSeletedServer.IP, this.NowSeletedServer.Name, this.NowSeletedServer.Port, this.Handle.ToInt32().ToString()));
             }
             catch { }
         }
@@ -3072,7 +3077,9 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnOrderedList_Click(object sender, EventArgs e)
         {
-
+            OrderHistoryForm frm = new OrderHistoryForm();
+            frm.ShowDialog(this);
+            frm.Dispose();
         }
 
         /// <summary>
@@ -3229,6 +3236,9 @@ namespace RimageMedicalSystemV2
                 if (lable.Tag != null)
                 {
                     ServerInfo srv = lable.Tag as ServerInfo;
+
+                    //// 현재 선택된 서버로 저장
+                    this.NowSeletedServer = srv;
 
                     if (CheckPing.TestPing(srv.IP))
                     {
