@@ -287,7 +287,8 @@ namespace RimageMedicalSystemV2
                     this.btnOrderedList.Visible = false;
                 }
 
-                //this.DeleteLog();
+                //// 로그삭제
+                ////this.DeleteLog();
 
                 //// 다운로드 폴더 체크하여 없으면 생성하자 - ProgramType1인 경우
                 if (GlobalVar.configEntity.programType == "1")
@@ -823,7 +824,7 @@ namespace RimageMedicalSystemV2
                 }
                 orderInfo.patFolderFullPath = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
                 
-                orderInfo.OrderId = string.Format("{0}_{1}_{2}{3}", Utils.ReplaceSpecialWord(orderInfo.patName).Replace(" ", "").Trim(), orderInfo.patNo, DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
+                orderInfo.OrderId = string.Format("{0}_{1}_{2}{3}_ORD", Utils.ReplaceSpecialWord(orderInfo.patName).Replace(" ", "").Trim(), orderInfo.patNo, DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
                 orderInfo.patDate = DateTime.Now.ToShortDateString();
                 orderInfo.Progress = "Submitted for Imaging";
                 orderInfo.ProcessingRate = "0 %";
@@ -1583,7 +1584,7 @@ namespace RimageMedicalSystemV2
                 if (this._BurningList.Count == 0)
                     return;
 
-                //// 해당 OrderID Row를 찾아서 업데이트한다.                
+                //// 해당 OrderID Row를 찾아서 업데이트한다.
                 this.UpdateBurningGrid(trace);
 
                 //// 굽기완료시
@@ -2648,9 +2649,10 @@ namespace RimageMedicalSystemV2
                         {
                             //// 굽기 완료
                         }
-                        else if (cds.lpData == "ERROR")
+                        else if (cds.lpData.StartsWith("ERROR"))
                         {
-                            //// 오류 발생
+                            //// 오류 발생 처리
+                            this.HandleError(cds.lpData);
                         }
                         break;
                     default:
@@ -3220,7 +3222,7 @@ namespace RimageMedicalSystemV2
         /// </summary>
         private void KillBurnPrograms()
         {
-
+            KillProcess.DelProcess("RMDS");
         }
 
         /// <summary>
@@ -3248,6 +3250,28 @@ namespace RimageMedicalSystemV2
                     {
                         this.SelectServerLabel(srv.IP, false);
                     }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 굽기 프로그램에서 받은 오류파일을 읽어서 처리한다.
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void HandleError(string fileName)
+        {
+            try
+            {
+                ////파일을 읽어온다.
+                string json = File.ReadAllText(fileName);
+                ErrorInfo err = JsonParser.ConvertToErrorInfo(json);
+
+                if (err.OrderType == "O")
+                {
+                    this.txtMessages.Text = string.Format("굽기 오류 발생\r\n{0}", err.Message);
+                    this.txtStatusView.AppendText(string.Format("오류발생 출력번호 : {0}\r\n", err.OrderID));
+                    this.txtStatusView.AppendText(err.Description);
                 }
             }
             catch { }

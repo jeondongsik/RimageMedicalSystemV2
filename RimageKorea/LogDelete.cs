@@ -33,63 +33,35 @@ namespace RimageKorea
             }
             catch { }
 
+            //// 굽기 명령 정보 삭제
             try
             {
-                DirectoryInfo logDir = new DirectoryInfo(Path.Combine(folderLoot, GlobalVar.LOG_ORDER_FLD));
+                DirectoryInfo logDir = new DirectoryInfo(Path.Combine(folderLoot, GlobalVar.ORDER_FOLDER));
                 Dictionary<string, string> delTargetOrderFiles = new Dictionary<string, string>();
                 if (1 > retentionPeriod) retentionPeriod = 1;
 
-                foreach (DirectoryInfo dinfo in logDir.GetDirectories())
+                foreach (FileInfo fi in logDir.GetFiles())
                 {
-                    DateTime diDt = Convert.ToDateTime(dinfo.Name).Date;
-                    if (diDt <= DateTime.Now.AddDays(retentionPeriod * -1).Date)
+                    if (fi.CreationTime > DateTime.Now.AddDays(retentionPeriod * -1).Date)
                     {
-                        //환자 폴더도 삭제
-                        string targetFolder = Path.Combine(logDir.FullName, diDt.ToString("yyyy-MM-dd"));
-                        DataTable dt = FileControl.GetOrderedList(targetFolder);
-
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            if (!delTargetOrderFiles.ContainsKey(dr["fileName"].ToString()))
-                                delTargetOrderFiles.Add(dr["fileName"].ToString(), dr["EditListPath"].ToString());
-
-                            if (Directory.Exists(Path.Combine(dr["LocalShareFolder"].ToString(), dr["patFolder"].ToString())))
-                            {                                
-                                if (false == string.IsNullOrWhiteSpace(dr["patFolder"].ToString()))
-                                {
-                                    if (FileControl.DeleteFolder(Path.Combine(dr["LocalShareFolder"].ToString(), dr["patFolder"].ToString()), false) == false)
-                                    {
-                                        //파일삭제 실패 시 읽기전용 파일의 속성 변경 후 다시한번 시도
-                                        FileControl.FileAttributeChange(Path.Combine(dr["LocalShareFolder"].ToString(), dr["patFolder"].ToString()));
-
-                                        if (FileControl.DeleteFolder(Path.Combine(dr["LocalShareFolder"].ToString(), dr["patFolder"].ToString()), false) == false)
-                                        {
-                                            if (delTargetOrderFiles.ContainsKey(dr["fileName"].ToString()))
-                                                delTargetOrderFiles.Remove(dr["fileName"].ToString());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        //로그폴더안의 OrderList.xml 및 EditFile삭제
-                        //FileControl.DeleteFolder(dinfo.FullName, false);
-                        foreach (KeyValuePair<string, string> kv in delTargetOrderFiles)
-                        {
-                            FileControl.DeleteFile(kv.Key);
-                            FileControl.DeleteFile(kv.Value);
-                        }
-
-                        //폴더안의 파일이 없다면 폴더도 삭제
-                        if (0 == FileControl.GetFolderLengthOnly(dinfo.FullName))
-                        {
-                            try
-                            {
-                                FileControl.DeleteFolder(dinfo.FullName, false);
-                            }
-                            catch { }
-                        }
+                        continue;
                     }
+                    
+                    //// 굽기명령 파일인 경우 하위 환자폴더도 삭제
+                    if (fi.Name.EndsWith("ORD"))
+                    {
+                        string json = File.ReadAllText(fi.FullName);
+                        BurnOrderedInfoEntity burnOrderInfo = JsonParser.ConvertToBurnOrderedInfoEntity(json);
+
+                        //// 환자폴더 삭제
+                        Directory.Delete(burnOrderInfo.patFolderFullPath, true);
+                        //// 머지파일 삭제
+                        FileControl.DeleteFile(burnOrderInfo.MegPath);
+                        //// EditList 파일 삭제
+                        FileControl.DeleteFile(burnOrderInfo.EditListPath);
+                    }
+
+                    fi.Delete();
                 }
             }
             catch (Exception ex)
@@ -111,6 +83,20 @@ namespace RimageKorea
             }
             catch { }
 
+            //에러로그 삭제
+            try
+            {
+                DirectoryInfo errDir = new DirectoryInfo(Path.Combine(folderLoot, GlobalVar.ORDER_FOLDER, "ERRORS"));
+                foreach (FileInfo fi in errDir.GetFiles())
+                {
+                    if (fi.CreationTime.Date <= DateTime.Now.AddDays(31).Date)
+                    {
+                        FileControl.DeleteFile(fi.FullName, false);
+                    }
+                }
+            }
+            catch { }
+
             //// 작업폴더 내용 삭제하기
             if (deleteInJobFolder == "Y")
             {
@@ -121,6 +107,25 @@ namespace RimageKorea
                 }
                 catch { }
             }
+
+            //// 굽기 로그 삭제
+            try
+            {
+                DirectoryInfo dirOrder  = new DirectoryInfo(Path.Combine(folderLoot, GlobalVar.ORDER_FOLDER));
+
+                foreach (DirectoryInfo dri in dirOrder.GetDirectories())
+                {
+                    if (dri.Name.StartsWith("ERRORS"))
+                        continue;
+
+                    try
+                    {
+                        dri.Delete(true);
+                    }
+                    catch { }
+                }
+            }
+            catch { }
         }
     }
 }

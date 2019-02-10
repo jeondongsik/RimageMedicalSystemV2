@@ -548,5 +548,14 @@ namespace RimageKorea
 
             return stream;
         }
+
+        /// <summary>
+        /// 에러파일명 생성
+        /// </summary>
+        /// <returns></returns>
+        public static string GetErrorsFileName()
+        {
+            return string.Format("ERR_{0}{1}.txt", Utils.GetNowTime(), DateTime.Now.Millisecond.ToString().PadLeft(3, '0'));
+        }
     }
 }

@@ -107,14 +107,14 @@ namespace RMDS
         /// <summary>
         /// 명령 종류
         /// </summary>
-        string OrderType = "O";
-        string ServerIP = string.Empty;
-        string ServerName = string.Empty;
-        string ServerPort = string.Empty;
+        string orderType = "O";
+        string serverIP = string.Empty;
+        string serverName = string.Empty;
+        string serverPort = string.Empty;
         /// <summary>
         /// 호출한 폼의 핸들값
         /// </summary>
-        IntPtr CallFormHandle = IntPtr.Zero;
+        IntPtr callFormHandle = IntPtr.Zero;
 
         /// <summary>
         /// Creator
@@ -145,18 +145,18 @@ namespace RMDS
                     if (arrArgs[0].Equals("S"))
                     {
                         //// 서버 설정값, 상태값만 가져온다.
-                        this.OrderType = arrArgs[0];
-                        this.ServerIP = arrArgs[1];
-                        this.ServerName = arrArgs[2];
-                        this.ServerPort = arrArgs[3];
-                        this.CallFormHandle = new IntPtr(Convert.ToInt32(arrArgs[4]));
+                        this.orderType = arrArgs[0];
+                        this.serverIP = arrArgs[1];
+                        this.serverName = arrArgs[2];
+                        this.serverPort = arrArgs[3];
+                        this.callFormHandle = new IntPtr(Convert.ToInt32(arrArgs[4]));
                     }
                     else
                     {
                         //// 굽기 명령 실행
-                        this.OrderType = arrArgs[0];
+                        this.orderType = arrArgs[0];
                         this.orderID = arrArgs[1];
-                        this.CallFormHandle = new IntPtr(Convert.ToInt32(arrArgs[2]));
+                        this.callFormHandle = new IntPtr(Convert.ToInt32(arrArgs[2]));
                     }
                 }
                 catch{}
@@ -177,12 +177,12 @@ namespace RMDS
             this.SendWinMessage("BURN_SRT");
 
             //// 서버 설정-상태 정보 가져오기일 경우
-            if (this.OrderType.Equals("S"))
+            if (this.orderType.Equals("S"))
             {
                 try
                 {
                     //// 서버IP로 폴더 생성
-                    this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.ServerIP));
+                    this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.serverIP));
 
                     //// 폴더가 없으면 생성
                     if (!Directory.Exists(this.serverLogPath))
@@ -214,11 +214,8 @@ namespace RMDS
                     ErrorInfo err = new ErrorInfo();
                     err.Code = "9999";
                     err.Message = ex.Message;
-                    err.Description = ex.ToString();
-                    this.WriteErrLog(err);
-
-                    //// 메인프로그램에 메시지 전송한다.
-                    this.SendWinMessage("ERROR");
+                    err.Description = ex.ToString();                    
+                    this.WriteErrLog(err, true);
 
                     //// 프로그램 종료
                     this.ApplicationExit(EnumExitType.Fail);
@@ -251,7 +248,7 @@ namespace RMDS
                         err.Message = "굽기명령정보를 찾을 수 없습니다.\r\n다시 시도하세요!";
                         err.Description = "굽기명령 파일 미생성";
 
-                        this.WriteErrLog(err);
+                        this.WriteErrLog(err, true);
 
                         //// 프로그램 종료
                         this.ApplicationExit(EnumExitType.Fail);
@@ -259,9 +256,9 @@ namespace RMDS
                     else
                     {
                         //// 서버 정보 
-                        this.ServerIP = this.burnOrderInfo.TargetServer.IP;
-                        this.ServerName = this.burnOrderInfo.TargetServer.Name;
-                        this.ServerPort = this.burnOrderInfo.TargetServer.Port;
+                        this.serverIP = this.burnOrderInfo.TargetServer.IP;
+                        this.serverName = this.burnOrderInfo.TargetServer.Name;
+                        this.serverPort = this.burnOrderInfo.TargetServer.Port;
 
                         //// 서버IP로 폴더 생성
                         this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.burnOrderInfo.TargetServer.IP));
@@ -292,10 +289,7 @@ namespace RMDS
                     err.Code = "9999";
                     err.Message = ex.Message;
                     err.Description = ex.ToString();
-                    this.WriteErrLog(err);
-
-                    //// 메인프로그램에 메시지 전송한다.
-                    this.SendWinMessage("ERROR");
+                    this.WriteErrLog(err, true);
 
                     //// 프로그램 종료
                     this.ApplicationExit(EnumExitType.Fail);
@@ -307,20 +301,29 @@ namespace RMDS
         /// 오류 로그 파일 남기기 - 하나의 파일에 넣지 않고 파일별로 생성한다.
         /// </summary>
         /// <param name="err"></param>
-        private void WriteErrLog(ErrorInfo err)
+        private void WriteErrLog(ErrorInfo err, bool sendMessage = false)
         {
             try
             {
-                err.ServerIP = this.ServerIP;
-                err.ServerName = this.ServerName;
+                err.OrderType = this.orderType;
+                err.OrderID = this.orderID;
+                err.ServerIP = this.serverIP;
+                err.ServerName = this.serverName;
 
                 string json = JsonParser.ConvertToJsonString(err);
-                string file = Path.Combine(this.orderTracePath, GlobalVar.ERR_FL_NM);
+                string fileName = string.Format("ERR_{0}{1}.txt", Utils.GetNowTime(), DateTime.Now.Millisecond.ToString().PadLeft(3, '0'));
+                string filePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, "ERRORS", fileName);
+                
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
 
-                if (File.Exists(file))
-                    File.Delete(file);
+                FileControl.Write(json, filePath);
 
-                FileControl.Write(json, file);
+                if (sendMessage)
+                {
+                    //// 메인프로그램에 메시지 전송한다.
+                    this.SendWinMessage(string.Format("ERROR_{0}", filePath));
+                }
             }
             catch { }
         }
@@ -377,10 +380,7 @@ namespace RMDS
                 err.Code = "1001";
                 err.Message = ex.Message;
                 err.Description = ex.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 this.ApplicationExit(EnumExitType.Fail);
             }
@@ -432,10 +432,7 @@ namespace RMDS
                     err.Code = "1001";
                     err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.burnOrderInfo.TargetServer.IP);
                     err.Description = "Rimage Message : Ping Test";
-                    this.WriteErrLog(err);
-
-                    //// 메인프로그램에 메시지 전송한다.
-                    this.SendWinMessage("ERROR");
+                    this.WriteErrLog(err, true);
                 }
             }
             catch (CMsgConnectFailedException me)
@@ -445,10 +442,7 @@ namespace RMDS
                 err.Code = "1001";
                 err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.burnOrderInfo.TargetServer.IP);
                 err.Description = me.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
             }
             catch (CBaseException be)
             {
@@ -456,10 +450,7 @@ namespace RMDS
                 err.Code = "1001";
                 err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.burnOrderInfo.TargetServer.IP);
                 err.Description = be.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
             }
 
             return false;
@@ -477,11 +468,11 @@ namespace RMDS
 
             if (CSystemManager.GetInstance().Connected)
             {
-                createOrder.SERVER = this.ServerName.ToUpper();
+                createOrder.SERVER = this.serverName.ToUpper();
                 createOrder.SYSFOLDER = CSystemManager.GetInstance().GetUncSystemFolder();
 
                 if (this.ServerType.Equals("R"))
-                    createOrder.SYSFOLDER = "\\\\" + this.ServerIP + "\\Rimage";
+                    createOrder.SYSFOLDER = "\\\\" + this.serverIP + "\\Rimage";
                 else
                     createOrder.SYSFOLDER = this.RimageSystemFolderPath;    //CSystemManager.GetInstance().GetUncSystemFolder();
 
@@ -492,12 +483,12 @@ namespace RMDS
                 try
                 {
                     CSystemManager.GetInstance().SetSynchronousTimeout(30000);
-                    strProdConfig = CServerManager.GetInstance().ExecuteServerRequest(this.ServerName.ToUpper() + "_PS01", sXml);
+                    strProdConfig = CServerManager.GetInstance().ExecuteServerRequest(this.serverName.ToUpper() + "_PS01", sXml);
 
                     if (this.ServerType.Equals("R"))
                     {
-                        strProdConfig = strProdConfig.Replace("D:\\Rimage\\XML\\", "\\\\" + this.ServerIP + "\\Rimage\\XML\\");
-                        strProdConfig = strProdConfig.Replace(this.ServerName.ToUpper(), this.ServerIP);
+                        strProdConfig = strProdConfig.Replace("D:\\Rimage\\XML\\", "\\\\" + this.serverIP + "\\Rimage\\XML\\");
+                        strProdConfig = strProdConfig.Replace(this.serverName.ToUpper(), this.serverIP);
                     }
                     else
                     {
@@ -538,11 +529,11 @@ namespace RMDS
 
             if (CSystemManager.GetInstance().Connected)
             {
-                createOrder.SERVER = this.ServerName.ToUpper();
+                createOrder.SERVER = this.serverName.ToUpper();
                 createOrder.SYSFOLDER = CSystemManager.GetInstance().GetUncSystemFolder();
 
                 if (this.ServerType.Equals("R"))
-                    createOrder.SYSFOLDER = "\\\\" + this.ServerIP + "\\Rimage";
+                    createOrder.SYSFOLDER = "\\\\" + this.serverIP + "\\Rimage";
                 else
                     createOrder.SYSFOLDER = this.RimageSystemFolderPath;
 
@@ -553,12 +544,12 @@ namespace RMDS
                 try
                 {
                     CSystemManager.GetInstance().SetSynchronousTimeout(60000);
-                    strProdConfig = CServerManager.GetInstance().ExecuteServerRequest(this.ServerName.ToUpper() + "_PS01", sXml);
+                    strProdConfig = CServerManager.GetInstance().ExecuteServerRequest(this.serverName.ToUpper() + "_PS01", sXml);
 
                     if (this.ServerType.Equals("R"))
                     {
-                        strProdConfig = strProdConfig.Replace("D:\\Rimage\\XML\\", "\\\\" + this.ServerIP + "\\Rimage\\XML\\");
-                        strProdConfig = strProdConfig.Replace(this.ServerName.ToUpper(), this.ServerIP);
+                        strProdConfig = strProdConfig.Replace("D:\\Rimage\\XML\\", "\\\\" + this.serverIP + "\\Rimage\\XML\\");
+                        strProdConfig = strProdConfig.Replace(this.serverName.ToUpper(), this.serverIP);
                     }
                     else
                     {
@@ -648,10 +639,7 @@ namespace RMDS
                 err.Code = "9999";
                 err.Message = string.Concat("Order Submission Failed\n", me.Message);
                 err.Description = me.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 return false;
             }
@@ -662,10 +650,7 @@ namespace RMDS
                 err.Code = "9999";
                 err.Message = string.Concat("Order Submission Failed\n", be.Message);
                 err.Description = be.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 return false;
             }
@@ -690,10 +675,7 @@ namespace RMDS
                 err.Code = "9999";
                 err.Message = string.Concat("ReOrder Submission Failed\n", me.Message);
                 err.Description = me.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 return false;
             }
@@ -703,10 +685,7 @@ namespace RMDS
                 err.Code = "9999";
                 err.Message = string.Concat("ReOrder Submission Failed\n", be.Message);
                 err.Description = be.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 return false;
             }
@@ -909,10 +888,7 @@ namespace RMDS
                 err.Code = "9999";
                 err.Message = me.Message;
                 err.Description = me.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 this.ApplicationExit(EnumExitType.Fail);
             }
@@ -922,10 +898,7 @@ namespace RMDS
                 err.Code = "9999";
                 err.Message = be.Message;
                 err.Description = be.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 this.ApplicationExit(EnumExitType.Fail);
             }
@@ -962,10 +935,7 @@ namespace RMDS
                 err.Code = "9000";
                 err.Message = "시스템에 일시적인 장애가 발생하였습니다.\r\n\r\n네트워크 상태 또는 서버 상태를 확인하세요.\r\n" + sysExecption.Message;
                 err.Description = sysExecption.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 //// 프로그램 종료
                 this.ApplicationExit(EnumExitType.Fail);
@@ -992,10 +962,7 @@ namespace RMDS
                 err.Code = "9999";
                 err.Message = string.Concat("Recover Order Submission Failed\n", ex.Message);
                 err.Description = ex.ToString();
-                this.WriteErrLog(err);
-
-                //// 메인프로그램에 메시지 전송한다.
-                this.SendWinMessage("ERROR");
+                this.WriteErrLog(err, true);
 
                 return false;
             }
@@ -1012,7 +979,7 @@ namespace RMDS
             this.Disconnect();
 
             //// 굽기일 경우에만 ..
-            if (this.OrderType.Equals("O"))
+            if (this.orderType.Equals("O"))
             {
                 try
                 {
@@ -1023,7 +990,7 @@ namespace RMDS
                     //// 로그기록
                     if (this.burnOrderInfo != null)
                     {
-                        RimageKorea.ErrorLog.TraceWrite(this, string.Format("-- [{0}] Complete. [{1}] -- ", this.burnOrderInfo.DiscOrder.OrderID, etype.ToString()), Application.StartupPath);
+                        ErrorLog.TraceWrite(this, string.Format("-- [{0}] Complete. [{1}] -- ", this.burnOrderInfo.DiscOrder.OrderID, etype.ToString()), Application.StartupPath);
                     }
                 }
                 catch { }
@@ -1059,7 +1026,7 @@ namespace RMDS
                     {   
                     }
 
-                    RimageKorea.ErrorLog.TraceWrite(this, "-- [" + this.burnOrderInfo.TargetServer.IP + "] Disconnected -- ", Application.StartupPath);
+                    ErrorLog.TraceWrite(this, "-- [" + this.burnOrderInfo.TargetServer.IP + "] Disconnected -- ", Application.StartupPath);
                 }
             }
             catch
@@ -1082,7 +1049,7 @@ namespace RMDS
                 cds.cbData = buff.Length + 1;
                 cds.lpData = msg;
                 
-                SendMessage(this.CallFormHandle, WM_COPYDATA, 0, ref cds);
+                SendMessage(this.callFormHandle, WM_COPYDATA, 0, ref cds);
             }
             catch { }
         }

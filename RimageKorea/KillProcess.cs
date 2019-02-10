@@ -12,6 +12,10 @@ namespace RimageKorea
         {
         }
 
+        /// <summary>
+        /// 실행중인 Process 죽이기
+        /// </summary>
+        /// <param name="processName"></param>
         public static void DelProcess(string processName)
         {
             try

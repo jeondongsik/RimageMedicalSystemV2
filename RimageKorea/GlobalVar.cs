@@ -115,7 +115,7 @@ namespace RimageKorea
         /// <summary>
         /// 오류 로그 파일명
         /// </summary>
-        public const string ERR_FL_NM = "ERROR.txt";
+        public const string ERR_FL_NM = "ERROR";
 
         /// <summary>
         /// 서버설정내용 기록파일명

@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrderHistoryForm));
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnSearch = new DevExpress.XtraEditors.SimpleButton();
             this.grpBurningList = new DevExpress.XtraEditors.GroupControl();
             this.gcPatientlist = new DevExpress.XtraGrid.GridControl();
             this.gvPatientlist = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -49,6 +49,7 @@
             this.repoQuantity = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.gridColResult = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColRetry = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoPicRetry = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
             this.gridColDelete = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoPicDel = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -59,20 +60,32 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvPatientlist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoMediatype)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoQuantity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoPicRetry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoPicDel)).BeginInit();
             this.SuspendLayout();
             // 
             // panelControl1
             // 
+            this.panelControl1.Controls.Add(this.label4);
             this.panelControl1.Controls.Add(this.label3);
             this.panelControl1.Controls.Add(this.label2);
             this.panelControl1.Controls.Add(this.label1);
-            this.panelControl1.Controls.Add(this.btnSearch);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(984, 70);
             this.panelControl1.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.label4.Location = new System.Drawing.Point(472, 44);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(266, 17);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "* Ctrl + F 키를 눌러서 검색할 수  있습니다.";
             // 
             // label3
             // 
@@ -107,19 +120,6 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "* CD/DVD 버닝 명령을 보낸 모든 내역입니다. ";
             // 
-            // btnSearch
-            // 
-            this.btnSearch.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Appearance.Options.UseFont = true;
-            this.btnSearch.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.ImageOptions.Image")));
-            this.btnSearch.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnSearch.Location = new System.Drawing.Point(833, 14);
-            this.btnSearch.LookAndFeel.SkinName = "London Liquid Sky";
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(139, 43);
-            this.btnSearch.TabIndex = 6;
-            this.btnSearch.Text = "조회하기";
-            // 
             // grpBurningList
             // 
             this.grpBurningList.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -142,7 +142,8 @@
             this.gcPatientlist.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repoQuantity,
             this.repoMediatype,
-            this.repoPicDel});
+            this.repoPicDel,
+            this.repoPicRetry});
             this.gcPatientlist.Size = new System.Drawing.Size(980, 561);
             this.gcPatientlist.TabIndex = 4;
             this.gcPatientlist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -174,11 +175,12 @@
             this.gridColDelete});
             this.gvPatientlist.GridControl = this.gcPatientlist;
             this.gvPatientlist.Name = "gvPatientlist";
+            this.gvPatientlist.OptionsBehavior.AllowSortAnimation = DevExpress.Utils.DefaultBoolean.True;
+            this.gvPatientlist.OptionsClipboard.CopyColumnHeaders = DevExpress.Utils.DefaultBoolean.False;
             this.gvPatientlist.OptionsCustomization.AllowColumnMoving = false;
             this.gvPatientlist.OptionsCustomization.AllowColumnResizing = false;
             this.gvPatientlist.OptionsCustomization.AllowFilter = false;
             this.gvPatientlist.OptionsCustomization.AllowGroup = false;
-            this.gvPatientlist.OptionsCustomization.AllowSort = false;
             this.gvPatientlist.OptionsDetail.EnableMasterViewMode = false;
             this.gvPatientlist.OptionsDetail.ShowDetailTabs = false;
             this.gvPatientlist.OptionsDetail.SmartDetailExpand = false;
@@ -207,6 +209,7 @@
             this.gridColPatientNo.FieldName = "patNo";
             this.gridColPatientNo.Name = "gridColPatientNo";
             this.gridColPatientNo.OptionsColumn.AllowEdit = false;
+            this.gridColPatientNo.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridColPatientNo.OptionsColumn.ReadOnly = true;
             this.gridColPatientNo.Visible = true;
             this.gridColPatientNo.VisibleIndex = 1;
@@ -229,6 +232,7 @@
             this.gridColGender.FieldName = "patSex";
             this.gridColGender.Name = "gridColGender";
             this.gridColGender.OptionsColumn.AllowEdit = false;
+            this.gridColGender.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridColGender.OptionsColumn.ReadOnly = true;
             this.gridColGender.Visible = true;
             this.gridColGender.VisibleIndex = 3;
@@ -237,8 +241,10 @@
             // gridColAge
             // 
             this.gridColAge.Caption = "나이";
+            this.gridColAge.FieldName = "patAge";
             this.gridColAge.Name = "gridColAge";
             this.gridColAge.OptionsColumn.AllowEdit = false;
+            this.gridColAge.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridColAge.OptionsColumn.ReadOnly = true;
             this.gridColAge.Visible = true;
             this.gridColAge.VisibleIndex = 4;
@@ -250,6 +256,7 @@
             this.gridColSize.FieldName = "mediSize";
             this.gridColSize.Name = "gridColSize";
             this.gridColSize.OptionsColumn.AllowEdit = false;
+            this.gridColSize.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridColSize.OptionsColumn.ReadOnly = true;
             this.gridColSize.Visible = true;
             this.gridColSize.VisibleIndex = 5;
@@ -283,6 +290,7 @@
             this.gridQuantity.ColumnEdit = this.repoQuantity;
             this.gridQuantity.FieldName = "copies";
             this.gridQuantity.Name = "gridQuantity";
+            this.gridQuantity.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridQuantity.Visible = true;
             this.gridQuantity.VisibleIndex = 7;
             // 
@@ -305,6 +313,7 @@
             // gridColResult
             // 
             this.gridColResult.Caption = "결과";
+            this.gridColResult.FieldName = "BurnState";
             this.gridColResult.Name = "gridColResult";
             this.gridColResult.OptionsColumn.AllowEdit = false;
             this.gridColResult.OptionsColumn.ReadOnly = true;
@@ -315,12 +324,22 @@
             // gridColRetry
             // 
             this.gridColRetry.Caption = "다시굽기";
+            this.gridColRetry.ColumnEdit = this.repoPicRetry;
+            this.gridColRetry.FieldName = "RetryIcon";
             this.gridColRetry.Name = "gridColRetry";
             this.gridColRetry.OptionsColumn.AllowEdit = false;
+            this.gridColRetry.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridColRetry.OptionsColumn.ReadOnly = true;
+            this.gridColRetry.ToolTip = "다시굽기";
             this.gridColRetry.Visible = true;
             this.gridColRetry.VisibleIndex = 9;
             this.gridColRetry.Width = 65;
+            // 
+            // repoPicRetry
+            // 
+            this.repoPicRetry.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.refreshpivottable_16x16;
+            this.repoPicRetry.Appearance.Options.UseImage = true;
+            this.repoPicRetry.Name = "repoPicRetry";
             // 
             // gridColDelete
             // 
@@ -329,17 +348,15 @@
             this.gridColDelete.FieldName = "DeleteIcon";
             this.gridColDelete.Name = "gridColDelete";
             this.gridColDelete.OptionsColumn.AllowEdit = false;
+            this.gridColDelete.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
             this.gridColDelete.OptionsColumn.ReadOnly = true;
+            this.gridColDelete.ToolTip = "폴더삭제";
             this.gridColDelete.Visible = true;
             this.gridColDelete.VisibleIndex = 10;
             this.gridColDelete.Width = 65;
             // 
             // repoPicDel
             // 
-            this.repoPicDel.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.close_16x161;
-            this.repoPicDel.Appearance.Options.UseImage = true;
-            this.repoPicDel.AppearanceReadOnly.Image = global::RimageMedicalSystemV2.Properties.Resources.close_16x16;
-            this.repoPicDel.AppearanceReadOnly.Options.UseImage = true;
             this.repoPicDel.Name = "repoPicDel";
             // 
             // OrderHistoryForm
@@ -355,6 +372,7 @@
             this.Name = "OrderHistoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "굽기 명령 전송 내역";
+            this.Load += new System.EventHandler(this.OrderHistoryForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
@@ -364,6 +382,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvPatientlist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoMediatype)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoQuantity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoPicRetry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoPicDel)).EndInit();
             this.ResumeLayout(false);
 
@@ -392,6 +411,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private DevExpress.XtraEditors.SimpleButton btnSearch;
+        private System.Windows.Forms.Label label4;
+        private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repoPicRetry;
     }
 }

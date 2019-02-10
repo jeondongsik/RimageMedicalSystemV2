@@ -11,6 +11,14 @@ namespace RimageKorea
     public class ErrorInfo
     {
         /// <summary>
+        /// 명령의 종류
+        /// </summary>
+        public string OrderType { get; set; }
+        /// <summary>
+        /// 명령아이디
+        /// </summary>
+        public string OrderID { get; set; }
+        /// <summary>
         /// 오류 코드
         /// </summary>
         public string Code { get; set; }
