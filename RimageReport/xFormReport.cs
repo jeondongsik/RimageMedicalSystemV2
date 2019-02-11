@@ -84,9 +84,36 @@ namespace RimageReport
             this.gridMonth.Tag = DateTime.Now.Year.ToString();
             this.gridDays.Tag = DateTime.Now.Month.ToString().PadLeft(2, '0');
 
-            this._webAddress = string.Format("http://{0}/RimageWeb", this._nowSelectedServer.IP);
+            this.BindingServerIPs();
 
-            this.BindingData(this.GetData());
+            ////this._webAddress = string.Format("http://{0}/RimageWeb", this._nowSelectedServer.IP);
+
+            ////this.BindingData(this.GetData());
+        }
+
+        /// <summary>
+        /// 서버 아이피 목록 콤보박스에 바인딩
+        /// </summary>
+        private void BindingServerIPs()
+        {
+            if (this._serverList != null)
+            {
+                if (this._serverList.Count > 0)
+                {
+                    int idx = 0;
+                    for (int i = 0; i < this._serverList.Count; i++)
+                    {
+                        this.cbServerIPs.Properties.Items.Add(this._serverList[i].IP);
+
+                        if (this._serverList[i].IP == this._nowSelectedServer.IP)
+                        {
+                            idx = i;
+                        }
+                    }
+
+                    this.cbServerIPs.SelectedIndex = idx;
+                }
+            }
         }
 
         /// <summary>
@@ -821,6 +848,17 @@ namespace RimageReport
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 서버아이피 선택
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbServerIPs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this._webAddress = string.Format("http://{0}/RimageWeb", this.cbServerIPs.Text);
+            this.BindingData(this.GetData());
         }
     }
 }

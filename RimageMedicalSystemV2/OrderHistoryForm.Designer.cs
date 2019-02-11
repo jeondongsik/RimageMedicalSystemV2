@@ -52,6 +52,7 @@
             this.repoPicRetry = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
             this.gridColDelete = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoPicDel = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpBurningList)).BeginInit();
@@ -66,6 +67,7 @@
             // 
             // panelControl1
             // 
+            this.panelControl1.Controls.Add(this.label5);
             this.panelControl1.Controls.Add(this.label4);
             this.panelControl1.Controls.Add(this.label3);
             this.panelControl1.Controls.Add(this.label2);
@@ -191,6 +193,7 @@
             this.gvPatientlist.OptionsView.ShowGroupPanel = false;
             this.gvPatientlist.OptionsView.ShowIndicator = false;
             this.gvPatientlist.RowHeight = 25;
+            this.gvPatientlist.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.gvPatientlist_RowCellClick);
             // 
             // gridColBurnDate
             // 
@@ -359,6 +362,17 @@
             // 
             this.repoPicDel.Name = "repoPicDel";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.label5.Location = new System.Drawing.Point(472, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(328, 17);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "* 다시굽기 또는 폴더삭제는 아이콘을 더블클릭하세요.";
+            // 
             // OrderHistoryForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -413,5 +427,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repoPicRetry;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -243,40 +243,7 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                //// 오더아이디별 폴더로 되어 있음.
-                foreach (string fld in Directory.GetDirectories(this.orderLogPath))
-                {
-                    if (fld.StartsWith("SVR_"))
-                        continue;
-
-                    //// 굽기완료된 주문폴더인지 체크
-                    var endFiles = Directory.GetFiles(fld, GlobalVar.BURN_CHK_FL_NM);
-                    if (endFiles != null && endFiles.Length > 0)
-                    {
-                        //// 굽기완료되었으므로 Pass
-                        continue;
-                    }
-
-                    //// 폴더명이 주문번호임.
-                    var fileLst = Directory.GetFiles(fld, GlobalVar.ERR_FL_NM);
-                    if (fileLst != null && fileLst.Length > 0)
-                    {
-                        string file = fileLst.First();
-                        string json = File.ReadAllText(file);
-
-                        ErrorInfo obj = JsonParser.ConvertToErrorInfo(json);
-
-                        if (obj != null)
-                        {
-                            this.mReportForm.Invoke(this.mReportForm.systemListenerDel, obj);
-                        }
-
-                        //// 오류파일 삭제
-                        FileControl.DeleteFile(file);
-
-                        ErrorLog.LogWrite("BurnProgressChecker", json, GlobalVar.ProgramExecuteFolder);
-                    }
-                }
+                
             }
             catch { }
         }

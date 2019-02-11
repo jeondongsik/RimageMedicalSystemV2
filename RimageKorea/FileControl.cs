@@ -1090,5 +1090,30 @@ namespace RimageKorea
                 throw;
             }
         }
+
+        /// <summary>
+        /// 환자 폴더 삭제
+        /// </summary>
+        /// <param name="target"></param>
+        public static void DeletePatFolder(string target)
+        {
+            try
+            {
+                DirectoryInfo sourceDir = new DirectoryInfo(target);
+
+                if (sourceDir.Exists)
+                {
+                    if (GlobalVar.configEntity.DelType == "0")
+                    {
+                        DeleteFolder(sourceDir.FullName, false);
+                    }
+                    else
+                    {
+                        DeleteFolder(sourceDir.FullName, true);
+                    }
+                }
+            }
+            catch { }
+        }
     }
 }

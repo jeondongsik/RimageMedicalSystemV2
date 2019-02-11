@@ -90,9 +90,13 @@ namespace RimageMedicalSystemV2
                             int idx = this.gvPatientlist.GetDataSourceRowIndex(e.RowHandle);
 
                             //// 환자 폴더 삭제
-                            this.DeletePatFolder(this._patInfoList[idx].patFolderFullPath);
+                            this.Cursor = Cursors.WaitCursor;
+                            FileControl.DeletePatFolder(this._patInfoList[idx].patFolderFullPath);
+                            this.Cursor = Cursors.Default;
 
                             this._patInfoList.RemoveAt(idx);
+
+                            this.gvPatientlist.RefreshData();
                             this.gcPatientlist.RefreshDataSource();
                         }
                     }
@@ -100,32 +104,7 @@ namespace RimageMedicalSystemV2
                 catch { }
             }
         }
-
-        /// <summary>
-        /// 환자 폴더 삭제
-        /// </summary>
-        /// <param name="target"></param>
-        public void DeletePatFolder(string target)
-        {
-            try
-            {
-                DirectoryInfo sourceDir = new DirectoryInfo(target);
-
-                if (sourceDir.Exists)
-                {
-                    if (GlobalVar.configEntity.DelType == "0")
-                    {
-                        FileControl.DeleteFolder(sourceDir.FullName, false);
-                    }
-                    else
-                    {
-                        FileControl.DeleteFolder(sourceDir.FullName, true);
-                    }
-                }
-            }
-            catch { }
-        }
-
+        
         /// <summary>
         /// 선택한 환자 가져오기
         /// </summary>
