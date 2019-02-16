@@ -288,7 +288,7 @@ namespace RimageMedicalSystemV2
                 }
 
                 //// 로그삭제
-                ////this.DeleteLog();
+                this.DeleteLog();
 
                 //// 다운로드 폴더 체크하여 없으면 생성하자 - ProgramType1인 경우
                 if (GlobalVar.configEntity.programType == "1")
@@ -475,13 +475,32 @@ namespace RimageMedicalSystemV2
 
                             if (orderInfo != null)
                             {
+                                bool found = false;
                                 orderInfo.DicomCDFolder = sdir.FullName;
 
-                                this.ucPatients21.PatientInfoList.Insert(0, orderInfo);
-                                this.ucPatients21.gcPatientlist.DataSource = this.ucPatients21.PatientInfoList;
-                                this.ucPatients21.gcPatientlist.RefreshDataSource();
+                                if (this.ucPatients21.PatientInfoList.Count == 0)
+                                {
+                                    this.ucPatients21.PatientInfoList.Add(orderInfo);
+                                    found = true;
+                                }
+                                else
+                                {
+                                    if (!this.ucPatients21.PatientInfoList.Any(p => p.DicomCDFolder == orderInfo.DicomCDFolder))
+                                    {
+                                        this.ucPatients21.PatientInfoList.Insert(0, orderInfo);
+                                        found = true;
+                                    }
+                                }
 
-                                this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
+                                this.ucPatients21.gcPatientlist.DataSource = this.ucPatients21.PatientInfoList;
+
+                                if (found)
+                                {
+                                    this.ucPatients21.gvPatientlist.RefreshData();
+                                    this.ucPatients21.gcPatientlist.RefreshDataSource();
+
+                                    this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
+                                }
                             }
                         }
 
@@ -678,6 +697,8 @@ namespace RimageMedicalSystemV2
 
             //// 조회된 환자 목록을 돌면서 굽기 실행한다.///////////////////////////////////////////////
             int idx = 0;
+            List<int> orderedIdx = new List<int>();
+
             foreach (BurnOrderedInfoEntity orderInfo in this.ucPatients21.PatientInfoList)
             {                
                 if (!autoExe)
@@ -709,12 +730,14 @@ namespace RimageMedicalSystemV2
                 //// 굽기 시작
                 if (this.StartBurn(orderInfo))
                 {
-                    //// 조회목록에서 삭제
-                    this.ucPatients21.RemoveAtList(idx);
+                    orderedIdx.Add(idx);
                 }
 
                 idx++;
             }
+
+            //// 조회목록에서 삭제
+            this.ucPatients21.RemoveAtList(orderedIdx);
         }
 
         /// <summary>
@@ -1412,10 +1435,14 @@ namespace RimageMedicalSystemV2
                 if (result.ContainsKey(this.NowSeletedServer.IP))
                 {
                     //// 설정값
-                    this.SetServerConfig(result[this.NowSeletedServer.IP]["CONFIG"].ToString());
+                    if (result[this.NowSeletedServer.IP].ContainsKey("CONFIG"))
+                        this.SetServerConfig(result[this.NowSeletedServer.IP]["CONFIG"].ToString());
 
                     //// 상태값
-                    this.SetServerStatus(result[this.NowSeletedServer.IP]["STATUS"].ToString());
+                    if (result[this.NowSeletedServer.IP].ContainsKey("STATUS"))
+                        this.SetServerStatus(result[this.NowSeletedServer.IP]["STATUS"].ToString());
+
+                    this.txtMessages.Text = string.Format("[{0}] 연결되었습니다.", this.NowSeletedServer.IP);
                 }
             }
             catch { }
@@ -1533,11 +1560,29 @@ namespace RimageMedicalSystemV2
 
                 if (dt2 != null && dt2.Rows.Count > 0)
                 {
-                    this.txtCMYRibbons.Text = Utils.CheckNull(dt2.Rows[0]["RibbonPanelSetsRemaining"]);
-                    this.txtRetansferRibbons.Text = Utils.CheckNull(dt2.Rows[0]["RetransferSheetPanelsRemaining"]);
+                    try
+                    {
+                        if (dt2.Columns.Contains("RibbonPanelSetsRemaining"))
+                            this.txtCMYRibbons.Text = Utils.CheckNull(dt2.Rows[0]["RibbonPanelSetsRemaining"]);
+                        else
+                            this.txtCMYRibbons.Text = "0";
 
-                    this.nowRemainCMYRibbon_Qty = Convert.ToInt32(Utils.CheckNull(dt2.Rows[0]["RibbonPanelSetsRemaining"], "0"));
-                    this.nowRemainTransferRibbon_Qty = Convert.ToInt32(Utils.CheckNull(dt2.Rows[0]["RetransferSheetPanelsRemaining"], "0"));
+                        if (dt2.Columns.Contains("RetransferSheetPanelsRemaining"))
+                            this.txtRetansferRibbons.Text = Utils.CheckNull(dt2.Rows[0]["RetransferSheetPanelsRemaining"]);
+                        else
+                            this.txtCMYRibbons.Text = "0";
+
+                        if (dt2.Columns.Contains("RibbonPanelSetsRemaining"))
+                            this.nowRemainCMYRibbon_Qty = Convert.ToInt32(Utils.CheckNull(dt2.Rows[0]["RibbonPanelSetsRemaining"], "0"));
+                        else
+                            this.nowRemainCMYRibbon_Qty = 0;
+
+                        if (dt2.Columns.Contains("RetransferSheetPanelsRemaining"))
+                            this.nowRemainTransferRibbon_Qty = Convert.ToInt32(Utils.CheckNull(dt2.Rows[0]["RetransferSheetPanelsRemaining"], "0"));
+                        else
+                            this.nowRemainTransferRibbon_Qty = 0;
+                    }
+                    catch { }
                 }
             }
             catch
@@ -1595,6 +1640,8 @@ namespace RimageMedicalSystemV2
                     if (string.IsNullOrEmpty(orderInfo.patNo))
                         return;
 
+                    orderInfo.Finish = "Y";
+
                     //// 오른쪽 하단에 메시지를 보여준다.
                     if (GlobalVar.configEntity.PopUpAlamYN == "Y")
                     {
@@ -1640,6 +1687,8 @@ namespace RimageMedicalSystemV2
                             prc.Kill();
                     }
                     catch { }
+
+                    this.txtStatusView.AppendText(string.Format("{0}[{1}] - {2}\r\n굽기가 완료되었습니다.", orderInfo.patNo, orderInfo.patName, trace.ResultMessage));
                 }
             }
             catch (Exception ex)
@@ -2091,7 +2140,7 @@ namespace RimageMedicalSystemV2
                 {
                     LabelControl lbl = ctrl as LabelControl;
 
-                    if (ctrl.Tag == null)
+                    if (lbl.Tag == null)
                     {
                         lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
                         lbl.Appearance.BorderColor = Color.FromArgb(105, 105, 105);
@@ -3019,6 +3068,8 @@ namespace RimageMedicalSystemV2
 
                 //// 관련 폴더 및 파일 삭제
                 this.ClearCompleteBurnList();
+
+                this.gvBurninglist.RefreshData();
                 this.gcBurninglist.RefreshDataSource();
 
                 this.txtMessages.Text = "화면정리 완료.";
@@ -3036,6 +3087,9 @@ namespace RimageMedicalSystemV2
 
             try
             {
+                int idx = 0;
+                List<int> idxList = new List<int>();
+
                 foreach (var orderInfo in this._BurningList)
                 {
                     if (orderInfo.Finish == "Y")
@@ -3063,7 +3117,20 @@ namespace RimageMedicalSystemV2
                         }
                         catch { }
 
-                        this._BurningList.Remove(orderInfo);
+                        idxList.Add(idx);
+                    }
+
+                    idx++;
+                }
+
+                if (idxList.Count > 0)
+                {
+                    int cnt = this._BurningList.Count - 1;
+
+                    for (int j = cnt; j >= 0; j--)
+                    {
+                        if (idxList.Contains(j))
+                            this._BurningList.RemoveAt(j);
                     }
                 }
             }
@@ -3275,6 +3342,16 @@ namespace RimageMedicalSystemV2
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 홈페이지 클릭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lblHomepage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

@@ -134,10 +134,12 @@ namespace RimageMedicalSystemV2
                 //// 결과값
                 Dictionary<string, Hashtable> result = new Dictionary<string, Hashtable>();
 
-                foreach (var dir in Directory.GetDirectories(this.orderLogPath, "SVR_*"))
+                foreach (string dir in Directory.GetDirectories(this.orderLogPath, "SVR_*"))
                 {
+                    DirectoryInfo dirInfo = new DirectoryInfo(dir);
+
                     //// IP 추가
-                    string ip = dir.Replace("SVR_", "");
+                    string ip = dirInfo.Name.Replace("SVR_", "");
 
                     if (!result.ContainsKey(ip))
                         result.Add(ip, new Hashtable());
@@ -147,7 +149,7 @@ namespace RimageMedicalSystemV2
                     {
                         string xml = File.ReadAllText(file);
 
-                        if (file.StartsWith(GlobalVar.SERVER_CONFIG_FL))
+                        if (file.EndsWith(string.Format("{0}.txt", GlobalVar.SERVER_CONFIG_FL)))
                         {
                             if (result[ip].ContainsKey("CONFIG"))
                             {
@@ -157,8 +159,11 @@ namespace RimageMedicalSystemV2
                             {
                                 result[ip].Add("CONFIG", xml);
                             }
+
+                            ////읽었으면 삭제하자
+                            File.Delete(file);
                         }
-                        else if (file.StartsWith(GlobalVar.SERVER_STATUS_FL))
+                        else if (file.EndsWith(string.Format("{0}.txt", GlobalVar.SERVER_STATUS_FL)))
                         {
                             if (result[ip].ContainsKey("STATUS"))
                             {
@@ -168,6 +173,8 @@ namespace RimageMedicalSystemV2
                             {
                                 result[ip].Add("STATUS", xml);
                             }
+
+                            File.Delete(file);
                         }
                     }
 

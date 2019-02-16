@@ -90,6 +90,7 @@
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             this.btnCancelBurning = new DevExpress.XtraEditors.SimpleButton();
+            this.lblHomepage = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -775,11 +776,11 @@
             this.labelControl11.Appearance.ForeColor = System.Drawing.Color.Silver;
             this.labelControl11.Appearance.Options.UseFont = true;
             this.labelControl11.Appearance.Options.UseForeColor = true;
-            this.labelControl11.Location = new System.Drawing.Point(773, 714);
+            this.labelControl11.Location = new System.Drawing.Point(789, 713);
             this.labelControl11.Name = "labelControl11";
-            this.labelControl11.Size = new System.Drawing.Size(217, 15);
+            this.labelControl11.Size = new System.Drawing.Size(201, 15);
             this.labelControl11.TabIndex = 16;
-            this.labelControl11.Text = "@ CD/DVD Publishing & Printing System";
+            this.labelControl11.Text = "(주)나시스 기술지원 ☎ 02-466-0745";
             // 
             // tmrBinCheker
             // 
@@ -846,11 +847,25 @@
             this.btnCancelBurning.Visible = false;
             this.btnCancelBurning.Click += new System.EventHandler(this.btnCancelBurning_Click);
             // 
+            // lblHomepage
+            // 
+            this.lblHomepage.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHomepage.Appearance.ForeColor = System.Drawing.Color.Silver;
+            this.lblHomepage.Appearance.Options.UseFont = true;
+            this.lblHomepage.Appearance.Options.UseForeColor = true;
+            this.lblHomepage.Location = new System.Drawing.Point(817, 689);
+            this.lblHomepage.Name = "lblHomepage";
+            this.lblHomepage.Size = new System.Drawing.Size(172, 15);
+            this.lblHomepage.TabIndex = 17;
+            this.lblHomepage.Text = "원격지원 http://www.nasis.co.kr";
+            this.lblHomepage.Click += new System.EventHandler(this.lblHomepage_Click);
+            // 
             // MainForm
             // 
             this.Appearance.Options.UseFont = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.Controls.Add(this.lblHomepage);
             this.Controls.Add(this.btnCancelBurning);
             this.Controls.Add(this.labelControl11);
             this.Controls.Add(this.grpServerState);
@@ -970,6 +985,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
         public DevExpress.XtraEditors.MemoEdit txtMessages;
         private DevExpress.XtraEditors.SimpleButton btnCancelBurning;
+        private DevExpress.XtraEditors.LabelControl lblHomepage;
     }
 }
 

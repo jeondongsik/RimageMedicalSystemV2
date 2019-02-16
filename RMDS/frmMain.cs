@@ -190,6 +190,8 @@ namespace RMDS
                         Directory.CreateDirectory(this.serverLogPath);
                     }
 
+                    GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, "Orders.xml");
+
                     //// 서버 접속
                     if (!this.ConnectServer())
                     {
@@ -268,6 +270,8 @@ namespace RMDS
                             Directory.CreateDirectory(this.serverLogPath);
                         }
 
+                        GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, "Orders.xml");
+
                         //// 서버 접속
                         if (!this.ConnectServer())
                         {
@@ -312,7 +316,12 @@ namespace RMDS
 
                 string json = JsonParser.ConvertToJsonString(err);
                 string fileName = string.Format("ERR_{0}{1}.txt", Utils.GetNowTime(), DateTime.Now.Millisecond.ToString().PadLeft(3, '0'));
-                string filePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, "ERRORS", fileName);
+                string fileFolder = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, "ERRORS");
+
+                if (!Directory.Exists(fileFolder))
+                    Directory.CreateDirectory(fileFolder);
+
+                string filePath = Path.Combine(fileFolder, fileName);
                 
                 if (File.Exists(filePath))
                     File.Delete(filePath);
@@ -399,12 +408,12 @@ namespace RMDS
             
             try
             {
-                if (CheckPing.TestPing(this.burnOrderInfo.TargetServer.IP))
+                if (CheckPing.TestPing(this.serverIP))
                 {
                     //// 서버연결
                     if (CSystemManager.GetInstance().Connected == false)
                     {
-                        CSystemManager.GetInstance().Connect(this.ClientId, this.burnOrderInfo.TargetServer.IP, this.burnOrderInfo.TargetServer.Port);
+                        CSystemManager.GetInstance().Connect(this.ClientId, this.serverIP, this.serverPort);
                     }
 
                     if (CSystemManager.GetInstance().Connected == true)
@@ -418,10 +427,10 @@ namespace RMDS
 
                         //// 설정파일에 저장
                         Config cf = new Config(Application.StartupPath);
-                        cf.setConfigServerInfo(this.burnOrderInfo.TargetServer.IP, this.burnOrderInfo.TargetServer.Name, this.burnOrderInfo.TargetServer.Port);
+                        cf.setConfigServerInfo(this.serverIP, this.serverName, this.serverPort);
                         cf = null;
 
-                        RimageKorea.ErrorLog.TraceWrite(this, "-- [" + this.burnOrderInfo.TargetServer.IP + "] Connected -- ", Application.StartupPath);
+                        RimageKorea.ErrorLog.TraceWrite(this, "-- [" + this.serverIP + "] Connected -- ", Application.StartupPath);
 
                         return true;
                     }
@@ -430,7 +439,7 @@ namespace RMDS
                 {
                     ErrorInfo err = new ErrorInfo();
                     err.Code = "1001";
-                    err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.burnOrderInfo.TargetServer.IP);
+                    err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.serverIP);
                     err.Description = "Rimage Message : Ping Test";
                     this.WriteErrLog(err, true);
                 }
@@ -440,7 +449,7 @@ namespace RMDS
                 ////ErrMsgShow("서버연결에 실패하였습니다. 네트워크를 점검해 주세요.\r\n" + me.Message, "Rimage Message : ServerConnect", me);
                 ErrorInfo err = new ErrorInfo();
                 err.Code = "1001";
-                err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.burnOrderInfo.TargetServer.IP);
+                err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.serverIP);
                 err.Description = me.ToString();
                 this.WriteErrLog(err, true);
             }
@@ -448,7 +457,7 @@ namespace RMDS
             {
                 ErrorInfo err = new ErrorInfo();
                 err.Code = "1001";
-                err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.burnOrderInfo.TargetServer.IP);
+                err.Message = string.Format("네트웤이 연결되지 않았습니다.\r\n서버IP[{0}]를 체크해 주세요.", this.serverIP);
                 err.Description = be.ToString();
                 this.WriteErrLog(err, true);
             }
@@ -627,6 +636,7 @@ namespace RMDS
                                   "?",
                                   ((this.burnOrderInfo.BurnPatientKind.Equals("Y") || this.burnOrderInfo.patList.Count > 1) ? this.burnOrderInfo.DicomDescription : this.burnOrderInfo.StudyModality),
                                   Utils.CheckNull(this.burnOrderInfo.BurnPatientKind, "N"),
+                                  this.serverIP,
                                   this.MyIP);
 
                 //// 로그 남긴다.
@@ -865,6 +875,7 @@ namespace RMDS
                               statusDisp.ResultMessage,
                               ((this.burnOrderInfo.BurnPatientKind.Equals("Y") || this.burnOrderInfo.patList.Count > 1) ? this.burnOrderInfo.DicomDescription : this.burnOrderInfo.StudyModality),
                               Utils.CheckNull(this.burnOrderInfo.BurnPatientKind, "N"),
+                              this.serverIP,
                               this.MyIP);
 
                     //// EditList Xml파일삭제하자.
@@ -879,6 +890,8 @@ namespace RMDS
                     this.SendWinMessage("BURN_END");
 
                     //// 굽기 종료되었으므로 프로그램 종료
+                    //// 잠깐 쉬었다 종료
+                    Thread.Sleep(1000);
                     this.ApplicationExit(EnumExitType.Success);
                 }
             }

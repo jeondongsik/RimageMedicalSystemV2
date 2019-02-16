@@ -135,5 +135,10 @@ namespace RimageKorea
         /// 환경설정값
         /// </summary>
         public static ConfigEntity configEntity = null;
+
+        /// <summary>
+        /// 오더 트래킹 파일명
+        /// </summary>
+        public static string OrderTrackingFile = "Order.xml";
     }
 }

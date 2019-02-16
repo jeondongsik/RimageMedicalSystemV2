@@ -79,6 +79,9 @@ namespace RimageMedicalSystemV2
                         if (this._mainForm != null)
                         {
                             this._mainForm.StartBurn(this._patInfoList[this.gvPatientlist.GetDataSourceRowIndex(e.RowHandle)]);
+
+                            this._patInfoList.RemoveAt(e.RowHandle);
+                            this.gvPatientlist.RefreshData();
                         }
                     }
 
@@ -152,10 +155,23 @@ namespace RimageMedicalSystemV2
         /// 조회된 폴더목록에서 삭제한다.
         /// </summary>
         /// <param name="idx"></param>
-        public void RemoveAtList(int idx)
+        public void RemoveAtList(List<int> idx)
         {
-            this._patInfoList.RemoveAt(idx);
-            this.gcPatientlist.RefreshDataSource();
+            if (idx.Count > 0)
+            {
+                try
+                {
+                    for (int j = this._patInfoList.Count - 1; j >= 0; j--)
+                    {
+                        if (idx.Contains(j))
+                            this._patInfoList.RemoveAt(j);
+                    }
+
+                    this.gvPatientlist.RefreshData();
+                    this.gcPatientlist.RefreshDataSource();
+                }
+                catch { }
+            }
         }
 
         /// <summary>

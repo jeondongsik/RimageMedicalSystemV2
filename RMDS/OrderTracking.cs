@@ -27,17 +27,17 @@ namespace RMDS
             // create the orders element
             XmlElement ordersElement = document.CreateElement("orders");
             document.DocumentElement.AppendChild(ordersElement);
-            document.Save(Path.Combine(AppDirectory, "Orders.xml"));
+            document.Save(GlobalVar.OrderTrackingFile);
         }
 
         // Add Persistant Order information to XML file
         public static void AddOrder(DiscData discOrder)
         {
             // Make sure file exists before attempting to add orders
-            if (!File.Exists(Path.Combine(AppDirectory, "Orders.xml"))) CreateDocument();
+            if (!File.Exists(GlobalVar.OrderTrackingFile)) CreateDocument();
 
             XmlDocument document = new XmlDocument();
-            document.Load(Path.Combine(AppDirectory, "Orders.xml"));
+            document.Load(GlobalVar.OrderTrackingFile);
             // Create a document fragment to contain the XML to be inserted.
             XmlDocumentFragment order = document.CreateDocumentFragment();
             // Set the contents of the document fragment.
@@ -49,19 +49,19 @@ namespace RMDS
             orderxml.InnerXml = newOrder;
             XmlNode currNode = document.DocumentElement.FirstChild;
             currNode.InsertAfter(orderxml, currNode.LastChild);
-            document.Save(Path.Combine(AppDirectory, "Orders.xml"));
+            document.Save(GlobalVar.OrderTrackingFile);
         }
 
         // Remove Persistant order information
         public static void RemoveOrder(DiscStatus discOrder)
         {
             // Make sure file exists before attempting to remove orders
-            if (System.IO.File.Exists(Path.Combine(AppDirectory, "Orders.xml")))
+            if (System.IO.File.Exists(GlobalVar.OrderTrackingFile))
             {
                 XmlDocument document = new XmlDocument();
                 try
                 {
-                    document.Load(Path.Combine(AppDirectory, "Orders.xml"));
+                    document.Load(GlobalVar.OrderTrackingFile);
                     XmlNode completedOrder;
                     completedOrder = document.SelectSingleNode("//PendingOrders/orders/order[@OrderId=" + "\'" + discOrder.OrderID + "\']");
 
@@ -71,7 +71,7 @@ namespace RMDS
                         XmlNode parentNode;
                         parentNode = completedOrder.ParentNode;
                         parentNode.RemoveChild(completedOrder);
-                        document.Save(Path.Combine(AppDirectory, "Orders.xml"));
+                        document.Save(GlobalVar.OrderTrackingFile);
                     }
                 }
                 catch (IOException ioEx)
@@ -84,12 +84,12 @@ namespace RMDS
         // Update Persistant order information
         public static void ModifyOrder(DiscStatus discOrder)
         {
-            if (System.IO.File.Exists(Path.Combine(AppDirectory, "Orders.xml")))
+            if (System.IO.File.Exists(GlobalVar.OrderTrackingFile))
             {
                 XmlDocument document = new XmlDocument();
                 try
                 {
-                    document.Load(Path.Combine(AppDirectory, "Orders.xml"));
+                    document.Load(GlobalVar.OrderTrackingFile);
                     XmlElement Order;
                     Order = (XmlElement)document.SelectSingleNode("//PendingOrders/orders/order[@OrderId=" + "\'" + discOrder.OrderID + "\']");
 
@@ -98,7 +98,7 @@ namespace RMDS
                     {
                         Order.SetAttribute("Status", discOrder.State);
                         Order.SetAttribute("PercentComplete", discOrder.PercentCompleted);
-                        document.Save(Path.Combine(AppDirectory, "Orders.xml"));
+                        document.Save(GlobalVar.OrderTrackingFile);
                     }
                 }
                 catch (IOException ioEx)
@@ -112,10 +112,10 @@ namespace RMDS
         public static ArrayList GetRecoverableStatus()
         {
             // Make sure file exists before attempting scan
-            if (System.IO.File.Exists(Path.Combine(AppDirectory, "Orders.xml")))
+            if (System.IO.File.Exists(GlobalVar.OrderTrackingFile))
             {
                 XmlDocument document = new XmlDocument();
-                document.Load(Path.Combine(AppDirectory, "Orders.xml"));
+                document.Load(GlobalVar.OrderTrackingFile);
                 XmlNodeList Order;
                 Order = (XmlNodeList)document.SelectNodes("//PendingOrders/orders/*");
 
@@ -203,7 +203,7 @@ namespace RMDS
 
             // Get produciton order File Name
             XmlDocument document = new XmlDocument();
-            document.Load(Path.Combine(AppDirectory, "Orders.xml"));
+            document.Load(GlobalVar.OrderTrackingFile);
             XmlElement order;
             order = (XmlElement)document.SelectSingleNode("//PendingOrders/orders/order[@OrderId=" + "\'" + orderInfo.OrderID + "\']");
             if (order != null)

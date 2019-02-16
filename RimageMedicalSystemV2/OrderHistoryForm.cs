@@ -41,19 +41,24 @@ namespace RimageMedicalSystemV2
         {
             try
             {
+                this._orderedList = new List<BurnOrderedInfoEntity>();
+
                 string orderFolder = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER);
 
                 foreach (var file in Directory.GetFiles(orderFolder))
                 {
-                    string json = File.ReadAllText(file);
-                    BurnOrderedInfoEntity order = JsonParser.ConvertToBurnOrderedInfoEntity(json);
-
-                    if (order != null)
+                    if (file.Contains("_ORD.json"))
                     {
-                        order.DeleteIcon = global::RimageMedicalSystemV2.Properties.Resources.close_16x16;
-                        order.RetryIcon = global::RimageMedicalSystemV2.Properties.Resources.refreshpivottable_16x16;
+                        string json = File.ReadAllText(file);
+                        BurnOrderedInfoEntity order = JsonParser.ConvertToBurnOrderedInfoEntity(json);
 
-                        this._orderedList.Add(order);
+                        if (order != null)
+                        {
+                            order.DeleteIcon = global::RimageMedicalSystemV2.Properties.Resources.close_16x16;
+                            order.RetryIcon = global::RimageMedicalSystemV2.Properties.Resources.refreshpivottable_16x16;
+
+                            this._orderedList.Add(order);
+                        }
                     }
                 }
 
