@@ -18,7 +18,7 @@ namespace RimageKorea
 
             po.DontFragment = true;
 
-            int timeout = 7000;
+            int timeout = 5000;
             PingReply reply = pingSender.Send(ip, timeout);
 
             pingSender.Dispose();

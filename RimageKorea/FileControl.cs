@@ -755,15 +755,7 @@ namespace RimageKorea
                 DirectoryInfo dir = new DirectoryInfo(folderPath);
                 if (dir.Exists)
                 {
-                    foreach (FileInfo fi in dir.GetFiles())
-                    {
-                        fi.Delete();
-                    }
-
-                    foreach (DirectoryInfo di in dir.GetDirectories())
-                    {
-                        di.Delete(true);
-                    }
+                    dir.Delete(true);
                 }
             }
             catch { }
@@ -981,8 +973,8 @@ namespace RimageKorea
                 }
 
                 //// 오더 파일 삭제
-                string orderFile = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderId));
-                FileControl.DeleteFile(orderFile);
+                //// string orderFile = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderId));
+                //// FileControl.DeleteFile(orderFile);
             }
             catch { }
         }

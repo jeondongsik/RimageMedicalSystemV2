@@ -90,6 +90,13 @@ namespace RimageMedicalSystemV2
                             if (this._mainForm != null)
                             {
                                 var orderInfo = this._orderedList[this.gvPatientlist.GetDataSourceRowIndex(e.RowHandle)];
+
+                                if (!Directory.Exists(orderInfo.patFolderFullPath))
+                                {
+                                    MessageBox.Show("환자폴더가 존재하지 않습니다. \r\n다시 다운로드해야 합니다.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    return;
+                                }
+
                                 this._mainForm.StartBurn(orderInfo);
                             }
                         }
@@ -102,10 +109,13 @@ namespace RimageMedicalSystemV2
                         {
                             int idx = this.gvPatientlist.GetDataSourceRowIndex(e.RowHandle);
 
-                            //// 환자 폴더 삭제
-                            this.Cursor = Cursors.WaitCursor;
-                            FileControl.DeletePatFolder(this._orderedList[idx].patFolderFullPath);
-                            this.Cursor = Cursors.Default;
+                            if (Directory.Exists(this._orderedList[idx].patFolderFullPath))
+                            {
+                                //// 환자 폴더 삭제
+                                this.Cursor = Cursors.WaitCursor;
+                                FileControl.DeletePatFolder(this._orderedList[idx].patFolderFullPath);
+                                this.Cursor = Cursors.Default;
+                            }
 
                             this._orderedList.RemoveAt(idx);
 

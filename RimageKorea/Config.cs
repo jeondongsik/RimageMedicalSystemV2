@@ -74,6 +74,10 @@ namespace RimageKorea
         /// </summary>
         string FolderSizeCheckTime;
         string DvdMaxSize;
+        /// <summary>
+        /// USB 복사 사용
+        /// </summary>
+        string UseUSBCopy;
 
         XmlDocument doc = new XmlDocument();
 
@@ -535,6 +539,14 @@ namespace RimageKorea
             get { return getConfig("DvdMaxSize", ""); }
             set { this.DvdMaxSize = value; }
         }
+        /// <summary>
+        /// USB 복사 사용 여부
+        /// </summary>
+        public string _UseUSBCopy
+        {
+            get { return getConfig("UseUSBCopy", ""); }
+            set { this.UseUSBCopy = value; }
+        }
         #endregion
 
         /// <summary>
@@ -657,6 +669,7 @@ namespace RimageKorea
                 updateConfigXml("DisableMultiPatient", this.DisableMultiPatient);
                 updateConfigXml("FolderSizeCheckTime", this.FolderSizeCheckTime);
                 updateConfigXml("DvdMaxSize", this.DvdMaxSize);
+                updateConfigXml("UseUSBCopy", this.UseUSBCopy);
             }
 
             //초기설정

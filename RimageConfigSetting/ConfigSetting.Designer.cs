@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigSetting));
             this.dataGridViewServerList = new System.Windows.Forms.DataGridView();
             this.ColumnNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -180,6 +180,7 @@
             this.checkBoxDeleteInJobFolder = new System.Windows.Forms.CheckBox();
             this.xtraTabPageSetProgramConfig1 = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl5 = new DevExpress.XtraEditors.GroupControl();
+            this.label53 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.textBoxFolderSizeCheckTime = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
@@ -190,6 +191,7 @@
             this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
             this.checkBoxDisableMultiPatient = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoPrintApp = new System.Windows.Forms.CheckBox();
+            this.checkBoxUseUSBCopy = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServerList)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -246,8 +248,8 @@
             // ColumnNo
             // 
             this.ColumnNo.DataPropertyName = "No";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColumnNo.HeaderText = "번호";
             this.ColumnNo.Name = "ColumnNo";
             this.ColumnNo.ReadOnly = true;
@@ -272,8 +274,8 @@
             // ColumnServerPort
             // 
             this.ColumnServerPort.DataPropertyName = "Port";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle4;
             this.ColumnServerPort.HeaderText = "Port";
             this.ColumnServerPort.Name = "ColumnServerPort";
             this.ColumnServerPort.ReadOnly = true;
@@ -356,7 +358,7 @@
             // checkBox_LabelPrint
             // 
             this.checkBox_LabelPrint.AutoSize = true;
-            this.checkBox_LabelPrint.Location = new System.Drawing.Point(368, 459);
+            this.checkBox_LabelPrint.Location = new System.Drawing.Point(368, 481);
             this.checkBox_LabelPrint.Name = "checkBox_LabelPrint";
             this.checkBox_LabelPrint.Size = new System.Drawing.Size(162, 19);
             this.checkBox_LabelPrint.TabIndex = 2;
@@ -701,7 +703,7 @@
             // checkBox_AlamSound
             // 
             this.checkBox_AlamSound.AutoSize = true;
-            this.checkBox_AlamSound.Location = new System.Drawing.Point(368, 509);
+            this.checkBox_AlamSound.Location = new System.Drawing.Point(368, 531);
             this.checkBox_AlamSound.Name = "checkBox_AlamSound";
             this.checkBox_AlamSound.Size = new System.Drawing.Size(174, 19);
             this.checkBox_AlamSound.TabIndex = 48;
@@ -711,7 +713,7 @@
             // checkBox_ConfirmPopup
             // 
             this.checkBox_ConfirmPopup.AutoSize = true;
-            this.checkBox_ConfirmPopup.Location = new System.Drawing.Point(368, 484);
+            this.checkBox_ConfirmPopup.Location = new System.Drawing.Point(368, 506);
             this.checkBox_ConfirmPopup.Name = "checkBox_ConfirmPopup";
             this.checkBox_ConfirmPopup.Size = new System.Drawing.Size(218, 19);
             this.checkBox_ConfirmPopup.TabIndex = 47;
@@ -721,7 +723,7 @@
             // checkBox_ManualExeBtnView
             // 
             this.checkBox_ManualExeBtnView.AutoSize = true;
-            this.checkBox_ManualExeBtnView.Location = new System.Drawing.Point(28, 484);
+            this.checkBox_ManualExeBtnView.Location = new System.Drawing.Point(28, 506);
             this.checkBox_ManualExeBtnView.Name = "checkBox_ManualExeBtnView";
             this.checkBox_ManualExeBtnView.Size = new System.Drawing.Size(130, 19);
             this.checkBox_ManualExeBtnView.TabIndex = 46;
@@ -817,7 +819,7 @@
             // checkBox_DelFolderWhenClose
             // 
             this.checkBox_DelFolderWhenClose.AutoSize = true;
-            this.checkBox_DelFolderWhenClose.Location = new System.Drawing.Point(28, 434);
+            this.checkBox_DelFolderWhenClose.Location = new System.Drawing.Point(28, 456);
             this.checkBox_DelFolderWhenClose.Name = "checkBox_DelFolderWhenClose";
             this.checkBox_DelFolderWhenClose.Size = new System.Drawing.Size(198, 19);
             this.checkBox_DelFolderWhenClose.TabIndex = 12;
@@ -862,7 +864,7 @@
             // checkDownloadCheckbyFileName
             // 
             this.checkDownloadCheckbyFileName.AutoSize = true;
-            this.checkDownloadCheckbyFileName.Location = new System.Drawing.Point(368, 409);
+            this.checkDownloadCheckbyFileName.Location = new System.Drawing.Point(368, 431);
             this.checkDownloadCheckbyFileName.Name = "checkDownloadCheckbyFileName";
             this.checkDownloadCheckbyFileName.Size = new System.Drawing.Size(274, 19);
             this.checkDownloadCheckbyFileName.TabIndex = 15;
@@ -872,7 +874,7 @@
             // checkBoxAutoCloseType
             // 
             this.checkBoxAutoCloseType.AutoSize = true;
-            this.checkBoxAutoCloseType.Location = new System.Drawing.Point(28, 509);
+            this.checkBoxAutoCloseType.Location = new System.Drawing.Point(28, 531);
             this.checkBoxAutoCloseType.Name = "checkBoxAutoCloseType";
             this.checkBoxAutoCloseType.Size = new System.Drawing.Size(192, 19);
             this.checkBoxAutoCloseType.TabIndex = 14;
@@ -924,7 +926,7 @@
             this.checkBox_ReportView.AutoSize = true;
             this.checkBox_ReportView.Checked = true;
             this.checkBox_ReportView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_ReportView.Location = new System.Drawing.Point(28, 459);
+            this.checkBox_ReportView.Location = new System.Drawing.Point(28, 481);
             this.checkBox_ReportView.Name = "checkBox_ReportView";
             this.checkBox_ReportView.Size = new System.Drawing.Size(90, 19);
             this.checkBox_ReportView.TabIndex = 13;
@@ -1092,7 +1094,7 @@
             this.checkBox_CDPrintYN.AutoSize = true;
             this.checkBox_CDPrintYN.Checked = true;
             this.checkBox_CDPrintYN.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_CDPrintYN.Location = new System.Drawing.Point(28, 409);
+            this.checkBox_CDPrintYN.Location = new System.Drawing.Point(28, 431);
             this.checkBox_CDPrintYN.Name = "checkBox_CDPrintYN";
             this.checkBox_CDPrintYN.Size = new System.Drawing.Size(234, 19);
             this.checkBox_CDPrintYN.TabIndex = 3;
@@ -1802,6 +1804,7 @@
             this.groupControl5.Appearance.Options.UseFont = true;
             this.groupControl5.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.groupControl5.AppearanceCaption.Options.UseFont = true;
+            this.groupControl5.Controls.Add(this.label53);
             this.groupControl5.Controls.Add(this.label49);
             this.groupControl5.Controls.Add(this.textBoxFolderSizeCheckTime);
             this.groupControl5.Controls.Add(this.label50);
@@ -1846,6 +1849,16 @@
             this.groupControl5.TabIndex = 4;
             this.groupControl5.Text = "프로그램 설정 (1)";
             // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.ForeColor = System.Drawing.Color.Red;
+            this.label53.Location = new System.Drawing.Point(24, 385);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(537, 15);
+            this.label53.TabIndex = 55;
+            this.label53.Text = "[보관기간을 1일 이상 설정하면 폴더 삭제 유형 설정을 무시하고 굽기 완료 시 폴더 삭제하지 않음.]";
+            // 
             // label49
             // 
             this.label49.AutoSize = true;
@@ -1879,7 +1892,7 @@
             // 
             this.textBox_DownCheckFileName.ForeColor = System.Drawing.Color.Black;
             this.textBox_DownCheckFileName.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox_DownCheckFileName.Location = new System.Drawing.Point(472, 431);
+            this.textBox_DownCheckFileName.Location = new System.Drawing.Point(472, 453);
             this.textBox_DownCheckFileName.Name = "textBox_DownCheckFileName";
             this.textBox_DownCheckFileName.Size = new System.Drawing.Size(158, 23);
             this.textBox_DownCheckFileName.TabIndex = 51;
@@ -1888,7 +1901,7 @@
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(377, 435);
+            this.label48.Location = new System.Drawing.Point(377, 457);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(98, 15);
             this.label48.TabIndex = 50;
@@ -1917,6 +1930,7 @@
             this.groupControl6.Appearance.Options.UseFont = true;
             this.groupControl6.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.groupControl6.AppearanceCaption.Options.UseFont = true;
+            this.groupControl6.Controls.Add(this.checkBoxUseUSBCopy);
             this.groupControl6.Controls.Add(this.checkBoxDisableMultiPatient);
             this.groupControl6.Controls.Add(this.checkBoxAutoPrintApp);
             this.groupControl6.Controls.Add(this.checkBoxErrorPupupUse);
@@ -1966,6 +1980,16 @@
             this.checkBoxAutoPrintApp.TabIndex = 55;
             this.checkBoxAutoPrintApp.Text = "굽기 완료 후 복사 신청서(발급내역) 자동 인쇄";
             this.checkBoxAutoPrintApp.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxUseUSBCopy
+            // 
+            this.checkBoxUseUSBCopy.AutoSize = true;
+            this.checkBoxUseUSBCopy.Location = new System.Drawing.Point(318, 241);
+            this.checkBoxUseUSBCopy.Name = "checkBoxUseUSBCopy";
+            this.checkBoxUseUSBCopy.Size = new System.Drawing.Size(104, 19);
+            this.checkBoxUseUSBCopy.TabIndex = 57;
+            this.checkBoxUseUSBCopy.Text = "USB 복사 사용";
+            this.checkBoxUseUSBCopy.UseVisualStyleBackColor = true;
             // 
             // ConfigSetting
             // 
@@ -2187,5 +2211,7 @@
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.TextBox textBox_DvdMaxSize;
         private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.CheckBox checkBoxUseUSBCopy;
     }
 }

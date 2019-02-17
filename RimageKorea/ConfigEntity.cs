@@ -237,5 +237,9 @@ namespace RimageKorea
         /// CD 프린트 여부
         /// </summary>
         public bool UseLabelPrint { get; set; }
+        /// <summary>
+        /// USB 복사 사용
+        /// </summary>
+        public string UseUSBCopy { get; set; }
     }
 }

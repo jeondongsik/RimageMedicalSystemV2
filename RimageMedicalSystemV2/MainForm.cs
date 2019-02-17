@@ -1315,6 +1315,7 @@ namespace RimageMedicalSystemV2
                 //// 다중환자
                 GlobalVar.configEntity.DisableMultiPatient = (string.IsNullOrWhiteSpace(cf._DisableMultiPatient)) ? "N" : cf._DisableMultiPatient;
                 GlobalVar.configEntity.DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
+                GlobalVar.configEntity.UseUSBCopy = (string.IsNullOrWhiteSpace(cf._UseUSBCopy)) ? "N" : cf._UseUSBCopy;
 
                 if (cf._CDPrintYN == "N")
                     GlobalVar.configEntity.UseLabelPrint = false;
@@ -1662,13 +1663,17 @@ namespace RimageMedicalSystemV2
                     FileControl.DeleteFile(orderInfo.EditListPath);
 
                     //// 환자 폴더 삭제
-                    if (GlobalVar.configEntity.DeleteAfterBurn == "1" && trace.ResultCode == "2")
+                    //// 보관기간이 1일 이상이면 삭제 안함.
+                    if (GlobalVar.configEntity.RetentionPeriod < 1)
                     {
-                        this.DeleteDestinationFolder(orderInfo.patFolderFullPath);
-                    }
-                    if (GlobalVar.configEntity.DeleteAfterBurn == "2")
-                    {
-                        this.DeleteDestinationFolder(orderInfo.patFolderFullPath);
+                        if (GlobalVar.configEntity.DeleteAfterBurn == "1" && trace.ResultCode == "2")
+                        {
+                            this.DeleteDestinationFolder(orderInfo.patFolderFullPath);
+                        }
+                        if (GlobalVar.configEntity.DeleteAfterBurn == "2")
+                        {
+                            this.DeleteDestinationFolder(orderInfo.patFolderFullPath);
+                        }
                     }
 
                     this.txtStatusView.AppendText(orderInfo.patName + " : " + trace.StatusType + trace.State + " " + trace.DeviceCurrentState + " " + trace.PercentCompleted + "%" + "\r\n");
@@ -1676,7 +1681,7 @@ namespace RimageMedicalSystemV2
                     //// 완료된 오더폴더에 종료파일 생성한다.
                     FileControl.CreateTextFile(Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, orderInfo.DiscOrder.OrderID, GlobalVar.BURN_CHK_FL_NM));
 
-                    //// 오더 폴더,파일 삭제
+                    //// 오더 폴더 삭제
                     FileControl.DeleteBurnEndOrder(orderInfo.DiscOrder.OrderID);
 
                     //// RDMS가 정상종료되었는지 체크-> 아니라면 종료 처리
@@ -3350,6 +3355,16 @@ namespace RimageMedicalSystemV2
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void lblHomepage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// USB 복사
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnUSBCopy_Click(object sender, EventArgs e)
         {
 
         }
