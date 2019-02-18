@@ -3366,7 +3366,13 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnUSBCopy_Click(object sender, EventArgs e)
         {
+            frmCopyToUSB frm = new frmCopyToUSB();
+            frm.Show();
+        }
 
+        private void hyperLinkEdit1_OpenLink(object sender, DevExpress.XtraEditors.Controls.OpenLinkEventArgs e)
+        {
+            e.EditValue = "http://www.seetrol.co.kr/download/client.exe";
         }
     }
 

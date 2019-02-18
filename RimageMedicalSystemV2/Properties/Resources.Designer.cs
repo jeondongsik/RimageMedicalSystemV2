@@ -143,6 +143,36 @@ namespace RimageMedicalSystemV2.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_c_drive_32 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-c-drive-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_usb_2_32 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-usb-2-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_usb_2_321 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-usb-2-321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap refreshpivottable_16x16 {
             get {
                 object obj = ResourceManager.GetObject("refreshpivottable_16x16", resourceCulture);
