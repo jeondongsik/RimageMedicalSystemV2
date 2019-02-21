@@ -241,7 +241,14 @@ namespace RimageMedicalSystemV2
                     this.buttonRetry.Enabled = false;
                 }
 
-                KillProcess.DelProcess(GlobalVar.RIMAGE_ENTERANCE);
+                if (GlobalVar.configEntity.UseUSBCopy.Equals("Y"))
+                {
+                    this.btnUSBCopy.Visible = true;
+                }
+                else
+                {
+                    this.btnUSBCopy.Visible = false;
+                }
 
                 //// 인피니티 팍스 실행 프로세스 죽인다.
                 KillProcess.DelProcess("SCDBurn");
@@ -315,6 +322,7 @@ namespace RimageMedicalSystemV2
             }
             finally
             {
+                KillProcess.DelProcess(GlobalVar.RIMAGE_ENTERANCE);
                 this.grpPatInfo.Focus();
             }
         }
@@ -3367,6 +3375,40 @@ namespace RimageMedicalSystemV2
         private void btnUSBCopy_Click(object sender, EventArgs e)
         {
             frmCopyToUSB frm = new frmCopyToUSB();
+
+            try
+            {
+                int screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
+                int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
+
+                Point parentPoint = this.Location;
+
+                int parentHeight = this.Height;
+                int parentWidth = this.Width;
+
+                int childHeight = frm.Height;
+                int childWidth = frm.Width;
+
+                int resultX;
+                int resultY;
+
+                if ((parentPoint.Y + parentHeight + childHeight) > screenHeight)
+                {                    
+                    resultY = parentPoint.Y;
+                    resultX = parentPoint.X + parentWidth;
+                }
+                else
+                {
+                    // Position on the edge.
+                    resultY = parentPoint.Y;
+                    resultX = parentPoint.X + parentWidth;
+                }
+
+                frm.StartPosition = FormStartPosition.Manual;
+                frm.Location = new Point(resultX, resultY);
+            }
+            catch { }
+                        
             frm.Show();
         }
 

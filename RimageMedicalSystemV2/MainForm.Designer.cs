@@ -92,6 +92,7 @@
             this.btnCancelBurning = new DevExpress.XtraEditors.SimpleButton();
             this.btnUSBCopy = new DevExpress.XtraEditors.SimpleButton();
             this.hyperLinkEdit1 = new DevExpress.XtraEditors.HyperLinkEdit();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -115,6 +116,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtCMYRibbons.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hyperLinkEdit1.Properties)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpPatInfo
@@ -336,7 +338,7 @@
             this.btnOrderedList.Appearance.Options.UseFont = true;
             this.btnOrderedList.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderedList.ImageOptions.Image")));
             this.btnOrderedList.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnOrderedList.Location = new System.Drawing.Point(715, 12);
+            this.btnOrderedList.Location = new System.Drawing.Point(131, 3);
             this.btnOrderedList.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnOrderedList.Name = "btnOrderedList";
             this.btnOrderedList.Size = new System.Drawing.Size(155, 43);
@@ -351,7 +353,7 @@
             this.btnReport.Appearance.Options.UseFont = true;
             this.btnReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.ImageOptions.Image")));
             this.btnReport.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnReport.Location = new System.Drawing.Point(876, 12);
+            this.btnReport.Location = new System.Drawing.Point(292, 3);
             this.btnReport.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(120, 43);
@@ -863,12 +865,13 @@
             this.btnUSBCopy.Appearance.Options.UseFont = true;
             this.btnUSBCopy.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.icons8_usb_2_321;
             this.btnUSBCopy.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnUSBCopy.Location = new System.Drawing.Point(589, 12);
+            this.btnUSBCopy.Location = new System.Drawing.Point(5, 3);
             this.btnUSBCopy.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnUSBCopy.Name = "btnUSBCopy";
             this.btnUSBCopy.Size = new System.Drawing.Size(120, 43);
             this.btnUSBCopy.TabIndex = 18;
             this.btnUSBCopy.Text = "USB복사";
+            this.btnUSBCopy.Visible = false;
             this.btnUSBCopy.Click += new System.EventHandler(this.btnUSBCopy_Click);
             // 
             // hyperLinkEdit1
@@ -886,13 +889,24 @@
             this.hyperLinkEdit1.TabStop = false;
             this.hyperLinkEdit1.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.hyperLinkEdit1_OpenLink);
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.btnReport);
+            this.flowLayoutPanel1.Controls.Add(this.btnOrderedList);
+            this.flowLayoutPanel1.Controls.Add(this.btnUSBCopy);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(584, 9);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(415, 50);
+            this.flowLayoutPanel1.TabIndex = 20;
+            // 
             // MainForm
             // 
             this.Appearance.Options.UseFont = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.hyperLinkEdit1);
-            this.Controls.Add(this.btnUSBCopy);
             this.Controls.Add(this.btnCancelBurning);
             this.Controls.Add(this.labelControl11);
             this.Controls.Add(this.grpServerState);
@@ -900,8 +914,6 @@
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.panelControl2);
             this.Controls.Add(this.grpBurningList);
-            this.Controls.Add(this.btnReport);
-            this.Controls.Add(this.btnOrderedList);
             this.Controls.Add(this.btnPatientDelete);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnBurn);
@@ -946,6 +958,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtCMYRibbons.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hyperLinkEdit1.Properties)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1015,6 +1028,7 @@
         private DevExpress.XtraEditors.SimpleButton btnCancelBurning;
         private DevExpress.XtraEditors.SimpleButton btnUSBCopy;
         private DevExpress.XtraEditors.HyperLinkEdit hyperLinkEdit1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
 

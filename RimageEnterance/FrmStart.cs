@@ -21,8 +21,6 @@ namespace RimageEnterance
         string HostIP;
         string HostName;
         string HostPort;
-        string programType;
-        string startProgram;
         string AppDirectory;
         string ServerListFile;
         List<ServerInfo> ServerList;    //서버목록
@@ -31,15 +29,7 @@ namespace RimageEnterance
         {
             InitializeComponent();
 
-            RimageKorea.ErrorLog.TraceWrite(this, "-- Program Start -- ", Application.StartupPath);
-
-            KillProcess.DelProcess(GlobalVar.RIMAGE_CONFIG_SETTING);
-            KillProcess.DelProcess(GlobalVar.RIMAGE_MEDICAL_CLIENT);
-
-            this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
-
-            GetConfig();
-            PingCheck();
+            ErrorLog.TraceWrite(this, "-- Program Start -- ", Application.StartupPath);
         }
 
         /// <summary>
@@ -52,12 +42,9 @@ namespace RimageEnterance
                 AppDirectory = Application.StartupPath;
                 Config cf = new Config(AppDirectory);
 
-                HostIP = cf._HostIP;
-                HostName = cf._HostName;
-                HostPort = cf._HostPort;
-                programType = cf._programType;
-                startProgram = cf._startProgram;
-
+                this.HostIP = cf._HostIP;
+                this.HostName = cf._HostName;
+                this.HostPort = cf._HostPort;
 
                 //서버목록을 불러온다.
                 if (File.Exists(this.ServerListFile))
@@ -87,7 +74,6 @@ namespace RimageEnterance
                     srvInfo.Port = this.HostPort;
                     this.ServerList.Add(srvInfo);
                 }
-
             }
             catch (Exception ex)
             {
@@ -100,50 +86,30 @@ namespace RimageEnterance
         /// </summary>
         protected void PingCheck()
         {
-            bool connection = false;
-            int tryCount = 0;
             List<string> checkIP = new List<string>();
 
             try
-            {
-                connection = CheckPing.TestPing(HostIP);
-                if (false == checkIP.Contains(this.HostIP))
-                    checkIP.Add(this.HostIP);
-
-                if (false == connection && 1 < this.ServerList.Count)
+            {                
+                if (this.ServerList != null && this.ServerList.Count > 1)
                 {
-                    tryCount++;
-
                     //등록된 서버목록을 돌아가면서 체크
                     foreach (ServerInfo srv in this.ServerList)
                     {
-                        if (false == checkIP.Contains(srv.IP))
+                        if (!checkIP.Contains(srv.IP))
                         {
-                            checkIP.Add(srv.IP);
                             if (CheckPing.TestPing(srv.IP))
                             {
-                                connection = true;
-                                this.HostIP = srv.IP;
-                                this.HostName = srv.Name;
-                                this.HostPort = srv.Port;
-                                break;
+                                checkIP.Add(srv.IP);
                             }
                         }
                     }
                 }
 
-
-                if (true == connection)
+                if (checkIP.Count > 0)
                 {
                     //백업 (매월 1, 11, 21)에 실행한다.
                     //if (DateTime.Now.Day == 1 || DateTime.Now.Day == 11 || DateTime.Now.Day == 21)
                     //    BackUpResult();
-
-                    //현재 서버정보를 환경설정파일에 등록한다.
-                    Config cf = new Config(Application.StartupPath);
-                    cf.setConfigServerInfo(this.HostIP, this.HostName, this.HostPort);
-                    cf = null;
-
                     //프로그램 실행
                     Process.Start(GlobalVar.RIMAGE_MEDICAL_CLIENT + ".exe");
                 }
@@ -157,7 +123,7 @@ namespace RimageEnterance
             }
             catch (Exception ex)
             {
-                RimageKorea.ErrorLog.LogWrite(this, "프로그램 구동 중 에러가 발생 했습니다.\r\n" + ex.ToString(), Application.StartupPath);
+                ErrorLog.LogWrite(this, "프로그램 구동 중 에러가 발생 했습니다.\r\n" + ex.ToString(), Application.StartupPath);
                 MessageBox.Show("프로그램 구동 중 에러가 발생 했습니다.\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -187,6 +153,34 @@ namespace RimageEnterance
             {
                 //
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            this.timer1.Enabled = false;
+
+            this.GetConfig();
+            this.PingCheck();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FrmStart_Load(object sender, EventArgs e)
+        {
+            KillProcess.DelProcess(GlobalVar.RIMAGE_CONFIG_SETTING);
+            KillProcess.DelProcess(GlobalVar.RIMAGE_MEDICAL_CLIENT);
+            
+            this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
+
+            this.timer1.Enabled = true;
         }
     }
 }
