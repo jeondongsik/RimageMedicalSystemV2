@@ -93,7 +93,6 @@ namespace RimageMedicalSystemV2
         string patientSex = string.Empty;
         string patientBirthDay = string.Empty;
         string patientAge = string.Empty;
-        string patientFolderName;
         string patStudy = string.Empty;
         string patStudyDesc = string.Empty;
         string patModality = string.Empty;
@@ -104,10 +103,6 @@ namespace RimageMedicalSystemV2
         string ServerListFile;
         List<ServerInfo> ServerList;    //서버목록
         string RimageSystemFolderPath;
-        string MdbFileName = "PiView.mdb";        
-        Dictionary<string, string> dicPatientList = null;       //Dicom에 포함된 환자목록
-        Dictionary<string, string> dicPatientListForMerge = null;   //다중환자 굽기시 머지파일에 쓰여질 환자 목록
-        int PatientCount = 0;           //Dicom에 포함된 환자수
 
         //환자정보가 위치한 폴더
         string dicomCDFolder = string.Empty;
@@ -118,25 +113,17 @@ namespace RimageMedicalSystemV2
 
         //Bin별 Input Type을 담기 위한 변수
         string AutoLoaderMediaType = "";
-        string nowConfigBin = "1";
         private int BinCount;
         string nowBin1Set = string.Empty;
         string nowBin2Set = string.Empty;
         string nowBin3Set = string.Empty;
         string nowBin4Set = string.Empty;
 
-        /*Bin별 Cd수량 및 Ribbon 수량을 체크하기 위한 변수***********/
-        string nowBinNumber = "1";
-        string nowPrinter = "1";
+        /*Bin별 Cd수량 및 Ribbon 수량을 체크하기 위한 변수***********/        
         int nowRemainCD_Qty = 0;
         int nowRemainDVD_Qty = 0;
         int nowRemainCMYRibbon_Qty = 0;
         int nowRemainTransferRibbon_Qty = 0;
-
-        int nowRemainCD1 = 0;
-        int nowRemainCD2 = 0;
-        int nowRemainCD3 = 0;
-        int nowRemainCD4 = 0;
         /***********************************************************/
 
         /// <summary>
@@ -150,18 +137,9 @@ namespace RimageMedicalSystemV2
         public const int WM_CLOSE = 0x0010; //닫기
         Dictionary<string, int> dicWhnd = null;                 //후킹으로 잡아낸 window 핸들 저장
         Dictionary<string, int> dicWhndNexus = null;            //후킹으로 잡아낸 window 핸들 저장-Nexus용
-
-        Dictionary<string, string> DBConnInfo = null;           //DB 접속정보
-
-        BurnOrderedInfoEntity burnOrderInfo = null;             //굽기 명령 정보 종합
-
+        Dictionary<string, string> DBConnInfo = null;           //DB 접속정보        
         CheckDownImages hookChecker = null;                     //// 울산병원의 후킹 체크 객체
         CheckDownComplete hookChecker2 = null;                  //// 폴더사이즈 체크하여 다운로드 완료 체크
-
-        /// <summary>
-        /// 연결된 서버 목록
-        /// </summary>
-        List<RimageServerInfo> connectedServers = null;
 
         string LastHostIP;
         string LastHostName;
@@ -179,6 +157,11 @@ namespace RimageMedicalSystemV2
         /// 굽기 목록 Datasource
         /// </summary>
         List<BurnOrderedInfoEntity> _BurningList = null;
+        
+        /// <summary>
+        /// 작업 대상 유형 - CD,DVD 굽기 또는 USB 복사
+        /// </summary>
+        MediaType mediaType = MediaType.CD_DVD;
         #endregion
 
         public MainForm()
@@ -547,6 +530,8 @@ namespace RimageMedicalSystemV2
         {
             if (!this.EnableServerConnect())
                 return;
+
+            this.mediaType = MediaType.CD_DVD;
 
             if (GlobalVar.configEntity.programType == "1")
             {
@@ -1141,7 +1126,7 @@ namespace RimageMedicalSystemV2
                         cls.srcDir = dirInfo;
                         cls.DicomDownloadFolder = GlobalVar.configEntity.DicomDownloadFolder;
                         cls.LocalShareFolder = GlobalVar.configEntity.LocalShareFolder;
-                        cls.patientFolderName = this.patientFolderName;
+                        cls.patientFolderName = this.ucPatients11.OrderInfo.patFolder;
                         cls.startupPath = Application.StartupPath;
 
                         this.backgroundWorker1.RunWorkerAsync(cls);
@@ -2334,6 +2319,7 @@ namespace RimageMedicalSystemV2
                         this.btnSearch_Click(null, null);
                         Thread.Sleep(200);
 
+                        this.mediaType = MediaType.CD_DVD;
                         if (GlobalVar.configEntity.programType == "1")
                         {
                             this.ReadyBurn1();
@@ -2657,6 +2643,7 @@ namespace RimageMedicalSystemV2
                             this.btnSearch_Click(null, null);
                             Thread.Sleep(3000);
 
+                            this.mediaType = MediaType.CD_DVD;
                             if (GlobalVar.configEntity.programType == "1")
                             {
                                 this.ReadyBurn1();
@@ -3057,7 +3044,54 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnCancelBurning_Click(object sender, EventArgs e)
         {
+            this.CancelOrder();
+        }
 
+        /// <summary>
+        /// 굽기 취소 실행
+        /// </summary>
+        private void CancelOrder()
+        {
+            try
+            {
+                if (this._BurningList == null)
+                    return;
+                if (this._BurningList.Count == 0)
+                    return;
+
+                //// 환자 선택
+                if (this.gvBurninglist.SelectedRowsCount == 0)
+                {
+                    MessageBox.Show("먼저 굽기 취소할 대상을 선택하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var orderInfo = this._BurningList[this.gvBurninglist.FocusedRowHandle];
+
+                //// 굽기완료된 폴더인지 체크(burn.end 파일체크)
+                if (!CheckFiles.CheckFileExists(new DirectoryInfo(orderInfo.patFolderFullPath), GlobalVar.BURN_CHK_FL_NM))
+                {
+                    string folder = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, "CANCEL");
+                    if (!Directory.Exists(folder))
+                    {
+                        Directory.CreateDirectory(folder);
+                    }
+
+                    string file = Path.Combine(folder, orderInfo.OrderId);
+                    if (!File.Exists(file))
+                    {
+                        File.Create(file);
+                    }
+
+                    //// item.SubItems[4].Text = "Submitted for cancel job";
+                    //// item.SubItems[6].Text = "취소";
+                    orderInfo.Progress = "Submitted for cancel job";
+                    orderInfo.BurnState = "취소";
+
+                    this.gvBurninglist.RefreshData();
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -3375,6 +3409,7 @@ namespace RimageMedicalSystemV2
         private void btnUSBCopy_Click(object sender, EventArgs e)
         {
             frmCopyToUSB frm = new frmCopyToUSB();
+            this.mediaType = MediaType.USB;
 
             try
             {

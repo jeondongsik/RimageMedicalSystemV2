@@ -14,4 +14,13 @@ namespace RimageKorea
         Fail,
         None
     }
+
+    /// <summary>
+    /// 파일 복사 대상
+    /// </summary>
+    public enum MediaType
+    {
+        CD_DVD,
+        USB
+    }
 }

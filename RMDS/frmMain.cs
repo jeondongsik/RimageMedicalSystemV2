@@ -100,6 +100,11 @@ namespace RMDS
         COrderDescription imgOrder = null;
 
         /// <summary>
+        /// 상태구분
+        /// </summary>
+        string statusType = "";
+
+        /// <summary>
         /// 현재 프로그램의 Process ID
         /// </summary>
         int processID = 0;
@@ -115,6 +120,11 @@ namespace RMDS
         /// 호출한 폼의 핸들값
         /// </summary>
         IntPtr callFormHandle = IntPtr.Zero;
+
+        /// <summary>
+        /// 초를 체크하기 위함.
+        /// </summary>
+        int cSecond = 0;
 
         /// <summary>
         /// Creator
@@ -727,7 +737,7 @@ namespace RMDS
                 //// Parse status information
                 DiscStatus orderInfo = XMLParser.ParseOrderStatus(xmlOrderStatus);
                 OrderTracking.ModifyOrder(orderInfo);
-                string statusType = (orderInfo.OrderType == "ImageOrderStatus") ? "Imaging " : "Producing ";
+                this.statusType = (orderInfo.OrderType == "ImageOrderStatus") ? "Imaging " : "Producing ";
 
                 //// 굽기 진행 상태 클래스에 세팅
                 DiscStatusForDisplay statusDisp = new DiscStatusForDisplay();
@@ -735,8 +745,8 @@ namespace RMDS
                 statusDisp.OrderID = this.burnOrderInfo.DiscOrder.OrderID;
                 statusDisp.ServerIP = this.burnOrderInfo.TargetServer.IP;
                 statusDisp.Status = orderInfo.Status;               //// IN_PROCESS
-                statusDisp.StatusType = statusType.Trim();          //// Imaging
-                statusDisp.Stage = orderInfo.Stage;                 //// IN_PROCESS                
+                statusDisp.StatusType = this.statusType.Trim();          //// Imaging
+                statusDisp.Stage = orderInfo.Stage;                 //// IN_PROCESS
                 statusDisp.DeviceCurrentState = orderInfo.DeviceCurrentState;
                 statusDisp.Finish = "N";
                 statusDisp.ResultCode = "1";
@@ -745,7 +755,7 @@ namespace RMDS
                 //// Update user display
                 if (!orderInfo.State.Equals("CANCELLED") || !orderInfo.State.Equals("FAILED"))
                 {
-                    statusDisp.StateString = statusType + orderInfo.State + " " + orderInfo.DeviceCurrentState;
+                    statusDisp.StateString = this.statusType + orderInfo.State + " " + orderInfo.DeviceCurrentState;
                     statusDisp.PercentCompleted = orderInfo.PercentCompleted;
 
                     if (orderInfo.State.Trim() == "COMPLETED")
@@ -755,7 +765,7 @@ namespace RMDS
                     }
 
                     //// When Producing COMPLETED
-                    if (statusType.Trim() == "Producing" && orderInfo.State.Trim() == "COMPLETED" && orderInfo.PercentCompleted == "100")
+                    if (this.statusType.Trim() == "Producing" && orderInfo.State.Trim() == "COMPLETED" && orderInfo.PercentCompleted == "100")
                     {
                         //// 굽기 성공 완료
                         //// 폴더안의 데이터 비교 
@@ -984,6 +994,30 @@ namespace RMDS
         }
 
         /// <summary>
+        /// 굽기 취소 
+        /// </summary>
+        private void CancelOrder()
+        {
+            try
+            {
+                COrderDescription pOrder = new COrderDescription();
+                pOrder.ClientId = ClientId;
+                pOrder.OrderId = this.orderID;
+
+                if (this.statusType.Contains("Imaging"))
+                    pOrder.TargetCluster = "DefaultImageCluster";
+                else
+                    pOrder.TargetCluster = "DefaultProductionCluster";
+
+                COrderManager.GetInstance().CancelOrder(pOrder, true);
+
+                //// 프로그램을 종료시키는 타이머 실행
+                //// this.timerAppExit.Enabled = true;
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// 프로그램 종료
         /// </summary>
         private void ApplicationExit(EnumExitType etype)
@@ -1065,6 +1099,65 @@ namespace RMDS
                 SendMessage(this.callFormHandle, WM_COPYDATA, 0, ref cds);
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 프로그램 종료을 위한 타이머 Tick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerAppExit_Tick(object sender, EventArgs e)
+        {
+            this.cSecond++;
+
+            if (this.cSecond == 6)
+            {
+                ////5초 후에 종료
+                this.timerAppExit.Enabled = false;
+                this.ApplicationExit(EnumExitType.None);
+            }
+        }
+
+        /// <summary>
+        /// 취소 명령이 들어왔는지 체크
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerCancelCheck_Tick(object sender, EventArgs e)
+        {
+            this.timerCancelCheck.Enabled = false;
+
+            if (this.CheckCancelFile())
+            {
+                this.CancelOrder();
+            }
+            else
+            {
+                this.timerCancelCheck.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// 취소명령이 들어왔는지 체크한다.
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckCancelFile()
+        {
+            try
+            {
+                string folder = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, "CANCEL");
+                
+                foreach (string dir in Directory.GetFiles(folder, this.orderID))
+                {
+                    if (dir.EndsWith(this.orderID))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch { }
+
+            return false;
         }
     }
 }

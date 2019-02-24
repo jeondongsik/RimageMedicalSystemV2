@@ -350,7 +350,7 @@ namespace RimageReport
                     return ds;
                 }
             }
-            catch (Exception ex)
+            catch 
             {
 
             }

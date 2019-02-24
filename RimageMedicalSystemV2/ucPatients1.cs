@@ -327,7 +327,7 @@ namespace RimageMedicalSystemV2
                     }
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 MessageBox.Show("파일 삭제중 에러가 발생하였습니다.\r\n수동으로 삭제하여 주세요.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

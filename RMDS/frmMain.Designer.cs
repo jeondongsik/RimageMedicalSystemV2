@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.timerAppExit = new System.Windows.Forms.Timer(this.components);
+            this.timerCancelCheck = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // textBox1
@@ -39,6 +42,16 @@
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(336, 173);
             this.textBox1.TabIndex = 0;
+            // 
+            // timerAppExit
+            // 
+            this.timerAppExit.Interval = 1000;
+            this.timerAppExit.Tick += new System.EventHandler(this.timerAppExit_Tick);
+            // 
+            // timerCancelCheck
+            // 
+            this.timerCancelCheck.Interval = 1000;
+            this.timerCancelCheck.Tick += new System.EventHandler(this.timerCancelCheck_Tick);
             // 
             // frmMain
             // 
@@ -58,6 +71,8 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Timer timerAppExit;
+        private System.Windows.Forms.Timer timerCancelCheck;
     }
 }
 
