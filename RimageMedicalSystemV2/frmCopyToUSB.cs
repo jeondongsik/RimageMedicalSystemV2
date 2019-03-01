@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.IO;
 using RimageKorea;
+using System.Management;
 
 namespace RimageMedicalSystemV2
 {
@@ -40,6 +41,8 @@ namespace RimageMedicalSystemV2
         List<DriveInfo> usbList;
         List<DriveInfo> others;
         DriveInfo seletedUSB;
+        long copyFileLen = 0;
+        bool isCopying = false;
 
         public frmCopyToUSB()
         {
@@ -48,6 +51,7 @@ namespace RimageMedicalSystemV2
 
         private void frmCopyToUSB_Load(object sender, EventArgs e)
         {
+            GlobalVar.isCopyingToUSB = true;
             this.timer1.Enabled = true;
         }
 
@@ -186,7 +190,7 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnDrive_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         /// <summary>
@@ -196,7 +200,142 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnStartCopy_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (!this.seletedUSB.IsReady)
+                {
+                    //// 드라이버가 준비되지 않았을 경우
+                    MessageBox.Show("준비된 USB 드라이버가 없습니다.\r\n컴퓨터에 제대로 연결되었는지 체크해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
+                if (this.ExistsUSBData())
+                {
+                    //// 다른데이터가 존재할 경우
+                    MessageBox.Show("USB 드라이버에 다른 데이터가 존재합니다.\r\n체크 후 다시 시도해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (!this.CheckAvailableSpace())
+                {
+                    //// 공간이 안될 경우
+                    MessageBox.Show("USB 공간이 복사하려는 환자정보의 크기보다 작습니다.\r\n체크 후 다시 시도해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                this.CopyStart();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 드라이브 공간 체크
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckAvailableSpace()
+        {
+            try
+            {
+                //// 환자정보가 USB공간보다 클 경우
+                if (this._orderInfo.FolderSize > this.seletedUSB.AvailableFreeSpace)
+                    return false;
+            }
+            catch { }
+
+            return true;
+        }
+
+        /// <summary>
+        /// USB 에 다른 데이터가 존재하는지 체크한다.
+        /// </summary>
+        /// <returns></returns>
+        private bool ExistsUSBData()
+        {
+            try
+            {
+                if (this.seletedUSB.RootDirectory.GetFiles().Length > 0 ||
+                    this.seletedUSB.RootDirectory.GetDirectories().Length > 0)
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// USB 포멧하기
+        /// </summary>
+        /// <param name="driveLetter"></param>
+        /// <param name="fileSystem">FAT32 or NTFS</param>
+        /// <param name="quickFormat"></param>
+        /// <param name="clusterSize"></param>
+        /// <param name="label"></param>
+        /// <param name="enableCompression"></param>
+        /// <returns></returns>
+        public bool FormatUSB(string driveLetter, string fileSystem = "NTFS", bool quickFormat = true,
+                                   int clusterSize = 4096, string label = "USB_0000", bool enableCompression = false)
+        {
+            //add logic to format Usb drive
+            //verify conditions for the letter format: driveLetter[0] must be letter. driveLetter[1] must be ":" and all the characters mustn't be more than 2
+            if (driveLetter.Length != 2 || driveLetter[1] != ':' || !char.IsLetter(driveLetter[0]))
+                return false;
+
+            //query and format given drive 
+            //best option is to use ManagementObjectSearcher
+
+            var files = Directory.GetFiles(driveLetter);
+            var directories = Directory.GetDirectories(driveLetter);
+
+            foreach (var item in files)
+            {
+                try
+                {
+                    File.Delete(item);
+                }
+                catch (UnauthorizedAccessException) { }
+                catch (IOException) { }
+            }
+
+            foreach (var item in directories)
+            {
+                try
+                {
+                    Directory.Delete(item);
+                }
+                catch (UnauthorizedAccessException) { }
+                catch (IOException) { }
+            }
+
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(@"select * from Win32_Volume WHERE DriveLetter = '" + driveLetter + "'");
+            foreach (ManagementObject vi in searcher.Get())
+            {
+                try
+                {
+                    var completed = false;
+                    var watcher = new ManagementOperationObserver();
+
+                    watcher.Completed += (sender, args) =>
+                    {
+                        Console.WriteLine("USB format completed " + args.Status);
+                        completed = true;
+                    };
+                    watcher.Progress += (sender, args) =>
+                    {
+                        Console.WriteLine("USB format in progress " + args.Current);
+                    };
+
+                    vi.InvokeMethod(watcher, "Format", new object[] { fileSystem, quickFormat, clusterSize, label, enableCompression });
+
+                    while (!completed) { System.Threading.Thread.Sleep(1000); }
+                }
+                catch
+                {
+
+                }
+            }
+            return true;
         }
 
         /// <summary>
@@ -204,7 +343,41 @@ namespace RimageMedicalSystemV2
         /// </summary>
         private void CopyStart()
         {
+            DirectoryInfo dirInfo = new DirectoryInfo(this.OrderInfo.patFolderFullPath);
 
+            try
+            {
+                if (dirInfo.Exists)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+
+                    if (this.backgroundWorker1.IsBusy == false)
+                    {
+                        CopyWorker cls = new CopyWorker();
+                        cls.srcDir = dirInfo;
+                        cls.TargetDrive = this.seletedUSB;
+
+                        this.isCopying = true;
+                        this.backgroundWorker1.RunWorkerAsync(cls);
+                    }
+                    else
+                    {                        
+                        this.Cursor = Cursors.Default;
+                        MessageBox.Show("파일복사가 진행되고 있습니다. 잠시 후 다시 시도하세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("환자폴더가 존재하지 않습니다.\r\n확인 후 다시 시도해주세요.", "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Cursor = Cursors.Default;
+                this.isCopying = false;
+                MessageBox.Show("굽기 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -216,19 +389,125 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                
+                BackgroundWorker worker = sender as BackgroundWorker;
+                CopyWorker cls = e.Argument as CopyWorker;
+                e.Result = 0;
+
+                //// 시작시 로그 저장
+                WebUtils.InsertResult(this._orderInfo.OrderId,
+                          this._orderInfo.StartDateTime,
+                          "",
+                          this._orderInfo.patNo,
+                          this._orderInfo.patName,
+                          this._orderInfo.copies.ToString(),
+                          this._orderInfo.mediType,
+                          this._orderInfo.mediSize,
+                          "?",
+                          ((this._orderInfo.BurnPatientKind.Equals("Y") || this._orderInfo.patList.Count > 1) ? this._orderInfo.DicomDescription : this._orderInfo.StudyModality),
+                          Utils.CheckNull(this._orderInfo.BurnPatientKind, "N"),
+                          this._orderInfo.TargetServer.IP,
+                          NetInfo.MyIP());
+
+                cls.ExecJob(worker, e);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                this.isCopying = false;
+                this.txtProgressView.Text = ex.ToString();
+                ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
+            }
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            CurrentState state = e.UserState as CurrentState;
+            this.txtProgressView.AppendText(state.retMessage);
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                this.txtProgressView.AppendText("Error: " + e.Error.Message + "\r\n");
+            }
+            else if (e.Cancelled)
+            {
+                this.txtProgressView.AppendText("Copying files canceled.\r\n");
+            }
+            else
+            {
+                this.txtProgressView.AppendText("Finished copying files.\r\n");
+            }
 
+            CurrentState state = e.Result as CurrentState;
+            this.copyFileLen = state.fileSize;
+            this.backgroundWorker1.CancelAsync();
+            this.isCopying = false;
+
+            this.Complet();
+        }
+
+        /// <summary>
+        /// 복사 종료
+        /// </summary>
+        private void Complet()
+        {
+            try
+            {
+                //// 복사가 제대로 되었는지 체크
+
+                //// 완료 파일 생성한다.
+                if (!File.Exists(Path.Combine(this._orderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM)))
+                {
+                    FileControl.CreateTextFile(Path.Combine(this._orderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM));
+                }
+
+                //// 결과 저장
+                WebUtils.InsertResult(this._orderInfo.OrderId,
+                          this._orderInfo.StartDateTime,
+                          Utils.GetNowTime(),
+                          this._orderInfo.patNo,
+                          this._orderInfo.patName,
+                          this._orderInfo.copies.ToString(),
+                          this._orderInfo.mediType,
+                          this._orderInfo.mediSize,
+                          "완료",
+                          ((this._orderInfo.BurnPatientKind.Equals("Y") || this._orderInfo.patList.Count > 1) ? this._orderInfo.DicomDescription : this._orderInfo.StudyModality),
+                          Utils.CheckNull(this._orderInfo.BurnPatientKind, "N"),
+                          this._orderInfo.TargetServer.IP,
+                          NetInfo.MyIP());
+
+                //// 종료 : 창을 닫고 메인화면에 종료 메시지 전송
+                string message = string.Format("[{0} - {1}] USB로 복사되었습니다.\r\n", this._orderInfo.patNo, this._orderInfo.patName);
+                this._mainForm.copyToUSBComplete(message);
+
+                GlobalVar.isCopyingToUSB = false;
+
+                this.Close();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 폼이 닫히기 전 복사진행중이라면 창을 못 닫게.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmCopyToUSB_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.isCopying || this.backgroundWorker1.IsBusy)
+            {
+                if (MessageBox.Show("환자정보 파일이 복사중입니다.\r\n그래도 종료할까요?", "Rimage Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    this.backgroundWorker1.CancelAsync();
+                }
+            }
+
+            GlobalVar.isCopyingToUSB = false;
         }
     }
 
@@ -303,8 +582,7 @@ namespace RimageMedicalSystemV2
             {
                 state.fileSize += file.Length;
                 //// 원본 파일의 드라이명을 USB 드라이버로 변경한다.
-                ////string orgDriveName = file.
-                string copyto = file.FullName.Replace("", "");
+                string copyto = file.FullName.Replace(Path.GetPathRoot(file.FullName), this.TargetDrive.Name);
                 file.CopyTo(copyto);
 
                 state.retMessage = state.fileSize.ToString() + " byte copied.\r\n";

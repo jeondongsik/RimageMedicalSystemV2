@@ -141,14 +141,17 @@
             // 
             // frmCopyToUSB
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(358, 519);
             this.Controls.Add(this.panelControl1);
+            this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.LookAndFeel.SkinName = "Sharp Plus";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.MaximizeBox = false;
             this.Name = "frmCopyToUSB";
             this.Text = "USB로 복사하기";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCopyToUSB_FormClosing);
             this.Load += new System.EventHandler(this.frmCopyToUSB_Load);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);

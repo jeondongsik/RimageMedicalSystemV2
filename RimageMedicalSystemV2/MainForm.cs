@@ -71,6 +71,7 @@ namespace RimageMedicalSystemV2
         public delegate void SysExecption(ErrorInfo err);
         public delegate void BurningTrace(DiscStatusForDisplay trace);
         public delegate void HookingComplete();
+        public delegate void CopyToUSBComplete(string message);
 
         /// <summary>
         /// 서버 설정/상태 값 받기위한 Delegate
@@ -87,7 +88,8 @@ namespace RimageMedicalSystemV2
 
         public HookingComplete hookingComp;
         public HookingComplete hookingComp2;
-        
+        public CopyToUSBComplete copyToUSBComplete;
+
         string patientName = string.Empty;
         string patientID = string.Empty;
         string patientSex = string.Empty;
@@ -162,6 +164,7 @@ namespace RimageMedicalSystemV2
         /// 작업 대상 유형 - CD,DVD 굽기 또는 USB 복사
         /// </summary>
         MediaType mediaType = MediaType.CD_DVD;
+        
         #endregion
 
         public MainForm()
@@ -179,7 +182,8 @@ namespace RimageMedicalSystemV2
                 this.systemListenerDel = new SysExecption(GetSysExecption);
                 this.serverStatusDel = new ServerStatus(GetServerConfig);
                 this.burningTraceDel = new BurningTrace(GetOrderStatus);
-                
+                this.copyToUSBComplete = new CopyToUSBComplete(CompleteCopyToUSB);
+
                 this.dicWhnd = new Dictionary<string, int>();
                 this.dicWhndNexus = new Dictionary<string, int>();
                 this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
@@ -242,7 +246,7 @@ namespace RimageMedicalSystemV2
                 ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
             }
         }
-
+        
         /// <summary>
         /// 폼로드 이벤트
         /// </summary>
@@ -3418,45 +3422,27 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void btnUSBCopy_Click(object sender, EventArgs e)
         {
-            frmCopyToUSB frm = new frmCopyToUSB();
+            //// 복사 진행중인지 체크한다.
+            if (GlobalVar.isCopyingToUSB)
+            {
+                MessageBox.Show("USB 복사가 진행중입니다.\r\n종료 후 시도하세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             this.mediaType = MediaType.USB;
 
             try
             {
-                //// 굽기 
-
-                int screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
-                int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
-
-                Point parentPoint = this.Location;
-
-                int parentHeight = this.Height;
-                int parentWidth = this.Width;
-
-                int childHeight = frm.Height;
-                int childWidth = frm.Width;
-
-                int resultX;
-                int resultY;
-
-                if ((parentPoint.Y + parentHeight + childHeight) > screenHeight)
-                {                    
-                    resultY = parentPoint.Y;
-                    resultX = parentPoint.X + parentWidth;
+                if (GlobalVar.configEntity.programType == "1")
+                {
+                    this.ReadyBurn1();
                 }
                 else
                 {
-                    // Position on the edge.
-                    resultY = parentPoint.Y;
-                    resultX = parentPoint.X + parentWidth;
+                    this.ReadyBurn2();
                 }
-
-                frm.StartPosition = FormStartPosition.Manual;
-                frm.Location = new Point(resultX, resultY);
             }
             catch { }
-                        
-            frm.Show();
         }
 
         /// <summary>
@@ -3505,6 +3491,21 @@ namespace RimageMedicalSystemV2
             frm.Show();
         }
 
+        /// <summary>
+        /// USB 굽기 종료
+        /// </summary>
+        /// <param name="message"></param>
+        private void CompleteCopyToUSB(string message)
+        {
+            GlobalVar.isCopyingToUSB = false;
+            this.txtStatusView.AppendText(message);
+        }
+
+        /// <summary>
+        /// 하단의 홈페이지를 클릭했을 경우 원격지원 파일을 실행한다.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void hyperLinkEdit1_OpenLink(object sender, DevExpress.XtraEditors.Controls.OpenLinkEventArgs e)
         {
             e.EditValue = "http://www.seetrol.co.kr/download/client.exe";

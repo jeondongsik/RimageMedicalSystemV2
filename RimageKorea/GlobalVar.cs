@@ -140,5 +140,10 @@ namespace RimageKorea
         /// 오더 트래킹 파일명
         /// </summary>
         public static string OrderTrackingFile = "Order.xml";
+
+        /// <summary>
+        /// USB 복사 진행중인지 여부
+        /// </summary>
+        public static bool isCopyingToUSB = false;
     }
 }
