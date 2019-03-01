@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.IO;
+using RimageKorea;
 
 namespace RimageMedicalSystemV2
 {
@@ -16,6 +17,26 @@ namespace RimageMedicalSystemV2
     /// </summary>
     public partial class frmCopyToUSB : DevExpress.XtraEditors.XtraForm
     {
+        BurnOrderedInfoEntity _orderInfo;
+        /// <summary>
+        /// 환자 정보
+        /// </summary>
+        public BurnOrderedInfoEntity OrderInfo
+        {
+            get { return this._orderInfo; }
+            set { this._orderInfo = value; }
+        }
+
+        MainForm _mainForm;
+        /// <summary>
+        /// 부모폼
+        /// </summary>
+        public MainForm MyOwnerForm
+        {
+            get { return this._mainForm; }
+            set { this._mainForm = value; }
+        }
+
         List<DriveInfo> usbList;
         List<DriveInfo> others;
         DriveInfo seletedUSB;
@@ -158,14 +179,142 @@ namespace RimageMedicalSystemV2
             return btnNew;
         }
 
+        /// <summary>
+        /// 고정형 하드 드라이브 클릭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDrive_Click(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// 복사 시작
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartCopy_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// 복사 시작
+        /// </summary>
+        private void CopyStart()
+        {
+
+        }
+
+        /// <summary>
+        /// 복사 진행 쓰레드
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                
+            }
+            catch { }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// 파일복사 실행 Class
+    /// </summary>
+    public class CopyWorker
+    {
+        public DirectoryInfo srcDir { get; set; }
+        public DriveInfo TargetDrive { get; set; }
+
+        /// <summary>
+        /// 환자정보 파일 복사하기
+        /// </summary>
+        /// <param name="worker"></param>
+        /// <param name="e"></param>
+        public void ExecJob(System.ComponentModel.BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e)
+        {
+            CurrentState state = new CurrentState();
+            state.fileSize = 0;
+            state.retCode = 0;
+            state.retMessage = "파일복사 시작 >>> \r\n";
+            worker.ReportProgress(1, state);
+
+            if (worker.CancellationPending)
+            {
+                state.retCode = 0;
+                state.retMessage = "파일복사가 작업자에 의해 취소되었습니다.\r\n";
+                worker.ReportProgress(100, state);
+                e.Cancel = true;
+            }
+            else
+            {
+                try
+                {
+                    if (srcDir.Exists)
+                    {
+                        //2.파일복사
+                        moveFiles(srcDir, worker, e, state);
+
+                        state.retMessage = "Copying files done.\r\n";
+                        worker.ReportProgress(100, state);
+                    }
+                    else
+                    {
+                        state.retCode = -1;
+                        state.retMessage = "파일복사 중 에러발생.\r\n";
+                        worker.ReportProgress(100, state);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    state.retCode = -1;
+                    state.retMessage = "파일복사 중 에러발생.\r\n";
+                    worker.ReportProgress(100, state);
+                }
+
+                e.Result = state;
+            }
+        }
+
+        /// <summary>
+        /// 파일이동
+        /// </summary>
+        /// <param name="directory"></param>
+        private void moveFiles(DirectoryInfo directory, System.ComponentModel.BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e, CurrentState state)
+        {
+            FileInfo[] files = directory.GetFiles();
+            DirectoryInfo[] dirs = directory.GetDirectories();
+
+            foreach (FileInfo file in files)
+            {
+                state.fileSize += file.Length;
+                //// 원본 파일의 드라이명을 USB 드라이버로 변경한다.
+                ////string orgDriveName = file.
+                string copyto = file.FullName.Replace("", "");
+                file.CopyTo(copyto);
+
+                state.retMessage = state.fileSize.ToString() + " byte copied.\r\n";
+                worker.ReportProgress(20, state);
+            }
+
+            foreach (DirectoryInfo dri in dirs)
+            {                
+                moveFiles(dri, worker, e, state);
+            }
         }
     }
 }

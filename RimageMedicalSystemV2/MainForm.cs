@@ -794,7 +794,9 @@ namespace RimageMedicalSystemV2
                 Dictionary<string, string> dicPatListMerge = orderInfo.patList;
                 //// 환자정보가 2개 이상일 때는 무조건 창을 띄운다. => 환경설정값 체크 추가
                 //// 다중환자사용안함이면 건너뜀
-                if (orderInfo.patList != null && orderInfo.patList.Count > 1 && GlobalVar.configEntity.PopUpSelPatInfoYN == "Y" && GlobalVar.configEntity.DisableMultiPatient == "N")
+                //// USB 복사 이면 건너뜀
+                if (orderInfo.patList != null && orderInfo.patList.Count > 1 && GlobalVar.configEntity.PopUpSelPatInfoYN == "Y" 
+                    && GlobalVar.configEntity.DisableMultiPatient == "N" && this.mediaType != MediaType.USB)
                 {
                     dicPatListMerge = this.GetCheckPatientList(orderInfo.patList);
                     if (dicPatListMerge == null)
@@ -809,7 +811,7 @@ namespace RimageMedicalSystemV2
                 }
 
                 //// 등록된 환자가 여러건일 경우
-                if (orderInfo.patList.Count > 1 && GlobalVar.configEntity.DisableMultiPatient == "N")
+                if (orderInfo.patList.Count > 1 && GlobalVar.configEntity.DisableMultiPatient == "N" && this.mediaType != MediaType.USB)
                 {
                     foreach (KeyValuePair<string, string> kvp in dicPatListMerge)
                     {
@@ -825,7 +827,7 @@ namespace RimageMedicalSystemV2
                 orderInfo.TargetServer = this.NowSeletedServer.ShallowCopy();
 
                 //// 다중환자 사용일 경우에만 체크
-                if (GlobalVar.configEntity.DisableMultiPatient == "N")
+                if (GlobalVar.configEntity.DisableMultiPatient == "N" && this.mediaType != MediaType.USB)
                 {
                     if (orderInfo.patListForMerge != null && orderInfo.patListForMerge.Count > 1)
                     {
@@ -880,7 +882,8 @@ namespace RimageMedicalSystemV2
                     DateTime.Now.Millisecond.ToString().PadLeft(3, '0'));
 
                 //// 머지파일 생성
-                if (GlobalVar.configEntity.UseLabelPrint)
+                //// USB일 경우에는 생성하지 않음.
+                if (GlobalVar.configEntity.UseLabelPrint && this.mediaType != MediaType.USB)
                 {
                     if (!string.IsNullOrWhiteSpace(orderInfo.patAge))
                     {
@@ -979,6 +982,13 @@ namespace RimageMedicalSystemV2
 
                     discOrder.LabelName = labelFileName;
                     discOrder.MergeName = orderInfo.MegPath;
+
+                    //// USB 일 경우 여기까지 통과되면 환자 객체를 USB화면으로 넘긴다.
+                    if (this.mediaType == MediaType.USB)
+                    {
+                        this.ExeCopyToUSB(orderInfo);
+                        return true;
+                    }
 
                     //// EditList 파일 생성
                     string editListXml = FileControl.createEditListXml(orderInfo.ImgFiles.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
@@ -3413,6 +3423,8 @@ namespace RimageMedicalSystemV2
 
             try
             {
+                //// 굽기 
+
                 int screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
                 int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
 
@@ -3444,6 +3456,52 @@ namespace RimageMedicalSystemV2
             }
             catch { }
                         
+            frm.Show();
+        }
+
+        /// <summary>
+        /// USB 굽기 실행
+        /// </summary>
+        private void ExeCopyToUSB(BurnOrderedInfoEntity orderInfo)
+        {
+            frmCopyToUSB frm = new frmCopyToUSB();
+
+            try
+            {
+                int screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
+                int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
+
+                Point parentPoint = this.Location;
+
+                int parentHeight = this.Height;
+                int parentWidth = this.Width;
+
+                int childHeight = frm.Height;
+                int childWidth = frm.Width;
+
+                int resultX;
+                int resultY;
+
+                if ((parentPoint.Y + parentHeight + childHeight) > screenHeight)
+                {
+                    resultY = parentPoint.Y;
+                    resultX = parentPoint.X + parentWidth;
+                }
+                else
+                {
+                    // Position on the edge.
+                    resultY = parentPoint.Y;
+                    resultX = parentPoint.X + parentWidth;
+                }
+
+                frm.StartPosition = FormStartPosition.Manual;
+                frm.Location = new Point(resultX, resultY);
+
+                frm.OrderInfo = orderInfo;
+                frm.MyOwnerForm = this;
+            }
+            catch { }
+
             frm.Show();
         }
 

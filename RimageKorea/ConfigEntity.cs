@@ -222,7 +222,7 @@ namespace RimageKorea
         /// </summary>
         public string DownCheckFileName { get; set; }
         /// <summary>
-        /// 다중환자 사용여부
+        /// 다중환자 사용안함 여부 (Y.사용안함, N.사용)
         /// </summary>
         public string DisableMultiPatient { get; set; }
         /// <summary>
