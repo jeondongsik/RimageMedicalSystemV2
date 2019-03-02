@@ -149,7 +149,7 @@
             // 
             this.gcPatientlist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcPatientlist.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gcPatientlist.Location = new System.Drawing.Point(2, 22);
+            this.gcPatientlist.Location = new System.Drawing.Point(2, 21);
             this.gcPatientlist.MainView = this.gvPatientlist;
             this.gcPatientlist.Name = "gcPatientlist";
             this.gcPatientlist.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -157,7 +157,7 @@
             this.repoMediatype,
             this.repoPicDel,
             this.repoPicRetry});
-            this.gcPatientlist.Size = new System.Drawing.Size(980, 561);
+            this.gcPatientlist.Size = new System.Drawing.Size(980, 562);
             this.gcPatientlist.TabIndex = 4;
             this.gcPatientlist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvPatientlist});

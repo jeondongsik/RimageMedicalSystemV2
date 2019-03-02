@@ -45,6 +45,7 @@
             // labelControl1
             // 
             this.labelControl1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl1.Appearance.Options.UseFont = true;
             this.labelControl1.Location = new System.Drawing.Point(23, 22);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(70, 17);
@@ -61,6 +62,7 @@
             // labelControl2
             // 
             this.labelControl2.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl2.Appearance.Options.UseFont = true;
             this.labelControl2.Location = new System.Drawing.Point(23, 48);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(39, 17);
@@ -78,7 +80,7 @@
             // 
             this.btnConfirm.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirm.Appearance.Options.UseFont = true;
-            this.btnConfirm.Image = ((System.Drawing.Image)(resources.GetObject("btnConfirm.Image")));
+            this.btnConfirm.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnConfirm.ImageOptions.Image")));
             this.btnConfirm.Location = new System.Drawing.Point(134, 113);
             this.btnConfirm.LookAndFeel.SkinName = "Money Twins";
             this.btnConfirm.LookAndFeel.UseDefaultLookAndFeel = false;
@@ -92,7 +94,7 @@
             // 
             this.btnCancel.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Appearance.Options.UseFont = true;
-            this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
+            this.btnCancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.ImageOptions.Image")));
             this.btnCancel.Location = new System.Drawing.Point(264, 113);
             this.btnCancel.LookAndFeel.SkinName = "Office 2010 Blue";
             this.btnCancel.LookAndFeel.UseDefaultLookAndFeel = false;
@@ -106,7 +108,7 @@
             // 
             this.btnFolder.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnFolder.Appearance.Options.UseFont = true;
-            this.btnFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnFolder.Image")));
+            this.btnFolder.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnFolder.ImageOptions.Image")));
             this.btnFolder.Location = new System.Drawing.Point(425, 18);
             this.btnFolder.LookAndFeel.SkinName = "Office 2010 Silver";
             this.btnFolder.LookAndFeel.UseDefaultLookAndFeel = false;
@@ -120,6 +122,8 @@
             // 
             this.labelControl3.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelControl3.Appearance.ForeColor = System.Drawing.Color.Red;
+            this.labelControl3.Appearance.Options.UseFont = true;
+            this.labelControl3.Appearance.Options.UseForeColor = true;
             this.labelControl3.Location = new System.Drawing.Point(106, 71);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(190, 17);
@@ -140,6 +144,7 @@
             this.Controls.Add(this.textEditFolderName);
             this.Controls.Add(this.labelControl1);
             this.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "xFormSelectFilePath";

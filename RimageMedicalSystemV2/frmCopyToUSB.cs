@@ -72,16 +72,33 @@ namespace RimageMedicalSystemV2
                 this.usbList = new List<DriveInfo>();
                 this.others = new List<DriveInfo>();
 
-                foreach (var di in DriveInfo.GetDrives())
+                ////foreach (var di in DriveInfo.GetDrives())
+                ////{
+                ////    if (di.IsReady && di.DriveType == DriveType.Removable)
+                ////    {
+                ////        this.usbList.Add(di);
+                ////    }
+                ////    else
+                ////    {
+                ////        this.others.Add(di);
+                ////    }
+                ////}
+
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive WHERE InterfaceType='USB'");
+                foreach (ManagementObject queryObj in searcher.Get())
                 {
-                    if (di.IsReady && di.DriveType == DriveType.Removable)
+                    foreach (ManagementObject b in queryObj.GetRelated("Win32_DiskPartition"))
                     {
-                        this.usbList.Add(di);
+                        foreach (ManagementBaseObject c in b.GetRelated("Win32_LogicalDisk"))
+                        {
+                            ////Console.WriteLine(String.Format("{0}" + "\\", c["Name"].ToString())); // here it will print USB drive letter
+                            this.txtProgressView.AppendText(String.Format("USB Drive => {0}\\ 준비되었습니다.\r\n", c["Name"].ToString()));
+
+                            DriveInfo driveInfo = new DriveInfo(c["Name"].ToString());
+                            this.usbList.Add(driveInfo);
+                        }
                     }
-                    else
-                    {
-                        this.others.Add(di);
-                    }
+
                 }
 
                 if (this.usbList.Count > 0)
@@ -97,8 +114,7 @@ namespace RimageMedicalSystemV2
                     {
                         //// 바로 복사 시작
                         this.seletedUSB = this.usbList[0];
-
-                        ////
+                        this.CopyStart();
                     }
                 }
                 else
@@ -174,7 +190,7 @@ namespace RimageMedicalSystemV2
             btnNew.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
             btnNew.Location = new System.Drawing.Point(3, 90);
             btnNew.Name = "btnDrive";
-            btnNew.Size = new System.Drawing.Size(106, 81);
+            btnNew.Size = new System.Drawing.Size(106, 80);
             btnNew.TabIndex = idx;
             btnNew.Text = di.Name;
             btnNew.Tag = di;
@@ -202,27 +218,6 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                if (!this.seletedUSB.IsReady)
-                {
-                    //// 드라이버가 준비되지 않았을 경우
-                    MessageBox.Show("준비된 USB 드라이버가 없습니다.\r\n컴퓨터에 제대로 연결되었는지 체크해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                if (this.ExistsUSBData())
-                {
-                    //// 다른데이터가 존재할 경우
-                    MessageBox.Show("USB 드라이버에 다른 데이터가 존재합니다.\r\n체크 후 다시 시도해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                if (!this.CheckAvailableSpace())
-                {
-                    //// 공간이 안될 경우
-                    MessageBox.Show("USB 공간이 복사하려는 환자정보의 크기보다 작습니다.\r\n체크 후 다시 시도해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
                 this.CopyStart();
             }
             catch { }
@@ -254,7 +249,7 @@ namespace RimageMedicalSystemV2
             try
             {
                 if (this.seletedUSB.RootDirectory.GetFiles().Length > 0 ||
-                    this.seletedUSB.RootDirectory.GetDirectories().Length > 0)
+                    this.seletedUSB.RootDirectory.GetDirectories().Length > 2)
                 {
                     return true;
                 }
@@ -275,7 +270,7 @@ namespace RimageMedicalSystemV2
         /// <param name="enableCompression"></param>
         /// <returns></returns>
         public bool FormatUSB(string driveLetter, string fileSystem = "NTFS", bool quickFormat = true,
-                                   int clusterSize = 4096, string label = "USB_0000", bool enableCompression = false)
+                                   int clusterSize = 4096, string label = "RIMAGE", bool enableCompression = false)
         {
             //add logic to format Usb drive
             //verify conditions for the letter format: driveLetter[0] must be letter. driveLetter[1] must be ":" and all the characters mustn't be more than 2
@@ -318,12 +313,14 @@ namespace RimageMedicalSystemV2
 
                     watcher.Completed += (sender, args) =>
                     {
-                        Console.WriteLine("USB format completed " + args.Status);
+                        ////Console.WriteLine("USB format completed " + args.Status);
+                        this.txtProgressView.AppendText(string.Format("USB format completed {0}", args.Status));
                         completed = true;
                     };
                     watcher.Progress += (sender, args) =>
                     {
-                        Console.WriteLine("USB format in progress " + args.Current);
+                        ////Console.WriteLine("USB format in progress " + args.Current);
+                        this.txtProgressView.AppendText(string.Format("USB format in progress {0}", args.Current));
                     };
 
                     vi.InvokeMethod(watcher, "Format", new object[] { fileSystem, quickFormat, clusterSize, label, enableCompression });
@@ -332,7 +329,6 @@ namespace RimageMedicalSystemV2
                 }
                 catch
                 {
-
                 }
             }
             return true;
@@ -343,25 +339,55 @@ namespace RimageMedicalSystemV2
         /// </summary>
         private void CopyStart()
         {
+            if (this.seletedUSB == null)
+                return;
+
+            if (!this.seletedUSB.IsReady)
+            {
+                //// 드라이버가 준비되지 않았을 경우
+                MessageBox.Show("준비된 USB 드라이버가 없습니다.\r\n컴퓨터에 제대로 연결되었는지 체크해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (this.ExistsUSBData())
+            {
+                //// 다른데이터가 존재할 경우
+                MessageBox.Show("USB 드라이버에 다른 데이터가 존재합니다.\r\n체크 후 다시 시도해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (!this.CheckAvailableSpace())
+            {
+                //// 공간이 안될 경우
+                MessageBox.Show("USB 공간이 복사하려는 환자정보의 크기보다 작습니다.\r\n체크 후 다시 시도해주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             DirectoryInfo dirInfo = new DirectoryInfo(this.OrderInfo.patFolderFullPath);
 
             try
             {
                 if (dirInfo.Exists)
                 {
+                    this.txtProgressView.AppendText(String.Format("{0}\\ 로 복사를 시작합니다.\r\n", this.seletedUSB.Name));
+                    this.progressBarControl1.Properties.Maximum = this._orderInfo.ImgFiles.EditList.Count;
+
                     this.Cursor = Cursors.WaitCursor;
 
                     if (this.backgroundWorker1.IsBusy == false)
                     {
                         CopyWorker cls = new CopyWorker();
                         cls.srcDir = dirInfo;
-                        cls.TargetDrive = this.seletedUSB;
+                        cls.targetDrive = this.seletedUSB;
 
                         this.isCopying = true;
+                        this._mainForm.ClearSendUSBPatInfo(this._orderInfo.patFolderFullPath);
+                        this._mainForm.AddBurningList(this._orderInfo);
+
                         this.backgroundWorker1.RunWorkerAsync(cls);
                     }
                     else
-                    {                        
+                    {
                         this.Cursor = Cursors.Default;
                         MessageBox.Show("파일복사가 진행되고 있습니다. 잠시 후 다시 시도하세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -420,8 +446,13 @@ namespace RimageMedicalSystemV2
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            CurrentState state = e.UserState as CurrentState;
-            this.txtProgressView.AppendText(state.retMessage);
+            try
+            {
+                CurrentState state = e.UserState as CurrentState;
+                this.progressBarControl1.EditValue = state.count;
+                this.txtProgressView.AppendText(state.retMessage);
+            }
+            catch { }
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -478,10 +509,24 @@ namespace RimageMedicalSystemV2
                           NetInfo.MyIP());
 
                 //// 종료 : 창을 닫고 메인화면에 종료 메시지 전송
-                string message = string.Format("[{0} - {1}] USB로 복사되었습니다.\r\n", this._orderInfo.patNo, this._orderInfo.patName);
-                this._mainForm.copyToUSBComplete(message);
-
                 GlobalVar.isCopyingToUSB = false;
+
+                this._orderInfo.Finish = "Y";
+
+                string message = string.Format("[{0} - {1}] USB로 복사되었습니다.\r\n", this._orderInfo.patNo, this._orderInfo.patName);
+
+                DiscStatusForDisplay trace = new DiscStatusForDisplay();
+                trace.OrderID = this._orderInfo.OrderId;
+                trace.ServerIP = this._orderInfo.TargetServer.IP;
+                trace.Status = "FINISHED";
+                trace.StatusType = "Coping";
+                trace.StateString = "COPY TO USB Complete";
+                trace.PercentCompleted = "100";
+                trace.ResultMessage = "완료";
+                trace.Finish = "Y";
+                trace.ResultCode = "2";
+
+                this._mainForm.copyToUSBComplete(message, trace);
 
                 this.Close();
             }
@@ -517,7 +562,8 @@ namespace RimageMedicalSystemV2
     public class CopyWorker
     {
         public DirectoryInfo srcDir { get; set; }
-        public DriveInfo TargetDrive { get; set; }
+        public DriveInfo targetDrive { get; set; }
+        string parentFolder;
 
         /// <summary>
         /// 환자정보 파일 복사하기
@@ -529,6 +575,7 @@ namespace RimageMedicalSystemV2
             CurrentState state = new CurrentState();
             state.fileSize = 0;
             state.retCode = 0;
+            state.count = 0;
             state.retMessage = "파일복사 시작 >>> \r\n";
             worker.ReportProgress(1, state);
 
@@ -545,8 +592,13 @@ namespace RimageMedicalSystemV2
                 {
                     if (srcDir.Exists)
                     {
+                        this.parentFolder = string.Format("{0}\\", srcDir.FullName);
+
+                        //1.폴더생성
+                        this.CreatdFolder(srcDir);
+
                         //2.파일복사
-                        moveFiles(srcDir, worker, e, state);
+                        this.moveFiles(srcDir, worker, e, state);
 
                         state.retMessage = "Copying files done.\r\n";
                         worker.ReportProgress(100, state);
@@ -570,29 +622,53 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
+        /// 복사할 대상 디렉토리 생성
+        /// </summary>
+        /// <param name="directory"></param>
+        public void CreatdFolder(DirectoryInfo directory)
+        {
+            foreach (DirectoryInfo d in directory.GetDirectories())
+            {
+                string srcDir = d.FullName.Replace(this.parentFolder, "");
+                string targetDir = Path.Combine(this.targetDrive.RootDirectory.Name, srcDir);
+                DirectoryInfo tdir = new DirectoryInfo(targetDir);
+
+                if (!tdir.Exists)
+                    tdir.Create();
+
+                CreatdFolder(d);
+            }
+        }
+
+        /// <summary>
         /// 파일이동
         /// </summary>
         /// <param name="directory"></param>
         private void moveFiles(DirectoryInfo directory, System.ComponentModel.BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e, CurrentState state)
         {
-            FileInfo[] files = directory.GetFiles();
-            DirectoryInfo[] dirs = directory.GetDirectories();
-
-            foreach (FileInfo file in files)
+            try
             {
-                state.fileSize += file.Length;
-                //// 원본 파일의 드라이명을 USB 드라이버로 변경한다.
-                string copyto = file.FullName.Replace(Path.GetPathRoot(file.FullName), this.TargetDrive.Name);
-                file.CopyTo(copyto);
+                FileInfo[] files = directory.GetFiles();
+                DirectoryInfo[] dirs = directory.GetDirectories();
 
-                state.retMessage = state.fileSize.ToString() + " byte copied.\r\n";
-                worker.ReportProgress(20, state);
-            }
+                foreach (FileInfo file in files)
+                {
+                    state.fileSize += file.Length;
+                    //// 원본 파일의 드라이명을 USB 드라이버로 변경한다.
+                    string copyto = file.FullName.Replace(this.parentFolder, this.targetDrive.RootDirectory.Name);
+                    file.CopyTo(copyto);
 
-            foreach (DirectoryInfo dri in dirs)
-            {                
-                moveFiles(dri, worker, e, state);
+                    state.count++;
+                    state.retMessage = string.Format("{0} {1} byte copied.\r\n", file.Name, state.fileSize.ToString());
+                    worker.ReportProgress(20, state);
+                }
+
+                foreach (DirectoryInfo dri in dirs)
+                {
+                    moveFiles(dri, worker, e, state);
+                }
             }
+            catch { }
         }
     }
 }

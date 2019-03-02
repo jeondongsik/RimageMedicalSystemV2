@@ -175,6 +175,23 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
+        /// 환자폴더명으로 선택하여 조회된 목록에서 제외
+        /// </summary>
+        /// <param name="patFolder"></param>
+        public void RemoveAt(string patFolder)
+        {
+            try
+            {
+                BurnOrderedInfoEntity burnOrderedInfo = this._patInfoList.Where(o => o.patFolderFullPath == patFolder).First();
+                this._patInfoList.Remove(burnOrderedInfo);
+
+                this.gvPatientlist.RefreshData();
+                this.gcPatientlist.RefreshDataSource();
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// 조회된 환자중 선택한 환자폴더를 삭제한다.
         /// </summary>
         /// <param name="mainForm"></param>

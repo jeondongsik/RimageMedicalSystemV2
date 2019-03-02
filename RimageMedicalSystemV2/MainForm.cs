@@ -71,7 +71,7 @@ namespace RimageMedicalSystemV2
         public delegate void SysExecption(ErrorInfo err);
         public delegate void BurningTrace(DiscStatusForDisplay trace);
         public delegate void HookingComplete();
-        public delegate void CopyToUSBComplete(string message);
+        public delegate void CopyToUSBComplete(string message, DiscStatusForDisplay trace);
 
         /// <summary>
         /// 서버 설정/상태 값 받기위한 Delegate
@@ -494,6 +494,8 @@ namespace RimageMedicalSystemV2
                                     this.ucPatients21.gvPatientlist.RefreshData();
                                     this.ucPatients21.gcPatientlist.RefreshDataSource();
 
+                                    this.ucPatients21.gvPatientlist.SelectRow(0);
+
                                     this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
                                 }
                             }
@@ -691,6 +693,12 @@ namespace RimageMedicalSystemV2
                 MessageBox.Show("환자를 선택하세요.\r\n선택된 환자가 없습니다.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            //// USB일 경우 한개의 정보만 가능.
+            if (this.mediaType == MediaType.USB && this.ucPatients21.gvPatientlist.SelectedRowsCount > 1)
+            {
+                MessageBox.Show("USB 복사는 한명의 환자정보만 가능합니다.\r\n한 명의 환자만 선택하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             //// 조회된 환자 목록을 돌면서 굽기 실행한다.///////////////////////////////////////////////
             int idx = 0;
@@ -700,7 +708,16 @@ namespace RimageMedicalSystemV2
             {                
                 if (!autoExe)
                 {
-                    //// 수동모드일 경우 선택한 Row만 굽기 진행한다.
+                    //// 수동모드일 경우 선택한 Row만 굽기 진행한다.                    
+                    if (!this.ucPatients21.gvPatientlist.IsRowSelected(idx))
+                    {
+                        continue;
+                    }
+                }
+
+                //// USB인 경우 선택된 한명만.
+                if (this.mediaType == MediaType.USB)
+                {
                     if (!this.ucPatients21.gvPatientlist.IsRowSelected(idx))
                     {
                         continue;
@@ -734,7 +751,11 @@ namespace RimageMedicalSystemV2
             }
 
             //// 조회목록에서 삭제
-            this.ucPatients21.RemoveAtList(orderedIdx);
+            //// USB일 경우 복사 시작시..
+            if (this.mediaType != MediaType.USB)
+            {
+                this.ucPatients21.RemoveAtList(orderedIdx);
+            }
         }
 
         /// <summary>
@@ -845,18 +866,26 @@ namespace RimageMedicalSystemV2
                     }
                 }
                 orderInfo.patFolderFullPath = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
-                
+
+                string progMessage = string.Empty;
+                if (this.mediaType == MediaType.USB)
+                {
+                    orderInfo.mediType = "USB";
+                    progMessage = "Submitted for Coping to USB";
+                }
+                else
+                {
+                    progMessage = "Submitted for Imaging";
+                }
+
                 orderInfo.OrderId = string.Format("{0}_{1}_{2}{3}_ORD", Utils.ReplaceSpecialWord(orderInfo.patName).Replace(" ", "").Trim(), orderInfo.patNo, DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
                 orderInfo.patDate = DateTime.Now.ToShortDateString();
-                orderInfo.Progress = "Submitted for Imaging";
+                orderInfo.Progress = progMessage;
                 orderInfo.ProcessingRate = "0 %";
                 orderInfo.BurnState = "대기";
                 orderInfo.ServerNo = string.Format("[{0}]", this.NowSeletedServer.No);
                 orderInfo.Sort = 0;
-
-                if (GlobalVar.configEntity.programType == "1")
-                    this.ucPatients11.Clear();
-
+                
                 ///////////////////////////////////////////////////////////////////////////////////////                    
                 orderInfo.StartDateTime = Utils.GetNowTime();
                 orderInfo.JobPath = GlobalVar.configEntity.ServerNetworkDrive + orderInfo.patFolder;
@@ -954,7 +983,7 @@ namespace RimageMedicalSystemV2
                     discOrder.ParentFolder = orderInfo.JobPath;
                     discOrder.Copies = orderInfo.copies.ToString();
                     discOrder.MediaType = orderInfo.mediType;
-                    discOrder.OrderStatus = "Submitted for Imaging";
+                    discOrder.OrderStatus = progMessage;
                     discOrder.ImagePath = RimageSystemFolder + "\\" + discOrder.OrderID + ".img";
                     discOrder.EditListPath = RimageSystemFolder + "\\EditList\\" + discOrder.OrderID + ".xml";
                     discOrder.UseLabelPrint = GlobalVar.configEntity.UseLabelPrint;
@@ -987,58 +1016,63 @@ namespace RimageMedicalSystemV2
                     discOrder.LabelName = labelFileName;
                     discOrder.MergeName = orderInfo.MegPath;
 
-                    //// USB 일 경우 여기까지 통과되면 환자 객체를 USB화면으로 넘긴다.
+                    //// USB가 아닐 경우에
+                    if (this.mediaType != MediaType.USB)
+                    {
+                        //// EditList 파일 생성
+                        string editListXml = FileControl.createEditListXml(orderInfo.ImgFiles.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
+                        FileControl.createEditListFile(editListXml, discOrder.EditListPath);
+
+                        //// EditList 파일이 없으면 다시 생성
+                        if (!File.Exists(discOrder.EditListPath))
+                        {
+                            editListXml = FileControl.createEditListXml(orderInfo.ImgFiles.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
+                            FileControl.createEditListFile(editListXml, discOrder.EditListPath);
+                        }
+
+                        orderInfo.EditListXml = editListXml;
+
+
+                        string imageXml = CreateOrderXml.CreateImageOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
+                        string productionXml = CreateOrderXml.CreateProductionOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
+                        discOrder.ProductionOrderPath = Path.Combine(AppDirectory, discOrder.OrderID + ".pOrd");
+
+                        OrderTracking.SaveProducitonFile(productionXml, discOrder.ProductionOrderPath);
+
+                        discOrder.Durable = "true";
+
+                        OrderTracking.AddOrder(discOrder);
+
+                        orderInfo.OrderXml = imageXml;
+                        orderInfo.DiscOrder = discOrder;
+                    }
+
+                    //////////////////////////////////////////////////////////////////////////////////////////
+                    //// 오더정보를 JSON 파일로 변경하여 저장한다.                    
+                    FileControl.CreateOrderJsonFile(orderInfo.OrderId, JsonParser.ConvertToJsonString(orderInfo));
+
+                    //// 굽기 실행
                     if (this.mediaType == MediaType.USB)
                     {
+                        //// USB 일 경우 여기까지 통과되면 환자 객체를 USB화면으로 넘긴다.
                         this.ExeCopyToUSB(orderInfo);
                         return true;
                     }
-
-                    //// EditList 파일 생성
-                    string editListXml = FileControl.createEditListXml(orderInfo.ImgFiles.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
-                    FileControl.createEditListFile(editListXml, discOrder.EditListPath);
-
-                    //// EditList 파일이 없으면 다시 생성
-                    if (!File.Exists(discOrder.EditListPath))
+                    else 
                     {
-                        editListXml = FileControl.createEditListXml(orderInfo.ImgFiles.EditList, orderInfo.DicomCDFolder, orderInfo.JobPath, RimageSystemFolder, orderInfo.JobPath);
-                        FileControl.createEditListFile(editListXml, discOrder.EditListPath);
+                        //// 그리드에 추가한다.
+                        this.AddBurningList(orderInfo);
+
+                        //// 프로그램 1일 경우 조회된 값 초기화.
+                        if (GlobalVar.configEntity.programType == "1")
+                            this.ucPatients11.Clear();
+
+                        //// 파일 생성이 완료된 후  프로그램 실행을 위해 1초 쉰다.
+                        Thread.Sleep(1000);
+
+                        //// 굽기 프로그램을 실행한다.
+                        Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
                     }
-
-                    orderInfo.EditListXml = editListXml;
-
-                    string imageXml = CreateOrderXml.CreateImageOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
-                    string productionXml = CreateOrderXml.CreateProductionOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
-                    discOrder.ProductionOrderPath = Path.Combine(AppDirectory, discOrder.OrderID + ".pOrd");
-
-                    OrderTracking.SaveProducitonFile(productionXml, discOrder.ProductionOrderPath);
-
-                    discOrder.Durable = "true";
-
-                    OrderTracking.AddOrder(discOrder);
-
-                    //////////////////////////////////////////////////////////////////////////////////////////
-                    //// 오더정보를 JSON 파일로 변경하여 저장한다.
-                    orderInfo.OrderXml = imageXml;
-                    orderInfo.DiscOrder = discOrder;
-                    FileControl.CreateOrderJsonFile(orderInfo.OrderId, JsonParser.ConvertToJsonString(orderInfo));
-
-                    //// 그리드에 추가한다.
-                    if (this._BurningList.Count == 0)
-                        this._BurningList.Add(orderInfo);
-                    else
-                        this._BurningList.Insert(0, orderInfo);
-
-                    this.gcBurninglist.RefreshDataSource();
-                    this.gvBurninglist.RefreshData();
-
-                    this.UpdateBurningGrid(orderInfo.OrderId, "Submitted for Imaging", "", "굽기");
-
-                    //// 파일 생성이 완료된 후  프로그램 실행을 위해 1초 쉰다.
-                    Thread.Sleep(1000);
-
-                    //// 굽기 프로그램을 실행한다.
-                    Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
 
                     //// 복사 신청서 인쇄 - 환경설정에 따라, 멀티환자가 아닐경우에만.
                     if (GlobalVar.configEntity.AutoPrintApp.Equals("Y") && orderInfo.BurnPatientKind.Equals("N"))
@@ -1049,8 +1083,7 @@ namespace RimageMedicalSystemV2
                     }
 
                     this.txtStatusView.AppendText(string.Format("[{0}]으로 굽기주문 전송하였습니다.\r\n", orderInfo.TargetServer.IP));
-
-                    RimageKorea.ErrorLog.TraceWrite(this, string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
+                    ErrorLog.TraceWrite(this, string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
                 }
                 catch (Exception ex)
                 {
@@ -1067,6 +1100,27 @@ namespace RimageMedicalSystemV2
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 굽기 목록에 추가
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        public void AddBurningList(BurnOrderedInfoEntity orderInfo)
+        {
+            try
+            {
+                if (this._BurningList.Count == 0)
+                    this._BurningList.Add(orderInfo);
+                else
+                    this._BurningList.Insert(0, orderInfo);
+
+                this.gcBurninglist.RefreshDataSource();
+                this.gvBurninglist.RefreshData();
+
+                this.UpdateBurningGrid(orderInfo.OrderId, orderInfo.Progress, "", orderInfo.BurnState);
+            }
+            catch { }
         }
 
         /// <summary>
@@ -1157,6 +1211,168 @@ namespace RimageMedicalSystemV2
                 this.Cursor = Cursors.Default;
                 this.checkCopying = false;
                 this.ErrMsgShow("굽기 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", ex);
+            }
+        }
+
+        /// <summary>
+        /// 파일복사 비동기 처리
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                BackgroundWorker worker = sender as BackgroundWorker;
+                Worker cls = e.Argument as Worker;
+                e.Result = 0;
+                cls.ExecJob(worker, e);
+            }
+            catch (Exception ex)
+            {
+                this.txtMessages.Text = ex.ToString();
+                RimageKorea.ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
+            }
+        }
+
+        /// <summary>
+        /// 파일복사 진행상황 보여주기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            CurrentState state = e.UserState as CurrentState;
+            this.txtStatusView.AppendText(state.retMessage);
+        }
+
+        /// <summary>
+        /// 파일복사 완료 후 처리
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.txtStatusView.AppendText("Error: " + e.Error.Message + "\r\n");
+            }
+            else if (e.Cancelled)
+            {
+                this.txtStatusView.AppendText("Copying files canceled.\r\n");
+            }
+            else
+            {
+                this.txtStatusView.AppendText("Finished copying files.\r\n");
+            }
+
+            CurrentState state = e.Result as CurrentState;
+            this.copyFileLen = state.fileSize;
+
+            this.backgroundWorker1.CancelAsync();
+
+            //제대로 복사되었는지 다시 체크 후 굽기 명령 보냄.
+            this.RecheckCDAfterCopyFiles();
+        }
+
+        /// <summary>
+        /// 파일을 복사한 후 제대로 복사했는지 체크 후 굽기명령을 보낸다.
+        /// </summary>
+        public void RecheckCDAfterCopyFiles()
+        {
+            this.checkCopying = true;
+            DirectoryInfo dirInfo = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
+            bool dicomDirCheck = true;
+            string errMsg = "";
+
+            try
+            {
+                if (dirInfo.Exists)
+                {
+                    //// 여기서 이동한 폴더에 있는 DicomDir정보를 다시 조회한다.
+                    //// 환자정보 가져오기
+                    List<string> imgList = new List<string>();
+                    Dictionary<string, string> patList = new Dictionary<string, string>();
+                    PatientList patInfor = null;
+                    Dictionary<string, string> dicomdirInfo = SearchPatient.GetPatient(Path.Combine(GlobalVar.configEntity.LocalShareFolder, this.ucPatients11.OrderInfo.patFolder),
+                        GlobalVar.configEntity.DisableMultiPatient, out imgList, out patInfor, out patList);
+
+                    if (dicomdirInfo == null)
+                    {
+                        dicomDirCheck = false;
+                        errMsg = "버닝할 환자번호가 조회된 환자번호와 일치하지 않습니다. 데이터를 재전송하세요.\r\n";
+                    }
+                    else
+                    {
+                        //// 연구용인 경우는 그냥 패스..
+                        //// this.patientName = "연구용자료";                        
+                        if (this.ucPatients11.OrderInfo.patNo.Trim().StartsWith("NA") || dicomdirInfo["ID"].Trim().Equals("") || this.ucPatients11.OrderInfo.patName.Equals("연구용자료"))
+                        {
+                            dicomDirCheck = true;
+                        }
+                        else
+                        {
+                            //// 제출용(1명이상의환자일 때 패스..)
+                            if (this.ucPatients11.OrderInfo.patList != null && this.ucPatients11.OrderInfo.patList.Count > 1)
+                            {
+                                dicomDirCheck = true;
+                            }
+                            else
+                            {
+                                if (this.ucPatients11.OrderInfo.patNo.Trim() != dicomdirInfo["ID"].Trim())
+                                {
+                                    dicomDirCheck = false;
+                                    errMsg = "버닝할 환자번호가 조회된 환자번호와 일치하지 않습니다. 데이터를 재전송하세요.\r\n";
+                                }
+                                else
+                                {
+                                    dicomDirCheck = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (dicomDirCheck == true)
+                {
+                    this.txtStatusView.Clear();
+
+                    //// 굽기 명령을 보낸다.
+                    this.checkCopying = false;
+                    this.StartBurn(this.ucPatients11.OrderInfo);
+
+                    //// Nexus인 경우 첫번째창도 닫아준다.
+                    try
+                    {
+                        if (null != this.dicWhndNexus && true == this.dicWhndNexus.ContainsKey("Window1"))
+                        {
+                            if (this.dicWhndNexus["Window1"] != 0)
+                            {
+                                SendMessage((IntPtr)this.dicWhndNexus["Window1"], WM_CLOSE, 0, 0);
+                                this.dicWhndNexus["Window1"] = 0;
+                            }
+                        }
+                    }
+                    catch { }
+                }
+                else
+                {
+                    this.Cursor = Cursors.Default;
+                    this.txtStatusView.AppendText(errMsg);
+
+                    MessageBox.Show(errMsg, "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                this.checkCopying = false;
+            }
+            catch (Exception ex)
+            {
+                this.ErrMsgShow("굽기 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", ex);
+            }
+            finally
+            {
+                this.checkCopying = false;
+                this.Cursor = Cursors.Default;
             }
         }
 
@@ -2769,168 +2985,6 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
-        /// 파일복사 비동기 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            try
-            {
-                BackgroundWorker worker = sender as BackgroundWorker;
-                Worker cls = e.Argument as Worker;
-                e.Result = 0;
-                cls.ExecJob(worker, e);
-            }
-            catch (Exception ex)
-            {
-                this.txtMessages.Text = ex.ToString();
-                RimageKorea.ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
-            }
-        }
-
-        /// <summary>
-        /// 파일복사 진행상황 보여주기
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            CurrentState state = e.UserState as CurrentState;
-            this.txtStatusView.AppendText(state.retMessage);
-        }
-
-        /// <summary>
-        /// 파일복사 완료 후 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                this.txtStatusView.AppendText("Error: " + e.Error.Message + "\r\n");
-            }
-            else if (e.Cancelled)
-            {
-                this.txtStatusView.AppendText("Copying files canceled.\r\n");
-            }
-            else
-            {
-                this.txtStatusView.AppendText("Finished copying files.\r\n");
-            }
-
-            CurrentState state = e.Result as CurrentState;
-            this.copyFileLen = state.fileSize;
-
-            this.backgroundWorker1.CancelAsync();
-
-            //제대로 복사되었는지 다시 체크 후 굽기 명령 보냄.
-            this.RecheckCDAfterCopyFiles();
-        }
-
-        /// <summary>
-        /// 파일을 복사한 후 제대로 복사했는지 체크 후 굽기명령을 보낸다.
-        /// </summary>
-        public void RecheckCDAfterCopyFiles()
-        {
-            this.checkCopying = true;
-            DirectoryInfo dirInfo = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
-            bool dicomDirCheck = true;
-            string errMsg = "";
-
-            try
-            {
-                if (dirInfo.Exists)
-                {
-                    //// 여기서 이동한 폴더에 있는 DicomDir정보를 다시 조회한다.
-                    //// 환자정보 가져오기
-                    List<string> imgList = new List<string>();
-                    Dictionary<string, string> patList = new Dictionary<string, string>();
-                    PatientList patInfor = null;
-                    Dictionary<string, string> dicomdirInfo = SearchPatient.GetPatient(Path.Combine(GlobalVar.configEntity.LocalShareFolder, this.ucPatients11.OrderInfo.patFolder), 
-                        GlobalVar.configEntity.DisableMultiPatient, out imgList, out patInfor, out patList);
-
-                    if (dicomdirInfo == null)
-                    {
-                        dicomDirCheck = false;
-                        errMsg = "버닝할 환자번호가 조회된 환자번호와 일치하지 않습니다. 데이터를 재전송하세요.\r\n";
-                    }
-                    else
-                    {
-                        //// 연구용인 경우는 그냥 패스..
-                        //// this.patientName = "연구용자료";                        
-                        if (this.ucPatients11.OrderInfo.patNo.Trim().StartsWith("NA") || dicomdirInfo["ID"].Trim().Equals("") || this.ucPatients11.OrderInfo.patName.Equals("연구용자료"))
-                        {
-                            dicomDirCheck = true;
-                        }
-                        else
-                        {
-                            //// 제출용(1명이상의환자일 때 패스..)
-                            if (this.ucPatients11.OrderInfo.patList != null && this.ucPatients11.OrderInfo.patList.Count > 1)
-                            {
-                                dicomDirCheck = true;
-                            }
-                            else
-                            {
-                                if (this.ucPatients11.OrderInfo.patNo.Trim() != dicomdirInfo["ID"].Trim())
-                                {
-                                    dicomDirCheck = false;
-                                    errMsg = "버닝할 환자번호가 조회된 환자번호와 일치하지 않습니다. 데이터를 재전송하세요.\r\n";
-                                }
-                                else
-                                {
-                                    dicomDirCheck = true;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (dicomDirCheck == true)
-                {
-                    this.txtStatusView.Clear();
-
-                    //// 굽기 명령을 보낸다.
-                    this.checkCopying = false;
-                    this.StartBurn(this.ucPatients11.OrderInfo);
-
-                    //// Nexus인 경우 첫번째창도 닫아준다.
-                    try
-                    {
-                        if (null != this.dicWhndNexus && true == this.dicWhndNexus.ContainsKey("Window1"))
-                        {
-                            if (this.dicWhndNexus["Window1"] != 0)
-                            {
-                                SendMessage((IntPtr)this.dicWhndNexus["Window1"], WM_CLOSE, 0, 0);
-                                this.dicWhndNexus["Window1"] = 0;
-                            }
-                        }
-                    }
-                    catch { }
-                }
-                else
-                {
-                    this.Cursor = Cursors.Default;
-                    this.txtStatusView.AppendText(errMsg);
-
-                    MessageBox.Show(errMsg, "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                this.checkCopying = false;
-            }
-            catch (Exception ex)
-            {
-                this.ErrMsgShow("굽기 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", ex);
-            }
-            finally
-            {
-                this.checkCopying = false;
-                this.Cursor = Cursors.Default;
-            }
-        }
-
-        /// <summary>
         /// 완료된 후 폴더 삭제 - backgroundWorker3
         /// </summary>
         /// <param name="folderPath"></param>
@@ -3233,7 +3287,9 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            System.Windows.Forms.DialogResult result = System.Windows.Forms.DialogResult.OK;
+            DialogResult result = System.Windows.Forms.DialogResult.OK;
+
+            //// 굽기진행중인지 체크
 
             if (GlobalVar.configEntity.CloseConfirm.Equals("Y"))
             {
@@ -3495,10 +3551,31 @@ namespace RimageMedicalSystemV2
         /// USB 굽기 종료
         /// </summary>
         /// <param name="message"></param>
-        private void CompleteCopyToUSB(string message)
+        private void CompleteCopyToUSB(string message, DiscStatusForDisplay trace)
         {
             GlobalVar.isCopyingToUSB = false;
+            //// 그리드 업데이트
+            this.UpdateBurningGrid(trace);
             this.txtStatusView.AppendText(message);
+        }
+
+        /// <summary>
+        /// 복사 진행 시작 후 조회된 환자 정보 Clear
+        /// </summary>
+        public void ClearSendUSBPatInfo(string patFolder)
+        {
+            try
+            {
+                if (GlobalVar.configEntity.programType == "1")
+                {
+                    this.ucPatients11.Clear();
+                }
+                else
+                {
+                    this.ucPatients21.RemoveAt(patFolder);
+                }
+            }
+            catch { }
         }
 
         /// <summary>

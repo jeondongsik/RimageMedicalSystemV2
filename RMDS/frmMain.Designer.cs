@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timerAppExit = new System.Windows.Forms.Timer(this.components);
             this.timerCancelCheck = new System.Windows.Forms.Timer(this.components);
@@ -59,6 +60,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(390, 227);
             this.Controls.Add(this.textBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.Text = "Rimage Medical Disc System";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
