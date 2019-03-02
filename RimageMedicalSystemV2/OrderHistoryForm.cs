@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using System.IO;
 using RimageKorea;
 
@@ -95,6 +89,15 @@ namespace RimageMedicalSystemV2
                                 {
                                     MessageBox.Show("환자폴더가 존재하지 않습니다. \r\n다시 다운로드해야 합니다.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     return;
+                                }
+
+                                if (orderInfo.mediType == "USB")
+                                {
+                                    this._mainForm.mediaType = MediaType.USB;
+                                }
+                                else
+                                {
+                                    this._mainForm.mediaType = MediaType.CD_DVD;
                                 }
 
                                 this._mainForm.StartBurn(orderInfo);

@@ -102,8 +102,20 @@ namespace RimageKorea
             {
                 try
                 {
-                    //// 다운로드 폴더
-                    FileControl.ClearDirectory(this.downloadFolder);
+                    //// 다운로드 폴더안을 정리
+                    foreach (string fl in Directory.GetFiles(this.downloadFolder))
+                    {
+                        try
+                        {
+                            File.Delete(fl);
+                        }
+                        catch { }
+                    }
+
+                    foreach (string dir in Directory.GetDirectories(this.downloadFolder))
+                    {
+                        FileControl.ClearDirectory(dir);
+                    }
                 }
                 catch { }
             }

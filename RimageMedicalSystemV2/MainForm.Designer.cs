@@ -93,6 +93,7 @@
             this.btnUSBCopy = new DevExpress.XtraEditors.SimpleButton();
             this.hyperLinkEdit1 = new DevExpress.XtraEditors.HyperLinkEdit();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tmrConnectServer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -900,6 +901,11 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(415, 50);
             this.flowLayoutPanel1.TabIndex = 20;
             // 
+            // tmrConnectServer
+            // 
+            this.tmrConnectServer.Interval = 300;
+            this.tmrConnectServer.Tick += new System.EventHandler(this.tmrConnectServer_Tick);
+            // 
             // MainForm
             // 
             this.Appearance.Options.UseFont = true;
@@ -1029,6 +1035,7 @@
         private DevExpress.XtraEditors.SimpleButton btnUSBCopy;
         private DevExpress.XtraEditors.HyperLinkEdit hyperLinkEdit1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Timer tmrConnectServer;
     }
 }
 

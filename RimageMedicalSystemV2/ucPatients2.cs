@@ -78,6 +78,7 @@ namespace RimageMedicalSystemV2
                         //// 굽기 실행
                         if (this._mainForm != null)
                         {
+                            this._mainForm.mediaType = MediaType.CD_DVD;
                             this._mainForm.StartBurn(this._patInfoList[this.gvPatientlist.GetDataSourceRowIndex(e.RowHandle)]);
 
                             this._patInfoList.RemoveAt(e.RowHandle);

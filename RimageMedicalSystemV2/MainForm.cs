@@ -6,22 +6,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.IO;
 using System.Windows.Forms;
 using System.Threading;
 using System.Net;
-using System.Net.Sockets;
-using System.Net.NetworkInformation;
-using System.Xml;
 using System.Runtime.InteropServices;
 using DevExpress.XtraEditors;
 
-using Rimage.Client.Api;
-using Rimage.Client.Api.Exception;
-
 using RimageKorea;
-using DicomReader;
 using RimageReport;
 using System.Linq;
 using System.Diagnostics;
@@ -163,7 +155,7 @@ namespace RimageMedicalSystemV2
         /// <summary>
         /// 작업 대상 유형 - CD,DVD 굽기 또는 USB 복사
         /// </summary>
-        MediaType mediaType = MediaType.CD_DVD;
+        public MediaType mediaType = MediaType.CD_DVD;
         
         #endregion
 
@@ -678,14 +670,12 @@ namespace RimageMedicalSystemV2
             {
                 if (!autoExe)
                     MessageBox.Show("조회된 환자정보가 없습니다.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
                 return;
             }
             if (this.ucPatients21.PatientInfoList.Count == 0)
             {
                 if (!autoExe)
                     MessageBox.Show("조회된 환자정보가 없습니다.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
                 return;
             }
             if (!autoExe && this.ucPatients21.gvPatientlist.SelectedRowsCount == 0)
@@ -1666,7 +1656,13 @@ namespace RimageMedicalSystemV2
                     if (result[this.NowSeletedServer.IP].ContainsKey("STATUS"))
                         this.SetServerStatus(result[this.NowSeletedServer.IP]["STATUS"].ToString());
 
-                    this.txtMessages.Text = string.Format("[{0}] 연결되었습니다.", this.NowSeletedServer.IP);
+                    this.txtMessages.Text = string.Format("{0} 연결 성공", this.NowSeletedServer.IP);
+                    this.txtStatusView.AppendText(string.Format("{0} 연결되었습니다.\r\n", this.NowSeletedServer.IP));
+                }
+                else
+                {
+                    this.txtMessages.Text = string.Format("{0} 연결 실패.", this.NowSeletedServer.IP);
+                    this.txtStatusView.AppendText(string.Format("{0} 연결되지 않습니다. 네트워크를 체크해주세요.\r\n", this.NowSeletedServer.IP));
                 }
             }
             catch { }
@@ -2399,7 +2395,13 @@ namespace RimageMedicalSystemV2
                 //// 서버 설정 가져오기
                 if (connected)
                 {
+                    this.txtStatusView.AppendText(string.Format("{0} 네트워크 연결되었습니다. 서버정보를 가져오고 있습니다.\r\n", this.NowSeletedServer.IP));
                     this.GetConnectedServerInfo();
+                }
+                else
+                {
+                    this.txtMessages.Text = string.Format("{0} 연결 실패.", this.NowSeletedServer.IP);
+                    this.txtStatusView.AppendText(string.Format("{0} 연결되지 않습니다. 네트워크를 체크해주세요.\r\n", this.NowSeletedServer.IP));
                 }
             }
             catch { }
@@ -3426,14 +3428,27 @@ namespace RimageMedicalSystemV2
                     //// 현재 선택된 서버로 저장
                     this.NowSeletedServer = srv;
 
-                    if (CheckPing.TestPing(srv.IP))
-                    {
-                        this.SelectServerLabel(srv.IP, true);
-                    }
-                    else
-                    {
-                        this.SelectServerLabel(srv.IP, false);
-                    }
+                    this.txtStatusView.AppendText(string.Format("{0} 연결중입니다. 잠시 기다려주세요.\r\n", srv.IP));
+                    this.tmrConnectServer.Enabled = true;
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 서버에 연결하고 Config, Status 값을 가져온다.
+        /// </summary>
+        private void ConnectServer()
+        {
+            try
+            {
+                if (CheckPing.TestPing(this.NowSeletedServer.IP))
+                {
+                    this.SelectServerLabel(this.NowSeletedServer.IP, true);
+                }
+                else
+                {
+                    this.SelectServerLabel(this.NowSeletedServer.IP, false);
                 }
             }
             catch { }
@@ -3586,6 +3601,19 @@ namespace RimageMedicalSystemV2
         private void hyperLinkEdit1_OpenLink(object sender, DevExpress.XtraEditors.Controls.OpenLinkEventArgs e)
         {
             e.EditValue = "http://www.seetrol.co.kr/download/client.exe";
+        }
+
+        /// <summary>
+        /// 서버연결
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tmrConnectServer_Tick(object sender, EventArgs e)
+        {
+            this.tmrConnectServer.Stop();
+            this.tmrConnectServer.Enabled = false;
+
+            this.ConnectServer();
         }
     }
 

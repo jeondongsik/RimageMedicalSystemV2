@@ -294,7 +294,8 @@
             this.repoMediatype.Items.AddRange(new object[] {
             "CDR",
             "DVDR",
-            "DVDR-DL"});
+            "DVDR-DL",
+            "USB"});
             this.repoMediatype.Name = "repoMediatype";
             this.repoMediatype.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             // 
