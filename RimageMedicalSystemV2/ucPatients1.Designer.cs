@@ -94,6 +94,7 @@
             "CDR",
             "DVDR",
             "DVDR-DL"});
+            this.cbMedia.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.cbMedia.Size = new System.Drawing.Size(73, 22);
             this.cbMedia.TabIndex = 8;
             this.cbMedia.TabStop = false;
@@ -125,6 +126,7 @@
             "5",
             "6",
             "7"});
+            this.cbCopies.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.cbCopies.Size = new System.Drawing.Size(72, 22);
             this.cbCopies.TabIndex = 6;
             this.cbCopies.TabStop = false;

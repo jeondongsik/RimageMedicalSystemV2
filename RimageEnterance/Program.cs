@@ -24,23 +24,7 @@ namespace RimageEnterance
             BonusSkins.Register();
             SkinManager.EnableFormSkins();
             UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
-
-            if (!IsAdministrator())
-            {
-                try
-                {
-                    ProcessStartInfo procInfo = new ProcessStartInfo();
-                    procInfo.UseShellExecute = true;
-                    procInfo.FileName = Application.ExecutablePath;
-                    procInfo.WorkingDirectory = Environment.CurrentDirectory;
-                    procInfo.Verb = "runas";
-                    Process.Start(procInfo);
-                }
-                catch { }
-
-                return;
-            }
-
+            
             Application.Run(new FrmStart());
         }
 

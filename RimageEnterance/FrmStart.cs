@@ -90,7 +90,7 @@ namespace RimageEnterance
 
             try
             {                
-                if (this.ServerList != null && this.ServerList.Count > 1)
+                if (this.ServerList != null && this.ServerList.Count > 0)
                 {
                     //등록된 서버목록을 돌아가면서 체크
                     foreach (ServerInfo srv in this.ServerList)
