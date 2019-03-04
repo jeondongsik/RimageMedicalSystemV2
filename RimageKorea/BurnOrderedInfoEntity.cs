@@ -143,6 +143,11 @@ namespace RimageKorea
         /// 굽기실행할 서버정보
         /// </summary>
         public ServerInfo TargetServer { get; set; }
+        
+        /// <summary>
+        /// 리마지 서버의 Rimage 폴더 경로
+        /// </summary>
+        public string RimageSystemFolder { get; set; }
 
         /// <summary>
         /// 굽기주문 정보

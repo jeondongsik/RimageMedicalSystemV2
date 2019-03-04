@@ -632,6 +632,15 @@ namespace RMDS
         {
             try
             {
+                string productionXml = CreateOrderXml.CreateProductionOrder(this.burnOrderInfo.DiscOrder, this.burnOrderInfo.TargetServer.IP, this.burnOrderInfo.RimageSystemFolder);
+                this.burnOrderInfo.DiscOrder.ProductionOrderPath = Path.Combine(this.AppDirectory, this.burnOrderInfo.DiscOrder.OrderID + ".pOrd");
+
+                OrderTracking.SaveProducitonFile(productionXml, this.burnOrderInfo.DiscOrder.ProductionOrderPath);
+
+                this.burnOrderInfo.DiscOrder.Durable = "true";
+
+                OrderTracking.AddOrder(this.burnOrderInfo.DiscOrder);
+
                 this.imgOrder = COrderManager.GetInstance().SubmitDurableOrder(this.burnOrderInfo.OrderXml, (IOrderStatusListener)(new OrderListener(this)));
 
                 //// 시작시 로그 저장

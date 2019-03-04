@@ -961,6 +961,8 @@ namespace RimageMedicalSystemV2
                     return false;
                 }
 
+                orderInfo.RimageSystemFolder = RimageSystemFolder;
+
                 try
                 {
                     DiscData discOrder;
@@ -1021,18 +1023,9 @@ namespace RimageMedicalSystemV2
                         }
 
                         orderInfo.EditListXml = editListXml;
-
-
+                        
                         string imageXml = CreateOrderXml.CreateImageOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
-                        string productionXml = CreateOrderXml.CreateProductionOrder(discOrder, orderInfo.TargetServer.IP, RimageSystemFolder);
-                        discOrder.ProductionOrderPath = Path.Combine(AppDirectory, discOrder.OrderID + ".pOrd");
-
-                        OrderTracking.SaveProducitonFile(productionXml, discOrder.ProductionOrderPath);
-
-                        discOrder.Durable = "true";
-
-                        OrderTracking.AddOrder(discOrder);
-
+                        
                         orderInfo.OrderXml = imageXml;
                         orderInfo.DiscOrder = discOrder;
                     }
