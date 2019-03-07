@@ -180,6 +180,9 @@ namespace RimageMedicalSystemV2
                 this.dicWhndNexus = new Dictionary<string, int>();
                 this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
 
+                //// 실행중인 RMDS 죽임.
+                this.KillBurnPrograms();
+
                 this.GetConfig();
                 this.InitializeControlValues();
 
@@ -1649,14 +1652,14 @@ namespace RimageMedicalSystemV2
                     if (result[this.NowSeletedServer.IP].ContainsKey("STATUS"))
                         this.SetServerStatus(result[this.NowSeletedServer.IP]["STATUS"].ToString());
 
-                    this.txtMessages.Text = string.Format("{0} 연결 성공", this.NowSeletedServer.IP);
-                    this.txtStatusView.AppendText(string.Format("{0} 연결되었습니다.\r\n", this.NowSeletedServer.IP));
+                    ////this.txtMessages.Text = string.Format("{0} 연결 성공", this.NowSeletedServer.IP);
+                    ////this.txtStatusView.AppendText(string.Format("{0} 연결되었습니다.\r\n", this.NowSeletedServer.IP));
                 }
-                else
-                {
-                    this.txtMessages.Text = string.Format("{0} 연결 실패.", this.NowSeletedServer.IP);
-                    this.txtStatusView.AppendText(string.Format("{0} 연결되지 않습니다. 네트워크를 체크해주세요.\r\n", this.NowSeletedServer.IP));
-                }
+                ////else
+                ////{
+                ////    this.txtMessages.Text = string.Format("{0} 연결 실패.", this.NowSeletedServer.IP);
+                ////    this.txtStatusView.AppendText(string.Format("{0} 연결되지 않습니다. 네트워크를 체크해주세요.\r\n", this.NowSeletedServer.IP));
+                ////}
             }
             catch { }
         }
@@ -1854,6 +1857,24 @@ namespace RimageMedicalSystemV2
                         return;
 
                     orderInfo.Finish = "Y";
+
+                    ////결과저장
+                    WebUtils.InsertResult(orderInfo.OrderId,
+                              orderInfo.StartDateTime,
+                              Utils.GetNowTime(),
+                              orderInfo.patNo,
+                              orderInfo.patName,
+                              orderInfo.copies.ToString(),
+                              orderInfo.mediType,
+                              orderInfo.mediSize,
+                              trace.ResultMessage,
+                              ((orderInfo.BurnPatientKind.Equals("Y") || orderInfo.patList.Count > 1) ? orderInfo.DicomDescription : orderInfo.StudyModality),
+                              Utils.CheckNull(orderInfo.BurnPatientKind, "N"),
+                              orderInfo.TargetServer.IP,
+                              this.MyIP);
+
+                    //// 오더정보를 JSON 파일로 변경하여 저장한다.
+                    FileControl.CreateOrderJsonFile(orderInfo.OrderId, JsonParser.ConvertToJsonString(orderInfo));
 
                     //// 오른쪽 하단에 메시지를 보여준다.
                     if (GlobalVar.configEntity.PopUpAlamYN == "Y")
@@ -2388,7 +2409,8 @@ namespace RimageMedicalSystemV2
                 //// 서버 설정 가져오기
                 if (connected)
                 {
-                    this.txtStatusView.AppendText(string.Format("{0} 네트워크 연결되었습니다. 서버정보를 가져오고 있습니다.\r\n", this.NowSeletedServer.IP));
+                    this.txtMessages.Text = string.Format("{0} 연결 성공", this.NowSeletedServer.IP);
+                    this.txtStatusView.AppendText(string.Format("{0} 네트워크 연결되었습니다.\r\n", this.NowSeletedServer.IP));
                     this.GetConnectedServerInfo();
                 }
                 else

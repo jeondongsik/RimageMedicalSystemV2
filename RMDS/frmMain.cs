@@ -200,7 +200,7 @@ namespace RMDS
                         Directory.CreateDirectory(this.serverLogPath);
                     }
 
-                    GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, "Orders.xml");
+                    GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, string.Format("Orders_{0}.xml", this.processID.ToString()));
 
                     //// 서버 접속
                     if (!this.ConnectServer())
@@ -226,7 +226,7 @@ namespace RMDS
                     ErrorInfo err = new ErrorInfo();
                     err.Code = "9999";
                     err.Message = ex.Message;
-                    err.Description = ex.ToString();                    
+                    err.Description = ex.ToString();
                     this.WriteErrLog(err, true);
 
                     //// 프로그램 종료
@@ -280,7 +280,7 @@ namespace RMDS
                             Directory.CreateDirectory(this.serverLogPath);
                         }
 
-                        GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, "Orders.xml");
+                        GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, string.Format("Orders_{0}.xml", this.processID.ToString()));
 
                         //// 서버 접속
                         if (!this.ConnectServer())
@@ -644,7 +644,7 @@ namespace RMDS
                 this.imgOrder = COrderManager.GetInstance().SubmitDurableOrder(this.burnOrderInfo.OrderXml, (IOrderStatusListener)(new OrderListener(this)));
 
                 //// 시작시 로그 저장
-                WebUtils.InsertResult(this.burnOrderInfo.DiscOrder.OrderID,
+                WebUtils.InsertResult(this.burnOrderInfo.OrderId,
                                   this.burnOrderInfo.StartDateTime,
                                   "",
                                   this.burnOrderInfo.patNo,
@@ -883,7 +883,7 @@ namespace RMDS
                     }
 
                     ////결과저장
-                    WebUtils.InsertResult(this.burnOrderInfo.DiscOrder.OrderID,
+                    WebUtils.InsertResult(this.burnOrderInfo.OrderId,
                               this.burnOrderInfo.StartDateTime,
                               Utils.GetNowTime(),
                               this.burnOrderInfo.patNo,
@@ -902,11 +902,12 @@ namespace RMDS
 
                     if (this.DeleteAfterBurn == "2" || (this.DeleteAfterBurn == "1" && statusDisp.ResultMessage == "완료"))
                     {
+                        //// 보관기간 체크
                         FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
                     }
 
                     //// 메인프로그램에 메시지 전송한다.
-                    this.SendWinMessage("BURN_END");
+                    this.SendWinMessage(string.Format("BURN_END_{0}", this.burnOrderInfo.OrderId));
 
                     //// 굽기 종료되었으므로 프로그램 종료
                     //// 잠깐 쉬었다 종료

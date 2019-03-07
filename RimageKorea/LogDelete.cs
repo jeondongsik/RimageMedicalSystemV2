@@ -42,26 +42,39 @@ namespace RimageKorea
 
                 foreach (FileInfo fi in logDir.GetFiles())
                 {
-                    if (fi.CreationTime > DateTime.Now.AddDays(retentionPeriod * -1).Date)
+                    DateTime diDt = fi.CreationTime.Date;
+                    if (diDt <= DateTime.Now.AddDays(retentionPeriod * -1).Date)
                     {
-                        continue;
+                        //// 굽기명령 파일인 경우 하위 환자폴더도 삭제
+                        if (fi.Name.EndsWith("ORD"))
+                        {
+                            string json = File.ReadAllText(fi.FullName);
+                            BurnOrderedInfoEntity burnOrderInfo = JsonParser.ConvertToBurnOrderedInfoEntity(json);
+
+                            //// 환자폴더 삭제
+                            FileControl.DeleteFolder(burnOrderInfo.patFolderFullPath);
+                            //// 머지파일 삭제
+                            FileControl.DeleteFile(burnOrderInfo.MegPath);
+                            //// EditList 파일 삭제
+                            FileControl.DeleteFile(burnOrderInfo.EditListPath);
+                            //// TraceLog 폴더 삭제
+                            FileControl.DeleteFolder(burnOrderInfo.OrderId);
+                        }
+
+                        fi.Delete();
                     }
-                    
-                    //// 굽기명령 파일인 경우 하위 환자폴더도 삭제
-                    if (fi.Name.EndsWith("ORD"))
+                }
+
+                //// Order.xml 파일 삭제
+                foreach (DirectoryInfo ddr in logDir.GetDirectories("SVR_*"))
+                {
+                    foreach (FileInfo file in ddr.GetFiles("Orders_*.xml"))
                     {
-                        string json = File.ReadAllText(fi.FullName);
-                        BurnOrderedInfoEntity burnOrderInfo = JsonParser.ConvertToBurnOrderedInfoEntity(json);
-
-                        //// 환자폴더 삭제
-                        Directory.Delete(burnOrderInfo.patFolderFullPath, true);
-                        //// 머지파일 삭제
-                        FileControl.DeleteFile(burnOrderInfo.MegPath);
-                        //// EditList 파일 삭제
-                        FileControl.DeleteFile(burnOrderInfo.EditListPath);
+                        if (file.CreationTime.Date < DateTime.Now.Date)
+                        {
+                            file.Delete();
+                        }
                     }
-
-                    fi.Delete();
                 }
             }
             catch (Exception ex)

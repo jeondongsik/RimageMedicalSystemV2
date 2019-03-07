@@ -45,6 +45,28 @@ namespace RimageKorea
         }
 
         /// <summary>
+        /// 폴더삭제
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static bool DeleteFolder(string source)
+        {
+            bool retVal = true;
+            try
+            {
+                if (Directory.Exists(source))
+                {
+                    Directory.Delete(source, true);
+                }
+            }
+            catch
+            {
+                
+            }
+            return retVal;
+        }
+
+        /// <summary>
         /// 폴더 사이즈 가져오기
         /// </summary>
         /// <param name="folderPath"></param>
@@ -867,7 +889,19 @@ namespace RimageKorea
         {
             try
             {
-                FileStream fs = new FileStream(Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderID)), FileMode.Create);
+                string filePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderID));
+
+                //// 파일이 존재하면 삭제하고 다시 생성
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        File.Delete(filePath);
+                    }
+                    catch { }
+                }
+
+                FileStream fs = new FileStream(filePath, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
                 sw.Write(json);
                 sw.Dispose();

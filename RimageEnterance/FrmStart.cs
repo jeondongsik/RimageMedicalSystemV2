@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Threading;
-using System.Xml;
 using System.Net;
 using System.Diagnostics;
-using DevExpress.XtraEditors;
 using RimageKorea;
 
 namespace RimageEnterance
@@ -177,7 +172,8 @@ namespace RimageEnterance
         {
             KillProcess.DelProcess(GlobalVar.RIMAGE_CONFIG_SETTING);
             KillProcess.DelProcess(GlobalVar.RIMAGE_MEDICAL_CLIENT);
-            
+            KillProcess.DelProcess("RMDS");
+
             this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
 
             this.timer1.Enabled = true;
