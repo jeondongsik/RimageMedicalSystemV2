@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 using RimageKorea;
 
 namespace RimageMedicalSystemV2
@@ -36,6 +37,7 @@ namespace RimageMedicalSystemV2
             try
             {
                 this._orderedList = new List<BurnOrderedInfoEntity>();
+                List<BurnOrderedInfoEntity> temp = new List<BurnOrderedInfoEntity>();
 
                 string orderFolder = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER);
 
@@ -51,9 +53,20 @@ namespace RimageMedicalSystemV2
                             order.DeleteIcon = global::RimageMedicalSystemV2.Properties.Resources.close_16x16;
                             order.RetryIcon = global::RimageMedicalSystemV2.Properties.Resources.refreshpivottable_16x16;
 
-                            this._orderedList.Add(order);
+                            temp.Add(order);
                         }
                     }
+                }
+
+                //// 정렬
+                if (temp.Count > 0)
+                {
+                    var sortList = temp.OrderBy(s => s.StartDateTime);
+                    this._orderedList = sortList.ToList();
+                }
+                else
+                {
+                    this._orderedList = temp;
                 }
 
                 this.gcPatientlist.DataSource = this._orderedList;

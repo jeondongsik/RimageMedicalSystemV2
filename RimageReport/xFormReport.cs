@@ -858,7 +858,23 @@ namespace RimageReport
         private void cbServerIPs_SelectedIndexChanged(object sender, EventArgs e)
         {
             this._webAddress = string.Format("http://{0}/RimageWeb", this.cbServerIPs.Text);
-            this.BindingData(this.GetData());
+
+            if (this.xTabReport.SelectedTabPage == this.xPageDailySum)
+            {
+                this.BindingStatics(this.GetStatics("", ""));
+
+                try
+                {
+                    this.gridViewYear.FocusedRowHandle = this.gridViewYear.RowCount - 1;
+                    this.gridViewMonth.FocusedRowHandle = DateTime.Now.Month - 1;
+                    this.gridViewDays.FocusedRowHandle = DateTime.Now.Day - 1;
+                }
+                catch { }
+            }
+            else
+            {
+                this.BindingData(this.GetData());
+            }
         }
     }
 }

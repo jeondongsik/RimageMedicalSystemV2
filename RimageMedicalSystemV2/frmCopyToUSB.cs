@@ -10,6 +10,7 @@ using DevExpress.XtraEditors;
 using System.IO;
 using RimageKorea;
 using System.Management;
+using System.Runtime.InteropServices;
 
 namespace RimageMedicalSystemV2
 {
@@ -340,7 +341,9 @@ namespace RimageMedicalSystemV2
         private void CopyStart()
         {
             if (this.seletedUSB == null)
+            {
                 return;
+            }
 
             if (!this.seletedUSB.IsReady)
             {
@@ -553,6 +556,42 @@ namespace RimageMedicalSystemV2
             }
 
             GlobalVar.isCopyingToUSB = false;
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            UInt32 WM_DEVICECHANGE = 0x0219;
+            UInt32 DBT_DEVTUP_VOLUME = 0x02;
+            UInt32 DBT_DEVICEARRIVAL = 0x8000;
+            ////UInt32 DBT_DEVICEREMOVECOMPLETE = 0x8004;
+
+            if ((m.Msg == WM_DEVICECHANGE) && (m.WParam.ToInt32() == DBT_DEVICEARRIVAL))//디바이스 연결
+            {
+                //int m_Count = 0;
+                int devType = Marshal.ReadInt32(m.LParam, 4);
+
+                if (devType == DBT_DEVTUP_VOLUME)
+                {
+                    this.timer1.Enabled = true;
+                }
+            }
+
+            ////if ((m.Msg == WM_DEVICECHANGE) && (m.WParam.ToInt32() == DBT_DEVICEREMOVECOMPLETE))  //디바이스 연결 해제
+            ////{
+            ////    int devType = Marshal.ReadInt32(m.LParam, 4);
+
+            ////    if (devType == DBT_DEVTUP_VOLUME)
+            ////    {
+            ////        this.txtProgressView.AppendText("디바이스 연결 해제");
+            ////    }
+            ////}
+
+            base.WndProc(ref m);
+        }
+
+        private void btnReFind_Click(object sender, EventArgs e)
+        {
+            this.FindUsb();
         }
     }
 

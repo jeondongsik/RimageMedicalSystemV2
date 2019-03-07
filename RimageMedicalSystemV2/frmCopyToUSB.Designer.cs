@@ -28,28 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCopyToUSB));
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.btnReFind = new DevExpress.XtraEditors.SimpleButton();
+            this.progressBarControl1 = new DevExpress.XtraEditors.ProgressBarControl();
             this.btnStartCopy = new DevExpress.XtraEditors.SimpleButton();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
             this.txtProgressView = new System.Windows.Forms.TextBox();
             this.grpDrives = new DevExpress.XtraEditors.GroupControl();
             this.flpDrives = new System.Windows.Forms.FlowLayoutPanel();
-            this.timer1 = new System.Windows.Forms.Timer();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.progressBarControl1 = new DevExpress.XtraEditors.ProgressBarControl();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBarControl1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
             this.panelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpDrives)).BeginInit();
             this.grpDrives.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.progressBarControl1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panelControl1
             // 
+            this.panelControl1.Controls.Add(this.btnReFind);
             this.panelControl1.Controls.Add(this.progressBarControl1);
             this.panelControl1.Controls.Add(this.btnStartCopy);
             this.panelControl1.Controls.Add(this.panelControl2);
@@ -61,6 +64,27 @@
             this.panelControl1.Size = new System.Drawing.Size(358, 519);
             this.panelControl1.TabIndex = 0;
             // 
+            // btnReFind
+            // 
+            this.btnReFind.AllowFocus = false;
+            this.btnReFind.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReFind.Appearance.Options.UseFont = true;
+            this.btnReFind.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReFind.ImageOptions.Image")));
+            this.btnReFind.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.btnReFind.Location = new System.Drawing.Point(12, 173);
+            this.btnReFind.Name = "btnReFind";
+            this.btnReFind.Size = new System.Drawing.Size(94, 29);
+            this.btnReFind.TabIndex = 59;
+            this.btnReFind.Text = "Refresh";
+            this.btnReFind.Click += new System.EventHandler(this.btnReFind_Click);
+            // 
+            // progressBarControl1
+            // 
+            this.progressBarControl1.Location = new System.Drawing.Point(12, 208);
+            this.progressBarControl1.Name = "progressBarControl1";
+            this.progressBarControl1.Size = new System.Drawing.Size(341, 18);
+            this.progressBarControl1.TabIndex = 58;
+            // 
             // btnStartCopy
             // 
             this.btnStartCopy.AllowFocus = false;
@@ -68,9 +92,9 @@
             this.btnStartCopy.Appearance.Options.UseFont = true;
             this.btnStartCopy.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnStartCopy.ImageOptions.Image")));
             this.btnStartCopy.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.btnStartCopy.Location = new System.Drawing.Point(12, 173);
+            this.btnStartCopy.Location = new System.Drawing.Point(112, 173);
             this.btnStartCopy.Name = "btnStartCopy";
-            this.btnStartCopy.Size = new System.Drawing.Size(341, 29);
+            this.btnStartCopy.Size = new System.Drawing.Size(241, 29);
             this.btnStartCopy.TabIndex = 57;
             this.btnStartCopy.Text = "복사 시작";
             this.btnStartCopy.Click += new System.EventHandler(this.btnStartCopy_Click);
@@ -141,13 +165,6 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // progressBarControl1
-            // 
-            this.progressBarControl1.Location = new System.Drawing.Point(12, 208);
-            this.progressBarControl1.Name = "progressBarControl1";
-            this.progressBarControl1.Size = new System.Drawing.Size(341, 18);
-            this.progressBarControl1.TabIndex = 58;
-            // 
             // frmCopyToUSB
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -165,12 +182,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBarControl1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
             this.panelControl2.ResumeLayout(false);
             this.panelControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpDrives)).EndInit();
             this.grpDrives.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.progressBarControl1.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -187,5 +204,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private DevExpress.XtraEditors.ProgressBarControl progressBarControl1;
+        private DevExpress.XtraEditors.SimpleButton btnReFind;
     }
 }

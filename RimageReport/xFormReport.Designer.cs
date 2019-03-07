@@ -467,7 +467,8 @@
             "전체",
             "CDR",
             "DVDR",
-            "DVDR-DL"});
+            "DVDR-DL",
+            "USB"});
             this.comboBoxEditMedia.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.comboBoxEditMedia.Size = new System.Drawing.Size(91, 24);
             this.comboBoxEditMedia.TabIndex = 10;
