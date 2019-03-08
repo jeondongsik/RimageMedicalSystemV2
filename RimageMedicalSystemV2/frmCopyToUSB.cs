@@ -70,6 +70,8 @@ namespace RimageMedicalSystemV2
         {
             try
             {
+                this.flpDrives.Controls.Clear();
+
                 this.usbList = new List<DriveInfo>();
                 this.others = new List<DriveInfo>();
 

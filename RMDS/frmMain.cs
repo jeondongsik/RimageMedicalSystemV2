@@ -840,6 +840,7 @@ namespace RMDS
                         orderInfo.State = "Submitted for production";
                         OrderTracking.ModifyOrder(orderInfo);
                         string xmlProductionOrder = OrderTracking.GetProductionOrderFile(orderInfo);
+
                         if (xmlProductionOrder != null)
                         {
                             this.SubmitOrder(xmlProductionOrder);

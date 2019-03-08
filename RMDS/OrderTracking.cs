@@ -71,12 +71,12 @@ namespace RMDS
                         XmlNode parentNode;
                         parentNode = completedOrder.ParentNode;
                         parentNode.RemoveChild(completedOrder);
-                        document.Save(GlobalVar.OrderTrackingFile);
+                        ////document.Save(GlobalVar.OrderTrackingFile);
                     }
                 }
                 catch (IOException ioEx)
                 {
-                    MessageBox.Show("Error reading persistant order information" + "\n" + ioEx.Message);
+                    ////MessageBox.Show("Error reading persistant order information" + "\n" + ioEx.Message);
                 }
             }
         }
@@ -98,12 +98,12 @@ namespace RMDS
                     {
                         Order.SetAttribute("Status", discOrder.State);
                         Order.SetAttribute("PercentComplete", discOrder.PercentCompleted);
-                        document.Save(GlobalVar.OrderTrackingFile);
+                        ////document.Save(GlobalVar.OrderTrackingFile);
                     }
                 }
                 catch (IOException ioEx)
                 {
-                    MessageBox.Show("Error reading persistant order information" + "\n" + ioEx.Message);
+                    ////MessageBox.Show("Error reading persistant order information" + "\n" + ioEx.Message);
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace RMDS
                 }
                 catch (IOException e)
                 {
-                    MessageBox.Show(e.Message + "\n" + "Failed to remove production order file", "Rimage SNUH");
+                    MessageBox.Show(e.Message + "\n" + "Failed to remove production order file", "Rimage");
                 }
             }
         }

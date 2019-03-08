@@ -3202,7 +3202,6 @@ namespace RimageMedicalSystemV2
                 this.ClearCompleteBurnList();
 
                 this.gvBurninglist.RefreshData();
-                this.gcBurninglist.RefreshDataSource();
 
                 this.txtMessages.Text = "화면정리 완료.";
                 this.Cursor = Cursors.Default;
