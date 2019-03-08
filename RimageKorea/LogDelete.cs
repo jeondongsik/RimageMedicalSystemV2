@@ -20,11 +20,6 @@ namespace RimageKorea
         {
             try
             {
-                //// Order.xml 파일 삭제
-                foreach (string file in Directory.GetFiles(folderLoot, "Orders.xml"))
-                {
-                    File.Delete(file);
-                }
                 //// .pOrd 파일 삭제
                 foreach (string file in Directory.GetFiles(folderLoot, "*.pOrd"))
                 {

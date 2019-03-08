@@ -50,6 +50,20 @@ namespace RimageMedicalSystemV2
 
                         if (order != null)
                         {
+                            if (order.StartDateTime.Length > 11)
+                            {
+                                order.ExecuteDatetime = string.Format("{0}-{1}-{2} {3}:{4}",
+                                                        order.StartDateTime.Substring(0, 4),
+                                                        order.StartDateTime.Substring(4, 2),
+                                                        order.StartDateTime.Substring(6, 2),
+                                                        order.StartDateTime.Substring(8, 2),
+                                                        order.StartDateTime.Substring(10, 2));
+                            }
+                            else
+                            {
+                                order.ExecuteDatetime = string.Format("{0} 00:00", order.patDate);
+                            }
+
                             order.DeleteIcon = global::RimageMedicalSystemV2.Properties.Resources.close_16x16;
                             order.RetryIcon = global::RimageMedicalSystemV2.Properties.Resources.refreshpivottable_16x16;
 
@@ -61,7 +75,7 @@ namespace RimageMedicalSystemV2
                 //// 정렬
                 if (temp.Count > 0)
                 {
-                    var sortList = temp.OrderBy(s => s.StartDateTime);
+                    var sortList = temp.OrderByDescending(s => s.StartDateTime);
                     this._orderedList = sortList.ToList();
                 }
                 else

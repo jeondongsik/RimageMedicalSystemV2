@@ -53,6 +53,7 @@
             this.repoPicRetry = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
             this.gridColDelete = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoPicDel = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpBurningList)).BeginInit();
@@ -67,6 +68,7 @@
             // 
             // panelControl1
             // 
+            this.panelControl1.Controls.Add(this.label6);
             this.panelControl1.Controls.Add(this.label5);
             this.panelControl1.Controls.Add(this.label4);
             this.panelControl1.Controls.Add(this.label3);
@@ -83,7 +85,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label5.Location = new System.Drawing.Point(472, 25);
+            this.label5.Location = new System.Drawing.Point(483, 7);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(328, 17);
             this.label5.TabIndex = 11;
@@ -94,7 +96,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.label4.Location = new System.Drawing.Point(472, 44);
+            this.label4.Location = new System.Drawing.Point(483, 25);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(266, 17);
             this.label4.TabIndex = 10;
@@ -209,9 +211,10 @@
             // gridColBurnDate
             // 
             this.gridColBurnDate.Caption = "실행 일시";
-            this.gridColBurnDate.FieldName = "patDate";
+            this.gridColBurnDate.FieldName = "ExecuteDatetime";
             this.gridColBurnDate.Name = "gridColBurnDate";
             this.gridColBurnDate.OptionsColumn.AllowEdit = false;
+            this.gridColBurnDate.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
             this.gridColBurnDate.OptionsColumn.ReadOnly = true;
             this.gridColBurnDate.Visible = true;
             this.gridColBurnDate.VisibleIndex = 0;
@@ -235,6 +238,7 @@
             this.gridColPatientName.FieldName = "patName";
             this.gridColPatientName.Name = "gridColPatientName";
             this.gridColPatientName.OptionsColumn.AllowEdit = false;
+            this.gridColPatientName.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
             this.gridColPatientName.OptionsColumn.ReadOnly = true;
             this.gridColPatientName.Visible = true;
             this.gridColPatientName.VisibleIndex = 2;
@@ -282,6 +286,7 @@
             this.gridColMedia.ColumnEdit = this.repoMediatype;
             this.gridColMedia.FieldName = "mediType";
             this.gridColMedia.Name = "gridColMedia";
+            this.gridColMedia.OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.True;
             this.gridColMedia.Visible = true;
             this.gridColMedia.VisibleIndex = 6;
             this.gridColMedia.Width = 100;
@@ -374,6 +379,17 @@
             // 
             this.repoPicDel.Name = "repoPicDel";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.label6.Location = new System.Drawing.Point(483, 45);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(344, 17);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "* 실행일시, 환자명, 미디어 클릭하여 정렬할 수 있습니다.";
+            // 
             // OrderHistoryForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -429,5 +445,6 @@
         private System.Windows.Forms.Label label4;
         private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repoPicRetry;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }

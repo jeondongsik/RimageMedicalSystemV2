@@ -212,6 +212,8 @@ namespace RimageMedicalSystemV2
                 {
                     if (fld.StartsWith("SVR_"))
                         continue;
+                    if (fld.StartsWith("ERRORS"))
+                        continue;
 
                     //// 굽기완료된 주문폴더인지 체크
                     var endFiles = Directory.GetFiles(fld, GlobalVar.BURN_CHK_FL_NM);

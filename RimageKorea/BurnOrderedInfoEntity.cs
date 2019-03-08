@@ -217,5 +217,10 @@ namespace RimageKorea
         /// </summary>
         [JsonIgnore]
         public Image RetryIcon { get; set; }
+
+        /// <summary>
+        /// 실행일시
+        /// </summary>
+        public string ExecuteDatetime { get; set; }
     }
 }

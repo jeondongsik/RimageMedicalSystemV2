@@ -125,6 +125,10 @@ namespace RMDS
         /// 초를 체크하기 위함.
         /// </summary>
         int cSecond = 0;
+        /// <summary>
+        /// 보관기간
+        /// </summary>
+        int RetentionPeriod = 0;
 
         /// <summary>
         /// Creator
@@ -273,7 +277,7 @@ namespace RMDS
                         this.serverPort = this.burnOrderInfo.TargetServer.Port;
 
                         //// 서버IP로 폴더 생성
-                        this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.burnOrderInfo.TargetServer.IP));
+                        this.serverLogPath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("SVR_{0}", this.serverIP));
                         //// 폴더가 없으면 생성
                         if (!Directory.Exists(this.serverLogPath))
                         {
@@ -374,6 +378,12 @@ namespace RMDS
 
                 this.MergeFileFolder = cf._MergeFileFolder;
                 this.DeleteAfterBurn = (String.IsNullOrWhiteSpace(cf._DeleteAfterBurn)) ? "0" : cf._DeleteAfterBurn;
+
+                try
+                {
+                    this.RetentionPeriod = Convert.ToInt32((String.IsNullOrWhiteSpace(cf._RetentionPeriod)) ? "0" : cf._RetentionPeriod);
+                }
+                catch { }
                 
                 //// 다운체크파일명을 전역변수에 저장
                 GlobalVar.DOWN_CHK_FL_NM = (string.IsNullOrWhiteSpace(cf._DownCheckFileName)) ? "end.txt" : cf._DownCheckFileName;
@@ -903,7 +913,10 @@ namespace RMDS
                     if (this.DeleteAfterBurn == "2" || (this.DeleteAfterBurn == "1" && statusDisp.ResultMessage == "완료"))
                     {
                         //// 보관기간 체크
-                        FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
+                        if (this.RetentionPeriod < 1)
+                        {
+                            FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
+                        }
                     }
 
                     //// 메인프로그램에 메시지 전송한다.
