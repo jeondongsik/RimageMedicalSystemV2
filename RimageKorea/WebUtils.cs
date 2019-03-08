@@ -47,7 +47,7 @@ namespace RimageKorea
                 {
                     NameValueCollection nvcol = new NameValueCollection();
 
-                    nvcol.Add("Idx", RimageKorea.Utils.LeftByte(Idx, 20));
+                    nvcol.Add("Idx", Idx);
                     nvcol.Add("startDateTime", startDateTime);
                     nvcol.Add("endDateTime", endDateTime);
                     nvcol.Add("PatientID", PatientID);

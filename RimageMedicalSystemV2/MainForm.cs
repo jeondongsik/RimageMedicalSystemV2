@@ -841,7 +841,7 @@ namespace RimageMedicalSystemV2
                 orderInfo.patListForMerge = dicPatListMerge;
                 
                 orderInfo.No = j;
-                orderInfo.StartDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
+                ////orderInfo.StartDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
                 orderInfo.TargetServer = this.NowSeletedServer.ShallowCopy();
 
                 //// 다중환자 사용일 경우에만 체크
