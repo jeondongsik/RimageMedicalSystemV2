@@ -1956,10 +1956,7 @@ namespace RimageMedicalSystemV2
 
                     //// 완료된 오더폴더에 종료파일 생성한다.
                     FileControl.CreateTextFile(Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, orderInfo.DiscOrder.OrderID, GlobalVar.BURN_CHK_FL_NM));
-
-                    //// 오더 폴더 삭제
-                    FileControl.DeleteBurnEndOrder(orderInfo.DiscOrder.OrderID);
-
+                    
                     //// RDMS가 정상종료되었는지 체크-> 아니라면 종료 처리
                     try
                     {
@@ -1968,6 +1965,9 @@ namespace RimageMedicalSystemV2
                             prc.Kill();
                     }
                     catch { }
+
+                    //// 오더 폴더 삭제
+                    FileControl.DeleteBurnEndOrder(orderInfo.DiscOrder.OrderID);
 
                     this.txtStatusView.AppendText(string.Format("{0}[{1}] - {2}\r\n굽기가 완료되었습니다.", orderInfo.patNo, orderInfo.patName, trace.ResultMessage));
                 }
@@ -3268,7 +3268,8 @@ namespace RimageMedicalSystemV2
                 {
                     if (orderInfo.Finish == "Y")
                     {
-                        if (GlobalVar.configEntity.DeleteAfterBurn != "0")
+                        //// 환자정보 삭제안함이 아니고, 보관기간이 0일 경우에만 환자폴더 삭제
+                        if (GlobalVar.configEntity.DeleteAfterBurn != "0" && GlobalVar.configEntity.RetentionPeriod == 0)
                         {
                             DirectoryInfo sourceDir = null;
                             sourceDir = new DirectoryInfo(orderInfo.patFolderFullPath);
@@ -3288,6 +3289,25 @@ namespace RimageMedicalSystemV2
                         {
                             FileControl.DeleteFolder(orderInfo.MegPath, false);
                             FileControl.DeleteFolder(orderInfo.EditListPath, false);
+                        }
+                        catch { }
+
+                        //// 오더 정보 삭제
+                        try
+                        {
+                            DirectoryInfo dirOrder = new DirectoryInfo(Path.Combine(Application.StartupPath, GlobalVar.ORDER_FOLDER));
+
+                            foreach (DirectoryInfo dri in dirOrder.GetDirectories(orderInfo.OrderId))
+                            {
+                                if (dri.Name.StartsWith("ERRORS"))
+                                    continue;
+
+                                try
+                                {
+                                    dri.Delete(true);
+                                }
+                                catch { }
+                            }
                         }
                         catch { }
 

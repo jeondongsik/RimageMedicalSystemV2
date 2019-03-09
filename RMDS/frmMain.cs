@@ -849,9 +849,20 @@ namespace RMDS
                         statusDisp.Finish = "N";
                         orderInfo.State = "Submitted for production";
                         OrderTracking.ModifyOrder(orderInfo);
+
                         string xmlProductionOrder = OrderTracking.GetProductionOrderFile(orderInfo);
 
-                        if (xmlProductionOrder != null)
+                        if (string.IsNullOrWhiteSpace(xmlProductionOrder))
+                        {
+                            //// 다시한번 시도
+                            xmlProductionOrder = OrderTracking.GetProductionOrderFile(this.burnOrderInfo.DiscOrder.ProductionOrderPath);
+
+                            if (!string.IsNullOrWhiteSpace(xmlProductionOrder))
+                            {
+                                this.SubmitOrder(xmlProductionOrder);
+                            }
+                        }
+                        else
                         {
                             this.SubmitOrder(xmlProductionOrder);
                         }

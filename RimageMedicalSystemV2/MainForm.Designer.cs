@@ -430,7 +430,7 @@
             this.gridColNo.Name = "gridColNo";
             this.gridColNo.Visible = true;
             this.gridColNo.VisibleIndex = 0;
-            this.gridColNo.Width = 45;
+            this.gridColNo.Width = 50;
             // 
             // gridColBurnDate
             // 
@@ -439,7 +439,7 @@
             this.gridColBurnDate.Name = "gridColBurnDate";
             this.gridColBurnDate.Visible = true;
             this.gridColBurnDate.VisibleIndex = 1;
-            this.gridColBurnDate.Width = 80;
+            this.gridColBurnDate.Width = 90;
             // 
             // gridColPatientNo
             // 
@@ -448,7 +448,7 @@
             this.gridColPatientNo.Name = "gridColPatientNo";
             this.gridColPatientNo.Visible = true;
             this.gridColPatientNo.VisibleIndex = 2;
-            this.gridColPatientNo.Width = 90;
+            this.gridColPatientNo.Width = 100;
             // 
             // gridColPatientName
             // 
@@ -457,7 +457,7 @@
             this.gridColPatientName.Name = "gridColPatientName";
             this.gridColPatientName.Visible = true;
             this.gridColPatientName.VisibleIndex = 3;
-            this.gridColPatientName.Width = 110;
+            this.gridColPatientName.Width = 130;
             // 
             // gridColState
             // 
@@ -466,7 +466,7 @@
             this.gridColState.Name = "gridColState";
             this.gridColState.Visible = true;
             this.gridColState.VisibleIndex = 4;
-            this.gridColState.Width = 150;
+            this.gridColState.Width = 230;
             // 
             // gridColProgress
             // 
@@ -475,15 +475,13 @@
             this.gridColProgress.Name = "gridColProgress";
             this.gridColProgress.Visible = true;
             this.gridColProgress.VisibleIndex = 5;
-            this.gridColProgress.Width = 70;
+            this.gridColProgress.Width = 80;
             // 
             // gridColStatus
             // 
             this.gridColStatus.Caption = "상태";
             this.gridColStatus.FieldName = "BurnState";
             this.gridColStatus.Name = "gridColStatus";
-            this.gridColStatus.Visible = true;
-            this.gridColStatus.VisibleIndex = 6;
             this.gridColStatus.Width = 65;
             // 
             // gridColOrderID
@@ -491,8 +489,6 @@
             this.gridColOrderID.Caption = "출력번호";
             this.gridColOrderID.FieldName = "OrderId";
             this.gridColOrderID.Name = "gridColOrderID";
-            this.gridColOrderID.Visible = true;
-            this.gridColOrderID.VisibleIndex = 7;
             this.gridColOrderID.Width = 120;
             // 
             // gridQuantity
@@ -501,8 +497,8 @@
             this.gridQuantity.FieldName = "copies";
             this.gridQuantity.Name = "gridQuantity";
             this.gridQuantity.Visible = true;
-            this.gridQuantity.VisibleIndex = 8;
-            this.gridQuantity.Width = 50;
+            this.gridQuantity.VisibleIndex = 6;
+            this.gridQuantity.Width = 55;
             // 
             // gridColMedia
             // 
@@ -510,8 +506,7 @@
             this.gridColMedia.FieldName = "mediType";
             this.gridColMedia.Name = "gridColMedia";
             this.gridColMedia.Visible = true;
-            this.gridColMedia.VisibleIndex = 9;
-            this.gridColMedia.Width = 60;
+            this.gridColMedia.VisibleIndex = 7;
             // 
             // gridColSize
             // 
@@ -519,8 +514,8 @@
             this.gridColSize.FieldName = "mediSize";
             this.gridColSize.Name = "gridColSize";
             this.gridColSize.Visible = true;
-            this.gridColSize.VisibleIndex = 10;
-            this.gridColSize.Width = 70;
+            this.gridColSize.VisibleIndex = 8;
+            this.gridColSize.Width = 85;
             // 
             // gridColServer
             // 
@@ -528,8 +523,8 @@
             this.gridColServer.FieldName = "ServerNo";
             this.gridColServer.Name = "gridColServer";
             this.gridColServer.Visible = true;
-            this.gridColServer.VisibleIndex = 11;
-            this.gridColServer.Width = 45;
+            this.gridColServer.VisibleIndex = 9;
+            this.gridColServer.Width = 50;
             // 
             // panelControl2
             // 
@@ -595,9 +590,9 @@
             this.lblDriveStatus.Appearance.Options.UseForeColor = true;
             this.lblDriveStatus.Location = new System.Drawing.Point(15, 5);
             this.lblDriveStatus.Name = "lblDriveStatus";
-            this.lblDriveStatus.Size = new System.Drawing.Size(469, 15);
+            this.lblDriveStatus.Size = new System.Drawing.Size(120, 15);
             this.lblDriveStatus.TabIndex = 17;
-            this.lblDriveStatus.Text = "Current Save Drive : D:\\ [전체용량 - 222.66GB] [사용량 : 133.23G, 잔여량 : 89.43G]";
+            this.lblDriveStatus.Text = "Current Save Drive : ";
             // 
             // grpServerState
             // 

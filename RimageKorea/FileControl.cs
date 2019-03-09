@@ -987,28 +987,24 @@ namespace RimageKorea
         {
             try
             {
-                bool delOK = false;
+                bool delOK = true;
 
                 //// 오더 폴더 삭제
                 string orderFolder = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, orderId);
 
-                foreach (string str in Directory.GetFiles(GlobalVar.BURN_JOB_END_FL))
-                {
-                    if (str.Contains(GlobalVar.BURN_JOB_END_FL))
-                    {
-                        delOK = true;
-                        break;
-                    }
-                }
+                ////foreach (string str in Directory.GetFiles(GlobalVar.BURN_JOB_END_FL))
+                ////{
+                ////    if (str.Contains(GlobalVar.BURN_JOB_END_FL))
+                ////    {
+                ////        delOK = true;
+                ////        break;
+                ////    }
+                ////}
 
                 if (delOK)
                 {
                     FileControl.ClearDirectory(orderFolder);
                 }
-
-                //// 오더 파일 삭제
-                //// string orderFile = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderId));
-                //// FileControl.DeleteFile(orderFile);
             }
             catch { }
         }

@@ -70,18 +70,12 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                if (this.seletedUSB != null && this.seletedUSB.IsReady)
-                {
-                    ////현재 선택된 USB가있고 준비상태라면 Return
-                    return;
-                }
-
                 if (this.isCopying)
                 {
                     ////현재 복사중이면 
                     return;
                 }
-
+                
                 this.flpDrives.Controls.Clear();
 
                 this.usbList = new List<DriveInfo>();
@@ -113,7 +107,6 @@ namespace RimageMedicalSystemV2
                             this.usbList.Add(driveInfo);
                         }
                     }
-
                 }
 
                 if (this.usbList.Count > 0)
@@ -126,7 +119,7 @@ namespace RimageMedicalSystemV2
                     }
 
                     if (i == 1)
-                    {
+                    {                        
                         //// 바로 복사 시작
                         this.seletedUSB = this.usbList[0];
                         this.CopyStart();
@@ -359,6 +352,12 @@ namespace RimageMedicalSystemV2
                 return;
             }
 
+            if (this.isCopying)
+            {
+                MessageBox.Show("지금 복사가 진행되고 있습니다.\r\n복사가 완료된 후 다시 시도해 주세요.", "Rimage Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             if (!this.seletedUSB.IsReady)
             {
                 //// 드라이버가 준비되지 않았을 경우
@@ -401,6 +400,24 @@ namespace RimageMedicalSystemV2
                         this._mainForm.ClearSendUSBPatInfo(this._orderInfo.patFolderFullPath);
                         this._mainForm.AddBurningList(this._orderInfo);
 
+                        //// 시작시 로그 저장
+                        WebUtils.InsertResult(this._orderInfo.OrderId,
+                                          this._orderInfo.StartDateTime,
+                                          "",
+                                          this._orderInfo.patNo,
+                                          this._orderInfo.patName,
+                                          this._orderInfo.copies.ToString(),
+                                          "USB",
+                                          this._orderInfo.mediSize,
+                                          "?",
+                                          ((this._orderInfo.BurnPatientKind.Equals("Y") || this._orderInfo.patList.Count > 1) ? this._orderInfo.DicomDescription : this._orderInfo.StudyModality),
+                                          Utils.CheckNull(this._orderInfo.BurnPatientKind, "N"),
+                                          this._orderInfo.TargetServer.IP,
+                                          NetInfo.MyIP());
+
+                        this.btnReFind.Enabled = false;
+                        this.btnStartCopy.Enabled = false;
+
                         this.backgroundWorker1.RunWorkerAsync(cls);
                     }
                     else
@@ -418,8 +435,12 @@ namespace RimageMedicalSystemV2
             catch (Exception ex)
             {
                 this.Cursor = Cursors.Default;
-                this.isCopying = false;
-                MessageBox.Show("굽기 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.isCopying = false;               
+
+                MessageBox.Show("복사 시작 중 에러가 발생했습니다.\r\n" + ex.Message, "Rimage Message : burnCDAfterCopyFiles", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                this.btnReFind.Enabled = true;
+                this.btnStartCopy.Enabled = true;
             }
         }
 
@@ -491,6 +512,8 @@ namespace RimageMedicalSystemV2
             this.copyFileLen = state.fileSize;
             this.backgroundWorker1.CancelAsync();
             this.isCopying = false;
+            this.btnReFind.Enabled = true;
+            this.btnStartCopy.Enabled = true;
 
             this.Complet();
         }
@@ -517,7 +540,7 @@ namespace RimageMedicalSystemV2
                           this._orderInfo.patNo,
                           this._orderInfo.patName,
                           this._orderInfo.copies.ToString(),
-                          this._orderInfo.mediType,
+                          "USB",
                           this._orderInfo.mediSize,
                           "완료",
                           ((this._orderInfo.BurnPatientKind.Equals("Y") || this._orderInfo.patList.Count > 1) ? this._orderInfo.DicomDescription : this._orderInfo.StudyModality),

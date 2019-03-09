@@ -71,10 +71,10 @@ namespace RMDS
                         XmlNode parentNode;
                         parentNode = completedOrder.ParentNode;
                         parentNode.RemoveChild(completedOrder);
-                        ////document.Save(GlobalVar.OrderTrackingFile);
+                        document.Save(GlobalVar.OrderTrackingFile);
                     }
                 }
-                catch (IOException ioEx)
+                catch 
                 {
                     ////MessageBox.Show("Error reading persistant order information" + "\n" + ioEx.Message);
                 }
@@ -98,10 +98,10 @@ namespace RMDS
                     {
                         Order.SetAttribute("Status", discOrder.State);
                         Order.SetAttribute("PercentComplete", discOrder.PercentCompleted);
-                        ////document.Save(GlobalVar.OrderTrackingFile);
+                        document.Save(GlobalVar.OrderTrackingFile);
                     }
                 }
-                catch (IOException ioEx)
+                catch
                 {
                     ////MessageBox.Show("Error reading persistant order information" + "\n" + ioEx.Message);
                 }
@@ -189,14 +189,14 @@ namespace RMDS
                 {
                     File.Delete(fileToDelete);
                 }
-                catch (IOException e)
+                catch
                 {
-                    MessageBox.Show(e.Message + "\n" + "Failed to remove production order file", "Rimage");
+                    ////MessageBox.Show(e.Message + "\n" + "Failed to remove production order file", "Rimage");
                 }
             }
         }
 
-        // Read production order file 
+        //// Read production order file 
         public static string GetProductionOrderFile(DiscStatus orderInfo)
         {
             string productionXml = null;
@@ -217,11 +217,35 @@ namespace RMDS
                     productionXml = pFile.ReadToEnd();
                     pFile.Close();
                 }
-                catch (Exception)
+                catch
                 {
 
-                    return null;
+                    return string.Empty;
                 }
+            }
+
+            return productionXml;
+        }
+
+        /// <summary>
+        /// Production Order 읽어오기
+        /// </summary>
+        /// <param name="pOrdFilePath"></param>
+        /// <returns></returns>
+        public static string GetProductionOrderFile(string pOrdFilePath)
+        {
+            string productionXml = null;
+
+            // Read production order file into string
+            try
+            {
+                System.IO.StreamReader pFile = new System.IO.StreamReader(pOrdFilePath);
+                productionXml = pFile.ReadToEnd();
+                pFile.Close();
+            }
+            catch
+            {
+                return string.Empty;
             }
 
             return productionXml;
