@@ -131,6 +131,11 @@ namespace RMDS
         int RetentionPeriod = 0;
 
         /// <summary>
+        /// 굽기명령 저장하는 파일명
+        /// </summary>
+        string odersXmlFileName = "";
+
+        /// <summary>
         /// Creator
         /// </summary>
         public frmMain()
@@ -141,6 +146,8 @@ namespace RMDS
 
             this.StatusDel = new OrderStatus(this.RecvOrderStatus);
             this.systemListenerDel = new SysExecption(this.sysExecption);
+
+            this.odersXmlFileName = string.Format("Orders_{0}{1}", DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber());
         }
 
         /// <summary>
@@ -204,7 +211,7 @@ namespace RMDS
                         Directory.CreateDirectory(this.serverLogPath);
                     }
 
-                    GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, string.Format("Orders_{0}.xml", this.processID.ToString()));
+                    GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, this.odersXmlFileName);
 
                     //// 서버 접속
                     if (!this.ConnectServer())
@@ -284,7 +291,7 @@ namespace RMDS
                             Directory.CreateDirectory(this.serverLogPath);
                         }
 
-                        GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, string.Format("Orders_{0}.xml", this.processID.ToString()));
+                        GlobalVar.OrderTrackingFile = Path.Combine(this.serverLogPath, this.odersXmlFileName);
 
                         //// 서버 접속
                         if (!this.ConnectServer())
@@ -755,6 +762,9 @@ namespace RMDS
 
                 //// Parse status information
                 DiscStatus orderInfo = XMLParser.ParseOrderStatus(xmlOrderStatus);
+                if (orderInfo == null)
+                    return;
+
                 OrderTracking.ModifyOrder(orderInfo);
                 this.statusType = (orderInfo.OrderType == "ImageOrderStatus") ? "Imaging " : "Producing ";
 

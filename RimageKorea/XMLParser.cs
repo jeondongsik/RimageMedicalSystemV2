@@ -12,15 +12,18 @@ namespace RimageKorea
     {
         public static DiscStatus ParseOrderStatus(string orderXml)
         {
-
-            DiscStatus discStatus;
-            discStatus = new DiscStatus();
-            XmlDocument document = new XmlDocument();
-            // Create memory stream 
-            MemoryStream memStream = new MemoryStream();
+            DiscStatus discStatus = null;
 
             try
             {
+                if (string.IsNullOrWhiteSpace(orderXml))
+                    return null;
+
+                discStatus = new DiscStatus();
+                XmlDocument document = new XmlDocument();
+                // Create memory stream 
+                MemoryStream memStream = new MemoryStream();
+
                 byte[] data = Encoding.Unicode.GetBytes(orderXml);
                 memStream.Write(data, 0, data.Length);
                 memStream.Position = 0;
@@ -42,7 +45,7 @@ namespace RimageKorea
                 }
                 catch (Exception ex)
                 {
-                    ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
+                    ////ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
                 }
 
                 // Read status information
@@ -62,7 +65,7 @@ namespace RimageKorea
                 }
                 catch (Exception ex)
                 {
-                    ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
+                    ////ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
                 }
 
                 if (discStatus.State == "FAILED")
@@ -70,9 +73,9 @@ namespace RimageKorea
                     discStatus.ErrorMessage = xmlAttributes.GetNamedItem("ErrorMessage").Value;
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
+                ////ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
             }
 
             return discStatus;

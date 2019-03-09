@@ -514,7 +514,7 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                if (this._BurningList.Any(o => o.patFolder == foldername))
+                if (this._BurningList.Any(o => o.patFolder == foldername && o.Finish != "Y"))
                     return true;
             }
             catch { }
@@ -780,10 +780,51 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
+        /// 재굽기
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        /// <param name="reburn"></param>
+        /// <returns></returns>
+        public void RetryBurn(BurnOrderedInfoEntity orderInfo)
+        {
+            try
+            {
+                ////굽기 진행중인지 체크한다.
+                //// 현재 굽기 실행중인지 체크한다.
+                if (this._BurningList != null && this._BurningList.Count > 0)
+                {
+                    if (this.ExistsBurningItem(orderInfo.patFolder))
+                    {
+                        ////굽기 진행중임.
+                        MessageBox.Show("이미 굽기진행중인 환자정보입니다.\r\n완료 후 다시 시도하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
+                //// 굽기완료 파일 삭제 (burn.end 파일체크)
+                string filePath = Path.Combine(orderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM);
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        File.Delete(filePath);
+                    }
+                    catch { }
+                }
+
+                orderInfo.Finish = "N";
+
+                this.StartBurn(orderInfo, true);
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// CD 굽기
         /// </summary>
         /// <param name="orderInfo"></param>
-        public bool StartBurn(BurnOrderedInfoEntity orderInfo)
+        /// <param name="reburn">재굽기여부</param>
+        public bool StartBurn(BurnOrderedInfoEntity orderInfo, bool reburn = false)
         {
             int j = 1;
 
@@ -913,7 +954,9 @@ namespace RimageMedicalSystemV2
                 {
                     if (!string.IsNullOrWhiteSpace(orderInfo.patAge))
                     {
-                        orderInfo.patSex = string.Format("{0}/{1}", orderInfo.patSex, orderInfo.patAge);
+                        ////재굽기 아닐 경우에만
+                        if (!reburn)
+                            orderInfo.patSex = string.Format("{0}/{1}", orderInfo.patSex, orderInfo.patAge);
                     }
 
                     try

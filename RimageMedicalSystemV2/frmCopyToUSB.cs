@@ -70,6 +70,18 @@ namespace RimageMedicalSystemV2
         {
             try
             {
+                if (this.seletedUSB != null && this.seletedUSB.IsReady)
+                {
+                    ////현재 선택된 USB가있고 준비상태라면 Return
+                    return;
+                }
+
+                if (this.isCopying)
+                {
+                    ////현재 복사중이면 
+                    return;
+                }
+
                 this.flpDrives.Controls.Clear();
 
                 this.usbList = new List<DriveInfo>();
@@ -591,6 +603,11 @@ namespace RimageMedicalSystemV2
             base.WndProc(ref m);
         }
 
+        /// <summary>
+        /// Refresh
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnReFind_Click(object sender, EventArgs e)
         {
             this.FindUsb();

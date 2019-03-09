@@ -127,7 +127,7 @@ namespace RimageMedicalSystemV2
                                     this._mainForm.mediaType = MediaType.CD_DVD;
                                 }
 
-                                this._mainForm.StartBurn(orderInfo);
+                                this._mainForm.RetryBurn(orderInfo);
                             }
                         }
                     }
