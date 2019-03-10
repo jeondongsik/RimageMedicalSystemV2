@@ -78,7 +78,7 @@ namespace RimageReport
         /// <param name="e"></param>
         private void xFormReport_Load(object sender, EventArgs e)
         {
-            this.dateEditFrom.EditValue = DateTime.Now.AddMonths(-1).Date;
+            this.dateEditFrom.EditValue = DateTime.Now.Date;
             this.dateEditTo.EditValue = DateTime.Now.Date;
 
             this.gridMonth.Tag = DateTime.Now.Year.ToString();

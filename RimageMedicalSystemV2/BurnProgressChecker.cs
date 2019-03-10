@@ -229,15 +229,19 @@ namespace RimageMedicalSystemV2
                     var fileLst = Directory.GetFiles(fld, string.Format("{0}*", GlobalVar.PFX_TRC));
                     if (fileLst != null && fileLst.Length > 0)
                     {
-                        var fList = fileLst.OrderByDescending(s => s).ToList();
+                        var fList = fileLst.OrderByDescending(s => s).ToList();                                                
                         string file = fList.First();
-                        string json = File.ReadAllText(file);
 
-                        DiscStatusForDisplay obj = JsonParser.ConvertToDiscStatusForDisplay(json);
-
-                        if (obj != null)
+                        if (File.Exists(file))
                         {
-                            this.mReportForm.Invoke(this.mReportForm.burningTraceDel, obj);
+                            string json = File.ReadAllText(file);
+
+                            DiscStatusForDisplay obj = JsonParser.ConvertToDiscStatusForDisplay(json);
+
+                            if (obj != null)
+                            {
+                                this.mReportForm.Invoke(this.mReportForm.burningTraceDel, obj);
+                            }
                         }
                     }
                 }

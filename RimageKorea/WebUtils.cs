@@ -34,7 +34,7 @@ namespace RimageKorea
             string webaddress = "";
 
             webaddress = "http://" + hostIP + "/RimageWeb/InsertResult.aspx";
-            //webaddress = "http://localhost:4557/RimageWeb/InsertResult.aspx";
+            ////webaddress = "http://localhost:4557/RimageWeb/InsertResult.aspx";
 
             try
             {

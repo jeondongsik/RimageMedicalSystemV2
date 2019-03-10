@@ -457,21 +457,6 @@ namespace RimageMedicalSystemV2
                 CopyWorker cls = e.Argument as CopyWorker;
                 e.Result = 0;
 
-                //// 시작시 로그 저장
-                WebUtils.InsertResult(this._orderInfo.OrderId,
-                          this._orderInfo.StartDateTime,
-                          "",
-                          this._orderInfo.patNo,
-                          this._orderInfo.patName,
-                          this._orderInfo.copies.ToString(),
-                          this._orderInfo.mediType,
-                          this._orderInfo.mediSize,
-                          "?",
-                          ((this._orderInfo.BurnPatientKind.Equals("Y") || this._orderInfo.patList.Count > 1) ? this._orderInfo.DicomDescription : this._orderInfo.StudyModality),
-                          Utils.CheckNull(this._orderInfo.BurnPatientKind, "N"),
-                          this._orderInfo.TargetServer.IP,
-                          NetInfo.MyIP());
-
                 cls.ExecJob(worker, e);
             }
             catch (Exception ex)
