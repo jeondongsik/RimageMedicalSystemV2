@@ -31,6 +31,9 @@ namespace RimageKorea
             bool retVal = true;
             try
             {
+                if (!Directory.Exists(source))
+                    return true;
+
                 if (recycle == true)
                     FileSystem.DeleteDirectory(source, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                 else
@@ -942,9 +945,9 @@ namespace RimageKorea
 
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
-                ErrorLog.LogWrite("FileControl", ex.ToString(), Environment.CurrentDirectory);
+                ////ErrorLog.LogWrite("FileControl", ex.ToString(), Environment.CurrentDirectory);
             }
 
             return false;

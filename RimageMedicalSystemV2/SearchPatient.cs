@@ -356,7 +356,7 @@ namespace RimageMedicalSystemV2
                     orderInfo.mediSize = fldLen.ToString() + " Mbyte";
 
                     //// 사이즈별 미디어 선택
-                    if (orderInfo.FolderSize > Convert.ToInt64(GlobalVar.configEntity.CDMaxSize))
+                    if (orderInfo.FolderSize > Convert.ToInt64(GlobalVar.configEntity.DvdMaxSize))
                     {
                         orderInfo.mediType = "DVDR-DL";     //DVDR-DL
                     }
@@ -371,23 +371,23 @@ namespace RimageMedicalSystemV2
                     }
 
                     //// BinCheck후에 미디어타입 다시 세팅
-                    if (autoLoaderMediaType.Equals("CDR"))
-                    {
-                        orderInfo.mediType = "CDR";
-                    }
-                    else if (autoLoaderMediaType.Equals("DVDR"))
-                    {
-                        orderInfo.mediType = "DVDR";     //DVD
+                    ////if (autoLoaderMediaType.Equals("CDR"))
+                    ////{
+                    ////    orderInfo.mediType = "CDR";
+                    ////}
+                    ////else if (autoLoaderMediaType.Equals("DVDR"))
+                    ////{
+                    ////    orderInfo.mediType = "DVDR";     //DVD
 
-                        if (orderInfo.FolderSize > Convert.ToInt64(GlobalVar.configEntity.DvdMaxSize))
-                        {
-                            orderInfo.mediType = "DVDR-DL";     //DVDR-DL
-                        }
-                        else
-                        {
-                            orderInfo.mediType = "DVDR";     //DVDR
-                        }
-                    }
+                    ////    if (orderInfo.FolderSize > Convert.ToInt64(GlobalVar.configEntity.DvdMaxSize))
+                    ////    {
+                    ////        orderInfo.mediType = "DVDR-DL";     //DVDR-DL
+                    ////    }
+                    ////    else
+                    ////    {
+                    ////        orderInfo.mediType = "DVDR";     //DVDR
+                    ////    }
+                    ////}
 
                     return orderInfo;
                 }

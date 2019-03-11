@@ -368,6 +368,11 @@ namespace RMDS
             {
                 string file = Path.Combine(this.orderTracePath, string.Format("{0}{1}{2}.txt", GlobalVar.PFX_TRC, Utils.GetNowTime(), DateTime.Now.Millisecond.ToString().PadLeft(3, '0')));
 
+                if (!Directory.Exists(this.orderTracePath))
+                {
+                    Directory.CreateDirectory(this.orderTracePath);
+                }
+
                 FileControl.Write(log, file);
             }
             catch { }
