@@ -1197,9 +1197,9 @@ namespace RMDS
             {
                 string folder = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, "CANCEL");
                 
-                foreach (string dir in Directory.GetFiles(folder, this.orderID))
+                foreach (string fl in Directory.GetFiles(folder, this.orderID))
                 {
-                    if (dir.EndsWith(this.orderID))
+                    if (fl.StartsWith(this.orderID))
                     {
                         return true;
                     }

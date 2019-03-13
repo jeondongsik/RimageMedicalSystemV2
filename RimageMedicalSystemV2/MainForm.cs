@@ -232,6 +232,12 @@ namespace RimageMedicalSystemV2
                     this.btnUSBCopy.Visible = false;
                 }
 
+                if (GlobalVar.configEntity.programType == "1")
+                {
+                    //// 프로그램 Type1일 경우 환자정보 삭제 버튼 노출
+                    this.btnPatientDelete.Visible = true;
+                }
+
                 //// 인피니티 팍스 실행 프로세스 죽인다.
                 KillProcess.DelProcess("SCDBurn");
                 KillProcess.DelProcess("CDBurner");
@@ -3155,15 +3161,21 @@ namespace RimageMedicalSystemV2
             {
                 this.Cursor = Cursors.WaitCursor;
 
-                if (GlobalVar.configEntity.programType == "1")
+                try
                 {
-                    this.ucPatients11.DeletePatientFiles(this);
-                    this.ucPatients11.Clear();
-                    this.ucPatients11.OrderInfo = null;
-                }
+                    if (GlobalVar.configEntity.programType == "1")
+                    {
+                        this.ucPatients11.DeletePatientFiles(this);
+                        this.ucPatients11.Clear();
+                        this.ucPatients11.OrderInfo = null;
+                    }
 
-                this.txtMessages.Text = "조회된 환자정보를 삭제하였습니다.";
-                this.Cursor = Cursors.Default;
+                    this.txtMessages.Text = "조회된 환자정보를 삭제하였습니다.";
+                }
+                finally
+                {
+                    this.Cursor = Cursors.Default;
+                }
             }
         }
 

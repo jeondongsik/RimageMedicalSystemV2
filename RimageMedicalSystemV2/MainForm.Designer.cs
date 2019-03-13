@@ -94,6 +94,7 @@
             this.hyperLinkEdit1 = new DevExpress.XtraEditors.HyperLinkEdit();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tmrConnectServer = new System.Windows.Forms.Timer(this.components);
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -118,6 +119,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hyperLinkEdit1.Properties)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpPatInfo
@@ -274,14 +276,14 @@
             // btnSearch
             // 
             this.btnSearch.AllowFocus = false;
-            this.btnSearch.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSearch.Appearance.Options.UseFont = true;
             this.btnSearch.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.ImageOptions.Image")));
             this.btnSearch.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnSearch.Location = new System.Drawing.Point(12, 11);
+            this.btnSearch.Location = new System.Drawing.Point(3, 3);
             this.btnSearch.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(120, 43);
+            this.btnSearch.Size = new System.Drawing.Size(105, 43);
             this.btnSearch.TabIndex = 5;
             this.btnSearch.Text = "조회하기";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -289,14 +291,14 @@
             // btnBurn
             // 
             this.btnBurn.AllowFocus = false;
-            this.btnBurn.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBurn.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnBurn.Appearance.Options.UseFont = true;
             this.btnBurn.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnBurn.ImageOptions.Image")));
             this.btnBurn.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnBurn.Location = new System.Drawing.Point(138, 12);
+            this.btnBurn.Location = new System.Drawing.Point(114, 3);
             this.btnBurn.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnBurn.Name = "btnBurn";
-            this.btnBurn.Size = new System.Drawing.Size(150, 43);
+            this.btnBurn.Size = new System.Drawing.Size(133, 43);
             this.btnBurn.TabIndex = 6;
             this.btnBurn.Text = "CD/DVD 버닝";
             this.btnBurn.Click += new System.EventHandler(this.btnBurn_Click);
@@ -304,14 +306,14 @@
             // btnClear
             // 
             this.btnClear.AllowFocus = false;
-            this.btnClear.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnClear.Appearance.Options.UseFont = true;
             this.btnClear.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClear.ImageOptions.Image")));
             this.btnClear.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnClear.Location = new System.Drawing.Point(294, 12);
+            this.btnClear.Location = new System.Drawing.Point(364, 3);
             this.btnClear.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(130, 43);
+            this.btnClear.Size = new System.Drawing.Size(105, 43);
             this.btnClear.TabIndex = 7;
             this.btnClear.Text = "화면 정리";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -319,14 +321,14 @@
             // btnPatientDelete
             // 
             this.btnPatientDelete.AllowFocus = false;
-            this.btnPatientDelete.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPatientDelete.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnPatientDelete.Appearance.Options.UseFont = true;
             this.btnPatientDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPatientDelete.ImageOptions.Image")));
             this.btnPatientDelete.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnPatientDelete.Location = new System.Drawing.Point(430, 12);
+            this.btnPatientDelete.Location = new System.Drawing.Point(475, 3);
             this.btnPatientDelete.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnPatientDelete.Name = "btnPatientDelete";
-            this.btnPatientDelete.Size = new System.Drawing.Size(152, 43);
+            this.btnPatientDelete.Size = new System.Drawing.Size(134, 43);
             this.btnPatientDelete.TabIndex = 10;
             this.btnPatientDelete.Text = "환자정보 삭제";
             this.btnPatientDelete.Visible = false;
@@ -335,11 +337,11 @@
             // btnOrderedList
             // 
             this.btnOrderedList.AllowFocus = false;
-            this.btnOrderedList.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnOrderedList.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnOrderedList.Appearance.Options.UseFont = true;
             this.btnOrderedList.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderedList.ImageOptions.Image")));
             this.btnOrderedList.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnOrderedList.Location = new System.Drawing.Point(131, 3);
+            this.btnOrderedList.Location = new System.Drawing.Point(110, 3);
             this.btnOrderedList.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnOrderedList.Name = "btnOrderedList";
             this.btnOrderedList.Size = new System.Drawing.Size(155, 43);
@@ -350,14 +352,14 @@
             // btnReport
             // 
             this.btnReport.AllowFocus = false;
-            this.btnReport.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReport.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnReport.Appearance.Options.UseFont = true;
             this.btnReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.ImageOptions.Image")));
             this.btnReport.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnReport.Location = new System.Drawing.Point(292, 3);
+            this.btnReport.Location = new System.Drawing.Point(271, 3);
             this.btnReport.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(120, 43);
+            this.btnReport.Size = new System.Drawing.Size(95, 43);
             this.btnReport.TabIndex = 8;
             this.btnReport.Text = "보고서";
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
@@ -841,30 +843,29 @@
             // btnCancelBurning
             // 
             this.btnCancelBurning.AllowFocus = false;
-            this.btnCancelBurning.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelBurning.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnCancelBurning.Appearance.Options.UseFont = true;
             this.btnCancelBurning.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.cancel_32x32;
             this.btnCancelBurning.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnCancelBurning.Location = new System.Drawing.Point(430, 12);
+            this.btnCancelBurning.Location = new System.Drawing.Point(253, 3);
             this.btnCancelBurning.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnCancelBurning.Name = "btnCancelBurning";
-            this.btnCancelBurning.Size = new System.Drawing.Size(130, 43);
+            this.btnCancelBurning.Size = new System.Drawing.Size(105, 43);
             this.btnCancelBurning.TabIndex = 9;
             this.btnCancelBurning.Text = "굽기 취소";
-            this.btnCancelBurning.Visible = false;
             this.btnCancelBurning.Click += new System.EventHandler(this.btnCancelBurning_Click);
             // 
             // btnUSBCopy
             // 
             this.btnUSBCopy.AllowFocus = false;
-            this.btnUSBCopy.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUSBCopy.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnUSBCopy.Appearance.Options.UseFont = true;
             this.btnUSBCopy.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.icons8_usb_2_321;
             this.btnUSBCopy.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnUSBCopy.Location = new System.Drawing.Point(5, 3);
+            this.btnUSBCopy.Location = new System.Drawing.Point(4, 3);
             this.btnUSBCopy.LookAndFeel.SkinName = "London Liquid Sky";
             this.btnUSBCopy.Name = "btnUSBCopy";
-            this.btnUSBCopy.Size = new System.Drawing.Size(120, 43);
+            this.btnUSBCopy.Size = new System.Drawing.Size(100, 43);
             this.btnUSBCopy.TabIndex = 18;
             this.btnUSBCopy.Text = "USB복사";
             this.btnUSBCopy.Visible = false;
@@ -891,9 +892,9 @@
             this.flowLayoutPanel1.Controls.Add(this.btnOrderedList);
             this.flowLayoutPanel1.Controls.Add(this.btnUSBCopy);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(584, 9);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(630, 9);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(415, 50);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(369, 50);
             this.flowLayoutPanel1.TabIndex = 20;
             // 
             // tmrConnectServer
@@ -901,24 +902,32 @@
             this.tmrConnectServer.Interval = 300;
             this.tmrConnectServer.Tick += new System.EventHandler(this.tmrConnectServer_Tick);
             // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.btnSearch);
+            this.flowLayoutPanel2.Controls.Add(this.btnBurn);
+            this.flowLayoutPanel2.Controls.Add(this.btnCancelBurning);
+            this.flowLayoutPanel2.Controls.Add(this.btnClear);
+            this.flowLayoutPanel2.Controls.Add(this.btnPatientDelete);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(9, 9);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(619, 50);
+            this.flowLayoutPanel2.TabIndex = 21;
+            // 
             // MainForm
             // 
             this.Appearance.Options.UseFont = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.hyperLinkEdit1);
-            this.Controls.Add(this.btnCancelBurning);
             this.Controls.Add(this.labelControl11);
             this.Controls.Add(this.grpServerState);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.panelControl2);
             this.Controls.Add(this.grpBurningList);
-            this.Controls.Add(this.btnPatientDelete);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.btnBurn);
-            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.grpServerList);
             this.Controls.Add(this.grpPatInfo);
             this.DoubleBuffered = true;
@@ -960,6 +969,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hyperLinkEdit1.Properties)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1031,6 +1041,7 @@
         private DevExpress.XtraEditors.HyperLinkEdit hyperLinkEdit1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Timer tmrConnectServer;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
     }
 }
 
