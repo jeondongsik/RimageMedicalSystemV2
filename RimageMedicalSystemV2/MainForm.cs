@@ -358,6 +358,8 @@ namespace RimageMedicalSystemV2
         {
             this.Cursor = Cursors.WaitCursor;
 
+            string retMessage = string.Empty;
+
             try
             {
                 //// 컨트롤 초기화
@@ -376,9 +378,11 @@ namespace RimageMedicalSystemV2
 
                     this.txtStatusView.AppendText("폴더전체크기 : " + orderInfo.FolderSize.ToString() + "bytes\r\n");
 
-                    //Drive 용량 다시 체크
+                    ////Drive 용량 다시 체크
                     this.SetDriveInfo();
                     this.txtMessages.Text = "환자정보 조회 완료.";
+
+                    retMessage = string.Format("{0}[{1}] 조회 완료", orderInfo.patName, orderInfo.patNo);
 
                     StringBuilder sbTemp = new StringBuilder();
                     sbTemp.AppendLine(string.Format("ID : {0}", orderInfo.patNo));
@@ -391,15 +395,24 @@ namespace RimageMedicalSystemV2
                 }
                 else
                 {
-                    this.ErrMsgShow("DICOMDIR 파일을 읽을 수 없거나 환자정보가 없습니다.", "Rimage Error Message");
+                    retMessage = "DICOMDIR 파일을 읽을 수 없거나 환자정보가 없습니다.";
+                    this.ErrMsgShow(retMessage, "Rimage Error Message : DICOMDIR file is bad.");
                 }
             }
             catch (Exception ex)
             {
+                retMessage = "환자정보 불러오기 에러";
                 this.ErrMsgShow(string.Format("환자정보 조회 중 오류가 발생하였습니다.\r\nError ▶ {0}", ex.Message), "Rimage Error Message", ex);
             }
             finally
             {
+                //// 오른쪽 하단에 메시지를 보여준다.
+                if (GlobalVar.configEntity.AutoExecute == "1" && GlobalVar.configEntity.PopUpAlamYN == "Y")
+                {
+                    this.NotifyBurningResult(retMessage);
+                }
+
+                this.isSearching = false;
                 this.Cursor = Cursors.Default;
             }
         }
@@ -445,6 +458,9 @@ namespace RimageMedicalSystemV2
         /// <param name="checkFile"></param>
         private void SearchDownloadFolder(string checkFile = "")
         {
+            string retMessage = string.Empty;
+            int i = 0;
+
             try
             {
                 DirectoryInfo dri = new DirectoryInfo(GlobalVar.configEntity.LocalShareFolder);                
@@ -498,17 +514,50 @@ namespace RimageMedicalSystemV2
                                     this.ucPatients21.gvPatientlist.SelectRow(0);
 
                                     this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
+
+                                    i++;
                                 }
                             }
                         }
 
                         patExists = false;
                     }
+                }
+                else
+                {
+                    retMessage = "폴더가 존재하지 않습니다.\r\n네트워크 드라이브를 설정해주세요.";
+                    ErrMsgShow(retMessage, "Rimage Message : 조회 결과");
+                }
 
-                    this.txtMessages.Text = "환자정보 조회 완료.";
+                if (i == 0)
+                {
+                    //자동굽기일 경우는 보여주지 않는다.
+                    if ("0" == GlobalVar.configEntity.AutoExecute)
+                        txtStatusView.AppendText("새로운 환자정보가 존재하지 않습니다.\r\n");
+                }
+                else
+                {
+                    retMessage = i.ToString() + " 건의 새로운 환자정보가 조회되었습니다.";
+                    txtStatusView.AppendText(retMessage + "\r\n");
+                }
+
+                ////Drive 용량 다시 체크
+                this.SetDriveInfo();
+                this.txtMessages.Text = "환자정보 조회 완료.";
+            }
+            catch (Exception ex)
+            {
+                retMessage = "폴더 읽기 에러";
+                ErrMsgShow(retMessage + "\r\n" + ex.Message, "Rimage Message : searchDownloadFolder", ex);
+            }
+            finally
+            {
+                //오른쪽 하단에 메시지를 보여준다.
+                if (GlobalVar.configEntity.AutoExecute == "1" && GlobalVar.configEntity.PopUpAlamYN == "Y")
+                {
+                    this.NotifyBurningResult(retMessage);
                 }
             }
-            catch { throw; }
         }
 
         /// <summary>
@@ -843,6 +892,13 @@ namespace RimageMedicalSystemV2
 
             try
             {
+                //// 서버 연결 체크 : USB가 아닐 경우
+                if (this.mediaType != MediaType.USB && this.NowSeletedServer == null)
+                {
+                    this.ErrMsgShow("연결된 서버가 존재하지 않습니다.\r\n먼저 서버를 클릭하여 선택하세요.", "Rimage Message");
+                    return false;
+                }
+
                 //// 체크파일이 있으면 체크한다.
                 if (!CheckFiles.Exists(Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder)))
                 {
@@ -888,8 +944,11 @@ namespace RimageMedicalSystemV2
                 orderInfo.patListForMerge = dicPatListMerge;
                 
                 orderInfo.No = j;
-                ////orderInfo.StartDateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
-                orderInfo.TargetServer = this.NowSeletedServer.ShallowCopy();
+
+                if (this.NowSeletedServer != null)
+                {
+                    orderInfo.TargetServer = this.NowSeletedServer.ShallowCopy();
+                }
 
                 //// 다중환자 사용일 경우에만 체크
                 if (GlobalVar.configEntity.DisableMultiPatient == "N" && this.mediaType != MediaType.USB)
@@ -1501,6 +1560,17 @@ namespace RimageMedicalSystemV2
                 if (CheckPing.TestPing(this.LastHostIP))
                 {
                     this.NowSeletedServer = this.GetServerInfo(this.LastHostIP);
+
+                    if (this.NowSeletedServer == null)
+                    {
+                        this.NowSeletedServer = this.GetServerInfo(this.ServerList.First().IP);
+
+                        if (this.NowSeletedServer == null)
+                        {
+                            this.NowSeletedServer = new ServerInfo();
+                        }
+                    }
+
                     this.SelectServerLabel(this.LastHostIP, true);
                 }
                 else
@@ -2440,7 +2510,7 @@ namespace RimageMedicalSystemV2
 
                     if (s.IP == hostIP)
                     {
-                        lbl.Appearance.BorderColor = Color.FromArgb(192, 255, 255);
+                        lbl.Appearance.BorderColor = Color.FromArgb(192, 0, 0);
                         if (connected)
                         {
                             lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.highpriority_16x16;

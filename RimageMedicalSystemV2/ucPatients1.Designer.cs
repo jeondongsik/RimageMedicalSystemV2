@@ -94,6 +94,8 @@
             "CDR",
             "DVDR",
             "DVDR-DL"});
+            this.cbMedia.Properties.LookAndFeel.SkinName = "Lilian";
+            this.cbMedia.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.cbMedia.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.cbMedia.Size = new System.Drawing.Size(73, 22);
             this.cbMedia.TabIndex = 8;
@@ -126,6 +128,8 @@
             "5",
             "6",
             "7"});
+            this.cbCopies.Properties.LookAndFeel.SkinName = "Lilian";
+            this.cbCopies.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.cbCopies.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.cbCopies.Size = new System.Drawing.Size(72, 22);
             this.cbCopies.TabIndex = 6;
@@ -140,6 +144,8 @@
             this.txtDataLength.Properties.Appearance.Options.UseFont = true;
             this.txtDataLength.Properties.Appearance.Options.UseTextOptions = true;
             this.txtDataLength.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtDataLength.Properties.LookAndFeel.SkinName = "Lilian";
+            this.txtDataLength.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.txtDataLength.Properties.ReadOnly = true;
             this.txtDataLength.Size = new System.Drawing.Size(84, 22);
             this.txtDataLength.TabIndex = 5;
@@ -159,8 +165,12 @@
             // 
             this.txtPatientName.Location = new System.Drawing.Point(254, 3);
             this.txtPatientName.Name = "txtPatientName";
-            this.txtPatientName.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtPatientName.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtPatientName.Properties.Appearance.Options.UseFont = true;
+            this.txtPatientName.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtPatientName.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.txtPatientName.Properties.LookAndFeel.SkinName = "Lilian";
+            this.txtPatientName.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.txtPatientName.Size = new System.Drawing.Size(175, 22);
             this.txtPatientName.TabIndex = 3;
             this.txtPatientName.TabStop = false;
@@ -179,8 +189,12 @@
             // 
             this.txtPatientID.Location = new System.Drawing.Point(87, 3);
             this.txtPatientID.Name = "txtPatientID";
-            this.txtPatientID.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtPatientID.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtPatientID.Properties.Appearance.Options.UseFont = true;
+            this.txtPatientID.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtPatientID.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.txtPatientID.Properties.LookAndFeel.SkinName = "Lilian";
+            this.txtPatientID.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.txtPatientID.Size = new System.Drawing.Size(110, 22);
             this.txtPatientID.TabIndex = 1;
             this.txtPatientID.TabStop = false;
@@ -197,11 +211,11 @@
             // 
             // treeView1
             // 
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(81)))), ((int)(((byte)(97)))));
+            this.treeView1.BackColor = System.Drawing.Color.White;
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeView1.ForeColor = System.Drawing.Color.White;
+            this.treeView1.ForeColor = System.Drawing.Color.Black;
             this.treeView1.FullRowSelect = true;
             this.treeView1.Location = new System.Drawing.Point(7, 5);
             this.treeView1.Name = "treeView1";
@@ -213,6 +227,8 @@
             this.pnlImgArea.Controls.Add(this.treeView1);
             this.pnlImgArea.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlImgArea.Location = new System.Drawing.Point(0, 31);
+            this.pnlImgArea.LookAndFeel.SkinName = "Lilian";
+            this.pnlImgArea.LookAndFeel.UseDefaultLookAndFeel = false;
             this.pnlImgArea.Name = "pnlImgArea";
             this.pnlImgArea.Padding = new System.Windows.Forms.Padding(5, 3, 5, 5);
             this.pnlImgArea.Size = new System.Drawing.Size(817, 177);
@@ -223,7 +239,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.pnlImgArea);
             this.Controls.Add(this.pnlPatInfoArea);
-            this.LookAndFeel.SkinName = "Sharp Plus";
+            this.LookAndFeel.SkinName = "Lilian";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Name = "ucPatients1";
             this.Size = new System.Drawing.Size(817, 208);

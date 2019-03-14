@@ -53,6 +53,8 @@
             this.gcPatientlist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcPatientlist.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gcPatientlist.Location = new System.Drawing.Point(0, 0);
+            this.gcPatientlist.LookAndFeel.SkinName = "Office 2016 Colorful";
+            this.gcPatientlist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcPatientlist.MainView = this.gvPatientlist;
             this.gcPatientlist.Name = "gcPatientlist";
             this.gcPatientlist.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -231,7 +233,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.gcPatientlist);
             this.DoubleBuffered = true;
-            this.LookAndFeel.SkinName = "Sharp Plus";
+            this.LookAndFeel.SkinName = "Lilian";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Name = "ucPatients2";
             this.Size = new System.Drawing.Size(817, 208);

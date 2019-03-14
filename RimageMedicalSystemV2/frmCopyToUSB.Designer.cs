@@ -110,7 +110,7 @@
             // labelControl11
             // 
             this.labelControl11.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelControl11.Appearance.ForeColor = System.Drawing.Color.Silver;
+            this.labelControl11.Appearance.ForeColor = System.Drawing.Color.Green;
             this.labelControl11.Appearance.Options.UseFont = true;
             this.labelControl11.Appearance.Options.UseForeColor = true;
             this.labelControl11.Location = new System.Drawing.Point(6, 6);
@@ -121,10 +121,10 @@
             // 
             // txtProgressView
             // 
-            this.txtProgressView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(69)))), ((int)(((byte)(84)))));
+            this.txtProgressView.BackColor = System.Drawing.Color.White;
             this.txtProgressView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProgressView.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProgressView.ForeColor = System.Drawing.Color.White;
+            this.txtProgressView.ForeColor = System.Drawing.Color.Black;
             this.txtProgressView.Location = new System.Drawing.Point(12, 232);
             this.txtProgressView.MaxLength = 2147483647;
             this.txtProgressView.Multiline = true;
@@ -172,7 +172,7 @@
             this.Controls.Add(this.panelControl1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.LookAndFeel.SkinName = "Sharp Plus";
+            this.LookAndFeel.SkinName = "Lilian";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.MaximizeBox = false;
             this.Name = "frmCopyToUSB";

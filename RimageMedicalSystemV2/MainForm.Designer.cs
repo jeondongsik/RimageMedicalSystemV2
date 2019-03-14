@@ -182,9 +182,9 @@
             this.Server5.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server5.Appearance.Options.UseFont = true;
             this.Server5.Appearance.Options.UseImage = true;
-            this.Server5.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server5.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server5.AppearanceHovered.Options.UseBorderColor = true;
-            this.Server5.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server5.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server5.AppearancePressed.Options.UseBorderColor = true;
             this.Server5.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
@@ -201,9 +201,9 @@
             this.Server4.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server4.Appearance.Options.UseFont = true;
             this.Server4.Appearance.Options.UseImage = true;
-            this.Server4.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server4.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server4.AppearanceHovered.Options.UseBorderColor = true;
-            this.Server4.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server4.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server4.AppearancePressed.Options.UseBorderColor = true;
             this.Server4.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
@@ -220,9 +220,9 @@
             this.Server3.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server3.Appearance.Options.UseFont = true;
             this.Server3.Appearance.Options.UseImage = true;
-            this.Server3.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server3.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server3.AppearanceHovered.Options.UseBorderColor = true;
-            this.Server3.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server3.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server3.AppearancePressed.Options.UseBorderColor = true;
             this.Server3.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
@@ -239,9 +239,9 @@
             this.Server2.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server2.Appearance.Options.UseFont = true;
             this.Server2.Appearance.Options.UseImage = true;
-            this.Server2.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server2.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server2.AppearanceHovered.Options.UseBorderColor = true;
-            this.Server2.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server2.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server2.AppearancePressed.Options.UseBorderColor = true;
             this.Server2.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
@@ -260,9 +260,9 @@
             this.Server1.Appearance.Options.UseFont = true;
             this.Server1.Appearance.Options.UseImage = true;
             this.Server1.Appearance.Options.UseImageAlign = true;
-            this.Server1.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server1.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server1.AppearanceHovered.Options.UseBorderColor = true;
-            this.Server1.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Server1.AppearancePressed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server1.AppearancePressed.Options.UseBorderColor = true;
             this.Server1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
@@ -379,6 +379,8 @@
             // 
             this.gcBurninglist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcBurninglist.Location = new System.Drawing.Point(2, 22);
+            this.gcBurninglist.LookAndFeel.SkinName = "Office 2016 Colorful";
+            this.gcBurninglist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcBurninglist.MainView = this.gvBurninglist;
             this.gcBurninglist.Name = "gcBurninglist";
             this.gcBurninglist.Size = new System.Drawing.Size(980, 215);
@@ -540,10 +542,10 @@
             // 
             // txtStatusView
             // 
-            this.txtStatusView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(69)))), ((int)(((byte)(84)))));
+            this.txtStatusView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(239)))), ((int)(((byte)(241)))));
             this.txtStatusView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtStatusView.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStatusView.ForeColor = System.Drawing.Color.White;
+            this.txtStatusView.ForeColor = System.Drawing.Color.Black;
             this.txtStatusView.Location = new System.Drawing.Point(5, 51);
             this.txtStatusView.MaxLength = 2147483647;
             this.txtStatusView.Multiline = true;
@@ -587,7 +589,7 @@
             // lblDriveStatus
             // 
             this.lblDriveStatus.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDriveStatus.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblDriveStatus.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.lblDriveStatus.Appearance.Options.UseFont = true;
             this.lblDriveStatus.Appearance.Options.UseForeColor = true;
             this.lblDriveStatus.Location = new System.Drawing.Point(15, 5);
@@ -771,9 +773,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(493, 685);
+            this.pictureBox1.Location = new System.Drawing.Point(493, 688);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(265, 45);
+            this.pictureBox1.Size = new System.Drawing.Size(265, 42);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 15;
             this.pictureBox1.TabStop = false;
@@ -781,7 +783,7 @@
             // labelControl11
             // 
             this.labelControl11.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelControl11.Appearance.ForeColor = System.Drawing.Color.Silver;
+            this.labelControl11.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.labelControl11.Appearance.Options.UseFont = true;
             this.labelControl11.Appearance.Options.UseForeColor = true;
             this.labelControl11.Location = new System.Drawing.Point(789, 688);
@@ -875,7 +877,7 @@
             // 
             this.hyperLinkEdit1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.hyperLinkEdit1.EditValue = "원격지원 http://www.nasis.co.kr";
-            this.hyperLinkEdit1.Location = new System.Drawing.Point(796, 708);
+            this.hyperLinkEdit1.Location = new System.Drawing.Point(797, 708);
             this.hyperLinkEdit1.Name = "hyperLinkEdit1";
             this.hyperLinkEdit1.Properties.AllowFocused = false;
             this.hyperLinkEdit1.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -934,7 +936,7 @@
             this.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.LookAndFeel.SkinName = "Sharp Plus";
+            this.LookAndFeel.SkinName = "Lilian";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.MaximizeBox = false;
             this.Name = "MainForm";

@@ -249,6 +249,8 @@ namespace RMDS
                 //// 명령정보 읽어오기
                 try
                 {
+                    this.timerCancelCheck.Enabled = true;
+
                     this.orderFilePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, string.Format("{0}.json", orderID));
                     this.orderTracePath = Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, this.orderID);
 
@@ -1051,7 +1053,7 @@ namespace RMDS
             try
             {
                 COrderDescription pOrder = new COrderDescription();
-                pOrder.ClientId = ClientId;
+                pOrder.ClientId = this.ClientId;
                 pOrder.OrderId = this.orderID;
 
                 if (this.statusType.Contains("Imaging"))
@@ -1199,7 +1201,7 @@ namespace RMDS
                 
                 foreach (string fl in Directory.GetFiles(folder, this.orderID))
                 {
-                    if (fl.StartsWith(this.orderID))
+                    if (fl.EndsWith(this.orderID))
                     {
                         return true;
                     }
