@@ -129,6 +129,7 @@
             this.grpPatInfo.Controls.Add(this.ucPatients11);
             this.grpPatInfo.Controls.Add(this.ucPatients21);
             this.grpPatInfo.Location = new System.Drawing.Point(12, 61);
+            this.grpPatInfo.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpPatInfo.Name = "grpPatInfo";
             this.grpPatInfo.Size = new System.Drawing.Size(821, 232);
             this.grpPatInfo.TabIndex = 0;
@@ -171,6 +172,7 @@
             this.grpServerList.Controls.Add(this.Server2);
             this.grpServerList.Controls.Add(this.Server1);
             this.grpServerList.Location = new System.Drawing.Point(839, 61);
+            this.grpServerList.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpServerList.Name = "grpServerList";
             this.grpServerList.Size = new System.Drawing.Size(157, 232);
             this.grpServerList.TabIndex = 2;
@@ -370,6 +372,7 @@
             this.grpBurningList.AppearanceCaption.Options.UseFont = true;
             this.grpBurningList.Controls.Add(this.gcBurninglist);
             this.grpBurningList.Location = new System.Drawing.Point(12, 299);
+            this.grpBurningList.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpBurningList.Name = "grpBurningList";
             this.grpBurningList.Size = new System.Drawing.Size(984, 239);
             this.grpBurningList.TabIndex = 1;
@@ -615,8 +618,9 @@
             this.grpServerState.Controls.Add(this.label2);
             this.grpServerState.Controls.Add(this.label1);
             this.grpServerState.Location = new System.Drawing.Point(491, 544);
+            this.grpServerState.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpServerState.Name = "grpServerState";
-            this.grpServerState.Size = new System.Drawing.Size(503, 135);
+            this.grpServerState.Size = new System.Drawing.Size(505, 135);
             this.grpServerState.TabIndex = 4;
             this.grpServerState.Text = "서버 상태 정보";
             // 

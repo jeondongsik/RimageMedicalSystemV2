@@ -1080,7 +1080,7 @@ namespace RimageMedicalSystemV2
                     discOrder = new DiscData();
 
                     discOrder.MyProperty = 1;
-                    discOrder.ClientID = this.ClientId;
+                    discOrder.ClientID = MainFormBiz.GetClientId(this.NowSeletedServer.IP, GlobalVar.configEntity.ServerType, this.MyIP);
                     discOrder.OrderID = orderInfo.OrderId;
                     discOrder.VolumeName = GlobalVar.configEntity.HospitalName;
                     discOrder.ParentFolder = orderInfo.JobPath;

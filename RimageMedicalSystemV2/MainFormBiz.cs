@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
+using RimageKorea;
+
 namespace RimageMedicalSystemV2
 {
     public class MainFormBiz
@@ -60,6 +62,19 @@ namespace RimageMedicalSystemV2
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// ClientID 생성
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="serverType"></param>
+        /// <param name="myIP"></param>
+        /// <returns></returns>
+        public static string GetClientId(string ip, string serverType, string myIP)
+        {
+            string id = string.Format("{0}{1}_{2}{3}", serverType, myIP.Replace(".", "_"), DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
+            return id;
         }
     }
 }

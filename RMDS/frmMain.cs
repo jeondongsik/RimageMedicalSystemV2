@@ -281,6 +281,7 @@ namespace RMDS
                     else
                     {
                         //// 서버 정보 
+                        this.ClientId = this.burnOrderInfo.DiscOrder.ClientID;
                         this.serverIP = this.burnOrderInfo.TargetServer.IP;
                         this.serverName = this.burnOrderInfo.TargetServer.Name;
                         this.serverPort = this.burnOrderInfo.TargetServer.Port;
@@ -434,10 +435,8 @@ namespace RMDS
         /// </summary>
         /// <param name="retry">재연결 여부</param>
         private bool ConnectServer(bool retry = false)
-        {
-            //// Client ID는 명령 실행시마다 바뀐다.
-            //// 재연결시에는 새로 생성하지 않는다.
-            if (!retry)
+        {            
+            if (string.IsNullOrWhiteSpace(this.ClientId))
                 this.ClientId = this.ServerType + this.MyIP.Replace(".", "_") + "_" + DateTime.Now.ToString("ddHHmmss") + RimageKorea.RandomOrderNumber.GetNewOrderNumber2();
             
             try
@@ -1056,6 +1055,7 @@ namespace RMDS
                 pOrder.ClientId = this.ClientId;
                 pOrder.OrderId = this.orderID;
 
+                ////this.statusType = (orderInfo.OrderType == "ImageOrderStatus") ? "Imaging " : "Producing ";
                 if (this.statusType.Contains("Imaging"))
                     pOrder.TargetCluster = "DefaultImageCluster";
                 else
@@ -1063,6 +1063,7 @@ namespace RMDS
 
                 COrderManager.GetInstance().CancelOrder(pOrder, true);
 
+                ErrorLog.TraceWrite(this, "취소명령 보냄 : " + pOrder.TargetCluster, GlobalVar.ProgramExecuteFolder);
                 //// 프로그램을 종료시키는 타이머 실행
                 //// this.timerAppExit.Enabled = true;
             }
@@ -1203,6 +1204,7 @@ namespace RMDS
                 {
                     if (fl.EndsWith(this.orderID))
                     {
+                        ErrorLog.TraceWrite(this, "취소명령 Catch : " + fl, GlobalVar.ProgramExecuteFolder);
                         return true;
                     }
                 }
