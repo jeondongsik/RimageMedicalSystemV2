@@ -103,7 +103,7 @@ namespace RimageKorea
         /// </summary>
         public string EditListXml { get; set; }
         /// <summary>
-        /// 결과값
+        /// 굽기 결과 코드(0.진행, 2.성공, 9.취소/실패)
         /// </summary>
         public string Result { get; set; }
         /// <summary>
@@ -190,6 +190,7 @@ namespace RimageKorea
         /// 굽기 완료 여부
         /// </summary>
         public string Finish { get; set; }
+        
         /// <summary>
         /// 출력번호
         /// </summary>

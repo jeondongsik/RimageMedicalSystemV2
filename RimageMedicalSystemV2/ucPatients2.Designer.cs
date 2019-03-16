@@ -53,7 +53,7 @@
             this.gcPatientlist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcPatientlist.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gcPatientlist.Location = new System.Drawing.Point(0, 0);
-            this.gcPatientlist.LookAndFeel.SkinName = "Office 2016 Colorful";
+            this.gcPatientlist.LookAndFeel.SkinName = "Foggy";
             this.gcPatientlist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcPatientlist.MainView = this.gvPatientlist;
             this.gcPatientlist.Name = "gcPatientlist";
@@ -73,7 +73,9 @@
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gvPatientlist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvPatientlist.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gvPatientlist.Appearance.Row.Options.UseFont = true;
+            this.gvPatientlist.Appearance.Row.Options.UseForeColor = true;
             this.gvPatientlist.Appearance.Row.Options.UseTextOptions = true;
             this.gvPatientlist.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gvPatientlist.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

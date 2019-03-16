@@ -149,7 +149,10 @@
             // grpBurningList
             // 
             this.grpBurningList.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBurningList.AppearanceCaption.ForeColor = System.Drawing.Color.Black;
             this.grpBurningList.AppearanceCaption.Options.UseFont = true;
+            this.grpBurningList.AppearanceCaption.Options.UseForeColor = true;
+            this.grpBurningList.CaptionImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.forward_16x16;
             this.grpBurningList.Controls.Add(this.gcPatientlist);
             this.grpBurningList.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.grpBurningList.Location = new System.Drawing.Point(0, 76);
@@ -162,8 +165,8 @@
             // 
             this.gcPatientlist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcPatientlist.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gcPatientlist.Location = new System.Drawing.Point(2, 21);
-            this.gcPatientlist.LookAndFeel.SkinName = "Office 2016 Colorful";
+            this.gcPatientlist.Location = new System.Drawing.Point(2, 22);
+            this.gcPatientlist.LookAndFeel.SkinName = "Foggy";
             this.gcPatientlist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcPatientlist.MainView = this.gvPatientlist;
             this.gcPatientlist.Name = "gcPatientlist";
@@ -172,7 +175,7 @@
             this.repoMediatype,
             this.repoPicDel,
             this.repoPicRetry});
-            this.gcPatientlist.Size = new System.Drawing.Size(980, 562);
+            this.gcPatientlist.Size = new System.Drawing.Size(980, 561);
             this.gcPatientlist.TabIndex = 4;
             this.gcPatientlist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvPatientlist});
@@ -184,7 +187,9 @@
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gvPatientlist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvPatientlist.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gvPatientlist.Appearance.Row.Options.UseFont = true;
+            this.gvPatientlist.Appearance.Row.Options.UseForeColor = true;
             this.gvPatientlist.Appearance.Row.Options.UseTextOptions = true;
             this.gvPatientlist.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gvPatientlist.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

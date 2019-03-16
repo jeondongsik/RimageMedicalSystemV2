@@ -124,8 +124,11 @@
             // 
             // grpPatInfo
             // 
-            this.grpPatInfo.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.grpPatInfo.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.grpPatInfo.AppearanceCaption.ForeColor = System.Drawing.Color.Black;
             this.grpPatInfo.AppearanceCaption.Options.UseFont = true;
+            this.grpPatInfo.AppearanceCaption.Options.UseForeColor = true;
+            this.grpPatInfo.CaptionImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.forward_16x16;
             this.grpPatInfo.Controls.Add(this.ucPatients11);
             this.grpPatInfo.Controls.Add(this.ucPatients21);
             this.grpPatInfo.Location = new System.Drawing.Point(12, 61);
@@ -138,12 +141,12 @@
             // ucPatients11
             // 
             this.ucPatients11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucPatients11.Location = new System.Drawing.Point(2, 22);
+            this.ucPatients11.Location = new System.Drawing.Point(2, 23);
             this.ucPatients11.LookAndFeel.SkinName = "Sharp Plus";
             this.ucPatients11.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients11.Name = "ucPatients11";
             this.ucPatients11.OrderInfo = null;
-            this.ucPatients11.Size = new System.Drawing.Size(817, 208);
+            this.ucPatients11.Size = new System.Drawing.Size(817, 207);
             this.ucPatients11.TabIndex = 1;
             this.ucPatients11.TabStop = false;
             this.ucPatients11.Visible = false;
@@ -152,12 +155,12 @@
             // 
             this.ucPatients21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucPatients21.FrmParent = null;
-            this.ucPatients21.Location = new System.Drawing.Point(2, 22);
+            this.ucPatients21.Location = new System.Drawing.Point(2, 23);
             this.ucPatients21.LookAndFeel.SkinName = "Sharp Plus";
             this.ucPatients21.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients21.Name = "ucPatients21";
             this.ucPatients21.PatientInfoList = null;
-            this.ucPatients21.Size = new System.Drawing.Size(817, 208);
+            this.ucPatients21.Size = new System.Drawing.Size(817, 207);
             this.ucPatients21.TabIndex = 0;
             this.ucPatients21.TabStop = false;
             this.ucPatients21.Visible = false;
@@ -181,8 +184,10 @@
             // Server5
             // 
             this.Server5.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server5.Appearance.ForeColor = System.Drawing.Color.Black;
             this.Server5.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server5.Appearance.Options.UseFont = true;
+            this.Server5.Appearance.Options.UseForeColor = true;
             this.Server5.Appearance.Options.UseImage = true;
             this.Server5.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server5.AppearanceHovered.Options.UseBorderColor = true;
@@ -191,7 +196,7 @@
             this.Server5.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.Server5.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.Server5.Location = new System.Drawing.Point(8, 187);
+            this.Server5.Location = new System.Drawing.Point(8, 189);
             this.Server5.Name = "Server5";
             this.Server5.Size = new System.Drawing.Size(140, 34);
             this.Server5.TabIndex = 4;
@@ -200,8 +205,10 @@
             // Server4
             // 
             this.Server4.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server4.Appearance.ForeColor = System.Drawing.Color.Black;
             this.Server4.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server4.Appearance.Options.UseFont = true;
+            this.Server4.Appearance.Options.UseForeColor = true;
             this.Server4.Appearance.Options.UseImage = true;
             this.Server4.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server4.AppearanceHovered.Options.UseBorderColor = true;
@@ -210,7 +217,7 @@
             this.Server4.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.Server4.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.Server4.Location = new System.Drawing.Point(8, 147);
+            this.Server4.Location = new System.Drawing.Point(8, 149);
             this.Server4.Name = "Server4";
             this.Server4.Size = new System.Drawing.Size(140, 34);
             this.Server4.TabIndex = 3;
@@ -219,8 +226,10 @@
             // Server3
             // 
             this.Server3.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server3.Appearance.ForeColor = System.Drawing.Color.Black;
             this.Server3.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server3.Appearance.Options.UseFont = true;
+            this.Server3.Appearance.Options.UseForeColor = true;
             this.Server3.Appearance.Options.UseImage = true;
             this.Server3.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server3.AppearanceHovered.Options.UseBorderColor = true;
@@ -229,7 +238,7 @@
             this.Server3.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.Server3.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.Server3.Location = new System.Drawing.Point(8, 107);
+            this.Server3.Location = new System.Drawing.Point(8, 109);
             this.Server3.Name = "Server3";
             this.Server3.Size = new System.Drawing.Size(140, 34);
             this.Server3.TabIndex = 2;
@@ -238,8 +247,10 @@
             // Server2
             // 
             this.Server2.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server2.Appearance.ForeColor = System.Drawing.Color.Black;
             this.Server2.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server2.Appearance.Options.UseFont = true;
+            this.Server2.Appearance.Options.UseForeColor = true;
             this.Server2.Appearance.Options.UseImage = true;
             this.Server2.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.Server2.AppearanceHovered.Options.UseBorderColor = true;
@@ -248,7 +259,7 @@
             this.Server2.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.Server2.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.Server2.Location = new System.Drawing.Point(8, 67);
+            this.Server2.Location = new System.Drawing.Point(8, 69);
             this.Server2.Name = "Server2";
             this.Server2.Size = new System.Drawing.Size(140, 34);
             this.Server2.TabIndex = 1;
@@ -257,9 +268,11 @@
             // Server1
             // 
             this.Server1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Server1.Appearance.ForeColor = System.Drawing.Color.Black;
             this.Server1.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
             this.Server1.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Server1.Appearance.Options.UseFont = true;
+            this.Server1.Appearance.Options.UseForeColor = true;
             this.Server1.Appearance.Options.UseImage = true;
             this.Server1.Appearance.Options.UseImageAlign = true;
             this.Server1.AppearanceHovered.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -269,7 +282,7 @@
             this.Server1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.Server1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.Server1.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.Server1.Location = new System.Drawing.Point(8, 27);
+            this.Server1.Location = new System.Drawing.Point(8, 29);
             this.Server1.Name = "Server1";
             this.Server1.Size = new System.Drawing.Size(140, 34);
             this.Server1.TabIndex = 0;
@@ -368,8 +381,11 @@
             // 
             // grpBurningList
             // 
-            this.grpBurningList.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBurningList.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBurningList.AppearanceCaption.ForeColor = System.Drawing.Color.Black;
             this.grpBurningList.AppearanceCaption.Options.UseFont = true;
+            this.grpBurningList.AppearanceCaption.Options.UseForeColor = true;
+            this.grpBurningList.CaptionImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.forward_16x16;
             this.grpBurningList.Controls.Add(this.gcBurninglist);
             this.grpBurningList.Location = new System.Drawing.Point(12, 299);
             this.grpBurningList.LookAndFeel.UseDefaultLookAndFeel = false;
@@ -381,12 +397,12 @@
             // gcBurninglist
             // 
             this.gcBurninglist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcBurninglist.Location = new System.Drawing.Point(2, 22);
-            this.gcBurninglist.LookAndFeel.SkinName = "Office 2016 Colorful";
+            this.gcBurninglist.Location = new System.Drawing.Point(2, 23);
+            this.gcBurninglist.LookAndFeel.SkinName = "Foggy";
             this.gcBurninglist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcBurninglist.MainView = this.gvBurninglist;
             this.gcBurninglist.Name = "gcBurninglist";
-            this.gcBurninglist.Size = new System.Drawing.Size(980, 215);
+            this.gcBurninglist.Size = new System.Drawing.Size(980, 214);
             this.gcBurninglist.TabIndex = 2;
             this.gcBurninglist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvBurninglist});
@@ -398,7 +414,9 @@
             this.gvBurninglist.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gvBurninglist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gvBurninglist.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvBurninglist.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gvBurninglist.Appearance.Row.Options.UseFont = true;
+            this.gvBurninglist.Appearance.Row.Options.UseForeColor = true;
             this.gvBurninglist.Appearance.Row.Options.UseTextOptions = true;
             this.gvBurninglist.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gvBurninglist.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -429,6 +447,7 @@
             this.gvBurninglist.OptionsView.ShowGroupPanel = false;
             this.gvBurninglist.OptionsView.ShowIndicator = false;
             this.gvBurninglist.RowHeight = 25;
+            this.gvBurninglist.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gvBurninglist_RowCellStyle);
             // 
             // gridColNo
             // 
@@ -604,7 +623,10 @@
             // grpServerState
             // 
             this.grpServerState.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpServerState.AppearanceCaption.ForeColor = System.Drawing.Color.Black;
             this.grpServerState.AppearanceCaption.Options.UseFont = true;
+            this.grpServerState.AppearanceCaption.Options.UseForeColor = true;
+            this.grpServerState.CaptionImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.documentmap_16x16;
             this.grpServerState.Controls.Add(this.txtBin2Discs);
             this.grpServerState.Controls.Add(this.txtBin4Discs);
             this.grpServerState.Controls.Add(this.txtBin1Discs);
@@ -630,7 +652,9 @@
             this.txtBin2Discs.Location = new System.Drawing.Point(409, 31);
             this.txtBin2Discs.Name = "txtBin2Discs";
             this.txtBin2Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin2Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.txtBin2Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin2Discs.Properties.Appearance.Options.UseForeColor = true;
             this.txtBin2Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin2Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin2Discs.Properties.ReadOnly = true;
@@ -644,7 +668,9 @@
             this.txtBin4Discs.Location = new System.Drawing.Point(409, 64);
             this.txtBin4Discs.Name = "txtBin4Discs";
             this.txtBin4Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin4Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.txtBin4Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin4Discs.Properties.Appearance.Options.UseForeColor = true;
             this.txtBin4Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin4Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin4Discs.Properties.ReadOnly = true;
@@ -658,7 +684,9 @@
             this.txtBin1Discs.Location = new System.Drawing.Point(168, 30);
             this.txtBin1Discs.Name = "txtBin1Discs";
             this.txtBin1Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin1Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.txtBin1Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin1Discs.Properties.Appearance.Options.UseForeColor = true;
             this.txtBin1Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin1Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin1Discs.Properties.ReadOnly = true;
@@ -672,7 +700,9 @@
             this.txtBin3Discs.Location = new System.Drawing.Point(168, 64);
             this.txtBin3Discs.Name = "txtBin3Discs";
             this.txtBin3Discs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBin3Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.txtBin3Discs.Properties.Appearance.Options.UseFont = true;
+            this.txtBin3Discs.Properties.Appearance.Options.UseForeColor = true;
             this.txtBin3Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin3Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin3Discs.Properties.ReadOnly = true;
@@ -686,7 +716,9 @@
             this.txtRetansferRibbons.Location = new System.Drawing.Point(409, 98);
             this.txtRetansferRibbons.Name = "txtRetansferRibbons";
             this.txtRetansferRibbons.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtRetansferRibbons.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.txtRetansferRibbons.Properties.Appearance.Options.UseFont = true;
+            this.txtRetansferRibbons.Properties.Appearance.Options.UseForeColor = true;
             this.txtRetansferRibbons.Properties.Appearance.Options.UseTextOptions = true;
             this.txtRetansferRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtRetansferRibbons.Properties.ReadOnly = true;
@@ -700,7 +732,9 @@
             this.txtCMYRibbons.Location = new System.Drawing.Point(168, 100);
             this.txtCMYRibbons.Name = "txtCMYRibbons";
             this.txtCMYRibbons.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtCMYRibbons.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.txtCMYRibbons.Properties.Appearance.Options.UseFont = true;
+            this.txtCMYRibbons.Properties.Appearance.Options.UseForeColor = true;
             this.txtCMYRibbons.Properties.Appearance.Options.UseTextOptions = true;
             this.txtCMYRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtCMYRibbons.Properties.ReadOnly = true;
@@ -712,10 +746,11 @@
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label7.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label7.ForeColor = System.Drawing.Color.Black;
             this.label7.Location = new System.Drawing.Point(267, 69);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(136, 12);
+            this.label7.Size = new System.Drawing.Size(131, 15);
             this.label7.TabIndex = 129;
             this.label7.Text = "· Bin4 Discs Remaining";
             // 
@@ -723,10 +758,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.Location = new System.Drawing.Point(258, 103);
+            this.label5.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(260, 103);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(145, 12);
+            this.label5.Size = new System.Drawing.Size(138, 15);
             this.label5.TabIndex = 128;
             this.label5.Text = "· ITS Ribbons Remaining";
             // 
@@ -734,10 +770,11 @@
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(8, 103);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(154, 12);
+            this.label4.Size = new System.Drawing.Size(148, 15);
             this.label4.TabIndex = 127;
             this.label4.Text = "· CMY Ribbons Remaining";
             // 
@@ -745,10 +782,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(8, 69);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(136, 12);
+            this.label3.Size = new System.Drawing.Size(131, 15);
             this.label3.TabIndex = 126;
             this.label3.Text = "· Bin3 Discs Remaining";
             // 
@@ -756,10 +794,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(267, 36);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(136, 12);
+            this.label2.Size = new System.Drawing.Size(131, 15);
             this.label2.TabIndex = 125;
             this.label2.Text = "· Bin2 Discs Remaining";
             // 
@@ -767,10 +806,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(8, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 12);
+            this.label1.Size = new System.Drawing.Size(131, 15);
             this.label1.TabIndex = 124;
             this.label1.Text = "· Bin1 Discs Remaining";
             // 

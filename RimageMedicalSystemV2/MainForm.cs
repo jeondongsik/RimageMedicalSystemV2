@@ -183,8 +183,12 @@ namespace RimageMedicalSystemV2
                 //// 실행중인 RMDS 죽임.
                 this.KillBurnPrograms();
 
+                //// 설정값 가져오기
                 this.GetConfig();
+
+                //// 컨트롤 초기화
                 this.InitializeControlValues();
+                this.InitEnabledButton();
 
                 ////환경설정 후에 정의
                 this.hookingComp = new HookingComplete(hooking_Complete);
@@ -194,48 +198,33 @@ namespace RimageMedicalSystemV2
                 if (GlobalVar.configEntity.AutoExecute == "0")
                 {
                     this.tmrHookChecker.Enabled = false;
+                    this.tmrDownloadChecker.Enabled = false;
                 }
                 else
                 {
-                    //// 9.울산병원인 경우
-                    if (GlobalVar.configEntity.AutoExecuteHookingType == "9")
+                    if (GlobalVar.configEntity.DownloadCheckbyFileName == "Y")
                     {
-                        this.hookChecker = new CheckDownImages(this, GlobalVar.configEntity.DicomDownloadFolder);
-                    }
-                    else if (GlobalVar.configEntity.AutoExecuteHookingType == "11")
-                    {
-                        //// 11.폴더사이즈를 체크하여 다운로드 완료 체크하는 경우
-                        this.hookChecker2 = new CheckDownComplete(this, GlobalVar.configEntity.DicomDownloadFolder);
+                        this.tmrDownloadChecker.Enabled = true;
+                        this.tmrDownloadChecker.Start();
                     }
                     else
                     {
-                        //// 윈도우메시지 체크하는 타이머
-                        this.tmrHookChecker.Enabled = true;
+                        //// 9.울산병원인 경우
+                        if (GlobalVar.configEntity.AutoExecuteHookingType == "9")
+                        {
+                            this.hookChecker = new CheckDownImages(this, GlobalVar.configEntity.DicomDownloadFolder);
+                        }
+                        else if (GlobalVar.configEntity.AutoExecuteHookingType == "11")
+                        {
+                            //// 11.폴더사이즈를 체크하여 다운로드 완료 체크하는 경우
+                            this.hookChecker2 = new CheckDownComplete(this, GlobalVar.configEntity.DicomDownloadFolder);
+                        }
+                        else
+                        {
+                            //// 윈도우메시지 체크하는 타이머
+                            this.tmrHookChecker.Enabled = true;
+                        }
                     }
-                }
-          
-                if (GlobalVar.configEntity.ManualExeBtnView.Equals("Y"))
-                {
-                    this.buttonRetry.Enabled = true;
-                }
-                else
-                {
-                    this.buttonRetry.Enabled = false;
-                }
-
-                if (GlobalVar.configEntity.UseUSBCopy.Equals("Y"))
-                {
-                    this.btnUSBCopy.Visible = true;
-                }
-                else
-                {
-                    this.btnUSBCopy.Visible = false;
-                }
-
-                if (GlobalVar.configEntity.programType == "1")
-                {
-                    //// 프로그램 Type1일 경우 환자정보 삭제 버튼 노출
-                    this.btnPatientDelete.Visible = true;
                 }
 
                 //// 인피니티 팍스 실행 프로세스 죽인다.
@@ -272,15 +261,6 @@ namespace RimageMedicalSystemV2
 
                 //// 폴더 생성
                 ExecuteWhenStart.CreateBaseDirectory(Application.StartupPath);
-
-                if (0 < GlobalVar.configEntity.RetentionPeriod)
-                {
-                    this.btnOrderedList.Visible = true;
-                }
-                else
-                {
-                    this.btnOrderedList.Visible = false;
-                }
 
                 //// 로그삭제
                 this.DeleteLog();
@@ -332,6 +312,79 @@ namespace RimageMedicalSystemV2
             }
 
             this._BurningList = new List<BurnOrderedInfoEntity>();
+        }
+
+        /// <summary>
+        /// 버튼 사용여부
+        /// </summary>
+        public void InitEnabledButton()
+        {
+            if (GlobalVar.configEntity.AutoExecute == "1")
+            {
+                this.btnSearch.Enabled = false;
+                this.btnBurn.Enabled = true;
+            }
+            else if (GlobalVar.configEntity.AutoExecute == "2")
+            {
+                this.btnSearch.Enabled = false;
+                this.btnBurn.Enabled = false;
+            }
+            else
+            {
+                this.btnSearch.Enabled = true;
+                this.btnBurn.Enabled = true;
+            }
+
+            if (GlobalVar.configEntity.ReportView == "N")
+                this.btnReport.Visible = false;
+            else
+                this.btnReport.Visible = true;
+
+            if (GlobalVar.configEntity.ManualExeBtnView.Equals("Y"))
+            {
+                this.buttonRetry.Enabled = true;
+            }
+            else
+            {
+                this.buttonRetry.Enabled = false;
+            }
+
+            if (GlobalVar.configEntity.UseUSBCopy.Equals("Y"))
+            {
+                this.btnUSBCopy.Visible = true;
+            }
+            else
+            {
+                this.btnUSBCopy.Visible = false;
+            }
+
+            if (GlobalVar.configEntity.programType == "1")
+            {
+                //// 프로그램 Type1일 경우 환자정보 삭제 버튼 노출
+                this.btnPatientDelete.Visible = true;
+            }
+
+            if (GlobalVar.configEntity.ManualExeBtnView.Equals("Y"))
+            {
+                this.buttonRetry.Visible = true;
+                this.txtMessages.Size = new Size(439, 39);
+                this.txtMessages.Location = new Point(31, 6);
+            }
+            else
+            {
+                this.buttonRetry.Visible = false;
+                this.txtMessages.Size = new Size(465, 39);
+                this.txtMessages.Location = new Point(5, 6);
+            }
+
+            if (0 < GlobalVar.configEntity.RetentionPeriod)
+            {
+                this.btnOrderedList.Visible = true;
+            }
+            else
+            {
+                this.btnOrderedList.Visible = false;
+            }
         }
 
         /// <summary>
@@ -406,6 +459,9 @@ namespace RimageMedicalSystemV2
             }
             finally
             {
+                //// 조회완료 파일 생성한다.
+                FileControl.CreateTextFile(Path.Combine(GlobalVar.configEntity.DicomDownloadFolder, GlobalVar.SEEK_CHK_FL_NM));
+
                 //// 오른쪽 하단에 메시지를 보여준다.
                 if (GlobalVar.configEntity.AutoExecute == "1" && GlobalVar.configEntity.PopUpAlamYN == "Y")
                 {
@@ -448,6 +504,7 @@ namespace RimageMedicalSystemV2
             }
             finally
             {
+                this.isSearching = false;
                 this.Cursor = Cursors.Default;
             }
         }
@@ -552,7 +609,7 @@ namespace RimageMedicalSystemV2
             }
             finally
             {
-                //오른쪽 하단에 메시지를 보여준다.
+                //// 오른쪽 하단에 메시지를 보여준다.
                 if (GlobalVar.configEntity.AutoExecute == "1" && GlobalVar.configEntity.PopUpAlamYN == "Y")
                 {
                     this.NotifyBurningResult(retMessage);
@@ -695,7 +752,9 @@ namespace RimageMedicalSystemV2
                     try
                     {
                         //// 폴더명을 변경한 후 굽기 명령을 보낼 경우
+                        this.checkCopying = true;
                         this.ucPatients11.OrderInfo.patFolder = FileControl.ChangeDownloadFolderToPatientFolder(this.ucPatients11.OrderInfo.patNo, pNm);
+                        this.checkCopying = false;
 
                         Thread.Sleep(300);
                         //// 굽기명령을 보낸다.
@@ -707,6 +766,7 @@ namespace RimageMedicalSystemV2
                     }
                     finally
                     {
+                        this.checkCopying = false;
                         this.Cursor = Cursors.Default;
                     }
                 }
@@ -944,6 +1004,7 @@ namespace RimageMedicalSystemV2
                 orderInfo.patListForMerge = dicPatListMerge;
                 
                 orderInfo.No = j;
+                orderInfo.Result = "0";
 
                 if (this.NowSeletedServer != null)
                 {
@@ -1164,6 +1225,21 @@ namespace RimageMedicalSystemV2
                         //// 파일 생성이 완료된 후  프로그램 실행을 위해 1초 쉰다.
                         Thread.Sleep(1000);
 
+                        //// 시작시 로그 저장
+                        ////WebUtils.InsertResult(orderInfo.OrderId,
+                        ////                  orderInfo.StartDateTime,
+                        ////                  "",
+                        ////                  orderInfo.patNo,
+                        ////                  orderInfo.patName,
+                        ////                  orderInfo.copies.ToString(),
+                        ////                  orderInfo.mediType,
+                        ////                  orderInfo.mediSize,
+                        ////                  "?",
+                        ////                  ((orderInfo.BurnPatientKind.Equals("Y") || orderInfo.patList.Count > 1) ? orderInfo.DicomDescription : orderInfo.StudyModality),
+                        ////                  Utils.CheckNull(orderInfo.BurnPatientKind, "N"),
+                        ////                  this.NowSeletedServer.IP,
+                        ////                  this.MyIP);
+
                         //// 굽기 프로그램을 실행한다.
                         Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
                     }
@@ -1260,6 +1336,7 @@ namespace RimageMedicalSystemV2
                     oInfo.Progress = trace.StateString;
                     oInfo.ProcessingRate = string.Format("{0} %", trace.PercentCompleted);
                     oInfo.BurnState = trace.ResultMessage;
+                    oInfo.Result = trace.ResultCode;
 
                     this.gcBurninglist.RefreshDataSource();
                     this.gvBurninglist.RefreshData();
@@ -1977,7 +2054,7 @@ namespace RimageMedicalSystemV2
                     if (string.IsNullOrEmpty(orderInfo.patNo))
                         return;
 
-                    orderInfo.Finish = "Y";
+                    orderInfo.Finish = "Y";                    
 
                     ////결과저장
                     WebUtils.InsertResult(orderInfo.OrderId,
@@ -2975,21 +3052,49 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void tmrDownloadChecker_Tick(object sender, EventArgs e)
         {
+            ////현재 환자조회중인지, 굽기를 위해 파일복사중인지 체크
+            if (this.isSearching || this.checkCopying)
+            {
+                return;
+            }
+
+            this.tmrDownloadChecker.Stop();
             bool check = false;
 
             try
             {
-                if (Directory.Exists(GlobalVar.configEntity.LocalShareFolder))
+                string checkFolder = string.Empty;
+                if (GlobalVar.configEntity.programType == "1")
                 {
-                    foreach (string sdir in Directory.GetDirectories(GlobalVar.configEntity.LocalShareFolder))
+                    checkFolder = GlobalVar.configEntity.DicomDownloadFolder;
+                }
+                else
+                {
+                    checkFolder = GlobalVar.configEntity.LocalShareFolder;
+                }
+
+                if (Directory.Exists(checkFolder))
+                {
+                    if (GlobalVar.configEntity.programType == "1")
                     {
-                        //// 다운체크파일이 존재하고 burn.end 파일이 없을 경우에만 다음단계 실행
-                        //// 환자목록에 없을 경우에만..
-                        if (true == CheckFiles.CheckFileExists(new DirectoryInfo(sdir), GlobalVar.DOWN_CHK_FL_NM) &&
-                            false == CheckFiles.CheckFileExists(new DirectoryInfo(sdir), GlobalVar.BURN_CHK_FL_NM))
+                        if (CheckFiles.CheckFileExists(new DirectoryInfo(checkFolder), GlobalVar.DOWN_CHK_FL_NM) &&
+                           !CheckFiles.CheckFileExists(new DirectoryInfo(checkFolder), GlobalVar.SEEK_CHK_FL_NM))
                         {
                             check = true;
-                            break;
+                        }
+                    }
+                    else
+                    {
+                        foreach (string sdir in Directory.GetDirectories(GlobalVar.configEntity.LocalShareFolder))
+                        {
+                            //// 다운체크파일이 존재하고 burn.end 파일이 없을 경우에만 다음단계 실행
+                            //// 환자목록에 없을 경우에만..
+                            if (CheckFiles.CheckFileExists(new DirectoryInfo(sdir), GlobalVar.DOWN_CHK_FL_NM) &&
+                               !CheckFiles.CheckFileExists(new DirectoryInfo(sdir), GlobalVar.BURN_CHK_FL_NM))
+                            {
+                                check = true;
+                                break;
+                            }
                         }
                     }
 
@@ -2997,17 +3102,29 @@ namespace RimageMedicalSystemV2
                     {
                         check = false;
 
-                        // 실행
+                        //// PACS 다운로드 창 닫아준다.
+                        int hw = FindWindow(null, "PACSPLUS Publisher Process");
+
+                        if (hw != 0) // 프로그램이 실행한 경우 
+                        {
+                            Thread.Sleep(500);
+                            // kill parent dialog.
+                            SendMessage((IntPtr)hw, WM_CLOSE, 0, 0);
+                        }
+
+                        //// 실행
                         if (GlobalVar.configEntity.AutoExecute == "1")
                         {
-                            //조회 실행
+                            //// 조회 실행
+                            this.isSearching = true;
                             this.btnSearch_Click(null, null);
                         }
                         else if (GlobalVar.configEntity.AutoExecute == "2")
                         {
                             Thread.Sleep(1000);
 
-                            //조회 및 굽기까지 실행
+                            ////조회 및 굽기까지 실행
+                            this.isSearching = true;
                             this.btnSearch_Click(null, null);
                             Thread.Sleep(3000);
 
@@ -3024,9 +3141,13 @@ namespace RimageMedicalSystemV2
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                //
+                ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
+            }
+            finally
+            {
+                this.tmrDownloadChecker.Start();
             }
         }
 
@@ -3062,7 +3183,7 @@ namespace RimageMedicalSystemV2
                             //// 서버 설정 가져오기 완료 => 파일읽어와 화면에 보여준다.
                             this.burnProcessChecker.ReadServerConfig();
                         }
-                        else if (cds.lpData == "BURN_END")
+                        else if (cds.lpData.StartsWith("BURN_END"))
                         {
                             //// 굽기 완료
                         }
@@ -3775,6 +3896,34 @@ namespace RimageMedicalSystemV2
             this.tmrConnectServer.Enabled = false;
 
             this.ConnectServer();
+        }
+
+        /// <summary>
+        /// 그리드의 폰트 색상
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gvBurninglist_RowCellStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs e)
+        {
+            if (this._BurningList == null)
+                return;
+
+            try
+            {
+                string retCode = this._BurningList[e.RowHandle].Result;
+
+                if (retCode == "2")
+                {
+                    //// 성공시 파란색
+                    e.Appearance.ForeColor = Color.Blue;
+                }
+                else if (retCode == "9")
+                {
+                    //// 취소/실패시 빨강색
+                    e.Appearance.ForeColor = Color.Red;
+                }
+            }
+            catch { }
         }
     }
 

@@ -33,8 +33,8 @@ namespace RimageKorea
             string response = "";
             string webaddress = "";
 
-            webaddress = "http://" + hostIP + "/RimageWeb/InsertResult.aspx";
-            ////webaddress = "http://localhost:4557/RimageWeb/InsertResult.aspx";
+            ////webaddress = "http://" + hostIP + "/RimageWeb/InsertResult.aspx";
+            webaddress = "http://localhost:4557/RimageWeb/InsertResult.aspx";
 
             try
             {
@@ -51,13 +51,13 @@ namespace RimageKorea
                     nvcol.Add("startDateTime", startDateTime);
                     nvcol.Add("endDateTime", endDateTime);
                     nvcol.Add("PatientID", PatientID);
-                    nvcol.Add("PatientName", PatientName.Replace("'", ""));
+                    nvcol.Add("PatientName", PatientName.Replace("'", "").Replace("<", "(").Replace(">", ")"));
                     nvcol.Add("Copies", Copies);
                     nvcol.Add("MediaType", MediaType);
                     nvcol.Add("FilesLength", FilesLength);
                     nvcol.Add("IPAddress", myIP);
                     nvcol.Add("Status", Status);
-                    nvcol.Add("StudyDesc", StudyDesc.Replace("'", ""));
+                    nvcol.Add("StudyDesc", StudyDesc.Replace("'", "").Replace("<", "(").Replace(">", ")"));
 
                     byte[] ResponseByte = webc.UploadValues(webaddress, nvcol);
                     response = Encoding.UTF8.GetString(ResponseByte);
@@ -67,7 +67,7 @@ namespace RimageKorea
                     //// txtStatusView.AppendText(string.Format("{0} Input {1}\r\n", PatientName, response));
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 //
             }

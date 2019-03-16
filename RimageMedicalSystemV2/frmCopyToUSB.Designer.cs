@@ -137,6 +137,8 @@
             // 
             // grpDrives
             // 
+            this.grpDrives.AppearanceCaption.ForeColor = System.Drawing.Color.Black;
+            this.grpDrives.AppearanceCaption.Options.UseForeColor = true;
             this.grpDrives.Controls.Add(this.flpDrives);
             this.grpDrives.Location = new System.Drawing.Point(12, 60);
             this.grpDrives.Name = "grpDrives";
@@ -147,9 +149,9 @@
             // flpDrives
             // 
             this.flpDrives.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpDrives.Location = new System.Drawing.Point(2, 23);
+            this.flpDrives.Location = new System.Drawing.Point(2, 22);
             this.flpDrives.Name = "flpDrives";
-            this.flpDrives.Size = new System.Drawing.Size(337, 84);
+            this.flpDrives.Size = new System.Drawing.Size(337, 85);
             this.flpDrives.TabIndex = 58;
             // 
             // timer1

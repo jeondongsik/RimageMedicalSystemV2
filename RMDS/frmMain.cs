@@ -874,16 +874,7 @@ namespace RMDS
                         }
                     }
                 }
-
-                //// 진행상태 기록
-                try
-                {
-                    //// 상태를 Json string으로 변환하여 OrderID 폴더에 기록한다.
-                    string js = JsonParser.ConvertToJsonString(statusDisp);
-                    this.WriteBurnTraceLog(js);
-                }
-                catch { }
-
+                
                 //// 굽기완료 시 처리
                 //// 오더 정보 Json으로 저장, 완료파일 생성, 결과저장, 파일 삭제
                 if (statusDisp.Finish == "Y")
@@ -891,18 +882,18 @@ namespace RMDS
                     try
                     {
                         //// 완료파일 생성
-                        if (!File.Exists(System.IO.Path.Combine(this.burnOrderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM)))
+                        if (!File.Exists(Path.Combine(this.burnOrderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM)))
                         {
-                            FileControl.CreateTextFile(System.IO.Path.Combine(this.burnOrderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM));
+                            FileControl.CreateTextFile(Path.Combine(this.burnOrderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM));
                         }
 
                         //// 명령정보를 OrderHistory폴더에 저장한다.
-                        string json = JsonParser.ConvertToJsonString(this.burnOrderInfo);
-                        string fileName = Path.Combine(Application.StartupPath, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"),
-                            string.Format("{0}{1}{2}{3}.txt", DateTime.Now.ToString("yyMMddHHmmss"), this.burnOrderInfo.patNo, this.burnOrderInfo.patName,
-                            RandomOrderNumber.GetNewOrderNumber().PadRight(7, '0')));
+                        ////string json = JsonParser.ConvertToJsonString(this.burnOrderInfo);
+                        ////string fileName = Path.Combine(Application.StartupPath, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"),
+                        ////    string.Format("{0}{1}{2}{3}.txt", DateTime.Now.ToString("yyMMddHHmmss"), this.burnOrderInfo.patNo, this.burnOrderInfo.patName,
+                        ////    RandomOrderNumber.GetNewOrderNumber().PadRight(7, '0')));
 
-                        FileControl.Write(json, fileName);
+                        ////FileControl.Write(json, fileName);
 
                         //// 서버상태값 다시한번 불러온다.
                         //// 서버 설정/상태 가져오기
@@ -919,7 +910,7 @@ namespace RMDS
                         err.Description = ex.ToString();
                         this.WriteErrLog(err);
                     }
-
+                    
                     ////결과저장
                     WebUtils.InsertResult(this.burnOrderInfo.OrderId,
                               this.burnOrderInfo.StartDateTime,
@@ -934,6 +925,15 @@ namespace RMDS
                               Utils.CheckNull(this.burnOrderInfo.BurnPatientKind, "N"),
                               this.serverIP,
                               this.MyIP);
+
+                    //// 진행상태 기록
+                    try
+                    {
+                        //// 상태를 Json string으로 변환하여 OrderID 폴더에 기록한다.
+                        string js = JsonParser.ConvertToJsonString(statusDisp);
+                        this.WriteBurnTraceLog(js);
+                    }
+                    catch { }
 
                     //// EditList Xml파일삭제하자.
                     FileControl.DelEditListFile(this.burnOrderInfo.DiscOrder.OrderID, this.burnOrderInfo.TargetServer.IP, this.RimageSystemFolderPath, this.ServerType);
@@ -954,6 +954,17 @@ namespace RMDS
                     //// 잠깐 쉬었다 종료
                     Thread.Sleep(1000);
                     this.ApplicationExit(EnumExitType.Success);
+                }
+                else
+                {
+                    //// 진행상태 기록
+                    try
+                    {
+                        //// 상태를 Json string으로 변환하여 OrderID 폴더에 기록한다.
+                        string js = JsonParser.ConvertToJsonString(statusDisp);
+                        this.WriteBurnTraceLog(js);
+                    }
+                    catch { }
                 }
             }
             catch (CMsgConnectFailedException me)
