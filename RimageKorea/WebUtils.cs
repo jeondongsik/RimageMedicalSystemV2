@@ -33,9 +33,10 @@ namespace RimageKorea
             string response = "";
             string webaddress = "";
 
-            ////webaddress = "http://" + hostIP + "/RimageWeb/InsertResult.aspx";
+            webaddress = "http://" + hostIP + "/RimageWeb/InsertResult.aspx";
+#if DEBUG
             webaddress = "http://localhost:4557/RimageWeb/InsertResult.aspx";
-
+#endif
             try
             {
                 if (multiPatYN.Equals("Y"))
