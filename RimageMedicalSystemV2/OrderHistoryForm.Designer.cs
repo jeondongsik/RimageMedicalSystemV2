@@ -68,6 +68,8 @@
             // 
             // panelControl1
             // 
+            this.panelControl1.Appearance.BackColor = System.Drawing.Color.White;
+            this.panelControl1.Appearance.Options.UseBackColor = true;
             this.panelControl1.Controls.Add(this.label6);
             this.panelControl1.Controls.Add(this.label5);
             this.panelControl1.Controls.Add(this.label4);
@@ -76,6 +78,8 @@
             this.panelControl1.Controls.Add(this.label1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
+            this.panelControl1.LookAndFeel.SkinName = "Money Twins";
+            this.panelControl1.LookAndFeel.UseDefaultLookAndFeel = false;
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(984, 70);
             this.panelControl1.TabIndex = 0;
@@ -83,72 +87,74 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Navy;
-            this.label6.Location = new System.Drawing.Point(483, 45);
+            this.label6.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label6.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label6.Location = new System.Drawing.Point(490, 48);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(344, 17);
+            this.label6.Size = new System.Drawing.Size(339, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "* 실행일시, 환자명, 미디어 클릭하여 정렬할 수 있습니다.";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Navy;
-            this.label5.Location = new System.Drawing.Point(483, 7);
+            this.label5.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label5.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label5.Location = new System.Drawing.Point(490, 10);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(328, 17);
+            this.label5.Size = new System.Drawing.Size(323, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "* 다시굽기 또는 폴더삭제는 아이콘을 더블클릭하세요.";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Navy;
-            this.label4.Location = new System.Drawing.Point(483, 25);
+            this.label4.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label4.Location = new System.Drawing.Point(490, 28);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(266, 17);
+            this.label4.Size = new System.Drawing.Size(254, 13);
             this.label4.TabIndex = 10;
             this.label4.Text = "* Ctrl + F 키를 눌러서 검색할 수  있습니다.";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Navy;
-            this.label3.Location = new System.Drawing.Point(12, 44);
+            this.label3.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label3.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label3.Location = new System.Drawing.Point(19, 47);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(418, 17);
+            this.label3.Size = new System.Drawing.Size(410, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "* 다시 버닝을 할 때 수량/미디어를 수정하여 다시굽기할 수 있습니다.";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Navy;
-            this.label2.Location = new System.Drawing.Point(12, 25);
+            this.label2.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label2.Location = new System.Drawing.Point(19, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(369, 17);
+            this.label2.Size = new System.Drawing.Size(363, 13);
             this.label2.TabIndex = 8;
             this.label2.Text = "* 성공/실패와 상관없이 명령을 보낸 내역이 모두 보여집니다.";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Navy;
-            this.label1.Location = new System.Drawing.Point(12, 7);
+            this.label1.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label1.Location = new System.Drawing.Point(19, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(282, 17);
+            this.label1.Size = new System.Drawing.Size(274, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "* CD/DVD 버닝 명령을 보낸 모든 내역입니다. ";
             // 
             // grpBurningList
             // 
-            this.grpBurningList.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBurningList.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBurningList.Appearance.Options.UseFont = true;
+            this.grpBurningList.AppearanceCaption.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.grpBurningList.AppearanceCaption.ForeColor = System.Drawing.Color.Black;
             this.grpBurningList.AppearanceCaption.Options.UseFont = true;
             this.grpBurningList.AppearanceCaption.Options.UseForeColor = true;
@@ -156,6 +162,8 @@
             this.grpBurningList.Controls.Add(this.gcPatientlist);
             this.grpBurningList.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.grpBurningList.Location = new System.Drawing.Point(0, 76);
+            this.grpBurningList.LookAndFeel.SkinName = "Money Twins";
+            this.grpBurningList.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpBurningList.Name = "grpBurningList";
             this.grpBurningList.Size = new System.Drawing.Size(984, 585);
             this.grpBurningList.TabIndex = 2;
@@ -164,9 +172,9 @@
             // gcPatientlist
             // 
             this.gcPatientlist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcPatientlist.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gcPatientlist.Location = new System.Drawing.Point(2, 22);
-            this.gcPatientlist.LookAndFeel.SkinName = "Foggy";
+            this.gcPatientlist.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gcPatientlist.Location = new System.Drawing.Point(2, 23);
+            this.gcPatientlist.LookAndFeel.SkinName = "VS2010";
             this.gcPatientlist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcPatientlist.MainView = this.gvPatientlist;
             this.gcPatientlist.Name = "gcPatientlist";
@@ -175,18 +183,18 @@
             this.repoMediatype,
             this.repoPicDel,
             this.repoPicRetry});
-            this.gcPatientlist.Size = new System.Drawing.Size(980, 561);
+            this.gcPatientlist.Size = new System.Drawing.Size(980, 560);
             this.gcPatientlist.TabIndex = 4;
             this.gcPatientlist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvPatientlist});
             // 
             // gvPatientlist
             // 
-            this.gvPatientlist.Appearance.HeaderPanel.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvPatientlist.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseFont = true;
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gvPatientlist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gvPatientlist.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gvPatientlist.Appearance.Row.Options.UseFont = true;
             this.gvPatientlist.Appearance.Row.Options.UseForeColor = true;
@@ -399,14 +407,20 @@
             // 
             // OrderHistoryForm
             // 
+            this.Appearance.BackColor = System.Drawing.Color.White;
+            this.Appearance.Options.UseBackColor = true;
+            this.Appearance.Options.UseFont = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(984, 661);
             this.Controls.Add(this.grpBurningList);
             this.Controls.Add(this.panelControl1);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.LookAndFeel.SkinName = "Lilian";
+            this.LookAndFeel.SkinName = "VS2010";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.MaximizeBox = false;
             this.Name = "OrderHistoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "굽기 명령 전송 내역";

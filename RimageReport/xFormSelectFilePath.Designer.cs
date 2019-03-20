@@ -44,11 +44,11 @@
             // 
             // labelControl1
             // 
-            this.labelControl1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl1.Appearance.Options.UseFont = true;
-            this.labelControl1.Location = new System.Drawing.Point(23, 22);
+            this.labelControl1.Location = new System.Drawing.Point(20, 22);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(70, 17);
+            this.labelControl1.Size = new System.Drawing.Size(75, 13);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "저장할 폴더";
             // 
@@ -56,16 +56,18 @@
             // 
             this.textEditFolderName.Location = new System.Drawing.Point(99, 19);
             this.textEditFolderName.Name = "textEditFolderName";
+            this.textEditFolderName.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditFolderName.Properties.Appearance.Options.UseFont = true;
             this.textEditFolderName.Size = new System.Drawing.Size(320, 20);
             this.textEditFolderName.TabIndex = 1;
             // 
             // labelControl2
             // 
-            this.labelControl2.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl2.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl2.Appearance.Options.UseFont = true;
-            this.labelControl2.Location = new System.Drawing.Point(23, 48);
+            this.labelControl2.Location = new System.Drawing.Point(20, 48);
             this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(39, 17);
+            this.labelControl2.Size = new System.Drawing.Size(42, 13);
             this.labelControl2.TabIndex = 2;
             this.labelControl2.Text = "파일명";
             // 
@@ -73,12 +75,14 @@
             // 
             this.textEditFileName.Location = new System.Drawing.Point(99, 45);
             this.textEditFileName.Name = "textEditFileName";
+            this.textEditFileName.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditFileName.Properties.Appearance.Options.UseFont = true;
             this.textEditFileName.Size = new System.Drawing.Size(320, 20);
             this.textEditFileName.TabIndex = 3;
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfirm.Appearance.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnConfirm.Appearance.Options.UseFont = true;
             this.btnConfirm.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnConfirm.ImageOptions.Image")));
             this.btnConfirm.Location = new System.Drawing.Point(134, 113);
@@ -92,7 +96,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Appearance.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnCancel.Appearance.Options.UseFont = true;
             this.btnCancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.ImageOptions.Image")));
             this.btnCancel.Location = new System.Drawing.Point(264, 113);
@@ -106,7 +110,7 @@
             // 
             // btnFolder
             // 
-            this.btnFolder.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnFolder.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnFolder.Appearance.Options.UseFont = true;
             this.btnFolder.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnFolder.ImageOptions.Image")));
             this.btnFolder.Location = new System.Drawing.Point(425, 18);
@@ -120,13 +124,13 @@
             // 
             // labelControl3
             // 
-            this.labelControl3.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl3.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl3.Appearance.ForeColor = System.Drawing.Color.Red;
             this.labelControl3.Appearance.Options.UseFont = true;
             this.labelControl3.Appearance.Options.UseForeColor = true;
-            this.labelControl3.Location = new System.Drawing.Point(106, 71);
+            this.labelControl3.Location = new System.Drawing.Point(102, 71);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(190, 17);
+            this.labelControl3.Size = new System.Drawing.Size(209, 13);
             this.labelControl3.TabIndex = 7;
             this.labelControl3.Text = "(파일확장자는 입력하지 마세요.)";
             // 

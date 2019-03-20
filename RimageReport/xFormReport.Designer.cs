@@ -69,27 +69,27 @@
             this.gridColumn18 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn19 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn22 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn27 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn28 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridMonth = new DevExpress.XtraGrid.GridControl();
             this.gridViewMonth = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn16 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn17 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn21 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn25 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn26 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridYear = new DevExpress.XtraGrid.GridControl();
             this.gridViewYear = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn14 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn15 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn20 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn23 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn24 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbServerIPs = new DevExpress.XtraEditors.ComboBoxEdit();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
-            this.gridColumn23 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn24 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn25 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn26 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn27 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn28 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdSearchResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -179,16 +179,16 @@
             // 
             // gridView1
             // 
-            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold);
+            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridView1.Appearance.HeaderPanel.Options.UseFont = true;
             this.gridView1.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridView1.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9F);
+            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridView1.Appearance.Row.Options.UseFont = true;
             this.gridView1.Appearance.Row.Options.UseTextOptions = true;
             this.gridView1.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridView1.Appearance.Row.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.gridView1.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView1.Appearance.ViewCaption.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridView1.Appearance.ViewCaption.ForeColor = System.Drawing.Color.Blue;
             this.gridView1.Appearance.ViewCaption.Options.UseFont = true;
             this.gridView1.Appearance.ViewCaption.Options.UseForeColor = true;
@@ -338,7 +338,7 @@
             // btnPrint
             // 
             this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrint.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrint.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnPrint.Appearance.Options.UseFont = true;
             this.btnPrint.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.ImageOptions.Image")));
             this.btnPrint.Location = new System.Drawing.Point(874, 7);
@@ -352,7 +352,7 @@
             // btnApplicationPrint
             // 
             this.btnApplicationPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnApplicationPrint.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApplicationPrint.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnApplicationPrint.Appearance.Options.UseFont = true;
             this.btnApplicationPrint.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnApplicationPrint.ImageOptions.Image")));
             this.btnApplicationPrint.Location = new System.Drawing.Point(578, 7);
@@ -380,7 +380,7 @@
             // 
             // xPageResultSearch
             // 
-            this.xPageResultSearch.Appearance.Header.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xPageResultSearch.Appearance.Header.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.xPageResultSearch.Appearance.Header.Options.UseFont = true;
             this.xPageResultSearch.Controls.Add(this.panelControl1);
             this.xPageResultSearch.Controls.Add(this.grdSearchResult);
@@ -414,9 +414,9 @@
             // dateEditTo
             // 
             this.dateEditTo.EditValue = null;
-            this.dateEditTo.Location = new System.Drawing.Point(196, 9);
+            this.dateEditTo.Location = new System.Drawing.Point(196, 10);
             this.dateEditTo.Name = "dateEditTo";
-            this.dateEditTo.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateEditTo.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.dateEditTo.Properties.Appearance.Options.UseFont = true;
             this.dateEditTo.Properties.Appearance.Options.UseTextOptions = true;
             this.dateEditTo.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
@@ -424,20 +424,20 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dateEditTo.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEditTo.Size = new System.Drawing.Size(110, 24);
+            this.dateEditTo.Size = new System.Drawing.Size(110, 20);
             this.dateEditTo.TabIndex = 3;
             // 
             // simpleButtonSearch
             // 
             this.simpleButtonSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.simpleButtonSearch.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.simpleButtonSearch.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.simpleButtonSearch.Appearance.Options.UseFont = true;
             this.simpleButtonSearch.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonSearch.ImageOptions.Image")));
-            this.simpleButtonSearch.Location = new System.Drawing.Point(896, 6);
+            this.simpleButtonSearch.Location = new System.Drawing.Point(889, 6);
             this.simpleButtonSearch.LookAndFeel.SkinName = "Glass Oceans";
             this.simpleButtonSearch.LookAndFeel.UseDefaultLookAndFeel = false;
             this.simpleButtonSearch.Name = "simpleButtonSearch";
-            this.simpleButtonSearch.Size = new System.Drawing.Size(91, 28);
+            this.simpleButtonSearch.Size = new System.Drawing.Size(98, 28);
             this.simpleButtonSearch.TabIndex = 11;
             this.simpleButtonSearch.TabStop = false;
             this.simpleButtonSearch.Text = "조회하기";
@@ -445,7 +445,7 @@
             // 
             // labelControl1
             // 
-            this.labelControl1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl1.Appearance.Image = global::RimageReport.Properties.Resources.pagenext_16x16;
             this.labelControl1.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelControl1.Appearance.Options.UseFont = true;
@@ -453,16 +453,16 @@
             this.labelControl1.Appearance.Options.UseImageAlign = true;
             this.labelControl1.Location = new System.Drawing.Point(10, 11);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(54, 17);
+            this.labelControl1.Size = new System.Drawing.Size(58, 16);
             this.labelControl1.TabIndex = 1;
             this.labelControl1.Text = "   기간 : ";
             // 
             // comboBoxEditMedia
             // 
             this.comboBoxEditMedia.EditValue = "전체";
-            this.comboBoxEditMedia.Location = new System.Drawing.Point(743, 8);
+            this.comboBoxEditMedia.Location = new System.Drawing.Point(746, 10);
             this.comboBoxEditMedia.Name = "comboBoxEditMedia";
-            this.comboBoxEditMedia.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxEditMedia.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.comboBoxEditMedia.Properties.Appearance.Options.UseFont = true;
             this.comboBoxEditMedia.Properties.Appearance.Options.UseTextOptions = true;
             this.comboBoxEditMedia.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
@@ -476,15 +476,15 @@
             "DVDR-DL",
             "USB"});
             this.comboBoxEditMedia.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.comboBoxEditMedia.Size = new System.Drawing.Size(91, 24);
+            this.comboBoxEditMedia.Size = new System.Drawing.Size(91, 20);
             this.comboBoxEditMedia.TabIndex = 10;
             // 
             // dateEditFrom
             // 
             this.dateEditFrom.EditValue = null;
-            this.dateEditFrom.Location = new System.Drawing.Point(67, 8);
+            this.dateEditFrom.Location = new System.Drawing.Point(69, 9);
             this.dateEditFrom.Name = "dateEditFrom";
-            this.dateEditFrom.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateEditFrom.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.dateEditFrom.Properties.Appearance.Options.UseFont = true;
             this.dateEditFrom.Properties.Appearance.Options.UseTextOptions = true;
             this.dateEditFrom.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
@@ -492,12 +492,12 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dateEditFrom.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEditFrom.Size = new System.Drawing.Size(110, 24);
+            this.dateEditFrom.Size = new System.Drawing.Size(110, 20);
             this.dateEditFrom.TabIndex = 2;
             // 
             // labelControl5
             // 
-            this.labelControl5.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl5.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl5.Appearance.Image = global::RimageReport.Properties.Resources.pagenext_16x16;
             this.labelControl5.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelControl5.Appearance.Options.UseFont = true;
@@ -505,7 +505,7 @@
             this.labelControl5.Appearance.Options.UseImageAlign = true;
             this.labelControl5.Location = new System.Drawing.Point(675, 12);
             this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(67, 17);
+            this.labelControl5.Size = new System.Drawing.Size(72, 16);
             this.labelControl5.TabIndex = 9;
             this.labelControl5.Text = "   미디어 : ";
             // 
@@ -521,16 +521,16 @@
             // 
             // textEditPatientID
             // 
-            this.textEditPatientID.Location = new System.Drawing.Point(570, 8);
+            this.textEditPatientID.Location = new System.Drawing.Point(572, 10);
             this.textEditPatientID.Name = "textEditPatientID";
-            this.textEditPatientID.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditPatientID.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.textEditPatientID.Properties.Appearance.Options.UseFont = true;
-            this.textEditPatientID.Size = new System.Drawing.Size(88, 24);
+            this.textEditPatientID.Size = new System.Drawing.Size(88, 20);
             this.textEditPatientID.TabIndex = 8;
             // 
             // labelControl3
             // 
-            this.labelControl3.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl3.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl3.Appearance.Image = global::RimageReport.Properties.Resources.pagenext_16x16;
             this.labelControl3.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelControl3.Appearance.Options.UseFont = true;
@@ -538,13 +538,13 @@
             this.labelControl3.Appearance.Options.UseImageAlign = true;
             this.labelControl3.Location = new System.Drawing.Point(321, 11);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(67, 17);
+            this.labelControl3.Size = new System.Drawing.Size(72, 16);
             this.labelControl3.TabIndex = 5;
             this.labelControl3.Text = "   환자명 : ";
             // 
             // labelControl4
             // 
-            this.labelControl4.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl4.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl4.Appearance.Image = global::RimageReport.Properties.Resources.pagenext_16x16;
             this.labelControl4.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelControl4.Appearance.Options.UseFont = true;
@@ -552,22 +552,22 @@
             this.labelControl4.Appearance.Options.UseImageAlign = true;
             this.labelControl4.Location = new System.Drawing.Point(497, 12);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(72, 17);
+            this.labelControl4.Size = new System.Drawing.Size(76, 16);
             this.labelControl4.TabIndex = 7;
             this.labelControl4.Text = "   환자 ID : ";
             // 
             // textEditPatientName
             // 
-            this.textEditPatientName.Location = new System.Drawing.Point(390, 8);
+            this.textEditPatientName.Location = new System.Drawing.Point(393, 10);
             this.textEditPatientName.Name = "textEditPatientName";
-            this.textEditPatientName.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditPatientName.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.textEditPatientName.Properties.Appearance.Options.UseFont = true;
-            this.textEditPatientName.Size = new System.Drawing.Size(91, 24);
+            this.textEditPatientName.Size = new System.Drawing.Size(91, 20);
             this.textEditPatientName.TabIndex = 6;
             // 
             // xPageDailySum
             // 
-            this.xPageDailySum.Appearance.Header.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xPageDailySum.Appearance.Header.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.xPageDailySum.Appearance.Header.Options.UseFont = true;
             this.xPageDailySum.Controls.Add(this.gridDays);
             this.xPageDailySum.Controls.Add(this.gridMonth);
@@ -589,15 +589,15 @@
             // 
             // gridViewDays
             // 
-            this.gridViewDays.Appearance.HeaderPanel.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewDays.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewDays.Appearance.HeaderPanel.Options.UseFont = true;
             this.gridViewDays.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridViewDays.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewDays.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewDays.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewDays.Appearance.Row.Options.UseFont = true;
             this.gridViewDays.Appearance.Row.Options.UseTextOptions = true;
             this.gridViewDays.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewDays.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewDays.Appearance.ViewCaption.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewDays.Appearance.ViewCaption.Options.UseFont = true;
             this.gridViewDays.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn18,
@@ -651,6 +651,26 @@
             this.gridColumn22.Visible = true;
             this.gridColumn22.VisibleIndex = 2;
             // 
+            // gridColumn27
+            // 
+            this.gridColumn27.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumn27.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.gridColumn27.Caption = "DVD-DL";
+            this.gridColumn27.FieldName = "DVDRDLCNT";
+            this.gridColumn27.Name = "gridColumn27";
+            this.gridColumn27.Visible = true;
+            this.gridColumn27.VisibleIndex = 3;
+            // 
+            // gridColumn28
+            // 
+            this.gridColumn28.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumn28.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.gridColumn28.Caption = "USB";
+            this.gridColumn28.FieldName = "USBCNT";
+            this.gridColumn28.Name = "gridColumn28";
+            this.gridColumn28.Visible = true;
+            this.gridColumn28.VisibleIndex = 4;
+            // 
             // gridMonth
             // 
             this.gridMonth.Location = new System.Drawing.Point(341, 12);
@@ -663,15 +683,15 @@
             // 
             // gridViewMonth
             // 
-            this.gridViewMonth.Appearance.HeaderPanel.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewMonth.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewMonth.Appearance.HeaderPanel.Options.UseFont = true;
             this.gridViewMonth.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridViewMonth.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewMonth.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewMonth.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewMonth.Appearance.Row.Options.UseFont = true;
             this.gridViewMonth.Appearance.Row.Options.UseTextOptions = true;
             this.gridViewMonth.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewMonth.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewMonth.Appearance.ViewCaption.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewMonth.Appearance.ViewCaption.Options.UseFont = true;
             this.gridViewMonth.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn16,
@@ -726,6 +746,26 @@
             this.gridColumn21.Visible = true;
             this.gridColumn21.VisibleIndex = 2;
             // 
+            // gridColumn25
+            // 
+            this.gridColumn25.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumn25.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.gridColumn25.Caption = "DVD-DL";
+            this.gridColumn25.FieldName = "DVDRDLCNT";
+            this.gridColumn25.Name = "gridColumn25";
+            this.gridColumn25.Visible = true;
+            this.gridColumn25.VisibleIndex = 3;
+            // 
+            // gridColumn26
+            // 
+            this.gridColumn26.AppearanceCell.Options.UseTextOptions = true;
+            this.gridColumn26.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.gridColumn26.Caption = "USB";
+            this.gridColumn26.FieldName = "USBCNT";
+            this.gridColumn26.Name = "gridColumn26";
+            this.gridColumn26.Visible = true;
+            this.gridColumn26.VisibleIndex = 4;
+            // 
             // gridYear
             // 
             this.gridYear.Location = new System.Drawing.Point(11, 12);
@@ -738,15 +778,15 @@
             // 
             // gridViewYear
             // 
-            this.gridViewYear.Appearance.HeaderPanel.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewYear.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewYear.Appearance.HeaderPanel.Options.UseFont = true;
             this.gridViewYear.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridViewYear.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewYear.Appearance.Row.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewYear.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewYear.Appearance.Row.Options.UseFont = true;
             this.gridViewYear.Appearance.Row.Options.UseTextOptions = true;
             this.gridViewYear.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewYear.Appearance.ViewCaption.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridViewYear.Appearance.ViewCaption.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewYear.Appearance.ViewCaption.Options.UseFont = true;
             this.gridViewYear.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn14,
@@ -801,60 +841,6 @@
             this.gridColumn20.Visible = true;
             this.gridColumn20.VisibleIndex = 2;
             // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Appearance.Options.UseFont = true;
-            this.btnSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.ImageOptions.Image")));
-            this.btnSave.Location = new System.Drawing.Point(742, 7);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(126, 40);
-            this.btnSave.TabIndex = 4;
-            this.btnSave.TabStop = false;
-            this.btnSave.Text = "엑셀로 저장";
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cbServerIPs);
-            this.panel1.Controls.Add(this.labelControl6);
-            this.panel1.Location = new System.Drawing.Point(275, 9);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(297, 40);
-            this.panel1.TabIndex = 13;
-            // 
-            // cbServerIPs
-            // 
-            this.cbServerIPs.EditValue = "";
-            this.cbServerIPs.Location = new System.Drawing.Point(161, 9);
-            this.cbServerIPs.Name = "cbServerIPs";
-            this.cbServerIPs.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbServerIPs.Properties.Appearance.Options.UseFont = true;
-            this.cbServerIPs.Properties.Appearance.Options.UseTextOptions = true;
-            this.cbServerIPs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.cbServerIPs.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cbServerIPs.Properties.DropDownRows = 10;
-            this.cbServerIPs.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.cbServerIPs.Size = new System.Drawing.Size(121, 24);
-            this.cbServerIPs.TabIndex = 11;
-            this.cbServerIPs.SelectedIndexChanged += new System.EventHandler(this.cbServerIPs_SelectedIndexChanged);
-            // 
-            // labelControl6
-            // 
-            this.labelControl6.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelControl6.Appearance.Image = global::RimageReport.Properties.Resources.next_16x16;
-            this.labelControl6.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelControl6.Appearance.Options.UseFont = true;
-            this.labelControl6.Appearance.Options.UseImage = true;
-            this.labelControl6.Appearance.Options.UseImageAlign = true;
-            this.labelControl6.Location = new System.Drawing.Point(77, 12);
-            this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(80, 17);
-            this.labelControl6.TabIndex = 6;
-            this.labelControl6.Text = "   서버선택 : ";
-            // 
             // gridColumn23
             // 
             this.gridColumn23.AppearanceCell.Options.UseTextOptions = true;
@@ -875,45 +861,59 @@
             this.gridColumn24.Visible = true;
             this.gridColumn24.VisibleIndex = 4;
             // 
-            // gridColumn25
+            // btnSave
             // 
-            this.gridColumn25.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn25.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.gridColumn25.Caption = "DVD-DL";
-            this.gridColumn25.FieldName = "DVDRDLCNT";
-            this.gridColumn25.Name = "gridColumn25";
-            this.gridColumn25.Visible = true;
-            this.gridColumn25.VisibleIndex = 3;
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSave.Appearance.Options.UseFont = true;
+            this.btnSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.ImageOptions.Image")));
+            this.btnSave.Location = new System.Drawing.Point(742, 7);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(126, 40);
+            this.btnSave.TabIndex = 4;
+            this.btnSave.TabStop = false;
+            this.btnSave.Text = "엑셀로 저장";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // gridColumn26
+            // panel1
             // 
-            this.gridColumn26.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn26.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.gridColumn26.Caption = "USB";
-            this.gridColumn26.FieldName = "USBCNT";
-            this.gridColumn26.Name = "gridColumn26";
-            this.gridColumn26.Visible = true;
-            this.gridColumn26.VisibleIndex = 4;
+            this.panel1.Controls.Add(this.cbServerIPs);
+            this.panel1.Controls.Add(this.labelControl6);
+            this.panel1.Location = new System.Drawing.Point(338, 9);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(234, 40);
+            this.panel1.TabIndex = 13;
             // 
-            // gridColumn27
+            // cbServerIPs
             // 
-            this.gridColumn27.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn27.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.gridColumn27.Caption = "DVD-DL";
-            this.gridColumn27.FieldName = "DVDRDLCNT";
-            this.gridColumn27.Name = "gridColumn27";
-            this.gridColumn27.Visible = true;
-            this.gridColumn27.VisibleIndex = 3;
+            this.cbServerIPs.EditValue = "";
+            this.cbServerIPs.Location = new System.Drawing.Point(88, 11);
+            this.cbServerIPs.Name = "cbServerIPs";
+            this.cbServerIPs.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.cbServerIPs.Properties.Appearance.Options.UseFont = true;
+            this.cbServerIPs.Properties.Appearance.Options.UseTextOptions = true;
+            this.cbServerIPs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.cbServerIPs.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbServerIPs.Properties.DropDownRows = 10;
+            this.cbServerIPs.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbServerIPs.Size = new System.Drawing.Size(121, 20);
+            this.cbServerIPs.TabIndex = 11;
+            this.cbServerIPs.SelectedIndexChanged += new System.EventHandler(this.cbServerIPs_SelectedIndexChanged);
             // 
-            // gridColumn28
+            // labelControl6
             // 
-            this.gridColumn28.AppearanceCell.Options.UseTextOptions = true;
-            this.gridColumn28.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.gridColumn28.Caption = "USB";
-            this.gridColumn28.FieldName = "USBCNT";
-            this.gridColumn28.Name = "gridColumn28";
-            this.gridColumn28.Visible = true;
-            this.gridColumn28.VisibleIndex = 4;
+            this.labelControl6.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelControl6.Appearance.Image = global::RimageReport.Properties.Resources.next_16x16;
+            this.labelControl6.Appearance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelControl6.Appearance.Options.UseFont = true;
+            this.labelControl6.Appearance.Options.UseImage = true;
+            this.labelControl6.Appearance.Options.UseImageAlign = true;
+            this.labelControl6.Location = new System.Drawing.Point(4, 13);
+            this.labelControl6.Name = "labelControl6";
+            this.labelControl6.Size = new System.Drawing.Size(86, 16);
+            this.labelControl6.TabIndex = 6;
+            this.labelControl6.Text = "   서버선택 : ";
             // 
             // xFormReport
             // 
@@ -924,7 +924,9 @@
             this.Controls.Add(this.btnApplicationPrint);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.xTabReport);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "xFormReport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rimage Medical Disc System - 결과 보고서";

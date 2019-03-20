@@ -73,22 +73,22 @@
             // 
             // labelControl5
             // 
-            this.labelControl5.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl5.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl5.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl5.Appearance.Options.UseFont = true;
             this.labelControl5.Appearance.Options.UseForeColor = true;
-            this.labelControl5.Location = new System.Drawing.Point(560, 6);
+            this.labelControl5.Location = new System.Drawing.Point(560, 8);
             this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(43, 15);
+            this.labelControl5.Size = new System.Drawing.Size(46, 13);
             this.labelControl5.TabIndex = 9;
             this.labelControl5.Text = "· 미디어";
             // 
             // cbMedia
             // 
             this.cbMedia.EditValue = "CDR";
-            this.cbMedia.Location = new System.Drawing.Point(609, 3);
+            this.cbMedia.Location = new System.Drawing.Point(609, 4);
             this.cbMedia.Name = "cbMedia";
-            this.cbMedia.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.cbMedia.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.cbMedia.Properties.Appearance.Options.UseFont = true;
             this.cbMedia.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -99,28 +99,28 @@
             this.cbMedia.Properties.LookAndFeel.SkinName = "Lilian";
             this.cbMedia.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.cbMedia.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.cbMedia.Size = new System.Drawing.Size(73, 22);
+            this.cbMedia.Size = new System.Drawing.Size(73, 20);
             this.cbMedia.TabIndex = 8;
             this.cbMedia.TabStop = false;
             // 
             // labelControl4
             // 
-            this.labelControl4.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl4.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl4.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl4.Appearance.Options.UseFont = true;
             this.labelControl4.Appearance.Options.UseForeColor = true;
-            this.labelControl4.Location = new System.Drawing.Point(438, 6);
+            this.labelControl4.Location = new System.Drawing.Point(438, 8);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(31, 15);
+            this.labelControl4.Size = new System.Drawing.Size(33, 13);
             this.labelControl4.TabIndex = 7;
             this.labelControl4.Text = "· 수량";
             // 
             // cbCopies
             // 
             this.cbCopies.EditValue = "1";
-            this.cbCopies.Location = new System.Drawing.Point(475, 3);
+            this.cbCopies.Location = new System.Drawing.Point(475, 4);
             this.cbCopies.Name = "cbCopies";
-            this.cbCopies.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.cbCopies.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.cbCopies.Properties.Appearance.Options.UseFont = true;
             this.cbCopies.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -135,87 +135,87 @@
             this.cbCopies.Properties.LookAndFeel.SkinName = "Lilian";
             this.cbCopies.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.cbCopies.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.cbCopies.Size = new System.Drawing.Size(72, 22);
+            this.cbCopies.Size = new System.Drawing.Size(72, 20);
             this.cbCopies.TabIndex = 6;
             this.cbCopies.TabStop = false;
             // 
             // txtDataLength
             // 
             this.txtDataLength.EditValue = "";
-            this.txtDataLength.Location = new System.Drawing.Point(725, 3);
+            this.txtDataLength.Location = new System.Drawing.Point(725, 4);
             this.txtDataLength.Name = "txtDataLength";
-            this.txtDataLength.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtDataLength.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtDataLength.Properties.Appearance.Options.UseFont = true;
             this.txtDataLength.Properties.Appearance.Options.UseTextOptions = true;
             this.txtDataLength.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtDataLength.Properties.LookAndFeel.SkinName = "Lilian";
             this.txtDataLength.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.txtDataLength.Properties.ReadOnly = true;
-            this.txtDataLength.Size = new System.Drawing.Size(84, 22);
+            this.txtDataLength.Size = new System.Drawing.Size(84, 20);
             this.txtDataLength.TabIndex = 5;
             this.txtDataLength.TabStop = false;
             // 
             // labelControl3
             // 
-            this.labelControl3.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl3.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl3.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl3.Appearance.Options.UseFont = true;
             this.labelControl3.Appearance.Options.UseForeColor = true;
-            this.labelControl3.Location = new System.Drawing.Point(688, 6);
+            this.labelControl3.Location = new System.Drawing.Point(688, 8);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(31, 15);
+            this.labelControl3.Size = new System.Drawing.Size(33, 13);
             this.labelControl3.TabIndex = 4;
             this.labelControl3.Text = "· 크기";
             // 
             // txtPatientName
             // 
-            this.txtPatientName.Location = new System.Drawing.Point(254, 3);
+            this.txtPatientName.Location = new System.Drawing.Point(254, 4);
             this.txtPatientName.Name = "txtPatientName";
-            this.txtPatientName.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtPatientName.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtPatientName.Properties.Appearance.Options.UseFont = true;
             this.txtPatientName.Properties.Appearance.Options.UseTextOptions = true;
             this.txtPatientName.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.txtPatientName.Properties.LookAndFeel.SkinName = "Lilian";
             this.txtPatientName.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
-            this.txtPatientName.Size = new System.Drawing.Size(175, 22);
+            this.txtPatientName.Size = new System.Drawing.Size(175, 20);
             this.txtPatientName.TabIndex = 3;
             this.txtPatientName.TabStop = false;
             // 
             // labelControl2
             // 
-            this.labelControl2.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl2.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl2.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl2.Appearance.Options.UseFont = true;
             this.labelControl2.Appearance.Options.UseForeColor = true;
-            this.labelControl2.Location = new System.Drawing.Point(205, 6);
+            this.labelControl2.Location = new System.Drawing.Point(205, 8);
             this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(43, 15);
+            this.labelControl2.Size = new System.Drawing.Size(46, 13);
             this.labelControl2.TabIndex = 2;
             this.labelControl2.Text = "· 환자명";
             // 
             // txtPatientID
             // 
-            this.txtPatientID.Location = new System.Drawing.Point(87, 3);
+            this.txtPatientID.Location = new System.Drawing.Point(87, 4);
             this.txtPatientID.Name = "txtPatientID";
-            this.txtPatientID.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtPatientID.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtPatientID.Properties.Appearance.Options.UseFont = true;
             this.txtPatientID.Properties.Appearance.Options.UseTextOptions = true;
             this.txtPatientID.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.txtPatientID.Properties.LookAndFeel.SkinName = "Lilian";
             this.txtPatientID.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
-            this.txtPatientID.Size = new System.Drawing.Size(110, 22);
+            this.txtPatientID.Size = new System.Drawing.Size(110, 20);
             this.txtPatientID.TabIndex = 1;
             this.txtPatientID.TabStop = false;
             // 
             // labelControl1
             // 
-            this.labelControl1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl1.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl1.Appearance.Options.UseFont = true;
             this.labelControl1.Appearance.Options.UseForeColor = true;
-            this.labelControl1.Location = new System.Drawing.Point(10, 6);
+            this.labelControl1.Location = new System.Drawing.Point(9, 8);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(71, 15);
+            this.labelControl1.Size = new System.Drawing.Size(76, 13);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "· 환자 아이디";
             // 
@@ -224,7 +224,7 @@
             this.treeView1.BackColor = System.Drawing.Color.White;
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeView1.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.treeView1.ForeColor = System.Drawing.Color.Black;
             this.treeView1.FullRowSelect = true;
             this.treeView1.Location = new System.Drawing.Point(7, 5);

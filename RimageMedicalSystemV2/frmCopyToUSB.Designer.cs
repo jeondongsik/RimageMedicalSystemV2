@@ -67,11 +67,13 @@
             // btnReFind
             // 
             this.btnReFind.AllowFocus = false;
-            this.btnReFind.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReFind.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnReFind.Appearance.Options.UseFont = true;
             this.btnReFind.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReFind.ImageOptions.Image")));
             this.btnReFind.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnReFind.Location = new System.Drawing.Point(12, 173);
+            this.btnReFind.LookAndFeel.SkinName = "Lilian";
+            this.btnReFind.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnReFind.Name = "btnReFind";
             this.btnReFind.Size = new System.Drawing.Size(94, 29);
             this.btnReFind.TabIndex = 59;
@@ -88,11 +90,13 @@
             // btnStartCopy
             // 
             this.btnStartCopy.AllowFocus = false;
-            this.btnStartCopy.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStartCopy.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnStartCopy.Appearance.Options.UseFont = true;
             this.btnStartCopy.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnStartCopy.ImageOptions.Image")));
             this.btnStartCopy.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnStartCopy.Location = new System.Drawing.Point(112, 173);
+            this.btnStartCopy.LookAndFeel.SkinName = "Lilian";
+            this.btnStartCopy.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnStartCopy.Name = "btnStartCopy";
             this.btnStartCopy.Size = new System.Drawing.Size(241, 29);
             this.btnStartCopy.TabIndex = 57;
@@ -109,13 +113,13 @@
             // 
             // labelControl11
             // 
-            this.labelControl11.Appearance.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl11.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.labelControl11.Appearance.ForeColor = System.Drawing.Color.Green;
             this.labelControl11.Appearance.Options.UseFont = true;
             this.labelControl11.Appearance.Options.UseForeColor = true;
-            this.labelControl11.Location = new System.Drawing.Point(6, 6);
+            this.labelControl11.Location = new System.Drawing.Point(4, 9);
             this.labelControl11.Name = "labelControl11";
-            this.labelControl11.Size = new System.Drawing.Size(330, 30);
+            this.labelControl11.Size = new System.Drawing.Size(334, 24);
             this.labelControl11.TabIndex = 17;
             this.labelControl11.Text = "* USB가 인식될 경우 자동으로 선택됩니다.\r\n* 그렇지 않은 경우 USB를 선택한 후 복사 버튼을 클릭하세요.";
             // 
@@ -123,7 +127,7 @@
             // 
             this.txtProgressView.BackColor = System.Drawing.Color.White;
             this.txtProgressView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtProgressView.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProgressView.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtProgressView.ForeColor = System.Drawing.Color.Black;
             this.txtProgressView.Location = new System.Drawing.Point(12, 232);
             this.txtProgressView.MaxLength = 2147483647;
@@ -141,6 +145,8 @@
             this.grpDrives.AppearanceCaption.Options.UseForeColor = true;
             this.grpDrives.Controls.Add(this.flpDrives);
             this.grpDrives.Location = new System.Drawing.Point(12, 60);
+            this.grpDrives.LookAndFeel.SkinName = "Money Twins";
+            this.grpDrives.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpDrives.Name = "grpDrives";
             this.grpDrives.Size = new System.Drawing.Size(341, 109);
             this.grpDrives.TabIndex = 2;
@@ -169,10 +175,13 @@
             // 
             // frmCopyToUSB
             // 
+            this.Appearance.Options.UseFont = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(358, 519);
             this.Controls.Add(this.panelControl1);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.LookAndFeel.SkinName = "Lilian";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
