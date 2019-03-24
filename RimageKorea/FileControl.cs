@@ -888,7 +888,7 @@ namespace RimageKorea
         /// <param name="orderID">명령아이디</param>
         /// <param name="json">저장할 명령정보 JSON Text</param>
         /// <returns></returns>
-        public static bool CreateOrderJsonFile(string orderID, string json)
+        public static string CreateOrderJsonFile(string orderID, string json)
         {
             try
             {
@@ -911,14 +911,14 @@ namespace RimageKorea
                 fs.Close();
                 fs.Dispose();
 
-                return true;
+                return filePath;
             }
             catch (Exception ex)
             {
                 ErrorLog.LogWrite("FileControl", ex.ToString(), Environment.CurrentDirectory);
             }
 
-            return false;
+            return string.Empty;
         }
 
         /// <summary>

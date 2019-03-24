@@ -194,9 +194,6 @@ namespace RMDS
             this.Visible = false;
             this.GetConfig();
 
-            //// 메인프로그램에 메시지 전송한다.
-            this.SendWinMessage("BURN_SRT");
-
             //// 서버 설정-상태 정보 가져오기일 경우
             if (this.orderType.Equals("S"))
             {
@@ -275,11 +272,17 @@ namespace RMDS
 
                         this.WriteErrLog(err, true);
 
+                        //// 메인프로그램에 메시지 전송한다.
+                        this.SendWinMessage(string.Format("BURN_ERROR:{0}", "NULL"));
+
                         //// 프로그램 종료
                         this.ApplicationExit(EnumExitType.Fail);
                     }
                     else
                     {
+                        //// 메인프로그램에 메시지 전송한다.
+                        //// this.SendWinMessage(string.Format("BURN_SRT:{0}", this.burnOrderInfo.OrderId));
+
                         //// 서버 정보 
                         this.ClientId = this.burnOrderInfo.DiscOrder.ClientID;
                         this.serverIP = this.burnOrderInfo.TargetServer.IP;
@@ -299,6 +302,9 @@ namespace RMDS
                         //// 서버 접속
                         if (!this.ConnectServer())
                         {
+                            //// 메인프로그램에 메시지 전송한다.
+                            this.SendWinMessage(string.Format("BURN_ERROR:{0}", this.burnOrderInfo.OrderId));
+
                             //// 서버에 접속되지 않으므로 프로그램 종료
                             this.ApplicationExit(EnumExitType.Fail);
                         }
@@ -306,6 +312,9 @@ namespace RMDS
                         //// 굽기 명령 전송
                         if (!this.SubmitOrder())
                         {
+                            //// 메인프로그램에 메시지 전송한다.
+                            this.SendWinMessage(string.Format("BURN_ERROR:{0}", this.burnOrderInfo.OrderId));
+
                             //// 명령 실패 => 프로그램 종료
                             this.ApplicationExit(EnumExitType.Fail);
                         }
@@ -666,6 +675,9 @@ namespace RMDS
 
                 this.imgOrder = COrderManager.GetInstance().SubmitDurableOrder(this.burnOrderInfo.OrderXml, (IOrderStatusListener)(new OrderListener(this)));
 
+                //// 메인프로그램에 메시지 전송한다.
+                this.SendWinMessage(string.Format("BURN_SRT:{0}", this.burnOrderInfo.OrderId));
+
                 //// 시작시 로그 저장
                 WebUtils.InsertResult(this.burnOrderInfo.OrderId,
                                   this.burnOrderInfo.StartDateTime,
@@ -886,14 +898,6 @@ namespace RMDS
                         {
                             FileControl.CreateTextFile(Path.Combine(this.burnOrderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM));
                         }
-
-                        //// 명령정보를 OrderHistory폴더에 저장한다.
-                        ////string json = JsonParser.ConvertToJsonString(this.burnOrderInfo);
-                        ////string fileName = Path.Combine(Application.StartupPath, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"),
-                        ////    string.Format("{0}{1}{2}{3}.txt", DateTime.Now.ToString("yyMMddHHmmss"), this.burnOrderInfo.patNo, this.burnOrderInfo.patName,
-                        ////    RandomOrderNumber.GetNewOrderNumber().PadRight(7, '0')));
-
-                        ////FileControl.Write(json, fileName);
 
                         //// 서버상태값 다시한번 불러온다.
                         //// 서버 설정/상태 가져오기

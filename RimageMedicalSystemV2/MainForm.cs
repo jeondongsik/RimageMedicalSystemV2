@@ -148,6 +148,11 @@ namespace RimageMedicalSystemV2
         private int nowRemainDVD_DL_Qty;
 
         /// <summary>
+        /// 굽기 대기 목록
+        /// </summary>
+        Dictionary<string, string> _BurnPendingList = null;
+
+        /// <summary>
         /// 굽기 목록 Datasource
         /// </summary>
         List<BurnOrderedInfoEntity> _BurningList = null;
@@ -1203,8 +1208,16 @@ namespace RimageMedicalSystemV2
                     }
 
                     //////////////////////////////////////////////////////////////////////////////////////////
-                    //// 오더정보를 JSON 파일로 변경하여 저장한다.                    
-                    FileControl.CreateOrderJsonFile(orderInfo.OrderId, JsonParser.ConvertToJsonString(orderInfo));
+                    //// 오더정보를 JSON 파일로 변경하여 저장한다.
+                    string ordJson = JsonParser.ConvertToJsonString(orderInfo);
+                    string ordFile = FileControl.CreateOrderJsonFile(orderInfo.OrderId, ordJson);
+
+                    //// 오더 파일이 생성되었는지 체크
+                    if (!File.Exists(ordFile))
+                    {
+                        //// 다시 한번 시도
+                        FileControl.CreateOrderJsonFile(orderInfo.OrderId, ordJson);
+                    }
 
                     //// 굽기 실행
                     if (this.mediaType == MediaType.USB)
@@ -1215,45 +1228,24 @@ namespace RimageMedicalSystemV2
                     }
                     else 
                     {
-                        //// 그리드에 추가한다.
-                        this.AddBurningList(orderInfo);
-
-                        //// 프로그램 1일 경우 조회된 값 초기화.
-                        if (GlobalVar.configEntity.programType == "1")
-                            this.ucPatients11.Clear();
+                        //// 굽기 프로그램을 실행한다.
+                        Process proc = Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
 
                         //// 파일 생성이 완료된 후  프로그램 실행을 위해 1초 쉰다.
-                        Thread.Sleep(1000);
+                        //// Thread.Sleep(1000);
 
-                        //// 시작시 로그 저장
-                        ////WebUtils.InsertResult(orderInfo.OrderId,
-                        ////                  orderInfo.StartDateTime,
-                        ////                  "",
-                        ////                  orderInfo.patNo,
-                        ////                  orderInfo.patName,
-                        ////                  orderInfo.copies.ToString(),
-                        ////                  orderInfo.mediType,
-                        ////                  orderInfo.mediSize,
-                        ////                  "?",
-                        ////                  ((orderInfo.BurnPatientKind.Equals("Y") || orderInfo.patList.Count > 1) ? orderInfo.DicomDescription : orderInfo.StudyModality),
-                        ////                  Utils.CheckNull(orderInfo.BurnPatientKind, "N"),
-                        ////                  this.NowSeletedServer.IP,
-                        ////                  this.MyIP);
+                        //// 대기 목록에 추가
+                        this.AddBurnPendingList(orderInfo.OrderId, ordJson);
 
-                        //// 굽기 프로그램을 실행한다.
-                        Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
+                        //////// 그리드에 추가한다.
+                        ////this.AddBurningList(orderInfo);
+
+                        //////// 프로그램 1일 경우 조회된 값 초기화.
+                        ////if (GlobalVar.configEntity.programType == "1")
+                        ////    this.ucPatients11.Clear();
                     }
 
-                    //// 복사 신청서 인쇄 - 환경설정에 따라, 멀티환자가 아닐경우에만.
-                    if (GlobalVar.configEntity.AutoPrintApp.Equals("Y") && orderInfo.BurnPatientKind.Equals("N"))
-                    {
-                        xFormReport report = new xFormReport();
-                        report.PrintCopyRequestForm(orderInfo.patNo, orderInfo.patName, orderInfo.StudyModality);
-                        report.Dispose();
-                    }
-
-                    this.txtStatusView.AppendText(string.Format("[{0}]으로 굽기주문 전송하였습니다.\r\n", orderInfo.TargetServer.IP));
-                    ErrorLog.TraceWrite(this, string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -1270,6 +1262,96 @@ namespace RimageMedicalSystemV2
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 굽기 대기 목록에 추가
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        public bool AddBurnPendingList(string orderID, string orderInfo)
+        {
+            try
+            {
+                if (this._BurnPendingList == null)
+                    this._BurnPendingList = new Dictionary<string, string>();
+
+                if (!this._BurnPendingList.ContainsKey(orderID))
+                    this._BurnPendingList.Add(orderID, orderInfo);
+
+                return true;
+            }
+            catch { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 굽기 대기 목록에서 삭제 - 굽기 제대로 시작 안됨.
+        /// </summary>
+        /// <param name="orderID"></param>
+        public void RemoveBurningList(string orderID)
+        {
+            try
+            {
+                if (orderID == "NULL")
+                {
+                    this.txtMessages.Text = "굽기 전송 실패 : 명령정보 생성 오류.";
+                    MessageBox.Show("굽기 명령 전송에 실패하였습니다.\r\n다시 시도해 주세요.", "Rimage Error");
+                }
+
+                if (this._BurnPendingList == null)
+                    return;
+
+                if (this._BurnPendingList.ContainsKey(orderID))
+                {
+                    if (this._BurnPendingList.ContainsKey(orderID))
+                        this._BurnPendingList.Remove(orderID);
+
+                    this.txtMessages.Text = string.Format("[{0}] 굽기 전송 실패.", orderID);
+                    MessageBox.Show("굽기 명령 전송에 실패하였습니다.\r\n다시 시도해 주세요.", "Rimage Error");
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 굽기 목록에 추가
+        /// </summary>
+        /// <param name="orderID"></param>
+        public void AddBurningList(string orderID)
+        {
+            try
+            {
+                if (this._BurnPendingList == null)
+                    return;
+
+                if (this._BurnPendingList.ContainsKey(orderID))
+                {
+                    BurnOrderedInfoEntity orderInfo = JsonParser.ConvertToBurnOrderedInfoEntity(this._BurnPendingList[orderID]);
+
+                    //// 그리드에 추가한다.
+                    this.AddBurningList(orderInfo);
+
+                    //// 대기 목록에서 삭제
+                    this._BurnPendingList.Remove(orderID);
+
+                    //// 프로그램 1일 경우 조회된 값 초기화.
+                    if (GlobalVar.configEntity.programType == "1")
+                        this.ucPatients11.Clear();
+
+                    //// 복사 신청서 인쇄 - 환경설정에 따라, 멀티환자가 아닐경우에만.
+                    if (GlobalVar.configEntity.AutoPrintApp.Equals("Y") && orderInfo.BurnPatientKind.Equals("N"))
+                    {
+                        xFormReport report = new xFormReport();
+                        report.PrintCopyRequestForm(orderInfo.patNo, orderInfo.patName, orderInfo.StudyModality);
+                        report.Dispose();
+                    }
+
+                    this.txtStatusView.AppendText(string.Format("[{0}]으로 굽기주문 전송하였습니다.\r\n", orderInfo.TargetServer.IP));
+                    ErrorLog.TraceWrite(this, string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -3174,9 +3256,17 @@ namespace RimageMedicalSystemV2
                     case WM_COPYDATA:
                         COPYDATASTRUCT cds = (COPYDATASTRUCT)m.GetLParam(typeof(COPYDATASTRUCT));
 
-                        if (cds.lpData == "BURN_SRT")
+                        if (cds.lpData.StartsWith("BURN_SRT"))
                         {
-                            //// 굽기 프로그램 시작
+                            //// 굽기 시작
+                            string orderID = cds.lpData.Substring(cds.lpData.IndexOf(":") + 1);
+                            this.AddBurningList(orderID);
+                        }
+                        else if (cds.lpData.StartsWith("BURN_ERROR"))
+                        {
+                            //// 굽기 시작이 안됨
+                            string orderID = cds.lpData.Substring(cds.lpData.IndexOf(":") + 1);
+                            this.RemoveBurningList(orderID);
                         }
                         else if (cds.lpData == "SRV_END")
                         {
