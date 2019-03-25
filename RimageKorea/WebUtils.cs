@@ -35,7 +35,7 @@ namespace RimageKorea
 
             webaddress = "http://" + hostIP + "/RimageWeb/InsertResult.aspx";
 #if DEBUG
-            webaddress = "http://localhost:4557/RimageWeb/InsertResult.aspx";
+            webaddress = "http://127.0.0.1/RimageWeb/InsertResult.aspx";
 #endif
             try
             {

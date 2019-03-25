@@ -1043,7 +1043,7 @@ namespace RimageMedicalSystemV2
                     progMessage = "Submitted for Imaging";
                 }
 
-                orderInfo.OrderId = string.Format("{0}_{1}_{2}{3}_ORD", Utils.ReplaceSpecialWord(orderInfo.patName).Replace(" ", "").Trim(), orderInfo.patNo, DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
+                orderInfo.OrderId = string.Format("{0}_{1}_{2}{3}_ORD", Utils.ReplaceSpecialWord(orderInfo.patName).Replace(" ", "").Replace(".", "_").Trim(), orderInfo.patNo, DateTime.Now.ToString("ddHHmmss"), RandomOrderNumber.GetNewOrderNumber2());
                 orderInfo.patDate = DateTime.Now.ToShortDateString();
                 orderInfo.Progress = progMessage;
                 orderInfo.ProcessingRate = "0 %";
@@ -1228,6 +1228,8 @@ namespace RimageMedicalSystemV2
                     }
                     else 
                     {
+                        ////this.SaveRimageWeb(orderInfo);
+
                         //// 굽기 프로그램을 실행한다.
                         Process proc = Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
 
@@ -1352,6 +1354,24 @@ namespace RimageMedicalSystemV2
                 }
             }
             catch { }
+        }
+
+        private void SaveRimageWeb(BurnOrderedInfoEntity orderInfo)
+        {
+            ////결과저장
+            WebUtils.InsertResult(orderInfo.OrderId,
+                      orderInfo.StartDateTime,
+                      Utils.GetNowTime(),
+                      orderInfo.patNo,
+                      orderInfo.patName,
+                      orderInfo.copies.ToString(),
+                      orderInfo.mediType,
+                      orderInfo.mediSize,
+                      "?",
+                      ((orderInfo.BurnPatientKind.Equals("Y") || orderInfo.patList.Count > 1) ? orderInfo.DicomDescription : orderInfo.StudyModality),
+                      Utils.CheckNull(orderInfo.BurnPatientKind, "N"),
+                      orderInfo.TargetServer.IP,
+                      this.MyIP);
         }
 
         /// <summary>
