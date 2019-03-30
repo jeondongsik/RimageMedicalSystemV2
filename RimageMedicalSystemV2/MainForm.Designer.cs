@@ -294,7 +294,7 @@
             // btnSearch
             // 
             this.btnSearch.AllowFocus = false;
-            this.btnSearch.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSearch.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSearch.Appearance.Options.UseFont = true;
             this.btnSearch.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.ImageOptions.Image")));
             this.btnSearch.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
@@ -302,7 +302,7 @@
             this.btnSearch.LookAndFeel.SkinName = "Lilian";
             this.btnSearch.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(100, 43);
+            this.btnSearch.Size = new System.Drawing.Size(105, 43);
             this.btnSearch.TabIndex = 5;
             this.btnSearch.Text = "조회";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -310,15 +310,15 @@
             // btnBurn
             // 
             this.btnBurn.AllowFocus = false;
-            this.btnBurn.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnBurn.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnBurn.Appearance.Options.UseFont = true;
             this.btnBurn.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.dvd_burn1;
             this.btnBurn.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnBurn.Location = new System.Drawing.Point(109, 3);
+            this.btnBurn.Location = new System.Drawing.Point(114, 3);
             this.btnBurn.LookAndFeel.SkinName = "Lilian";
             this.btnBurn.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnBurn.Name = "btnBurn";
-            this.btnBurn.Size = new System.Drawing.Size(100, 43);
+            this.btnBurn.Size = new System.Drawing.Size(105, 43);
             this.btnBurn.TabIndex = 6;
             this.btnBurn.Text = "굽기";
             this.btnBurn.Click += new System.EventHandler(this.btnBurn_Click);
@@ -326,15 +326,15 @@
             // btnClear
             // 
             this.btnClear.AllowFocus = false;
-            this.btnClear.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnClear.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnClear.Appearance.Options.UseFont = true;
             this.btnClear.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClear.ImageOptions.Image")));
             this.btnClear.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnClear.Location = new System.Drawing.Point(336, 3);
+            this.btnClear.Location = new System.Drawing.Point(351, 3);
             this.btnClear.LookAndFeel.SkinName = "Lilian";
             this.btnClear.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(115, 43);
+            this.btnClear.Size = new System.Drawing.Size(120, 43);
             this.btnClear.TabIndex = 7;
             this.btnClear.Text = "목록정리";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -342,32 +342,32 @@
             // btnPatientDelete
             // 
             this.btnPatientDelete.AllowFocus = false;
-            this.btnPatientDelete.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnPatientDelete.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnPatientDelete.Appearance.Options.UseFont = true;
             this.btnPatientDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPatientDelete.ImageOptions.Image")));
             this.btnPatientDelete.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnPatientDelete.Location = new System.Drawing.Point(457, 3);
+            this.btnPatientDelete.Location = new System.Drawing.Point(477, 3);
             this.btnPatientDelete.LookAndFeel.SkinName = "Lilian";
             this.btnPatientDelete.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnPatientDelete.Name = "btnPatientDelete";
-            this.btnPatientDelete.Size = new System.Drawing.Size(159, 43);
+            this.btnPatientDelete.Size = new System.Drawing.Size(165, 43);
             this.btnPatientDelete.TabIndex = 10;
-            this.btnPatientDelete.Text = "대기환자 삭제";
+            this.btnPatientDelete.Text = "환자정보 삭제";
             this.btnPatientDelete.Visible = false;
             this.btnPatientDelete.Click += new System.EventHandler(this.btnPatientDelete_Click);
             // 
             // btnOrderedList
             // 
             this.btnOrderedList.AllowFocus = false;
-            this.btnOrderedList.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnOrderedList.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnOrderedList.Appearance.Options.UseFont = true;
             this.btnOrderedList.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderedList.ImageOptions.Image")));
             this.btnOrderedList.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnOrderedList.Location = new System.Drawing.Point(131, 3);
+            this.btnOrderedList.Location = new System.Drawing.Point(121, 3);
             this.btnOrderedList.LookAndFeel.SkinName = "Lilian";
             this.btnOrderedList.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnOrderedList.Name = "btnOrderedList";
-            this.btnOrderedList.Size = new System.Drawing.Size(100, 43);
+            this.btnOrderedList.Size = new System.Drawing.Size(105, 43);
             this.btnOrderedList.TabIndex = 11;
             this.btnOrderedList.Text = "재굽기";
             this.btnOrderedList.Click += new System.EventHandler(this.btnOrderedList_Click);
@@ -375,15 +375,15 @@
             // btnReport
             // 
             this.btnReport.AllowFocus = false;
-            this.btnReport.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnReport.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnReport.Appearance.Options.UseFont = true;
             this.btnReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.ImageOptions.Image")));
             this.btnReport.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnReport.Location = new System.Drawing.Point(237, 3);
+            this.btnReport.Location = new System.Drawing.Point(232, 3);
             this.btnReport.LookAndFeel.SkinName = "Lilian";
             this.btnReport.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(100, 43);
+            this.btnReport.Size = new System.Drawing.Size(105, 43);
             this.btnReport.TabIndex = 8;
             this.btnReport.Text = "보고서";
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
@@ -419,11 +419,13 @@
             // 
             // gvBurninglist
             // 
-            this.gvBurninglist.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvBurninglist.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvBurninglist.Appearance.HeaderPanel.ForeColor = System.Drawing.Color.Black;
             this.gvBurninglist.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gvBurninglist.Appearance.HeaderPanel.Options.UseForeColor = true;
             this.gvBurninglist.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gvBurninglist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gvBurninglist.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvBurninglist.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gvBurninglist.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gvBurninglist.Appearance.Row.Options.UseFont = true;
             this.gvBurninglist.Appearance.Row.Options.UseForeColor = true;
@@ -904,15 +906,15 @@
             // btnCancelBurning
             // 
             this.btnCancelBurning.AllowFocus = false;
-            this.btnCancelBurning.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnCancelBurning.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnCancelBurning.Appearance.Options.UseFont = true;
             this.btnCancelBurning.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.cancel_32x32;
             this.btnCancelBurning.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnCancelBurning.Location = new System.Drawing.Point(215, 3);
+            this.btnCancelBurning.Location = new System.Drawing.Point(225, 3);
             this.btnCancelBurning.LookAndFeel.SkinName = "Lilian";
             this.btnCancelBurning.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnCancelBurning.Name = "btnCancelBurning";
-            this.btnCancelBurning.Size = new System.Drawing.Size(115, 43);
+            this.btnCancelBurning.Size = new System.Drawing.Size(120, 43);
             this.btnCancelBurning.TabIndex = 9;
             this.btnCancelBurning.Text = "굽기취소";
             this.btnCancelBurning.Click += new System.EventHandler(this.btnCancelBurning_Click);
@@ -920,15 +922,15 @@
             // btnUSBCopy
             // 
             this.btnUSBCopy.AllowFocus = false;
-            this.btnUSBCopy.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnUSBCopy.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnUSBCopy.Appearance.Options.UseFont = true;
             this.btnUSBCopy.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.icons8_usb_2_321;
             this.btnUSBCopy.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnUSBCopy.Location = new System.Drawing.Point(25, 3);
+            this.btnUSBCopy.Location = new System.Drawing.Point(10, 3);
             this.btnUSBCopy.LookAndFeel.SkinName = "Lilian";
             this.btnUSBCopy.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnUSBCopy.Name = "btnUSBCopy";
-            this.btnUSBCopy.Size = new System.Drawing.Size(100, 43);
+            this.btnUSBCopy.Size = new System.Drawing.Size(105, 43);
             this.btnUSBCopy.TabIndex = 18;
             this.btnUSBCopy.Text = "USB";
             this.btnUSBCopy.Visible = false;
@@ -974,7 +976,7 @@
             this.flowLayoutPanel2.Controls.Add(this.btnPatientDelete);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(9, 5);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(642, 50);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(654, 50);
             this.flowLayoutPanel2.TabIndex = 21;
             // 
             // MainForm

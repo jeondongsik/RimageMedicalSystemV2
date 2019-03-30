@@ -68,11 +68,13 @@
             // 
             // gvPatientlist
             // 
-            this.gvPatientlist.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvPatientlist.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvPatientlist.Appearance.HeaderPanel.ForeColor = System.Drawing.Color.Black;
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gvPatientlist.Appearance.HeaderPanel.Options.UseForeColor = true;
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gvPatientlist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gvPatientlist.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gvPatientlist.Appearance.Row.Options.UseFont = true;
             this.gvPatientlist.Appearance.Row.Options.UseForeColor = true;
