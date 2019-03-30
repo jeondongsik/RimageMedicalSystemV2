@@ -438,7 +438,7 @@ namespace RimageMedicalSystemV2
 
                     ////Drive 용량 다시 체크
                     this.SetDriveInfo();
-                    this.txtMessages.Text = "환자정보 조회 완료.";
+                    this.txtMessages.Text = "환자정보 조회 완료";
 
                     retMessage = string.Format("{0}[{1}] 조회 완료", orderInfo.patName, orderInfo.patNo);
 
@@ -605,7 +605,7 @@ namespace RimageMedicalSystemV2
 
                 ////Drive 용량 다시 체크
                 this.SetDriveInfo();
-                this.txtMessages.Text = "환자정보 조회 완료.";
+                this.txtMessages.Text = "환자정보 조회 완료";
             }
             catch (Exception ex)
             {
@@ -1297,7 +1297,7 @@ namespace RimageMedicalSystemV2
             {
                 if (orderID == "NULL")
                 {
-                    this.txtMessages.Text = "굽기 전송 실패 : 명령정보 생성 오류.";
+                    this.txtMessages.Text = "굽기 전송 실패 : 명령정보 생성 오류";
                     MessageBox.Show("굽기 명령 전송에 실패하였습니다.\r\n다시 시도해 주세요.", "Rimage Error");
                 }
 
@@ -1309,7 +1309,7 @@ namespace RimageMedicalSystemV2
                     if (this._BurnPendingList.ContainsKey(orderID))
                         this._BurnPendingList.Remove(orderID);
 
-                    this.txtMessages.Text = string.Format("[{0}] 굽기 전송 실패.", orderID);
+                    this.txtMessages.Text = string.Format("[{0}] 굽기 전송 실패", orderID);
                     MessageBox.Show("굽기 명령 전송에 실패하였습니다.\r\n다시 시도해 주세요.", "Rimage Error");
                 }
             }
@@ -2716,7 +2716,7 @@ namespace RimageMedicalSystemV2
                 }
                 else
                 {
-                    this.txtMessages.Text = string.Format("{0} 연결 실패.", this.NowSeletedServer.IP);
+                    this.txtMessages.Text = string.Format("{0} 연결 실패", this.NowSeletedServer.IP);
                     this.txtStatusView.AppendText(string.Format("{0} 연결되지 않습니다. 네트워크를 체크해주세요.\r\n", this.NowSeletedServer.IP));
                 }
             }
@@ -3562,7 +3562,7 @@ namespace RimageMedicalSystemV2
 
                 this.gvBurninglist.RefreshData();
 
-                this.txtMessages.Text = "화면정리 완료.";
+                this.txtMessages.Text = "화면정리 완료";
                 this.Cursor = Cursors.Default;
             }
         }
