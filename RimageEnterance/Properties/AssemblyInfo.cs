@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 어셈블리의 일반 정보는 다음 특성 집합을 통해 제어됩니다.
 // 어셈블리와 관련된 정보를 수정하려면
 // 이 특성 값을 변경하십시오.
-[assembly: AssemblyTitle("Rimage Medical Disc System")]
+[assembly: AssemblyTitle("Rimage Medical Disc System3")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("(주)나시스")]
-[assembly: AssemblyProduct("Rimage Medical Disc System")]
-[assembly: AssemblyCopyright("Copyright © Nasis 2013")]
+[assembly: AssemblyProduct("Rimage Medical Disc System3")]
+[assembly: AssemblyCopyright("Copyright © Nasis 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

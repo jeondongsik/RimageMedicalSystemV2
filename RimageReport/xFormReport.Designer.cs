@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(xFormReport));
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -162,10 +162,10 @@
             // 
             this.grdSearchResult.Cursor = System.Windows.Forms.Cursors.Default;
             this.grdSearchResult.Dock = System.Windows.Forms.DockStyle.Bottom;
-            gridLevelNode1.LevelTemplate = this.gridView2;
-            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.LevelTemplate = this.gridView2;
+            gridLevelNode2.RelationName = "Level1";
             this.grdSearchResult.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
+            gridLevelNode2});
             this.grdSearchResult.Location = new System.Drawing.Point(5, 51);
             this.grdSearchResult.MainView = this.gridView1;
             this.grdSearchResult.Name = "grdSearchResult";
@@ -179,12 +179,16 @@
             // 
             // gridView1
             // 
-            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridView1.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridView1.Appearance.HeaderPanel.ForeColor = System.Drawing.Color.Black;
             this.gridView1.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridView1.Appearance.HeaderPanel.Options.UseForeColor = true;
             this.gridView1.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridView1.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridView1.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridView1.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gridView1.Appearance.Row.Options.UseFont = true;
+            this.gridView1.Appearance.Row.Options.UseForeColor = true;
             this.gridView1.Appearance.Row.Options.UseTextOptions = true;
             this.gridView1.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridView1.Appearance.Row.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
@@ -339,7 +343,9 @@
             // 
             this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrint.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnPrint.Appearance.ForeColor = System.Drawing.Color.Black;
             this.btnPrint.Appearance.Options.UseFont = true;
+            this.btnPrint.Appearance.Options.UseForeColor = true;
             this.btnPrint.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.ImageOptions.Image")));
             this.btnPrint.Location = new System.Drawing.Point(874, 7);
             this.btnPrint.Name = "btnPrint";
@@ -353,7 +359,9 @@
             // 
             this.btnApplicationPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApplicationPrint.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnApplicationPrint.Appearance.ForeColor = System.Drawing.Color.Black;
             this.btnApplicationPrint.Appearance.Options.UseFont = true;
+            this.btnApplicationPrint.Appearance.Options.UseForeColor = true;
             this.btnApplicationPrint.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnApplicationPrint.ImageOptions.Image")));
             this.btnApplicationPrint.Location = new System.Drawing.Point(578, 7);
             this.btnApplicationPrint.Name = "btnApplicationPrint";
@@ -590,15 +598,21 @@
             // gridViewDays
             // 
             this.gridViewDays.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewDays.Appearance.HeaderPanel.ForeColor = System.Drawing.Color.Black;
             this.gridViewDays.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridViewDays.Appearance.HeaderPanel.Options.UseForeColor = true;
             this.gridViewDays.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridViewDays.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewDays.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewDays.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewDays.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gridViewDays.Appearance.Row.Options.UseFont = true;
+            this.gridViewDays.Appearance.Row.Options.UseForeColor = true;
             this.gridViewDays.Appearance.Row.Options.UseTextOptions = true;
             this.gridViewDays.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridViewDays.Appearance.ViewCaption.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewDays.Appearance.ViewCaption.ForeColor = System.Drawing.Color.Black;
             this.gridViewDays.Appearance.ViewCaption.Options.UseFont = true;
+            this.gridViewDays.Appearance.ViewCaption.Options.UseForeColor = true;
             this.gridViewDays.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn18,
             this.gridColumn19,
@@ -684,15 +698,19 @@
             // gridViewMonth
             // 
             this.gridViewMonth.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewMonth.Appearance.HeaderPanel.ForeColor = System.Drawing.Color.Black;
             this.gridViewMonth.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridViewMonth.Appearance.HeaderPanel.Options.UseForeColor = true;
             this.gridViewMonth.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridViewMonth.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewMonth.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewMonth.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gridViewMonth.Appearance.Row.Options.UseFont = true;
             this.gridViewMonth.Appearance.Row.Options.UseTextOptions = true;
             this.gridViewMonth.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridViewMonth.Appearance.ViewCaption.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewMonth.Appearance.ViewCaption.ForeColor = System.Drawing.Color.Black;
             this.gridViewMonth.Appearance.ViewCaption.Options.UseFont = true;
+            this.gridViewMonth.Appearance.ViewCaption.Options.UseForeColor = true;
             this.gridViewMonth.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn16,
             this.gridColumn17,
@@ -779,15 +797,21 @@
             // gridViewYear
             // 
             this.gridViewYear.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewYear.Appearance.HeaderPanel.ForeColor = System.Drawing.Color.Black;
             this.gridViewYear.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridViewYear.Appearance.HeaderPanel.Options.UseForeColor = true;
             this.gridViewYear.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gridViewYear.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridViewYear.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewYear.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewYear.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gridViewYear.Appearance.Row.Options.UseFont = true;
+            this.gridViewYear.Appearance.Row.Options.UseForeColor = true;
             this.gridViewYear.Appearance.Row.Options.UseTextOptions = true;
             this.gridViewYear.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gridViewYear.Appearance.ViewCaption.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gridViewYear.Appearance.ViewCaption.ForeColor = System.Drawing.Color.Black;
             this.gridViewYear.Appearance.ViewCaption.Options.UseFont = true;
+            this.gridViewYear.Appearance.ViewCaption.Options.UseForeColor = true;
             this.gridViewYear.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn14,
             this.gridColumn15,
@@ -811,8 +835,6 @@
             // 
             // gridColumn14
             // 
-            this.gridColumn14.AppearanceHeader.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gridColumn14.AppearanceHeader.Options.UseFont = true;
             this.gridColumn14.Caption = "년";
             this.gridColumn14.FieldName = "Year";
             this.gridColumn14.Name = "gridColumn14";
@@ -823,8 +845,6 @@
             // 
             this.gridColumn15.AppearanceCell.Options.UseTextOptions = true;
             this.gridColumn15.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.gridColumn15.AppearanceHeader.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gridColumn15.AppearanceHeader.Options.UseFont = true;
             this.gridColumn15.Caption = "CD";
             this.gridColumn15.FieldName = "CDCNT";
             this.gridColumn15.Name = "gridColumn15";
@@ -865,7 +885,9 @@
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSave.Appearance.ForeColor = System.Drawing.Color.Black;
             this.btnSave.Appearance.Options.UseFont = true;
+            this.btnSave.Appearance.Options.UseForeColor = true;
             this.btnSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.ImageOptions.Image")));
             this.btnSave.Location = new System.Drawing.Point(742, 7);
             this.btnSave.Name = "btnSave";

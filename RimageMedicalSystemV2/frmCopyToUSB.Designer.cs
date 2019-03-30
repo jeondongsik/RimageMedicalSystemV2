@@ -68,7 +68,9 @@
             // 
             this.btnReFind.AllowFocus = false;
             this.btnReFind.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnReFind.Appearance.ForeColor = System.Drawing.Color.Black;
             this.btnReFind.Appearance.Options.UseFont = true;
+            this.btnReFind.Appearance.Options.UseForeColor = true;
             this.btnReFind.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReFind.ImageOptions.Image")));
             this.btnReFind.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnReFind.Location = new System.Drawing.Point(12, 173);
@@ -91,7 +93,9 @@
             // 
             this.btnStartCopy.AllowFocus = false;
             this.btnStartCopy.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnStartCopy.Appearance.ForeColor = System.Drawing.Color.Black;
             this.btnStartCopy.Appearance.Options.UseFont = true;
+            this.btnStartCopy.Appearance.Options.UseForeColor = true;
             this.btnStartCopy.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnStartCopy.ImageOptions.Image")));
             this.btnStartCopy.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnStartCopy.Location = new System.Drawing.Point(112, 173);
@@ -114,7 +118,7 @@
             // labelControl11
             // 
             this.labelControl11.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelControl11.Appearance.ForeColor = System.Drawing.Color.Green;
+            this.labelControl11.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelControl11.Appearance.Options.UseFont = true;
             this.labelControl11.Appearance.Options.UseForeColor = true;
             this.labelControl11.Location = new System.Drawing.Point(4, 9);
@@ -141,7 +145,9 @@
             // 
             // grpDrives
             // 
+            this.grpDrives.AppearanceCaption.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpDrives.AppearanceCaption.ForeColor = System.Drawing.Color.Black;
+            this.grpDrives.AppearanceCaption.Options.UseFont = true;
             this.grpDrives.AppearanceCaption.Options.UseForeColor = true;
             this.grpDrives.Controls.Add(this.flpDrives);
             this.grpDrives.Location = new System.Drawing.Point(12, 60);

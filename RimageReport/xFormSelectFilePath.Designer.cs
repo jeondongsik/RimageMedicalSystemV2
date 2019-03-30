@@ -57,7 +57,9 @@
             this.textEditFolderName.Location = new System.Drawing.Point(99, 19);
             this.textEditFolderName.Name = "textEditFolderName";
             this.textEditFolderName.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditFolderName.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.textEditFolderName.Properties.Appearance.Options.UseFont = true;
+            this.textEditFolderName.Properties.Appearance.Options.UseForeColor = true;
             this.textEditFolderName.Size = new System.Drawing.Size(320, 20);
             this.textEditFolderName.TabIndex = 1;
             // 
@@ -76,14 +78,18 @@
             this.textEditFileName.Location = new System.Drawing.Point(99, 45);
             this.textEditFileName.Name = "textEditFileName";
             this.textEditFileName.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditFileName.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.textEditFileName.Properties.Appearance.Options.UseFont = true;
+            this.textEditFileName.Properties.Appearance.Options.UseForeColor = true;
             this.textEditFileName.Size = new System.Drawing.Size(320, 20);
             this.textEditFileName.TabIndex = 3;
             // 
             // btnConfirm
             // 
             this.btnConfirm.Appearance.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnConfirm.Appearance.ForeColor = System.Drawing.Color.Black;
             this.btnConfirm.Appearance.Options.UseFont = true;
+            this.btnConfirm.Appearance.Options.UseForeColor = true;
             this.btnConfirm.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnConfirm.ImageOptions.Image")));
             this.btnConfirm.Location = new System.Drawing.Point(134, 113);
             this.btnConfirm.LookAndFeel.SkinName = "Money Twins";
@@ -97,7 +103,9 @@
             // btnCancel
             // 
             this.btnCancel.Appearance.Font = new System.Drawing.Font("돋움", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnCancel.Appearance.ForeColor = System.Drawing.Color.Black;
             this.btnCancel.Appearance.Options.UseFont = true;
+            this.btnCancel.Appearance.Options.UseForeColor = true;
             this.btnCancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.ImageOptions.Image")));
             this.btnCancel.Location = new System.Drawing.Point(264, 113);
             this.btnCancel.LookAndFeel.SkinName = "Office 2010 Blue";

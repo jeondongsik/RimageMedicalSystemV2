@@ -167,7 +167,7 @@
             this.grpBurningList.Name = "grpBurningList";
             this.grpBurningList.Size = new System.Drawing.Size(984, 585);
             this.grpBurningList.TabIndex = 2;
-            this.grpBurningList.Text = "CD/DVD 버닝 목록";
+            this.grpBurningList.Text = "CD/DVD 굽기 이력";
             // 
             // gcPatientlist
             // 
@@ -190,11 +190,13 @@
             // 
             // gvPatientlist
             // 
-            this.gvPatientlist.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvPatientlist.Appearance.HeaderPanel.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvPatientlist.Appearance.HeaderPanel.ForeColor = System.Drawing.Color.Black;
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gvPatientlist.Appearance.HeaderPanel.Options.UseForeColor = true;
             this.gvPatientlist.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.gvPatientlist.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gvPatientlist.Appearance.Row.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.gvPatientlist.Appearance.Row.ForeColor = System.Drawing.Color.Black;
             this.gvPatientlist.Appearance.Row.Options.UseFont = true;
             this.gvPatientlist.Appearance.Row.Options.UseForeColor = true;
@@ -423,7 +425,7 @@
             this.MaximizeBox = false;
             this.Name = "OrderHistoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "굽기 명령 전송 내역";
+            this.Text = "재굽기";
             this.Load += new System.EventHandler(this.OrderHistoryForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
