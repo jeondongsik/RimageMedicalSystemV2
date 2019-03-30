@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigSetting));
             this.dataGridViewServerList = new System.Windows.Forms.DataGridView();
             this.ColumnNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -189,9 +189,10 @@
             this.label45 = new System.Windows.Forms.Label();
             this.xtraTabPageSetProgramConfig2 = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
+            this.checkBoxUseUSBCopy = new System.Windows.Forms.CheckBox();
             this.checkBoxDisableMultiPatient = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoPrintApp = new System.Windows.Forms.CheckBox();
-            this.checkBoxUseUSBCopy = new System.Windows.Forms.CheckBox();
+            this.checkBoxDisplayServeIP = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServerList)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -248,8 +249,8 @@
             // ColumnNo
             // 
             this.ColumnNo.DataPropertyName = "No";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColumnNo.HeaderText = "번호";
             this.ColumnNo.Name = "ColumnNo";
             this.ColumnNo.ReadOnly = true;
@@ -274,8 +275,8 @@
             // ColumnServerPort
             // 
             this.ColumnServerPort.DataPropertyName = "Port";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColumnServerPort.HeaderText = "Port";
             this.ColumnServerPort.Name = "ColumnServerPort";
             this.ColumnServerPort.ReadOnly = true;
@@ -1930,6 +1931,7 @@
             this.groupControl6.Appearance.Options.UseFont = true;
             this.groupControl6.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.groupControl6.AppearanceCaption.Options.UseFont = true;
+            this.groupControl6.Controls.Add(this.checkBoxDisplayServeIP);
             this.groupControl6.Controls.Add(this.checkBoxUseUSBCopy);
             this.groupControl6.Controls.Add(this.checkBoxDisableMultiPatient);
             this.groupControl6.Controls.Add(this.checkBoxAutoPrintApp);
@@ -1961,6 +1963,16 @@
             this.groupControl6.TabIndex = 2;
             this.groupControl6.Text = "프로그램 설정 (2)";
             // 
+            // checkBoxUseUSBCopy
+            // 
+            this.checkBoxUseUSBCopy.AutoSize = true;
+            this.checkBoxUseUSBCopy.Location = new System.Drawing.Point(318, 241);
+            this.checkBoxUseUSBCopy.Name = "checkBoxUseUSBCopy";
+            this.checkBoxUseUSBCopy.Size = new System.Drawing.Size(104, 19);
+            this.checkBoxUseUSBCopy.TabIndex = 57;
+            this.checkBoxUseUSBCopy.Text = "USB 복사 사용";
+            this.checkBoxUseUSBCopy.UseVisualStyleBackColor = true;
+            // 
             // checkBoxDisableMultiPatient
             // 
             this.checkBoxDisableMultiPatient.AutoSize = true;
@@ -1981,15 +1993,15 @@
             this.checkBoxAutoPrintApp.Text = "굽기 완료 후 복사 신청서(발급내역) 자동 인쇄";
             this.checkBoxAutoPrintApp.UseVisualStyleBackColor = true;
             // 
-            // checkBoxUseUSBCopy
+            // checkBoxDisplayServeIP
             // 
-            this.checkBoxUseUSBCopy.AutoSize = true;
-            this.checkBoxUseUSBCopy.Location = new System.Drawing.Point(318, 241);
-            this.checkBoxUseUSBCopy.Name = "checkBoxUseUSBCopy";
-            this.checkBoxUseUSBCopy.Size = new System.Drawing.Size(104, 19);
-            this.checkBoxUseUSBCopy.TabIndex = 57;
-            this.checkBoxUseUSBCopy.Text = "USB 복사 사용";
-            this.checkBoxUseUSBCopy.UseVisualStyleBackColor = true;
+            this.checkBoxDisplayServeIP.AutoSize = true;
+            this.checkBoxDisplayServeIP.Location = new System.Drawing.Point(318, 267);
+            this.checkBoxDisplayServeIP.Name = "checkBoxDisplayServeIP";
+            this.checkBoxDisplayServeIP.Size = new System.Drawing.Size(277, 19);
+            this.checkBoxDisplayServeIP.TabIndex = 58;
+            this.checkBoxDisplayServeIP.Text = "화면에 서버목록 - IP로 표시 (기본은 서버명임)";
+            this.checkBoxDisplayServeIP.UseVisualStyleBackColor = true;
             // 
             // ConfigSetting
             // 
@@ -2213,5 +2225,6 @@
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.CheckBox checkBoxUseUSBCopy;
+        private System.Windows.Forms.CheckBox checkBoxDisplayServeIP;
     }
 }

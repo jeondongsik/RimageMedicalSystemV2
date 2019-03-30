@@ -93,6 +93,10 @@ namespace RimageConfigSetting
         /// USB 복사 사용
         /// </summary>
         string UseUSBCopy;
+        /// <summary>
+        /// 서버명을 IP로 표시
+        /// </summary>
+        string DisplayServeIP;
 
         /// <summary>
         /// 1:다른 프로그램에서 실행
@@ -242,6 +246,7 @@ namespace RimageConfigSetting
                 FolderSizeCheckTime = (string.IsNullOrWhiteSpace(cf._FolderSizeCheckTime)) ? "5" : cf._FolderSizeCheckTime;
                 DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
                 UseUSBCopy = (string.IsNullOrWhiteSpace(cf._UseUSBCopy)) ? "N" : cf._UseUSBCopy;
+                DisplayServeIP = (string.IsNullOrWhiteSpace(cf._DisplayServeIP)) ? "N" : cf._DisplayServeIP;
 
                 myIP = GetMyIP.MyIP();
                 setControl();
@@ -427,6 +432,7 @@ namespace RimageConfigSetting
             this.textBoxFolderSizeCheckTime.Text = this.FolderSizeCheckTime;
             this.textBox_DvdMaxSize.Text = this.DvdMaxSize;
             this.checkBoxUseUSBCopy.Checked = this.UseUSBCopy.Equals("Y");
+            this.checkBoxDisplayServeIP.Checked = this.DisplayServeIP.Equals("Y");
 
             this.SetServerType();
             this.SetControlByServerType();
@@ -666,6 +672,7 @@ namespace RimageConfigSetting
                     cf._DvdMaxSize = (string.IsNullOrWhiteSpace(this.textBox_DvdMaxSize.Text)) ? "4831838208" : this.textBox_DvdMaxSize.Text;
 
                     cf._UseUSBCopy = (this.checkBoxUseUSBCopy.Checked) ? "Y" : "N";
+                    cf._DisplayServeIP = (this.checkBoxDisplayServeIP.Checked) ? "Y" : "N";
 
                     cf.setConfig("all");
                     cf.setServerType(this.ServerType);

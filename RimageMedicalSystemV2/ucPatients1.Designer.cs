@@ -68,7 +68,7 @@
             this.pnlPatInfoArea.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlPatInfoArea.Location = new System.Drawing.Point(0, 0);
             this.pnlPatInfoArea.Name = "pnlPatInfoArea";
-            this.pnlPatInfoArea.Size = new System.Drawing.Size(817, 31);
+            this.pnlPatInfoArea.Size = new System.Drawing.Size(802, 31);
             this.pnlPatInfoArea.TabIndex = 128;
             // 
             // labelControl5
@@ -77,7 +77,7 @@
             this.labelControl5.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl5.Appearance.Options.UseFont = true;
             this.labelControl5.Appearance.Options.UseForeColor = true;
-            this.labelControl5.Location = new System.Drawing.Point(560, 8);
+            this.labelControl5.Location = new System.Drawing.Point(547, 8);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(46, 13);
             this.labelControl5.TabIndex = 9;
@@ -86,7 +86,7 @@
             // cbMedia
             // 
             this.cbMedia.EditValue = "CDR";
-            this.cbMedia.Location = new System.Drawing.Point(609, 4);
+            this.cbMedia.Location = new System.Drawing.Point(596, 4);
             this.cbMedia.Name = "cbMedia";
             this.cbMedia.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.cbMedia.Properties.Appearance.Options.UseFont = true;
@@ -109,7 +109,7 @@
             this.labelControl4.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl4.Appearance.Options.UseFont = true;
             this.labelControl4.Appearance.Options.UseForeColor = true;
-            this.labelControl4.Location = new System.Drawing.Point(438, 8);
+            this.labelControl4.Location = new System.Drawing.Point(425, 8);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(33, 13);
             this.labelControl4.TabIndex = 7;
@@ -118,7 +118,7 @@
             // cbCopies
             // 
             this.cbCopies.EditValue = "1";
-            this.cbCopies.Location = new System.Drawing.Point(475, 4);
+            this.cbCopies.Location = new System.Drawing.Point(462, 4);
             this.cbCopies.Name = "cbCopies";
             this.cbCopies.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.cbCopies.Properties.Appearance.Options.UseFont = true;
@@ -142,7 +142,7 @@
             // txtDataLength
             // 
             this.txtDataLength.EditValue = "";
-            this.txtDataLength.Location = new System.Drawing.Point(725, 4);
+            this.txtDataLength.Location = new System.Drawing.Point(712, 4);
             this.txtDataLength.Name = "txtDataLength";
             this.txtDataLength.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtDataLength.Properties.Appearance.Options.UseFont = true;
@@ -161,7 +161,7 @@
             this.labelControl3.Appearance.ForeColor = System.Drawing.Color.Black;
             this.labelControl3.Appearance.Options.UseFont = true;
             this.labelControl3.Appearance.Options.UseForeColor = true;
-            this.labelControl3.Location = new System.Drawing.Point(688, 8);
+            this.labelControl3.Location = new System.Drawing.Point(675, 8);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(33, 13);
             this.labelControl3.TabIndex = 4;
@@ -177,7 +177,7 @@
             this.txtPatientName.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.txtPatientName.Properties.LookAndFeel.SkinName = "Lilian";
             this.txtPatientName.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
-            this.txtPatientName.Size = new System.Drawing.Size(175, 20);
+            this.txtPatientName.Size = new System.Drawing.Size(165, 20);
             this.txtPatientName.TabIndex = 3;
             this.txtPatientName.TabStop = false;
             // 
@@ -229,7 +229,7 @@
             this.treeView1.FullRowSelect = true;
             this.treeView1.Location = new System.Drawing.Point(7, 5);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(803, 165);
+            this.treeView1.Size = new System.Drawing.Size(788, 165);
             this.treeView1.TabIndex = 129;
             // 
             // pnlImgArea
@@ -241,7 +241,7 @@
             this.pnlImgArea.LookAndFeel.UseDefaultLookAndFeel = false;
             this.pnlImgArea.Name = "pnlImgArea";
             this.pnlImgArea.Padding = new System.Windows.Forms.Padding(5, 3, 5, 5);
-            this.pnlImgArea.Size = new System.Drawing.Size(817, 177);
+            this.pnlImgArea.Size = new System.Drawing.Size(802, 177);
             this.pnlImgArea.TabIndex = 130;
             // 
             // ucPatients1
@@ -252,7 +252,7 @@
             this.LookAndFeel.SkinName = "Lilian";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Name = "ucPatients1";
-            this.Size = new System.Drawing.Size(817, 208);
+            this.Size = new System.Drawing.Size(802, 208);
             ((System.ComponentModel.ISupportInitialize)(this.pnlPatInfoArea)).EndInit();
             this.pnlPatInfoArea.ResumeLayout(false);
             this.pnlPatInfoArea.PerformLayout();

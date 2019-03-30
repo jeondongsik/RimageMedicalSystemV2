@@ -1730,33 +1730,7 @@ namespace RimageMedicalSystemV2
                     srvInfo.Port = cf._HostPort;
                     this.ServerList.Add(srvInfo);
                 }
-
-                //// 서버목록 바인딩
-                this.SetServerList();
-
-                //// 마지막 선택했던 서버가 선택되도록 처리                
-                //// 핑체크만 한다.                
-                if (CheckPing.TestPing(this.LastHostIP))
-                {
-                    this.NowSeletedServer = this.GetServerInfo(this.LastHostIP);
-
-                    if (this.NowSeletedServer == null)
-                    {
-                        this.NowSeletedServer = this.GetServerInfo(this.ServerList.First().IP);
-
-                        if (this.NowSeletedServer == null)
-                        {
-                            this.NowSeletedServer = new ServerInfo();
-                        }
-                    }
-
-                    this.SelectServerLabel(this.LastHostIP, true);
-                }
-                else
-                {
-                    this.SelectServerLabel(this.LastHostIP, false);
-                }
-
+                
                 GlobalVar.configEntity.LocalShareFolder = cf._LocalShareFolder;
                 GlobalVar.configEntity.CDLabelFile = cf._CDLabelFile;
                 GlobalVar.configEntity.DVDLabelFile = cf._DVDLabelFile;
@@ -1823,6 +1797,7 @@ namespace RimageMedicalSystemV2
                 GlobalVar.configEntity.DisableMultiPatient = (string.IsNullOrWhiteSpace(cf._DisableMultiPatient)) ? "N" : cf._DisableMultiPatient;
                 GlobalVar.configEntity.DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
                 GlobalVar.configEntity.UseUSBCopy = (string.IsNullOrWhiteSpace(cf._UseUSBCopy)) ? "N" : cf._UseUSBCopy;
+                GlobalVar.configEntity.DisplayServeIP = (string.IsNullOrWhiteSpace(cf._DisplayServeIP)) ? "N" : cf._DisplayServeIP;
 
                 if (cf._CDPrintYN == "N")
                     GlobalVar.configEntity.UseLabelPrint = false;
@@ -1861,6 +1836,32 @@ namespace RimageMedicalSystemV2
                 {
                     if (!int.TryParse(cf._FolderSizeCheckTime, out GlobalVar.FolderSizeCheckTime))
                         GlobalVar.FolderSizeCheckTime = 5;
+                }
+
+                //// 서버목록 바인딩
+                this.SetServerList();
+
+                //// 마지막 선택했던 서버가 선택되도록 처리                
+                //// 핑체크만 한다.                
+                if (CheckPing.TestPing(this.LastHostIP))
+                {
+                    this.NowSeletedServer = this.GetServerInfo(this.LastHostIP);
+
+                    if (this.NowSeletedServer == null)
+                    {
+                        this.NowSeletedServer = this.GetServerInfo(this.ServerList.First().IP);
+
+                        if (this.NowSeletedServer == null)
+                        {
+                            this.NowSeletedServer = new ServerInfo();
+                        }
+                    }
+
+                    this.SelectServerLabel(this.LastHostIP, true);
+                }
+                else
+                {
+                    this.SelectServerLabel(this.LastHostIP, false);
                 }
             }
             catch (Exception ex)
@@ -2328,7 +2329,7 @@ namespace RimageMedicalSystemV2
                     foreach (var srv in this.ServerList)
                     {
                         LabelControl lbl = this.grpServerList.Controls.Find(string.Format("Server{0}", i.ToString()), false)[0] as LabelControl;
-                        lbl.Text = string.Format("[{0}] {1}", srv.No, srv.IP);
+                        lbl.Text = string.Format("[{0}] {1}", srv.No, GlobalVar.configEntity.DisplayServeIP.Equals("Y") ? srv.IP : srv.Name);
                         lbl.Appearance.Image = global::RimageMedicalSystemV2.Properties.Resources.add_16x16;
                         lbl.Tag = srv;
 

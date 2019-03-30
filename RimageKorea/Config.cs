@@ -78,10 +78,14 @@ namespace RimageKorea
         /// USB 복사 사용
         /// </summary>
         string UseUSBCopy;
+        /// <summary>
+        /// 서버명을 IP로 표시
+        /// </summary>
+        string DisplayServeIP;
 
         XmlDocument doc = new XmlDocument();
 
-        #region Properties
+        #region Properties        
         /// <summary>
         /// 메시지
         /// </summary>
@@ -547,6 +551,14 @@ namespace RimageKorea
             get { return getConfig("UseUSBCopy", ""); }
             set { this.UseUSBCopy = value; }
         }
+        /// <summary>
+        /// 서버명을 IP로 표시
+        /// </summary>
+        public string _DisplayServeIP
+        {
+            get { return DisplayServeIP; }
+            set { this.DisplayServeIP = value; }
+        }
         #endregion
 
         /// <summary>
@@ -670,6 +682,7 @@ namespace RimageKorea
                 updateConfigXml("FolderSizeCheckTime", this.FolderSizeCheckTime);
                 updateConfigXml("DvdMaxSize", this.DvdMaxSize);
                 updateConfigXml("UseUSBCopy", this.UseUSBCopy);
+                updateConfigXml("DisplayServeIP", this.DisplayServeIP);
             }
 
             //초기설정

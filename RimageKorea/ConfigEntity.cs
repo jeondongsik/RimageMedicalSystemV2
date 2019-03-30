@@ -241,5 +241,9 @@ namespace RimageKorea
         /// USB 복사 사용
         /// </summary>
         public string UseUSBCopy { get; set; }
+        /// <summary>
+        /// 화면 서버 목록 IP로 표시
+        /// </summary>
+        public string DisplayServeIP { get; set; }
     }
 }

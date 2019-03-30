@@ -61,7 +61,7 @@
             this.repoQuantity,
             this.repoMediatype,
             this.repoPicDel});
-            this.gcPatientlist.Size = new System.Drawing.Size(817, 208);
+            this.gcPatientlist.Size = new System.Drawing.Size(802, 208);
             this.gcPatientlist.TabIndex = 3;
             this.gcPatientlist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvPatientlist});
@@ -128,7 +128,7 @@
             this.gridColPatientNo.OptionsColumn.ReadOnly = true;
             this.gridColPatientNo.Visible = true;
             this.gridColPatientNo.VisibleIndex = 1;
-            this.gridColPatientNo.Width = 120;
+            this.gridColPatientNo.Width = 115;
             // 
             // gridColPatientName
             // 
@@ -139,7 +139,7 @@
             this.gridColPatientName.OptionsColumn.ReadOnly = true;
             this.gridColPatientName.Visible = true;
             this.gridColPatientName.VisibleIndex = 2;
-            this.gridColPatientName.Width = 155;
+            this.gridColPatientName.Width = 145;
             // 
             // gridColGender
             // 
@@ -238,7 +238,7 @@
             this.LookAndFeel.SkinName = "Lilian";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
             this.Name = "ucPatients2";
-            this.Size = new System.Drawing.Size(817, 208);
+            this.Size = new System.Drawing.Size(802, 208);
             ((System.ComponentModel.ISupportInitialize)(this.gcPatientlist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvPatientlist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoQuantity)).EndInit();

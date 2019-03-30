@@ -138,11 +138,29 @@ namespace RimageKorea
                     if (dri.Name.StartsWith("ERRORS"))
                         continue;
 
-                    try
+                    if (dri.Name.StartsWith("SVR_"))
                     {
-                        dri.Delete(true);
+                        ////서버 설정,상태값 파일은 삭제하지 않음.
+                        foreach (var fl in Directory.GetFiles(dri.FullName))
+                        {
+                            if (fl.Contains(GlobalVar.SERVER_CONFIG_FL) || fl.Contains(GlobalVar.SERVER_STATUS_FL))
+                                continue;
+
+                            try
+                            {
+                                File.Delete(fl);
+                            }
+                            catch { }
+                        }
                     }
-                    catch { }
+                    else
+                    {
+                        try
+                        {
+                            dri.Delete(true);
+                        }
+                        catch { }
+                    }
                 }
             }
             catch { }

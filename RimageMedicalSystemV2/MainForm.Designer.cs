@@ -135,7 +135,7 @@
             this.grpPatInfo.LookAndFeel.SkinName = "Money Twins";
             this.grpPatInfo.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpPatInfo.Name = "grpPatInfo";
-            this.grpPatInfo.Size = new System.Drawing.Size(821, 232);
+            this.grpPatInfo.Size = new System.Drawing.Size(804, 232);
             this.grpPatInfo.TabIndex = 0;
             this.grpPatInfo.Text = "환자 정보";
             // 
@@ -147,7 +147,7 @@
             this.ucPatients11.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients11.Name = "ucPatients11";
             this.ucPatients11.OrderInfo = null;
-            this.ucPatients11.Size = new System.Drawing.Size(817, 207);
+            this.ucPatients11.Size = new System.Drawing.Size(800, 207);
             this.ucPatients11.TabIndex = 1;
             this.ucPatients11.TabStop = false;
             this.ucPatients11.Visible = false;
@@ -161,7 +161,7 @@
             this.ucPatients21.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients21.Name = "ucPatients21";
             this.ucPatients21.PatientInfoList = null;
-            this.ucPatients21.Size = new System.Drawing.Size(817, 207);
+            this.ucPatients21.Size = new System.Drawing.Size(800, 207);
             this.ucPatients21.TabIndex = 0;
             this.ucPatients21.TabStop = false;
             this.ucPatients21.Visible = false;
@@ -176,11 +176,11 @@
             this.grpServerList.Controls.Add(this.Server3);
             this.grpServerList.Controls.Add(this.Server2);
             this.grpServerList.Controls.Add(this.Server1);
-            this.grpServerList.Location = new System.Drawing.Point(839, 57);
+            this.grpServerList.Location = new System.Drawing.Point(822, 57);
             this.grpServerList.LookAndFeel.SkinName = "Money Twins";
             this.grpServerList.LookAndFeel.UseDefaultLookAndFeel = false;
             this.grpServerList.Name = "grpServerList";
-            this.grpServerList.Size = new System.Drawing.Size(157, 232);
+            this.grpServerList.Size = new System.Drawing.Size(174, 232);
             this.grpServerList.TabIndex = 2;
             this.grpServerList.Text = "서버 목록";
             // 
@@ -201,7 +201,7 @@
             this.Server5.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.Server5.Location = new System.Drawing.Point(8, 189);
             this.Server5.Name = "Server5";
-            this.Server5.Size = new System.Drawing.Size(140, 34);
+            this.Server5.Size = new System.Drawing.Size(159, 34);
             this.Server5.TabIndex = 4;
             this.Server5.Click += new System.EventHandler(this.ServerButton_Click);
             // 
@@ -222,7 +222,7 @@
             this.Server4.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.Server4.Location = new System.Drawing.Point(8, 149);
             this.Server4.Name = "Server4";
-            this.Server4.Size = new System.Drawing.Size(140, 34);
+            this.Server4.Size = new System.Drawing.Size(159, 34);
             this.Server4.TabIndex = 3;
             this.Server4.Click += new System.EventHandler(this.ServerButton_Click);
             // 
@@ -243,7 +243,7 @@
             this.Server3.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.Server3.Location = new System.Drawing.Point(8, 109);
             this.Server3.Name = "Server3";
-            this.Server3.Size = new System.Drawing.Size(140, 34);
+            this.Server3.Size = new System.Drawing.Size(159, 34);
             this.Server3.TabIndex = 2;
             this.Server3.Click += new System.EventHandler(this.ServerButton_Click);
             // 
@@ -264,7 +264,7 @@
             this.Server2.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.Server2.Location = new System.Drawing.Point(8, 69);
             this.Server2.Name = "Server2";
-            this.Server2.Size = new System.Drawing.Size(140, 34);
+            this.Server2.Size = new System.Drawing.Size(159, 34);
             this.Server2.TabIndex = 1;
             this.Server2.Click += new System.EventHandler(this.ServerButton_Click);
             // 
@@ -287,14 +287,14 @@
             this.Server1.ImageAlignToText = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.Server1.Location = new System.Drawing.Point(8, 29);
             this.Server1.Name = "Server1";
-            this.Server1.Size = new System.Drawing.Size(140, 34);
+            this.Server1.Size = new System.Drawing.Size(159, 34);
             this.Server1.TabIndex = 0;
             this.Server1.Click += new System.EventHandler(this.ServerButton_Click);
             // 
             // btnSearch
             // 
             this.btnSearch.AllowFocus = false;
-            this.btnSearch.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSearch.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSearch.Appearance.Options.UseFont = true;
             this.btnSearch.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.ImageOptions.Image")));
             this.btnSearch.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
@@ -302,88 +302,88 @@
             this.btnSearch.LookAndFeel.SkinName = "Lilian";
             this.btnSearch.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(105, 43);
+            this.btnSearch.Size = new System.Drawing.Size(100, 43);
             this.btnSearch.TabIndex = 5;
-            this.btnSearch.Text = "조회하기";
+            this.btnSearch.Text = "조회";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnBurn
             // 
             this.btnBurn.AllowFocus = false;
-            this.btnBurn.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnBurn.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnBurn.Appearance.Options.UseFont = true;
-            this.btnBurn.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnBurn.ImageOptions.Image")));
+            this.btnBurn.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.dvd_burn1;
             this.btnBurn.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnBurn.Location = new System.Drawing.Point(114, 3);
+            this.btnBurn.Location = new System.Drawing.Point(109, 3);
             this.btnBurn.LookAndFeel.SkinName = "Lilian";
             this.btnBurn.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnBurn.Name = "btnBurn";
-            this.btnBurn.Size = new System.Drawing.Size(133, 43);
+            this.btnBurn.Size = new System.Drawing.Size(100, 43);
             this.btnBurn.TabIndex = 6;
-            this.btnBurn.Text = "CD/DVD 버닝";
+            this.btnBurn.Text = "굽기";
             this.btnBurn.Click += new System.EventHandler(this.btnBurn_Click);
             // 
             // btnClear
             // 
             this.btnClear.AllowFocus = false;
-            this.btnClear.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnClear.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnClear.Appearance.Options.UseFont = true;
             this.btnClear.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClear.ImageOptions.Image")));
             this.btnClear.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnClear.Location = new System.Drawing.Point(364, 3);
+            this.btnClear.Location = new System.Drawing.Point(336, 3);
             this.btnClear.LookAndFeel.SkinName = "Lilian";
             this.btnClear.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(105, 43);
+            this.btnClear.Size = new System.Drawing.Size(115, 43);
             this.btnClear.TabIndex = 7;
-            this.btnClear.Text = "화면 정리";
+            this.btnClear.Text = "목록정리";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnPatientDelete
             // 
             this.btnPatientDelete.AllowFocus = false;
-            this.btnPatientDelete.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnPatientDelete.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnPatientDelete.Appearance.Options.UseFont = true;
             this.btnPatientDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPatientDelete.ImageOptions.Image")));
             this.btnPatientDelete.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnPatientDelete.Location = new System.Drawing.Point(475, 3);
+            this.btnPatientDelete.Location = new System.Drawing.Point(457, 3);
             this.btnPatientDelete.LookAndFeel.SkinName = "Lilian";
             this.btnPatientDelete.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnPatientDelete.Name = "btnPatientDelete";
-            this.btnPatientDelete.Size = new System.Drawing.Size(134, 43);
+            this.btnPatientDelete.Size = new System.Drawing.Size(159, 43);
             this.btnPatientDelete.TabIndex = 10;
-            this.btnPatientDelete.Text = "환자정보 삭제";
+            this.btnPatientDelete.Text = "대기환자 삭제";
             this.btnPatientDelete.Visible = false;
             this.btnPatientDelete.Click += new System.EventHandler(this.btnPatientDelete_Click);
             // 
             // btnOrderedList
             // 
             this.btnOrderedList.AllowFocus = false;
-            this.btnOrderedList.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnOrderedList.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnOrderedList.Appearance.Options.UseFont = true;
             this.btnOrderedList.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderedList.ImageOptions.Image")));
             this.btnOrderedList.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnOrderedList.Location = new System.Drawing.Point(110, 3);
+            this.btnOrderedList.Location = new System.Drawing.Point(131, 3);
             this.btnOrderedList.LookAndFeel.SkinName = "Lilian";
             this.btnOrderedList.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnOrderedList.Name = "btnOrderedList";
-            this.btnOrderedList.Size = new System.Drawing.Size(155, 43);
+            this.btnOrderedList.Size = new System.Drawing.Size(100, 43);
             this.btnOrderedList.TabIndex = 11;
-            this.btnOrderedList.Text = "버닝내역(재굽기)";
+            this.btnOrderedList.Text = "재굽기";
             this.btnOrderedList.Click += new System.EventHandler(this.btnOrderedList_Click);
             // 
             // btnReport
             // 
             this.btnReport.AllowFocus = false;
-            this.btnReport.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnReport.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnReport.Appearance.Options.UseFont = true;
             this.btnReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.ImageOptions.Image")));
             this.btnReport.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnReport.Location = new System.Drawing.Point(271, 3);
+            this.btnReport.Location = new System.Drawing.Point(237, 3);
             this.btnReport.LookAndFeel.SkinName = "Lilian";
             this.btnReport.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(95, 43);
+            this.btnReport.Size = new System.Drawing.Size(100, 43);
             this.btnReport.TabIndex = 8;
             this.btnReport.Text = "보고서";
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
@@ -402,7 +402,7 @@
             this.grpBurningList.Name = "grpBurningList";
             this.grpBurningList.Size = new System.Drawing.Size(984, 243);
             this.grpBurningList.TabIndex = 1;
-            this.grpBurningList.Text = "CD/DVD 버닝 목록";
+            this.grpBurningList.Text = "진행 상태 목록";
             // 
             // gcBurninglist
             // 
@@ -664,7 +664,7 @@
             // txtBin2Discs
             // 
             this.txtBin2Discs.EditValue = "0";
-            this.txtBin2Discs.Location = new System.Drawing.Point(409, 31);
+            this.txtBin2Discs.Location = new System.Drawing.Point(410, 35);
             this.txtBin2Discs.Name = "txtBin2Discs";
             this.txtBin2Discs.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtBin2Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -680,7 +680,7 @@
             // txtBin4Discs
             // 
             this.txtBin4Discs.EditValue = "0";
-            this.txtBin4Discs.Location = new System.Drawing.Point(409, 64);
+            this.txtBin4Discs.Location = new System.Drawing.Point(410, 68);
             this.txtBin4Discs.Name = "txtBin4Discs";
             this.txtBin4Discs.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtBin4Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -696,7 +696,7 @@
             // txtBin1Discs
             // 
             this.txtBin1Discs.EditValue = "0";
-            this.txtBin1Discs.Location = new System.Drawing.Point(168, 30);
+            this.txtBin1Discs.Location = new System.Drawing.Point(169, 34);
             this.txtBin1Discs.Name = "txtBin1Discs";
             this.txtBin1Discs.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtBin1Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -712,7 +712,7 @@
             // txtBin3Discs
             // 
             this.txtBin3Discs.EditValue = "0";
-            this.txtBin3Discs.Location = new System.Drawing.Point(168, 64);
+            this.txtBin3Discs.Location = new System.Drawing.Point(169, 68);
             this.txtBin3Discs.Name = "txtBin3Discs";
             this.txtBin3Discs.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtBin3Discs.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -728,7 +728,7 @@
             // txtRetansferRibbons
             // 
             this.txtRetansferRibbons.EditValue = "0";
-            this.txtRetansferRibbons.Location = new System.Drawing.Point(409, 98);
+            this.txtRetansferRibbons.Location = new System.Drawing.Point(410, 102);
             this.txtRetansferRibbons.Name = "txtRetansferRibbons";
             this.txtRetansferRibbons.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtRetansferRibbons.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -744,7 +744,7 @@
             // txtCMYRibbons
             // 
             this.txtCMYRibbons.EditValue = "0";
-            this.txtCMYRibbons.Location = new System.Drawing.Point(168, 100);
+            this.txtCMYRibbons.Location = new System.Drawing.Point(169, 104);
             this.txtCMYRibbons.Name = "txtCMYRibbons";
             this.txtCMYRibbons.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.txtCMYRibbons.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -763,7 +763,7 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(267, 69);
+            this.label7.Location = new System.Drawing.Point(268, 73);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(134, 12);
             this.label7.TabIndex = 129;
@@ -775,7 +775,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(260, 103);
+            this.label5.Location = new System.Drawing.Point(261, 107);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(142, 12);
             this.label5.TabIndex = 128;
@@ -787,7 +787,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(8, 103);
+            this.label4.Location = new System.Drawing.Point(9, 107);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(152, 12);
             this.label4.TabIndex = 127;
@@ -799,7 +799,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(8, 69);
+            this.label3.Location = new System.Drawing.Point(9, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(134, 12);
             this.label3.TabIndex = 126;
@@ -811,7 +811,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(267, 36);
+            this.label2.Location = new System.Drawing.Point(268, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(134, 12);
             this.label2.TabIndex = 125;
@@ -823,7 +823,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(8, 35);
+            this.label1.Location = new System.Drawing.Point(9, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 12);
             this.label1.TabIndex = 124;
@@ -832,9 +832,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(493, 688);
+            this.pictureBox1.Location = new System.Drawing.Point(493, 693);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(265, 42);
+            this.pictureBox1.Size = new System.Drawing.Size(265, 31);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 15;
             this.pictureBox1.TabStop = false;
@@ -904,33 +904,33 @@
             // btnCancelBurning
             // 
             this.btnCancelBurning.AllowFocus = false;
-            this.btnCancelBurning.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnCancelBurning.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnCancelBurning.Appearance.Options.UseFont = true;
             this.btnCancelBurning.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.cancel_32x32;
             this.btnCancelBurning.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnCancelBurning.Location = new System.Drawing.Point(253, 3);
+            this.btnCancelBurning.Location = new System.Drawing.Point(215, 3);
             this.btnCancelBurning.LookAndFeel.SkinName = "Lilian";
             this.btnCancelBurning.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnCancelBurning.Name = "btnCancelBurning";
-            this.btnCancelBurning.Size = new System.Drawing.Size(105, 43);
+            this.btnCancelBurning.Size = new System.Drawing.Size(115, 43);
             this.btnCancelBurning.TabIndex = 9;
-            this.btnCancelBurning.Text = "굽기 취소";
+            this.btnCancelBurning.Text = "굽기취소";
             this.btnCancelBurning.Click += new System.EventHandler(this.btnCancelBurning_Click);
             // 
             // btnUSBCopy
             // 
             this.btnUSBCopy.AllowFocus = false;
-            this.btnUSBCopy.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnUSBCopy.Appearance.Font = new System.Drawing.Font("돋움", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnUSBCopy.Appearance.Options.UseFont = true;
             this.btnUSBCopy.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.icons8_usb_2_321;
             this.btnUSBCopy.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.btnUSBCopy.Location = new System.Drawing.Point(4, 3);
+            this.btnUSBCopy.Location = new System.Drawing.Point(25, 3);
             this.btnUSBCopy.LookAndFeel.SkinName = "Lilian";
             this.btnUSBCopy.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnUSBCopy.Name = "btnUSBCopy";
             this.btnUSBCopy.Size = new System.Drawing.Size(100, 43);
             this.btnUSBCopy.TabIndex = 18;
-            this.btnUSBCopy.Text = "USB복사";
+            this.btnUSBCopy.Text = "USB";
             this.btnUSBCopy.Visible = false;
             this.btnUSBCopy.Click += new System.EventHandler(this.btnUSBCopy_Click);
             // 
@@ -955,9 +955,9 @@
             this.flowLayoutPanel1.Controls.Add(this.btnOrderedList);
             this.flowLayoutPanel1.Controls.Add(this.btnUSBCopy);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(630, 5);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(659, 5);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(369, 50);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(340, 50);
             this.flowLayoutPanel1.TabIndex = 20;
             // 
             // tmrConnectServer
@@ -974,7 +974,7 @@
             this.flowLayoutPanel2.Controls.Add(this.btnPatientDelete);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(9, 5);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(619, 50);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(642, 50);
             this.flowLayoutPanel2.TabIndex = 21;
             // 
             // MainForm
@@ -1004,7 +1004,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Rimage Medical Disc System3";
+            this.Text = "Rimage Medical Disc System";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).EndInit();

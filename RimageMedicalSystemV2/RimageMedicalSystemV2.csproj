@@ -194,6 +194,7 @@
     <None Include="Resources\mr_16x16.png" />
     <None Include="Resources\forward_16x16.png" />
     <None Include="Resources\documentmap_16x16.png" />
+    <None Include="Resources\dvd-burn1.png" />
     <Content Include="RimageBasic.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
