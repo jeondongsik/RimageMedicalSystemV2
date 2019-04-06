@@ -24,7 +24,7 @@ namespace RimageEnterance
         {
             InitializeComponent();
 
-            ErrorLog.TraceWrite(this, "-- Program Start -- ", Application.StartupPath);
+            ErrorLog.TraceWrite("RimageEnterance.FrmStart", "-- Program Start -- ", Application.StartupPath);
         }
 
         /// <summary>

@@ -95,6 +95,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tmrConnectServer = new System.Windows.Forms.Timer(this.components);
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelLoadingBurn = new DevExpress.XtraEditors.PanelControl();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -120,6 +122,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.hyperLinkEdit1.Properties)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelLoadingBurn)).BeginInit();
+            this.panelLoadingBurn.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpPatInfo
@@ -979,6 +983,27 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(654, 50);
             this.flowLayoutPanel2.TabIndex = 21;
             // 
+            // panelLoadingBurn
+            // 
+            this.panelLoadingBurn.Controls.Add(this.labelControl1);
+            this.panelLoadingBurn.Location = new System.Drawing.Point(273, 225);
+            this.panelLoadingBurn.LookAndFeel.SkinName = "Blueprint";
+            this.panelLoadingBurn.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.panelLoadingBurn.Name = "panelLoadingBurn";
+            this.panelLoadingBurn.Size = new System.Drawing.Size(459, 128);
+            this.panelLoadingBurn.TabIndex = 22;
+            this.panelLoadingBurn.Visible = false;
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelControl1.Appearance.Options.UseFont = true;
+            this.labelControl1.Location = new System.Drawing.Point(74, 31);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(328, 63);
+            this.labelControl1.TabIndex = 0;
+            this.labelControl1.Text = "굽기 명령을 서버에 전송하고 있습니다.\r\n\r\n이 창이 없어질 때까지 잠시만 기다려 주세요.";
+            // 
             // MainForm
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -986,6 +1011,7 @@
             this.Appearance.Options.UseFont = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1008, 761);
+            this.Controls.Add(this.panelLoadingBurn);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.hyperLinkEdit1);
@@ -1037,6 +1063,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.hyperLinkEdit1.Properties)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.panelLoadingBurn)).EndInit();
+            this.panelLoadingBurn.ResumeLayout(false);
+            this.panelLoadingBurn.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1109,6 +1138,8 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Timer tmrConnectServer;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private DevExpress.XtraEditors.PanelControl panelLoadingBurn;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
     }
 }
 

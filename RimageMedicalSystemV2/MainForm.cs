@@ -161,6 +161,11 @@ namespace RimageMedicalSystemV2
         /// 작업 대상 유형 - CD,DVD 굽기 또는 USB 복사
         /// </summary>
         public MediaType mediaType = MediaType.CD_DVD;
+
+        /// <summary>
+        /// 굽기명령을 서버에 보내고 있는지 여부
+        /// </summary>
+        public bool _SendingOrder = false;
         
         #endregion
 
@@ -174,7 +179,7 @@ namespace RimageMedicalSystemV2
 
             try
             {
-                ErrorLog.TraceWrite(this, "-- Program Initialize  -- ", Application.StartupPath);
+                ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm", "-- Program Initialize  -- ", Application.StartupPath);
 
                 this.systemListenerDel = new SysExecption(GetSysExecption);
                 this.serverStatusDel = new ServerStatus(GetServerConfig);
@@ -996,6 +1001,11 @@ namespace RimageMedicalSystemV2
                     return false;
                 }
 
+                //// 굽기전송중
+                this._SendingOrder = true;
+                this.btnBurn.Enabled = false;
+                this.panelLoadingBurn.Visible = true;
+
                 //// 등록된 환자가 여러건일 경우
                 if (orderInfo.patList.Count > 1 && GlobalVar.configEntity.DisableMultiPatient == "N" && this.mediaType != MediaType.USB)
                 {
@@ -1117,6 +1127,7 @@ namespace RimageMedicalSystemV2
                         }
                         catch (Exception ex)
                         {
+                            this.UnlockBurn();
                             this.ErrMsgShow("MergeFile 생성 에러\r\n" + ex.Message, "Rimage Message : createMergeFile", ex);
                             return false;
                         }
@@ -1134,6 +1145,7 @@ namespace RimageMedicalSystemV2
                 }
                 catch (Exception me)
                 {
+                    this.UnlockBurn();
                     MessageBox.Show(me.Message, "Rimage Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
@@ -1223,6 +1235,7 @@ namespace RimageMedicalSystemV2
                     if (this.mediaType == MediaType.USB)
                     {
                         //// USB 일 경우 여기까지 통과되면 환자 객체를 USB화면으로 넘긴다.
+                        this.UnlockBurn();
                         this.ExeCopyToUSB(orderInfo);
                         return true;
                     }
@@ -1233,24 +1246,13 @@ namespace RimageMedicalSystemV2
                         //// 굽기 프로그램을 실행한다.
                         Process proc = Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
 
-                        //// 파일 생성이 완료된 후  프로그램 실행을 위해 1초 쉰다.
-                        //// Thread.Sleep(1000);
-
                         //// 대기 목록에 추가
                         this.AddBurnPendingList(orderInfo.OrderId, ordJson);
-
-                        //////// 그리드에 추가한다.
-                        ////this.AddBurningList(orderInfo);
-
-                        //////// 프로그램 1일 경우 조회된 값 초기화.
-                        ////if (GlobalVar.configEntity.programType == "1")
-                        ////    this.ucPatients11.Clear();
-                    }
-
-                    
+                    }                    
                 }
                 catch (Exception ex)
                 {
+                    this.UnlockBurn();
                     this.Cursor = Cursors.Default;
                     ErrMsgShow("굽기 명령 실행 중 에러 발생\r\n" + ex.Message, "Rimage Message : Submit_Order", ex);
                 }
@@ -1259,11 +1261,22 @@ namespace RimageMedicalSystemV2
             }
             catch (Exception ex)
             {
+                this.UnlockBurn();
                 this.Cursor = Cursors.Default;
                 this.ErrMsgShow("굽기 명령 실행 중 에러 발생\r\n" + ex.Message, "Rimage Message : BurningOrder", ex);
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 굽기 가능한 상태로 전환
+        /// </summary>
+        private void UnlockBurn()
+        {
+            this._SendingOrder = false;
+            this.btnBurn.Enabled = true;
+            this.panelLoadingBurn.Visible = false;
         }
 
         /// <summary>
@@ -1295,6 +1308,8 @@ namespace RimageMedicalSystemV2
         {
             try
             {
+                this.UnlockBurn();
+
                 if (orderID == "NULL")
                 {
                     this.txtMessages.Text = "굽기 전송 실패 : 명령정보 생성 오류";
@@ -1324,6 +1339,8 @@ namespace RimageMedicalSystemV2
         {
             try
             {
+                this.UnlockBurn();
+
                 if (this._BurnPendingList == null)
                     return;
 
@@ -1350,7 +1367,7 @@ namespace RimageMedicalSystemV2
                     }
 
                     this.txtStatusView.AppendText(string.Format("[{0}]으로 굽기주문 전송하였습니다.\r\n", orderInfo.TargetServer.IP));
-                    ErrorLog.TraceWrite(this, string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
+                    ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm.AddBurningList", string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
                 }
             }
             catch { }
@@ -3280,12 +3297,14 @@ namespace RimageMedicalSystemV2
                         if (cds.lpData.StartsWith("BURN_SRT"))
                         {
                             //// 굽기 시작
+                            this.UnlockBurn();
                             string orderID = cds.lpData.Substring(cds.lpData.IndexOf(":") + 1);
                             this.AddBurningList(orderID);
                         }
                         else if (cds.lpData.StartsWith("BURN_ERROR"))
                         {
                             //// 굽기 시작이 안됨
+                            this.UnlockBurn();
                             string orderID = cds.lpData.Substring(cds.lpData.IndexOf(":") + 1);
                             this.RemoveBurningList(orderID);
                         }
@@ -3527,12 +3546,12 @@ namespace RimageMedicalSystemV2
                         File.Create(file);
                     }
 
-                    //// item.SubItems[4].Text = "Submitted for cancel job";
-                    //// item.SubItems[6].Text = "취소";
                     orderInfo.Progress = "Submitted for cancel job";
                     orderInfo.BurnState = "취소";
 
                     this.gvBurninglist.RefreshData();
+
+                    ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm.CancelOrder", "굽기취소 : " + file, GlobalVar.ProgramExecuteFolder);
                 }
             }
             catch { }
@@ -3703,7 +3722,7 @@ namespace RimageMedicalSystemV2
                 this.ClearImgFiles();
                 this.KillBurnPrograms();
 
-                ErrorLog.TraceWrite(this, "-- Program Exit --", Application.StartupPath);
+                ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm.MainForm_FormClosing", "-- Program Exit --", Application.StartupPath);
             }
             else
             {

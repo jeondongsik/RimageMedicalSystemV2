@@ -77,13 +77,13 @@ namespace RimageKorea
                 ErrorLog.LogWrite(null, ex.ToString(), folderLoot);
             }
             
-            //에러로그 삭제
+            //// 에러로그 삭제            
             try
             {
                 DirectoryInfo errDir = new DirectoryInfo(Path.Combine(folderLoot, GlobalVar.LOG_ERR_FLD));
                 foreach (FileInfo fi in errDir.GetFiles())
                 {
-                    if (fi.CreationTime.Date <= DateTime.Now.AddDays(31).Date)
+                    if (fi.CreationTime.Date <= DateTime.Now.AddDays(-30).Date)
                     {
                         FileControl.DeleteFile(fi.FullName, false);
                     }
@@ -97,7 +97,7 @@ namespace RimageKorea
                 DirectoryInfo errDir = new DirectoryInfo(Path.Combine(folderLoot, GlobalVar.ORDER_FOLDER, "ERRORS"));
                 foreach (FileInfo fi in errDir.GetFiles())
                 {
-                    if (fi.CreationTime.Date <= DateTime.Now.AddDays(31).Date)
+                    if (fi.CreationTime.Date <= DateTime.Now.AddDays(-30).Date)
                     {
                         FileControl.DeleteFile(fi.FullName, false);
                     }

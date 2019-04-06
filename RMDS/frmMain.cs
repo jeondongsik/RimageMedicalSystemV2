@@ -472,7 +472,7 @@ namespace RMDS
                         cf.setConfigServerInfo(this.serverIP, this.serverName, this.serverPort);
                         cf = null;
 
-                        RimageKorea.ErrorLog.TraceWrite(this, "-- [" + this.serverIP + "] Connected -- ", Application.StartupPath);
+                        RimageKorea.ErrorLog.TraceWrite("RMDS.frmMain.ConnectServer", "-- [" + this.serverIP + "] Connected -- ", Application.StartupPath);
 
                         return true;
                     }
@@ -694,7 +694,7 @@ namespace RMDS
                                   this.MyIP);
 
                 //// 로그 남긴다.
-                ErrorLog.TraceWrite(this, string.Format("OrderID:[{0}] 굽기 명령 전송 완료.", this.burnOrderInfo.DiscOrder.OrderID), GlobalVar.ProgramExecuteFolder);
+                ErrorLog.TraceWrite("RMDS.frmMain.SubmitOrder", string.Format("OrderID:[{0}] 굽기 명령 전송 완료.", this.burnOrderInfo.DiscOrder.OrderID), GlobalVar.ProgramExecuteFolder);
             }
             catch (CMsgConnectFailedException me)
             {
@@ -1069,8 +1069,7 @@ namespace RMDS
                 COrderDescription pOrder = new COrderDescription();
                 pOrder.ClientId = this.ClientId;
                 pOrder.OrderId = this.orderID;
-
-                ////this.statusType = (orderInfo.OrderType == "ImageOrderStatus") ? "Imaging " : "Producing ";
+                                
                 if (this.statusType.Contains("Imaging"))
                     pOrder.TargetCluster = "DefaultImageCluster";
                 else
@@ -1078,9 +1077,7 @@ namespace RMDS
 
                 COrderManager.GetInstance().CancelOrder(pOrder, true);
 
-                ErrorLog.TraceWrite(this, "취소명령 보냄 : " + pOrder.TargetCluster, GlobalVar.ProgramExecuteFolder);
-                //// 프로그램을 종료시키는 타이머 실행
-                //// this.timerAppExit.Enabled = true;
+                ErrorLog.TraceWrite("RMDS.frmMain.CancelOrder", "취소명령 보냄 : " + pOrder.TargetCluster, GlobalVar.ProgramExecuteFolder);
             }
             catch { }
         }
@@ -1105,7 +1102,7 @@ namespace RMDS
                     //// 로그기록
                     if (this.burnOrderInfo != null)
                     {
-                        ErrorLog.TraceWrite(this, string.Format("-- [{0}] Complete. [{1}] -- ", this.burnOrderInfo.DiscOrder.OrderID, etype.ToString()), Application.StartupPath);
+                        ErrorLog.TraceWrite("RMDS.frmMain.ApplicationExit", string.Format("-- [{0}] Complete. [{1}] -- ", this.burnOrderInfo.DiscOrder.OrderID, etype.ToString()), Application.StartupPath);
                     }
                 }
                 catch { }
@@ -1141,7 +1138,7 @@ namespace RMDS
                     {   
                     }
 
-                    ErrorLog.TraceWrite(this, "-- [" + this.burnOrderInfo.TargetServer.IP + "] Disconnected -- ", Application.StartupPath);
+                    ////ErrorLog.TraceWrite(this.ToString(), "-- [" + this.burnOrderInfo.TargetServer.IP + "] Disconnected -- ", Application.StartupPath);
                 }
             }
             catch
@@ -1219,7 +1216,7 @@ namespace RMDS
                 {
                     if (fl.EndsWith(this.orderID))
                     {
-                        ErrorLog.TraceWrite(this, "취소명령 Catch : " + fl, GlobalVar.ProgramExecuteFolder);
+                        ErrorLog.TraceWrite("RMDS.frmMain.CheckCancelFile", "취소명령 Catch : " + fl, GlobalVar.ProgramExecuteFolder);
                         return true;
                     }
                 }
