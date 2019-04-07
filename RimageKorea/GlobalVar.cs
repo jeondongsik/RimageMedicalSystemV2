@@ -30,13 +30,13 @@ namespace RimageKorea
 
         public const string RIMAGE_CONFIG_SETTING = "RimageConfigSetting";
 
-        public const string RIMAGE_ENTERANCE = "RimageEnterance3";
-        public const string RIMAGE_MEDICAL_CLIENT = "RimageMedicalSystemV23";
-        public const string PRODUCT_NAME = "Rimage Medical Disc System3";
+        public const string RIMAGE_ENTERANCE = "RimageEnterance";
+        public const string RIMAGE_MEDICAL_CLIENT = "RimageMedicalSystemV2";
+        public const string PRODUCT_NAME = "Rimage Medical Disc System";
         /// <summary>
         /// 굽기 프로그램명
         /// </summary>
-        public static string BURM_PROGRAM = "RMDS3.exe";
+        public static string BURM_PROGRAM = "RMDS.exe";
 
         public const string CD_INFO_FILE = "CD_Info.txt";
         public const string CD_STUDY_INFO_FILE = "Studyinfo.ini";
