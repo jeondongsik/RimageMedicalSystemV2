@@ -393,7 +393,7 @@ namespace RimageKorea
                 pAttribute.Value = "true";
                 memberElement2.Attributes.SetNamedItem(pAttribute);
             }
-            if (orderData.MediaType.Equals("DVDR"))
+            else if (orderData.MediaType.Equals("DVDR"))
             {
                 memberElement2 = pXMLDoc.CreateElement("UDFFormat");
                 memberElement1.AppendChild(memberElement2);
@@ -406,7 +406,19 @@ namespace RimageKorea
                 pAttribute.Value = "none";
                 memberElement2.Attributes.SetNamedItem(pAttribute);
             }
+            else if (orderData.MediaType.Equals("DVDR-DL"))
+            {
+                memberElement2 = pXMLDoc.CreateElement("UDFFormat");
+                memberElement1.AppendChild(memberElement2);
 
+                pAttribute = pXMLDoc.CreateAttribute("UDF");
+                pAttribute.Value = "102ISO";
+                memberElement2.Attributes.SetNamedItem(pAttribute);
+
+                pAttribute = pXMLDoc.CreateAttribute("Apple");
+                pAttribute.Value = "none";
+                memberElement2.Attributes.SetNamedItem(pAttribute);
+            }
 
             //Create FormatOptions Member Element:
             memberElement2 = pXMLDoc.CreateElement("FormatOptions");
@@ -470,6 +482,8 @@ namespace RimageKorea
                 pAttribute.Value = "80";
             else if (orderData.MediaType.Equals("DVDR"))
                 pAttribute.Value = "500";
+            else if (orderData.MediaType.Equals("DVDR-DL"))
+                pAttribute.Value = "DVD-DL";
 
             memberElement1.Attributes.SetNamedItem(pAttribute);
 
