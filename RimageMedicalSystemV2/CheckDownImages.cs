@@ -44,6 +44,12 @@ namespace RimageMedicalSystemV2
                 this.mReportForm = _reForm;
                 this.dicomDirLoc = _dicomDirLoc;
 
+                ////TechHiem -신규버전인 경우
+                if (GlobalVar.configEntity.AutoExecuteHookingType == "12")
+                {
+                    this.checkFolderName = "ViewRex";
+                }
+
                 this.tmChecker = new Timer();
                 this.tmChecker.Enabled = true;
                 this.tmChecker.Interval = 300;

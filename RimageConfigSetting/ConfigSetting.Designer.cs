@@ -189,10 +189,10 @@
             this.label45 = new System.Windows.Forms.Label();
             this.xtraTabPageSetProgramConfig2 = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
+            this.checkBoxDisplayServeIP = new System.Windows.Forms.CheckBox();
             this.checkBoxUseUSBCopy = new System.Windows.Forms.CheckBox();
             this.checkBoxDisableMultiPatient = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoPrintApp = new System.Windows.Forms.CheckBox();
-            this.checkBoxDisplayServeIP = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServerList)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -747,7 +747,8 @@
             "8. DEIT PACS",
             "9. TechHeim",
             "10. DCAS",
-            "11. CheckFolderSize"});
+            "11. CheckFolderSize",
+            "12.TechHeim2"});
             this.comboBox_AutoExecuteHookingType.Location = new System.Drawing.Point(181, 261);
             this.comboBox_AutoExecuteHookingType.Name = "comboBox_AutoExecuteHookingType";
             this.comboBox_AutoExecuteHookingType.Size = new System.Drawing.Size(200, 23);
@@ -1963,6 +1964,16 @@
             this.groupControl6.TabIndex = 2;
             this.groupControl6.Text = "프로그램 설정 (2)";
             // 
+            // checkBoxDisplayServeIP
+            // 
+            this.checkBoxDisplayServeIP.AutoSize = true;
+            this.checkBoxDisplayServeIP.Location = new System.Drawing.Point(318, 267);
+            this.checkBoxDisplayServeIP.Name = "checkBoxDisplayServeIP";
+            this.checkBoxDisplayServeIP.Size = new System.Drawing.Size(277, 19);
+            this.checkBoxDisplayServeIP.TabIndex = 58;
+            this.checkBoxDisplayServeIP.Text = "화면에 서버목록 - IP로 표시 (기본은 서버명임)";
+            this.checkBoxDisplayServeIP.UseVisualStyleBackColor = true;
+            // 
             // checkBoxUseUSBCopy
             // 
             this.checkBoxUseUSBCopy.AutoSize = true;
@@ -1992,16 +2003,6 @@
             this.checkBoxAutoPrintApp.TabIndex = 55;
             this.checkBoxAutoPrintApp.Text = "굽기 완료 후 복사 신청서(발급내역) 자동 인쇄";
             this.checkBoxAutoPrintApp.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDisplayServeIP
-            // 
-            this.checkBoxDisplayServeIP.AutoSize = true;
-            this.checkBoxDisplayServeIP.Location = new System.Drawing.Point(318, 267);
-            this.checkBoxDisplayServeIP.Name = "checkBoxDisplayServeIP";
-            this.checkBoxDisplayServeIP.Size = new System.Drawing.Size(277, 19);
-            this.checkBoxDisplayServeIP.TabIndex = 58;
-            this.checkBoxDisplayServeIP.Text = "화면에 서버목록 - IP로 표시 (기본은 서버명임)";
-            this.checkBoxDisplayServeIP.UseVisualStyleBackColor = true;
             // 
             // ConfigSetting
             // 

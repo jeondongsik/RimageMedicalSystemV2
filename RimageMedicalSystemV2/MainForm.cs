@@ -219,8 +219,8 @@ namespace RimageMedicalSystemV2
                     }
                     else
                     {
-                        //// 9.울산병원인 경우
-                        if (GlobalVar.configEntity.AutoExecuteHookingType == "9")
+                        //// 9.울산병원인 경우 - 테크하임일 경우
+                        if (GlobalVar.configEntity.AutoExecuteHookingType == "9" || GlobalVar.configEntity.AutoExecuteHookingType == "12")
                         {
                             this.hookChecker = new CheckDownImages(this, GlobalVar.configEntity.DicomDownloadFolder);
                         }

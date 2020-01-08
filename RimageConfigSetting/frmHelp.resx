@@ -146,11 +146,16 @@
  Caption : Deit_Burn
  
  9. TechHeim
- 
+ Caption : ExportDicom, CheckFoler : CDViewer
+
  10. DCAS
  Caption : DCAS_Success
 
 11. CheckFolderSize : 폴더크기를 체크하여 다운로드 완료를 체크한다.
+
+12. TechHeim
+ Caption : ExportDicom, CheckFoler : ViewRex
+
 ----------------------------------------------------------------------------------</value>
   </data>
 </root>
