@@ -144,5 +144,10 @@ namespace RimageKorea
         /// USB 복사 진행중인지 여부
         /// </summary>
         public static bool isCopyingToUSB = false;
+
+        /// <summary>
+        /// 아산병원 Tomctech 뷰어 파일위치
+        /// </summary>
+        public const string TOMTECH_VIEWR_FOLDER = @"C:\TomtechV2";
     }
 }

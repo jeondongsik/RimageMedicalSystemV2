@@ -97,6 +97,7 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelLoadingBurn = new DevExpress.XtraEditors.PanelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -1004,6 +1005,14 @@
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "굽기 명령을 서버에 전송하고 있습니다.\r\n\r\n이 창이 없어질 때까지 잠시만 기다려 주세요.";
             // 
+            // backgroundWorker5
+            // 
+            this.backgroundWorker5.WorkerReportsProgress = true;
+            this.backgroundWorker5.WorkerSupportsCancellation = true;
+            this.backgroundWorker5.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker5_DoWork);
+            this.backgroundWorker5.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker5_ProgressChanged);
+            this.backgroundWorker5.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker5_RunWorkerCompleted);
+            // 
             // MainForm
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -1140,6 +1149,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private DevExpress.XtraEditors.PanelControl panelLoadingBurn;
         private DevExpress.XtraEditors.LabelControl labelControl1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker5;
     }
 }
 

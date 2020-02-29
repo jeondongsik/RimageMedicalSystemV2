@@ -1989,9 +1989,9 @@
             this.checkBoxDisableMultiPatient.AutoSize = true;
             this.checkBoxDisableMultiPatient.Location = new System.Drawing.Point(318, 215);
             this.checkBoxDisableMultiPatient.Name = "checkBoxDisableMultiPatient";
-            this.checkBoxDisableMultiPatient.Size = new System.Drawing.Size(133, 19);
+            this.checkBoxDisableMultiPatient.Size = new System.Drawing.Size(130, 19);
             this.checkBoxDisableMultiPatient.TabIndex = 56;
-            this.checkBoxDisableMultiPatient.Text = "멀티 환자 사용안함.";
+            this.checkBoxDisableMultiPatient.Text = "멀티 환자 사용안함";
             this.checkBoxDisableMultiPatient.UseVisualStyleBackColor = true;
             // 
             // checkBoxAutoPrintApp

@@ -1140,5 +1140,41 @@ namespace RimageKorea
             }
             catch { }
         }
+
+        /// <summary>
+        /// 폴더 통째로 복사하기
+        /// </summary>
+        /// <param name="srcDir">소스폴더</param>
+        /// <param name="trgDir">대상풀더</param>
+        /// <param name="topSrcFolder"></param>
+        public static void CopyFolderAndFiles(string srcDir, string trgDir, string topSrcFolder)
+        {
+            try
+            {
+                DirectoryInfo srcFolder = new DirectoryInfo(srcDir);
+                
+                FileInfo[] files = srcFolder.GetFiles();
+                DirectoryInfo[] dirs = srcFolder.GetDirectories();
+
+                foreach (FileInfo file in files)
+                { 
+                    string copyto = file.FullName.Replace(topSrcFolder, trgDir);                    
+                    FileSystem.CopyFile(file.FullName, copyto, true);
+                }
+
+                foreach (DirectoryInfo dri in dirs)
+                {                    
+                    //// 폴더가 없을 경우 생성한다.
+                    string targetFolder = dri.FullName.Replace(topSrcFolder, trgDir);
+                    if (!Directory.Exists(targetFolder))
+                    {
+                        FileSystem.CreateDirectory(targetFolder);
+                    }
+
+                    CopyFolderAndFiles(dri.FullName, trgDir, topSrcFolder);
+                }
+            }
+            catch { }
+        }
     }
 }

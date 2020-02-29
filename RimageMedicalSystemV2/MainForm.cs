@@ -712,7 +712,7 @@ namespace RimageMedicalSystemV2
                     orderInfo.patName = this.ucPatients11.txtPatientName.Text;
                     orderInfo.copies = Convert.ToInt32(this.ucPatients11.cbCopies.EditValue);
                     orderInfo.mediType = Convert.ToString(this.ucPatients11.cbMedia.EditValue);
-
+                                        
                     if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
                     {
                         //// Process Kill - Deit_Burn.exe
@@ -951,6 +951,24 @@ namespace RimageMedicalSystemV2
         /// <param name="reburn">재굽기여부</param>
         public bool StartBurn(BurnOrderedInfoEntity orderInfo, bool reburn = false)
         {
+            //// 아산병원Tomch 인 경우에 View관련 파일을 환자폴더에 복사해서 넣어준다.
+            try
+            {
+                if (GlobalVar.configEntity.FolderPattern == "6")
+                {
+                    frmCopyFolder frmCopy = new frmCopyFolder();
+                    frmCopy.SourceDirectory = GlobalVar.TOMTECH_VIEWR_FOLDER;
+                    frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
+
+                    frmCopy.ShowDialog();
+                    frmCopy.Dispose();
+                }
+            }
+            catch
+            {
+
+            }
+
             int j = 1;
 
             if (this._BurningList == null)
@@ -4052,6 +4070,44 @@ namespace RimageMedicalSystemV2
                     //// 취소/실패시 빨강색
                     e.Appearance.ForeColor = Color.Red;
                 }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 파일 복사 : 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                string targetFolder = e.Argument as string;
+                
+                if (!string.IsNullOrWhiteSpace(targetFolder))
+                {
+                    //// 톰텍뷰어폴더의 파일들을 환자폴더로 이동한다.
+                    FileControl.CopyFolderAndFiles(GlobalVar.TOMTECH_VIEWR_FOLDER, targetFolder, GlobalVar.TOMTECH_VIEWR_FOLDER);
+                }
+            }
+            catch { }
+        }
+
+        private void backgroundWorker5_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch { }
+        }
+
+        private void backgroundWorker5_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+
             }
             catch { }
         }

@@ -463,16 +463,18 @@ namespace RMDS
                         //Create system listener 
                         systemListener = new SystemListener(this);
                         CSystemManager.GetInstance().ListenForSystemStatus(systemListener);
-                        
+
                         if (string.IsNullOrWhiteSpace(this.RimageSystemFolderPath))
+                        {
                             this.RimageSystemFolderPath = CSystemManager.GetInstance().GetUncSystemFolder();
+                        }
 
                         //// 설정파일에 저장
                         Config cf = new Config(Application.StartupPath);
                         cf.setConfigServerInfo(this.serverIP, this.serverName, this.serverPort);
                         cf = null;
 
-                        RimageKorea.ErrorLog.TraceWrite("RMDS.frmMain.ConnectServer", "-- [" + this.serverIP + "] Connected -- ", Application.StartupPath);
+                        RimageKorea.ErrorLog.TraceWrite("RMDS.frmMain.ConnectServer", string.Format("-- [{0}] Connected -- systemfolder:{1}", this.serverIP, this.RimageSystemFolderPath), Application.StartupPath);
 
                         return true;
                     }
@@ -775,7 +777,7 @@ namespace RMDS
                 }
                 else
                 {
-                    xmlOrderStatus = xmlOrderStatus.Replace(CSystemManager.GetInstance().GetUncSystemFolder(), this.RimageSystemFolderPath);
+                    ////xmlOrderStatus = xmlOrderStatus.Replace(CSystemManager.GetInstance().GetUncSystemFolder(), this.RimageSystemFolderPath);
                 }
 
                 //// Parse status information
