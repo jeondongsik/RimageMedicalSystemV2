@@ -961,6 +961,16 @@ namespace RimageMedicalSystemV2
                     frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
 
                     frmCopy.ShowDialog();
+
+                    ////EditList에 Viewr 파일 목록 넣어준다.                    
+                    if (frmCopy.EditList != null)
+                    {
+                        foreach (string fl in frmCopy.EditList)
+                        {
+                            orderInfo.ImgFiles.EditList.Add(fl);
+                        }
+                    }
+
                     frmCopy.Dispose();
                 }
             }
@@ -4070,44 +4080,6 @@ namespace RimageMedicalSystemV2
                     //// 취소/실패시 빨강색
                     e.Appearance.ForeColor = Color.Red;
                 }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 파일 복사 : 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
-        {
-            try
-            {
-                string targetFolder = e.Argument as string;
-                
-                if (!string.IsNullOrWhiteSpace(targetFolder))
-                {
-                    //// 톰텍뷰어폴더의 파일들을 환자폴더로 이동한다.
-                    FileControl.CopyFolderAndFiles(GlobalVar.TOMTECH_VIEWR_FOLDER, targetFolder, GlobalVar.TOMTECH_VIEWR_FOLDER);
-                }
-            }
-            catch { }
-        }
-
-        private void backgroundWorker5_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            try
-            {
-
-            }
-            catch { }
-        }
-
-        private void backgroundWorker5_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            try
-            {
-
             }
             catch { }
         }

@@ -17,10 +17,16 @@ namespace RimageMedicalSystemV2
         /// 복사할 원 디렉토리
         /// </summary>
         public string SourceDirectory { get; set; }
+
         /// <summary>
         /// 복사할 대상 디렉토리
         /// </summary>
         public string TargetDirectory { get; set; }
+
+        /// <summary>
+        /// EditList
+        /// </summary>
+        public List<string> EditList { get; set; }
 
         public frmCopyFolder()
         {
@@ -41,7 +47,7 @@ namespace RimageMedicalSystemV2
             try
             {
                 //// 톰텍뷰어폴더의 파일들을 환자폴더로 이동한다.
-                FileControl.CopyFolderAndFiles(this.SourceDirectory, this.TargetDirectory, this.SourceDirectory);
+                this.EditList = FileControl.CopyFolderAndFiles(this.SourceDirectory, this.TargetDirectory, this.SourceDirectory, null);
             }
             catch { }
         }

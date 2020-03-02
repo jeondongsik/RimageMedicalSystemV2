@@ -1147,8 +1147,11 @@ namespace RimageKorea
         /// <param name="srcDir">소스폴더</param>
         /// <param name="trgDir">대상풀더</param>
         /// <param name="topSrcFolder"></param>
-        public static void CopyFolderAndFiles(string srcDir, string trgDir, string topSrcFolder)
+        public static List<string> CopyFolderAndFiles(string srcDir, string trgDir, string topSrcFolder, List<string> addFiles)
         {
+            if (addFiles == null)
+                addFiles = new List<string>();
+
             try
             {
                 DirectoryInfo srcFolder = new DirectoryInfo(srcDir);
@@ -1160,6 +1163,9 @@ namespace RimageKorea
                 { 
                     string copyto = file.FullName.Replace(topSrcFolder, trgDir);                    
                     FileSystem.CopyFile(file.FullName, copyto, true);
+
+                    if (!addFiles.Contains(copyto))
+                        addFiles.Add(copyto);
                 }
 
                 foreach (DirectoryInfo dri in dirs)
@@ -1171,10 +1177,12 @@ namespace RimageKorea
                         FileSystem.CreateDirectory(targetFolder);
                     }
 
-                    CopyFolderAndFiles(dri.FullName, trgDir, topSrcFolder);
+                    CopyFolderAndFiles(dri.FullName, trgDir, topSrcFolder, addFiles);
                 }
             }
             catch { }
+
+            return addFiles;
         }
     }
 }
