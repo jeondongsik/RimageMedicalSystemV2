@@ -962,12 +962,16 @@ namespace RimageMedicalSystemV2
 
                     frmCopy.ShowDialog();
 
-                    ////EditList에 Viewr 파일 목록 넣어준다.                    
+                    //// 다운로드 폴더의 상위 폴더
+                    string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
+
+                    ////EditList에 Viewr 파일 목록 넣어준다.
                     if (frmCopy.EditList != null)
                     {
                         foreach (string fl in frmCopy.EditList)
                         {
-                            orderInfo.ImgFiles.EditList.Add(fl);
+                            //// download 폴더로 변경해줘야 함.                            
+                            orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
                         }
                     }
 
