@@ -975,6 +975,9 @@ namespace RimageMedicalSystemV2
                         }
                     }
 
+                    //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
+                    orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
+
                     frmCopy.Dispose();
                 }
             }

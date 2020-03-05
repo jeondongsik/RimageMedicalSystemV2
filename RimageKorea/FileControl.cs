@@ -1088,7 +1088,7 @@ namespace RimageKorea
                     {
                         fld_new = patName + "(1)";
                     }
-                                        
+                    
                     patientFolderName = string.Format("MC_{0}_{1}_{2}", DateTime.Now.ToString("yyyyMMdd"), patNo, fld_new);
                     ChangeDownloadFolderToPatientFolder(patNo, fld_new);
                 }
@@ -1161,7 +1161,7 @@ namespace RimageKorea
 
                 foreach (FileInfo file in files)
                 { 
-                    string copyto = file.FullName.Replace(topSrcFolder, trgDir);                    
+                    string copyto = file.FullName.Replace(topSrcFolder, trgDir);                  
                     FileSystem.CopyFile(file.FullName, copyto, true);
 
                     if (!addFiles.Contains(copyto))

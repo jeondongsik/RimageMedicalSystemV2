@@ -823,7 +823,7 @@ namespace RMDS
 
                         statusDisp.ResultCode = "2";
                         statusDisp.ResultMessage = "완료";
-                        
+
                         if (afterLen != startLen)
                         {
                             statusDisp.ResultCode = "9";
