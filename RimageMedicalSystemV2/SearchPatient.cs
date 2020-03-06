@@ -324,7 +324,8 @@ namespace RimageMedicalSystemV2
                                 }
                                 break;
                             case "6":
-                                //// Tomtech-아산병원초음파
+                            case "7":
+                                //// Tomtech-아산병원초음파 : 7은 New버전
                                 GetPatientInfoFromTomtech clsTT = new GetPatientInfoFromTomtech();
                                 clsTT.GetInfo(sdir.FullName);
 

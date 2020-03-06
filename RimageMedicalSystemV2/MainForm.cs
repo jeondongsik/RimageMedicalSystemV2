@@ -951,10 +951,10 @@ namespace RimageMedicalSystemV2
         /// <param name="reburn">재굽기여부</param>
         public bool StartBurn(BurnOrderedInfoEntity orderInfo, bool reburn = false)
         {
-            //// 아산병원Tomch 인 경우에 View관련 파일을 환자폴더에 복사해서 넣어준다.
+            //// 아산병원Tomch_New 인 경우에 View관련 파일을 환자폴더에 복사해서 넣어준다.
             try
             {
-                if (GlobalVar.configEntity.FolderPattern == "6")
+                if (GlobalVar.configEntity.FolderPattern == "7")
                 {
                     frmCopyFolder frmCopy = new frmCopyFolder();
                     frmCopy.SourceDirectory = GlobalVar.TOMTECH_VIEWR_FOLDER;
@@ -970,13 +970,20 @@ namespace RimageMedicalSystemV2
                     {
                         foreach (string fl in frmCopy.EditList)
                         {
-                            //// download 폴더로 변경해줘야 함.                            
+                            //// download 폴더로 변경해줘야 함.
                             orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
                         }
                     }
 
                     //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
                     orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
+
+                    //// 화면 출력용도 다시 계산
+                    long fldLen = orderInfo.FolderSize / 1024 / 1024;
+                    orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+
+                    if (GlobalVar.configEntity.programType == "1")
+                        ucPatients11.txtDataLength.Text = orderInfo.mediSize;
 
                     frmCopy.Dispose();
                 }
