@@ -172,7 +172,7 @@ namespace RimageEnterance
         {
             KillProcess.DelProcess(GlobalVar.RIMAGE_CONFIG_SETTING);
             KillProcess.DelProcess(GlobalVar.RIMAGE_MEDICAL_CLIENT);
-            KillProcess.DelProcess("RMDS");
+            KillProcess.DelProcess(GlobalVar.RMDS_PROG);
 
             this.ServerListFile = Path.Combine(Application.StartupPath, "ServerList.xml");
 

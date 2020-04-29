@@ -3247,7 +3247,7 @@ namespace RimageMedicalSystemV2
                     }
                     else
                     {
-                        foreach (string sdir in Directory.GetDirectories(GlobalVar.configEntity.LocalShareFolder))
+                        foreach (string sdir in Directory.GetDirectories(checkFolder))
                         {
                             //// 다운체크파일이 존재하고 burn.end 파일이 없을 경우에만 다음단계 실행
                             //// 환자목록에 없을 경우에만..
