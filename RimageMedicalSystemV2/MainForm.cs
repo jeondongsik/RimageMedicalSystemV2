@@ -331,16 +331,19 @@ namespace RimageMedicalSystemV2
         {
             if (GlobalVar.configEntity.AutoExecute == "1")
             {
+                //// 조회까지 진행일 경우
                 this.btnSearch.Enabled = false;
                 this.btnBurn.Enabled = true;
             }
             else if (GlobalVar.configEntity.AutoExecute == "2")
             {
+                //// 굽기까지 진행일 경우
                 this.btnSearch.Enabled = false;
                 this.btnBurn.Enabled = false;
             }
             else
             {
+                //// 수기 실행
                 this.btnSearch.Enabled = true;
                 this.btnBurn.Enabled = true;
             }
@@ -1317,8 +1320,17 @@ namespace RimageMedicalSystemV2
         private void UnlockBurn()
         {
             this._SendingOrder = false;
-            this.btnBurn.Enabled = true;
             this.panelLoadingBurn.Visible = false;
+
+            if (GlobalVar.configEntity.AutoExecute == "2")
+            {
+                //// 굽기까지 진행일 경우
+                this.btnBurn.Enabled = false;
+            }
+            else
+            {
+                this.btnBurn.Enabled = true;
+            }
         }
 
         /// <summary>
