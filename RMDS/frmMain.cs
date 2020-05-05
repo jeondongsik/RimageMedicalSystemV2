@@ -308,15 +308,17 @@ namespace RMDS
                             //// 서버에 접속되지 않으므로 프로그램 종료
                             this.ApplicationExit(EnumExitType.Fail);
                         }
-
-                        //// 굽기 명령 전송
-                        if (!this.SubmitOrder())
+                        else
                         {
-                            //// 메인프로그램에 메시지 전송한다.
-                            this.SendWinMessage(string.Format("BURN_ERROR:{0}", this.burnOrderInfo.OrderId));
+                            //// 굽기 명령 전송
+                            if (!this.SubmitOrder())
+                            {
+                                //// 메인프로그램에 메시지 전송한다.
+                                this.SendWinMessage(string.Format("BURN_ERROR:{0}", this.burnOrderInfo.OrderId));
 
-                            //// 명령 실패 => 프로그램 종료
-                            this.ApplicationExit(EnumExitType.Fail);
+                                //// 명령 실패 => 프로그램 종료
+                                this.ApplicationExit(EnumExitType.Fail);
+                            }
                         }
                     }
                 }

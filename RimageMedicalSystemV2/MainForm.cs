@@ -705,6 +705,22 @@ namespace RimageMedicalSystemV2
         /// </summary>
         public void ReadyBurn1()
         {
+            //// 굽기명령 진행중일 경우
+            if (this._SendingOrder)
+            {
+                if (GlobalVar.configEntity.AutoExecute == "2")
+                {
+                    //// 굽기까지 진행일 경우 그냥 리턴
+                    return;
+                }
+                else
+                {
+                    //// 메시지 보여준다.
+                    MessageBox.Show("서버에 굽기 명령을 보내고 있습니다.\r\n잠시 후 다시 시도하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             try
             {
                 DialogResult result = System.Windows.Forms.DialogResult.Yes;
@@ -740,13 +756,37 @@ namespace RimageMedicalSystemV2
 
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
+                    //// USB가 아닐 경우에만 체크
+                    if (this.mediaType != MediaType.USB)
+                    {
+                        //// 대기 목록에 동일한 환자가 있는지 체크
+                        if (this._BurnPendingList != null && this._BurnPendingList.Count > 0)
+                        {
+                            if (this.ExistsPendingItem(orderInfo.patFolder))
+                                return;
+                        }
+
+                        //// 현재 굽기 실행중인지 체크한다.
+                        if (this._BurningList != null && this._BurningList.Count > 0)
+                        {
+                            if (this.ExistsBurningItem(orderInfo.patFolder))
+                                return;
+                        }
+
+                        //// 굽기완료된 폴더인지 체크(burn.end 파일체크)
+                        if (CheckFiles.CheckFileExists(new DirectoryInfo(orderInfo.patFolderFullPath), GlobalVar.BURN_CHK_FL_NM))
+                        {
+                            return;
+                        }
+                    }
+
                     this.Cursor = Cursors.WaitCursor;
                     this.txtMessages.Text = "굽기 준비중입니다. 잠시만 기다려 주세요.";
 
                     orderInfo.patName = this.ucPatients11.txtPatientName.Text;
                     orderInfo.copies = Convert.ToInt32(this.ucPatients11.cbCopies.EditValue);
                     orderInfo.mediType = Convert.ToString(this.ucPatients11.cbMedia.EditValue);
-                                        
+
                     if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
                     {
                         //// Process Kill - Deit_Burn.exe
@@ -852,7 +892,7 @@ namespace RimageMedicalSystemV2
                 MessageBox.Show("USB 복사는 한명의 환자정보만 가능합니다.\r\n한 명의 환자만 선택하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            
             //// 조회된 환자 목록을 돌면서 굽기 실행한다.///////////////////////////////////////////////
             int idx = 0;
             List<int> orderedIdx = new List<int>();
@@ -986,30 +1026,6 @@ namespace RimageMedicalSystemV2
         /// <param name="reburn">재굽기여부</param>
         public bool StartBurn(BurnOrderedInfoEntity orderInfo, bool reburn = false)
         {
-            //// 재굽기가 아닐 경우에만 체크
-            if (!reburn)
-            {
-                //// 대기 목록에 동일한 환자가 있는지 체크
-                if (this._BurnPendingList != null && this._BurnPendingList.Count > 0)
-                {
-                    if (this.ExistsPendingItem(orderInfo.patFolder))
-                        return false;
-                }
-
-                //// 현재 굽기 실행중인지 체크한다.
-                if (this._BurningList != null && this._BurningList.Count > 0)
-                {
-                    if (this.ExistsBurningItem(orderInfo.patFolder))
-                        return false;
-                }
-
-                //// 굽기완료된 폴더인지 체크(burn.end 파일체크)
-                if (CheckFiles.CheckFileExists(new DirectoryInfo(orderInfo.patFolderFullPath), GlobalVar.BURN_CHK_FL_NM))
-                {
-                    return false;
-                }
-            }
-
             //// 아산병원Tomch_New 인 경우에 View관련 파일을 환자폴더에 복사해서 넣어준다.
             try
             {
@@ -1386,6 +1402,7 @@ namespace RimageMedicalSystemV2
                 }
             }
         }
+
         /// <summary>
         /// 굽기 가능한 상태로 전환
         /// </summary>
@@ -1465,10 +1482,11 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                this.UnlockBurn();
-
                 if (this._BurnPendingList == null)
+                {
+                    this.UnlockBurn();
                     return;
+                }
 
                 if (this._BurnPendingList.ContainsKey(orderID))
                 {
@@ -1478,7 +1496,11 @@ namespace RimageMedicalSystemV2
                     this.AddBurningList(orderInfo);
 
                     //// 대기 목록에서 삭제
-                    this._BurnPendingList.Remove(orderID);
+                    if (this._BurnPendingList.ContainsKey(orderID))
+                        this._BurnPendingList.Remove(orderID);
+
+                    //// 굽기 가능한 상태로 만든다.
+                    this.UnlockBurn();
 
                     //// 프로그램 1일 경우 조회된 값 초기화.
                     if (GlobalVar.configEntity.programType == "1")
@@ -1498,6 +1520,8 @@ namespace RimageMedicalSystemV2
             }
             catch
             {
+                this.UnlockBurn();
+
                 if (this._BurnPendingList.ContainsKey(orderID))
                 {
                     //// 대기 목록에서 삭제
@@ -3386,19 +3410,23 @@ namespace RimageMedicalSystemV2
                         {
                             Thread.Sleep(1000);
 
-                            ////조회 및 굽기까지 실행
-                            this.isSearching = true;
-                            this.btnSearch_Click(null, null);
-                            Thread.Sleep(3000);
+                            //// 굽기명령이 종료된 상태일 경우에만 실행
+                            if (!this._SendingOrder)
+                            {
+                                ////조회 및 굽기까지 실행
+                                this.isSearching = true;
+                                this.btnSearch_Click(null, null);
+                                Thread.Sleep(3000);
 
-                            this.mediaType = MediaType.CD_DVD;
-                            if (GlobalVar.configEntity.programType == "1")
-                            {
-                                this.ReadyBurn1();
-                            }
-                            else
-                            {
-                                this.ReadyBurn2(true);
+                                this.mediaType = MediaType.CD_DVD;
+                                if (GlobalVar.configEntity.programType == "1")
+                                {
+                                    this.ReadyBurn1();
+                                }
+                                else
+                                {
+                                    this.ReadyBurn2(true);
+                                }
                             }
                         }
                     }
