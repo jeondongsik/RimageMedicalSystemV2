@@ -331,16 +331,19 @@ namespace RimageMedicalSystemV2
         {
             if (GlobalVar.configEntity.AutoExecute == "1")
             {
+                //// 조회까지 진행일 경우
                 this.btnSearch.Enabled = false;
                 this.btnBurn.Enabled = true;
             }
             else if (GlobalVar.configEntity.AutoExecute == "2")
             {
+                //// 굽기까지 진행일 경우
                 this.btnSearch.Enabled = false;
                 this.btnBurn.Enabled = false;
             }
             else
             {
+                //// 수기 실행
                 this.btnSearch.Enabled = true;
                 this.btnBurn.Enabled = true;
             }
@@ -645,6 +648,37 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
+        /// 굽기 대기 목록에 존재하는지 체크
+        /// </summary>
+        /// <param name="foldername"></param>
+        /// <returns></returns>
+        private bool ExistsPendingItem(string foldername)
+        {
+            try
+            {
+                if (this._BurnPendingList != null && this._BurnPendingList.Count > 0)
+                {
+                    for (int i = this._BurnPendingList.Count - 1; i >= 0; i--)
+                    {
+                        if (i >= this._BurnPendingList.Count)
+                            continue;
+
+                        try
+                        {
+                            BurnOrderedInfoEntity orderInfo = JsonParser.ConvertToBurnOrderedInfoEntity(this._BurnPendingList.ElementAt(i).Value);
+                            if (orderInfo.patFolder == foldername)
+                                return true;
+                        }
+                        catch { continue; }
+                    }
+                }
+            }
+            catch { }
+
+            return false;
+        }
+
+        /// <summary>
         /// 굽기 버튼 클릭
         /// </summary>
         /// <param name="sender"></param>
@@ -671,6 +705,22 @@ namespace RimageMedicalSystemV2
         /// </summary>
         public void ReadyBurn1()
         {
+            //// 굽기명령 진행중일 경우
+            if (this._SendingOrder)
+            {
+                if (GlobalVar.configEntity.AutoExecute == "2")
+                {
+                    //// 굽기까지 진행일 경우 그냥 리턴
+                    return;
+                }
+                else
+                {
+                    //// 메시지 보여준다.
+                    MessageBox.Show("서버에 굽기 명령을 보내고 있습니다.\r\n잠시 후 다시 시도하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             try
             {
                 DialogResult result = System.Windows.Forms.DialogResult.Yes;
@@ -706,13 +756,37 @@ namespace RimageMedicalSystemV2
 
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
+                    //// USB가 아닐 경우에만 체크
+                    if (this.mediaType != MediaType.USB)
+                    {
+                        //// 대기 목록에 동일한 환자가 있는지 체크
+                        if (this._BurnPendingList != null && this._BurnPendingList.Count > 0)
+                        {
+                            if (this.ExistsPendingItem(orderInfo.patFolder))
+                                return;
+                        }
+
+                        //// 현재 굽기 실행중인지 체크한다.
+                        if (this._BurningList != null && this._BurningList.Count > 0)
+                        {
+                            if (this.ExistsBurningItem(orderInfo.patFolder))
+                                return;
+                        }
+
+                        //// 굽기완료된 폴더인지 체크(burn.end 파일체크)
+                        if (CheckFiles.CheckFileExists(new DirectoryInfo(orderInfo.patFolderFullPath), GlobalVar.BURN_CHK_FL_NM))
+                        {
+                            return;
+                        }
+                    }
+
                     this.Cursor = Cursors.WaitCursor;
                     this.txtMessages.Text = "굽기 준비중입니다. 잠시만 기다려 주세요.";
 
                     orderInfo.patName = this.ucPatients11.txtPatientName.Text;
                     orderInfo.copies = Convert.ToInt32(this.ucPatients11.cbCopies.EditValue);
                     orderInfo.mediType = Convert.ToString(this.ucPatients11.cbMedia.EditValue);
-                                        
+
                     if (GlobalVar.configEntity.AutoExecuteHookingType == "8")
                     {
                         //// Process Kill - Deit_Burn.exe
@@ -767,6 +841,7 @@ namespace RimageMedicalSystemV2
                         this.checkCopying = false;
 
                         Thread.Sleep(300);
+                        
                         //// 굽기명령을 보낸다.
                         this.StartBurn(this.ucPatients11.OrderInfo);
                     }
@@ -817,7 +892,7 @@ namespace RimageMedicalSystemV2
                 MessageBox.Show("USB 복사는 한명의 환자정보만 가능합니다.\r\n한 명의 환자만 선택하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            
             //// 조회된 환자 목록을 돌면서 굽기 실행한다.///////////////////////////////////////////////
             int idx = 0;
             List<int> orderedIdx = new List<int>();
@@ -1283,14 +1358,12 @@ namespace RimageMedicalSystemV2
                     }
                     else 
                     {
-                        ////this.SaveRimageWeb(orderInfo);
-
                         //// 굽기 프로그램을 실행한다.
                         Process proc = Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
 
-                        //// 대기 목록에 추가
+                        //// 굽기 대기 목록에 추가 : 실제 시작전임.
                         this.AddBurnPendingList(orderInfo.OrderId, ordJson);
-                    }                    
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1312,13 +1385,41 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
+        /// 후킹 체크 타이머 실행
+        /// </summary>
+        private void StartHookTimer()
+        {
+            ////자동굽기 여부에 따라 타이머 사용 설정 - 굽기자동실행일 경우에만 
+            if (GlobalVar.configEntity.AutoExecute != "0")
+            {
+                if (GlobalVar.configEntity.DownloadCheckbyFileName == "Y")
+                {
+                    if (!this.tmrDownloadChecker.Enabled)
+                    {
+                        this.tmrDownloadChecker.Enabled = true;
+                        this.tmrDownloadChecker.Start();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 굽기 가능한 상태로 전환
         /// </summary>
         private void UnlockBurn()
         {
             this._SendingOrder = false;
-            this.btnBurn.Enabled = true;
             this.panelLoadingBurn.Visible = false;
+
+            if (GlobalVar.configEntity.AutoExecute == "2")
+            {
+                //// 굽기까지 진행일 경우
+                this.btnBurn.Enabled = false;
+            }
+            else
+            {
+                this.btnBurn.Enabled = true;
+            }
         }
 
         /// <summary>
@@ -1374,17 +1475,18 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
-        /// 굽기 목록에 추가
+        /// 진행중 굽기 목록에 추가
         /// </summary>
         /// <param name="orderID"></param>
         public void AddBurningList(string orderID)
         {
             try
             {
-                this.UnlockBurn();
-
                 if (this._BurnPendingList == null)
+                {
+                    this.UnlockBurn();
                     return;
+                }
 
                 if (this._BurnPendingList.ContainsKey(orderID))
                 {
@@ -1394,7 +1496,11 @@ namespace RimageMedicalSystemV2
                     this.AddBurningList(orderInfo);
 
                     //// 대기 목록에서 삭제
-                    this._BurnPendingList.Remove(orderID);
+                    if (this._BurnPendingList.ContainsKey(orderID))
+                        this._BurnPendingList.Remove(orderID);
+
+                    //// 굽기 가능한 상태로 만든다.
+                    this.UnlockBurn();
 
                     //// 프로그램 1일 경우 조회된 값 초기화.
                     if (GlobalVar.configEntity.programType == "1")
@@ -1412,9 +1518,22 @@ namespace RimageMedicalSystemV2
                     ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm.AddBurningList", string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
                 }
             }
-            catch { }
+            catch
+            {
+                this.UnlockBurn();
+
+                if (this._BurnPendingList.ContainsKey(orderID))
+                {
+                    //// 대기 목록에서 삭제
+                    this._BurnPendingList.Remove(orderID);
+                }
+            }
         }
 
+        /// <summary>
+        /// 굽기정보 웹에 저장
+        /// </summary>
+        /// <param name="orderInfo"></param>
         private void SaveRimageWeb(BurnOrderedInfoEntity orderInfo)
         {
             ////결과저장
@@ -2875,6 +2994,8 @@ namespace RimageMedicalSystemV2
             bool retVal8 = false;
             bool retVal10 = false;
 
+            this.tmrHookChecker.Stop();
+
             try
             {
                 switch (GlobalVar.configEntity.AutoExecuteHookingType)
@@ -2939,6 +3060,10 @@ namespace RimageMedicalSystemV2
                 }
             }
             catch { }
+            finally
+            {
+                this.tmrHookChecker.Start();
+            }
         }
 
         /// <summary>
@@ -3285,19 +3410,23 @@ namespace RimageMedicalSystemV2
                         {
                             Thread.Sleep(1000);
 
-                            ////조회 및 굽기까지 실행
-                            this.isSearching = true;
-                            this.btnSearch_Click(null, null);
-                            Thread.Sleep(3000);
+                            //// 굽기명령이 종료된 상태일 경우에만 실행
+                            if (!this._SendingOrder)
+                            {
+                                ////조회 및 굽기까지 실행
+                                this.isSearching = true;
+                                this.btnSearch_Click(null, null);
+                                Thread.Sleep(3000);
 
-                            this.mediaType = MediaType.CD_DVD;
-                            if (GlobalVar.configEntity.programType == "1")
-                            {
-                                this.ReadyBurn1();
-                            }
-                            else
-                            {
-                                this.ReadyBurn2(true);
+                                this.mediaType = MediaType.CD_DVD;
+                                if (GlobalVar.configEntity.programType == "1")
+                                {
+                                    this.ReadyBurn1();
+                                }
+                                else
+                                {
+                                    this.ReadyBurn2(true);
+                                }
                             }
                         }
                     }
@@ -3338,7 +3467,7 @@ namespace RimageMedicalSystemV2
 
                         if (cds.lpData.StartsWith("BURN_SRT"))
                         {
-                            //// 굽기 시작
+                            //// 굽기 시작됨
                             this.UnlockBurn();
                             string orderID = cds.lpData.Substring(cds.lpData.IndexOf(":") + 1);
                             this.AddBurningList(orderID);
