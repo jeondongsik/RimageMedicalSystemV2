@@ -70,6 +70,7 @@
     <Compile Include="BurnProgressChecker.cs" />
     <Compile Include="CheckDownComplete.cs" />
     <Compile Include="CheckDownImages.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="frmCopyFolder.cs">
       <SubType>Form</SubType>
     </Compile>
