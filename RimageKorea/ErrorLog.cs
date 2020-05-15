@@ -64,7 +64,8 @@ namespace RimageKorea
 
             string Filename = path.ToString() + "\\tracelog_" + year.ToString() + month.ToString().PadLeft(2, '0') + day.ToString().PadLeft(2, '0') + ".txt";
             //string[] strDir = Directory.GetDirectories(path);
-            Directory.CreateDirectory(path);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
             StreamWriter sw = null;
 

@@ -410,7 +410,7 @@ namespace RimageMedicalSystemV2
 
             foreach (FileInfo fi in dirInfo.GetFiles())
             {
-                if (fi.Name.Equals(checkFileName))
+                if (fi.Name == checkFileName)
                 {
                     retVal = true;
                     break;
