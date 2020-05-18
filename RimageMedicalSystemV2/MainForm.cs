@@ -595,6 +595,8 @@ namespace RimageMedicalSystemV2
 
                                     this.ucPatients21.gvPatientlist.SelectRow(0);
 
+                                    ErrorLog.TraceWrite("SearchDownloadFolder", string.Format(">>Start>>환자조회완료 : {0}-{1}", orderInfo.patNo, orderInfo.patFolder), Environment.CurrentDirectory);
+
                                     this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
 
                                     i++;
@@ -1379,6 +1381,8 @@ namespace RimageMedicalSystemV2
                         //// 굽기 프로그램을 실행한다.
                         Process proc = Process.Start(GlobalVar.BURM_PROGRAM, string.Format("O|{0}|{1}", orderInfo.OrderId, this.Handle.ToInt32().ToString()));
 
+                        ErrorLog.TraceWrite("StartBurn", string.Format(">> 굽기 명령 전송 (Process.Start) : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
+
                         //// 굽기 대기 목록에 추가 : 실제 시작전임.
                         this.AddBurnPendingList(orderInfo.OrderId, ordJson, orderInfo.patFolder);
                     }
@@ -1501,6 +1505,7 @@ namespace RimageMedicalSystemV2
                 {
                     this.txtMessages.Text = "굽기 전송 실패 : 명령정보 생성 오류";
                     MessageBox.Show("굽기 명령 전송에 실패하였습니다.\r\n다시 시도해 주세요.", "Rimage Error");
+                    return;
                 }
 
                 if (this._BurnPendingList == null)
@@ -1517,6 +1522,9 @@ namespace RimageMedicalSystemV2
                     this.UpdateBurnState(orderInfo.patFolder, Enums.BurnState.Finish);
 
                     this.txtMessages.Text = string.Format("[{0}] 굽기 전송 실패", orderID);
+
+                    ErrorLog.TraceWrite("MainForm.RemoveBurningList", string.Format(">> 굽기 실패 (RDMS.exe 종료) : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
+
                     MessageBox.Show("굽기 명령 전송에 실패하였습니다.\r\n다시 시도해 주세요.", "Rimage Error");
                 }
             }
@@ -1567,7 +1575,8 @@ namespace RimageMedicalSystemV2
                     }
 
                     this.txtStatusView.AppendText(string.Format("[{0}]으로 굽기주문 전송하였습니다.\r\n", orderInfo.TargetServer.IP));
-                    ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm.AddBurningList", string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Application.StartupPath);
+                    ErrorLog.TraceWrite("MainForm.AddBurningList", string.Format(">> 굽기 실행 (RDMS.exe 실행) : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
+                    ErrorLog.TraceWrite("MainForm.AddBurningList", string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Environment.CurrentDirectory);
                 }
             }
             catch
@@ -2409,7 +2418,9 @@ namespace RimageMedicalSystemV2
                                         
                     //// 굽기 진행 상태 업데이트
                     this.UpdateBurnState(orderInfo.patFolder, Enums.BurnState.Finish);
-                    
+
+                    ErrorLog.TraceWrite("MainForm.GetOrderStatus", string.Format(">> 굽기 완료 : {0}-{1}-{2}-{3}", orderInfo.OrderId, orderInfo.patNo, orderInfo.patName, orderInfo.patFolder), Environment.CurrentDirectory);
+
                     //// 오른쪽 하단에 메시지를 보여준다.
                     if (GlobalVar.configEntity.PopUpAlamYN == "Y")
                     {

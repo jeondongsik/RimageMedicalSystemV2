@@ -699,7 +699,7 @@ namespace RMDS
                                   this.MyIP);
 
                 //// 로그 남긴다.
-                ErrorLog.TraceWrite("RMDS.frmMain.SubmitOrder", string.Format("OrderID:[{0}] 굽기 명령 전송 완료.", this.burnOrderInfo.DiscOrder.OrderID), GlobalVar.ProgramExecuteFolder);
+                //// ErrorLog.TraceWrite("RMDS.frmMain.SubmitOrder", string.Format("OrderID:[{0}] 굽기 명령 전송 완료.", this.burnOrderInfo.DiscOrder.OrderID), GlobalVar.ProgramExecuteFolder);
             }
             catch (CMsgConnectFailedException me)
             {
@@ -1082,7 +1082,7 @@ namespace RMDS
 
                 COrderManager.GetInstance().CancelOrder(pOrder, true);
 
-                ErrorLog.TraceWrite("RMDS.frmMain.CancelOrder", "취소명령 보냄 : " + pOrder.TargetCluster, GlobalVar.ProgramExecuteFolder);
+                //// ErrorLog.TraceWrite("RMDS.frmMain.CancelOrder", "취소명령 보냄 : " + pOrder.TargetCluster, GlobalVar.ProgramExecuteFolder);
             }
             catch { }
         }
@@ -1105,10 +1105,10 @@ namespace RMDS
                     FileControl.Write(etype.ToString(), file);
 
                     //// 로그기록
-                    if (this.burnOrderInfo != null)
-                    {
-                        ErrorLog.TraceWrite("RMDS.frmMain.ApplicationExit", string.Format("-- [{0}] Complete. [{1}] -- ", this.burnOrderInfo.DiscOrder.OrderID, etype.ToString()), Application.StartupPath);
-                    }
+                    ////if (this.burnOrderInfo != null)
+                    ////{
+                    ////    ErrorLog.TraceWrite("RMDS.frmMain.ApplicationExit", string.Format("-- [{0}] Complete. [{1}] -- ", this.burnOrderInfo.DiscOrder.OrderID, etype.ToString()), Application.StartupPath);
+                    ////}
                 }
                 catch { }
             }
@@ -1221,7 +1221,7 @@ namespace RMDS
                 {
                     if (fl.EndsWith(this.orderID))
                     {
-                        ErrorLog.TraceWrite("RMDS.frmMain.CheckCancelFile", "취소명령 Catch : " + fl, GlobalVar.ProgramExecuteFolder);
+                        ////ErrorLog.TraceWrite("RMDS.frmMain.CheckCancelFile", "취소명령 Catch : " + fl, GlobalVar.ProgramExecuteFolder);
                         return true;
                     }
                 }
