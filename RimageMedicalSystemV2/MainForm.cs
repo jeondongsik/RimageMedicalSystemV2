@@ -552,7 +552,7 @@ namespace RimageMedicalSystemV2
                 {
                     if (this.ucPatients21.PatientInfoList == null)
                     {
-                        this.ucPatients21.PatientInfoList = new List<BurnOrderedInfoEntity>();
+                        this.ucPatients21.PatientInfoList = new BindingList<BurnOrderedInfoEntity>();
                     }
 
                     foreach (DirectoryInfo sdir in dri.GetDirectories())
@@ -567,6 +567,7 @@ namespace RimageMedicalSystemV2
                         {
                             BurnOrderedInfoEntity orderInfo = SearchPatient.Get(Application.StartupPath, sdir, this.DBConnInfo, this.AutoLoaderMediaType, checkFile);
 
+							//// 조회된 환자가 있다면..
                             if (orderInfo != null)
                             {
                                 bool found = false;
@@ -586,11 +587,12 @@ namespace RimageMedicalSystemV2
                                     }
                                 }
 
-                                this.ucPatients21.gcPatientlist.DataSource = this.ucPatients21.PatientInfoList;
-
                                 if (found)
                                 {
-                                    this.ucPatients21.gvPatientlist.RefreshData();
+									this.ucPatients21.gcPatientlist.DataSource = null;
+									this.ucPatients21.gcPatientlist.DataSource = this.ucPatients21.PatientInfoList;
+
+									this.ucPatients21.gvPatientlist.RefreshData();
                                     this.ucPatients21.gcPatientlist.RefreshDataSource();
 
                                     this.ucPatients21.gvPatientlist.SelectRow(0);
@@ -615,7 +617,7 @@ namespace RimageMedicalSystemV2
 
                 if (i == 0)
                 {
-                    //자동굽기일 경우는 보여주지 않는다.
+                    //// 자동굽기일 경우는 보여주지 않는다.
                     if ("0" == GlobalVar.configEntity.AutoExecute)
                         txtStatusView.AppendText("새로운 환자정보가 존재하지 않습니다.\r\n");
                 }

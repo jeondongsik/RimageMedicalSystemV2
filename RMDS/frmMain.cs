@@ -135,10 +135,12 @@ namespace RMDS
         /// </summary>
         string odersXmlFileName = "";
 
-        /// <summary>
-        /// Creator
-        /// </summary>
-        public frmMain()
+		public string DicomCDFolder { get => dicomCDFolder; set => dicomCDFolder = value; }
+
+		/// <summary>
+		/// Creator
+		/// </summary>
+		public frmMain()
         {
             InitializeComponent();
 

@@ -486,6 +486,9 @@ namespace RimageKorea
         {
             try
             {
+				if (File.Exists(fileName))
+					return;
+
                 FileStream fs = new FileStream(fileName, FileMode.Create);
                 fs.Close();
                 fs.Dispose();
@@ -783,7 +786,19 @@ namespace RimageKorea
                     dir.Delete(true);
                 }
             }
-            catch { }
+            catch
+			{
+				//// 다시 한번 시도한다.
+				try
+				{
+					DirectoryInfo dir = new DirectoryInfo(folderPath);
+					if (dir.Exists)
+					{
+						dir.Delete(true);
+					}
+				}
+				catch { }
+			}
         }
 
         /// <summary>

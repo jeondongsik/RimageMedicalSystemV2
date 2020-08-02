@@ -14,13 +14,13 @@ namespace RimageMedicalSystemV2
 {
     public partial class ucPatients2 : DevExpress.XtraEditors.XtraUserControl
     {
-        List<BurnOrderedInfoEntity> _patInfoList = null;
-        MainForm _mainForm = null;
-
+		private BindingList<BurnOrderedInfoEntity> _patInfoList = null;
+		private MainForm _mainForm = null;
+		
         /// <summary>
         /// 조회된 환자 목록
         /// </summary>
-        public List<BurnOrderedInfoEntity> PatientInfoList
+        public BindingList<BurnOrderedInfoEntity> PatientInfoList
         {
             get { return this._patInfoList; }
             set { this._patInfoList = value; }
@@ -38,7 +38,7 @@ namespace RimageMedicalSystemV2
         {
             InitializeComponent();
 
-            this._patInfoList = new List<BurnOrderedInfoEntity>();
+            this._patInfoList = new BindingList<BurnOrderedInfoEntity>();
             this.gcPatientlist.DataSource = this._patInfoList;
         }
 
