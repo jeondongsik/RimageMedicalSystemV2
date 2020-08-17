@@ -21,23 +21,23 @@ namespace RimageKorea
                     Directory.CreateDirectory(Path.Combine(baseDir, GlobalVar.ORDER_FOLDER));
                 }
 
-                //////일자, EditList 폴더
-                ////if (!Directory.Exists(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"))))
-                ////{
-                ////    Directory.CreateDirectory(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd")));
-                ////}
-                ////if (!Directory.Exists(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"), GlobalVar.LOG_ORDER_EDITLIST_FLD)))
-                ////{
-                ////    Directory.CreateDirectory(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"), GlobalVar.LOG_ORDER_EDITLIST_FLD));
-                ////}
+				//////일자, EditList 폴더
+				////if (!Directory.Exists(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"))))
+				////{
+				////    Directory.CreateDirectory(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd")));
+				////}
+				////if (!Directory.Exists(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"), GlobalVar.LOG_ORDER_EDITLIST_FLD)))
+				////{
+				////    Directory.CreateDirectory(Path.Combine(baseDir, GlobalVar.LOG_ORDER_FLD, DateTime.Now.ToString("yyyy-MM-dd"), GlobalVar.LOG_ORDER_EDITLIST_FLD));
+				////}
 
-                //////// 굽기명령정보 저장 폴더 생성
-                ////if (!Directory.Exists(Path.Combine(baseDir, GlobalVar.ORDER_FOLDER)))
-                ////{
-                ////    Directory.CreateDirectory(Path.Combine(baseDir, GlobalVar.ORDER_FOLDER));
-                ////}
-            }
-            catch { }
+				//// 굽기명령정보 저장 폴더 생성
+				if (!Directory.Exists(Path.Combine(baseDir, GlobalVar.LOG_END_FLD)))
+				{
+					Directory.CreateDirectory(Path.Combine(baseDir, GlobalVar.LOG_END_FLD));
+				}
+			}
+			catch { }
         }
     }
 }

@@ -906,9 +906,12 @@ namespace RMDS
                             FileControl.CreateTextFile(Path.Combine(this.burnOrderInfo.patFolderFullPath, GlobalVar.BURN_CHK_FL_NM));
                         }
 
-                        //// 서버상태값 다시한번 불러온다.
-                        //// 서버 설정/상태 가져오기
-                        this.GetServerConfig();
+						//// 완료된 폴더명 저장 (빈파일로 생성 - 여러 Process가 동시에 쓸수 있기 때문에)
+						FileControl.CreateTextFile(Path.Combine(GlobalVar.LOG_END_FLD, string.Format("END_{0}.txt", this.burnOrderInfo.patFolder)));
+
+						//// 서버상태값 다시한번 불러온다.
+						//// 서버 설정/상태 가져오기
+						this.GetServerConfig();
 
                         //// 서버 상태 가져오기
                         this.GetServerStatus();
@@ -954,7 +957,11 @@ namespace RMDS
                         //// 보관기간 체크
                         if (this.RetentionPeriod < 1)
                         {
-                            FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
+							//// 삭제된 폴더명 저장 (빈파일로 생성 - 여러 Process가 동시에 쓸수 있기 때문에)
+							FileControl.CreateTextFile(Path.Combine(GlobalVar.LOG_END_FLD, string.Format("DEL_{0}.txt", this.burnOrderInfo.patFolder)));
+
+							//// 폴더 삭제
+							FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
                         }
                     }
 

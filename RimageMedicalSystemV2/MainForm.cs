@@ -563,7 +563,17 @@ namespace RimageMedicalSystemV2
                             patExists = this.ExistsBurningItem(sdir.Name);
                         }
 
-                        if (!patExists)
+						//// 아산병원일 경우 완료된 폴더, 삭제된 폴더 체크한다.
+						if (!patExists)
+						{
+							if (GlobalVar.configEntity.FolderPattern == "6" || GlobalVar.configEntity.FolderPattern == "7")
+							{
+								patExists = this.IsEndFolder(sdir.Name);
+							}
+						}
+
+						//// 실행중이지 않고, 완료/삭제된 폴더가 아닐 경우
+						if (!patExists)
                         {
                             BurnOrderedInfoEntity orderInfo = SearchPatient.Get(Application.StartupPath, sdir, this.DBConnInfo, this.AutoLoaderMediaType, checkFile);
 
@@ -663,12 +673,40 @@ namespace RimageMedicalSystemV2
             return false;
         }
 
-        /// <summary>
-        /// 굽기 대기 목록에 존재하는지 체크
-        /// </summary>
-        /// <param name="foldername"></param>
-        /// <returns></returns>
-        private bool ExistsPendingItem(string foldername)
+		/// <summary>
+		/// 완료,삭제된 폴더인지 체크한다.
+		/// </summary>
+		/// <param name="patFolder"></param>
+		/// <returns></returns>
+		private bool IsEndFolder(string patFolder)
+		{
+			bool retVal = false;
+
+			try
+			{
+				DirectoryInfo dirInfo = new DirectoryInfo(Path.Combine(Application.StartupPath, GlobalVar.LOG_END_FLD));
+
+				foreach (FileInfo fi in dirInfo.GetFiles())
+				{
+					//// 환자폴더명이 존재하면..
+					if (fi.Name.Contains(patFolder))
+					{
+						retVal = true;
+						break;
+					}
+				}
+			}
+			catch { }
+
+			return retVal;
+		}
+
+		/// <summary>
+		/// 굽기 대기 목록에 존재하는지 체크
+		/// </summary>
+		/// <param name="foldername"></param>
+		/// <returns></returns>
+		private bool ExistsPendingItem(string foldername)
         {
             try
             {

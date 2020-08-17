@@ -14,6 +14,7 @@ namespace RimageKorea
         public const string LOG_ERR_FLD = "Log";
         public const string LOG_ORDER_FLD = "OrderHistory";
         public const string LOG_ORDER_EDITLIST_FLD = "EditList";
+		public const string LOG_END_FLD = "End";
         public const string BURN_CHK_FL_NM = "burn.end";      //굽기완료된 폴더에 생성시킨다.
         public const string SEEK_CHK_FL_NM = "seek.end";      //찾기완료된 폴더에 생성시킨다.
         public static string DOWN_CHK_FL_NM = "end.txt";       //다운로드가 완료되었을때 생성(아산병원에서 사용)
