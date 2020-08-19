@@ -68,16 +68,27 @@ namespace RimageKorea
         {
             bool retVal = false;
 
-            foreach (FileInfo fi in dirInfo.GetFiles())
-            {
-                if (fi.Name == checkFileName)
-                {
-                    retVal = true;
-                    break;
-                }
-            }
+			try
+			{
+				if (!dirInfo.Exists)
+					return true;
 
-            return retVal;
+				foreach (FileInfo fi in dirInfo.GetFiles())
+				{
+					if (fi.Name == checkFileName)
+					{
+						retVal = true;
+						break;
+					}
+				}
+			}
+			catch
+			{
+				//// 오류 발생 시 완료되었다고 판단하여 조회되지 않게 한다.
+				return true;
+			}
+
+			return retVal;
         }
     }
 }
