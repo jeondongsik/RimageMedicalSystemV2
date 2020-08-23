@@ -555,7 +555,10 @@ namespace RimageMedicalSystemV2
                         this.ucPatients21.PatientInfoList = new BindingList<BurnOrderedInfoEntity>();
                     }
 
-                    foreach (DirectoryInfo sdir in dri.GetDirectories())
+					int idx = 0;
+					List<int> deletedIdx = new List<int>();
+
+					foreach (DirectoryInfo sdir in dri.GetDirectories())
                     {
                         //// 현재 굽기 실행중인지 체크한다.
                         if (this._BurningList != null && this._BurningList.Count > 0)
@@ -569,6 +572,9 @@ namespace RimageMedicalSystemV2
 							if (GlobalVar.configEntity.FolderPattern == "6" || GlobalVar.configEntity.FolderPattern == "7")
 							{
 								patExists = this.IsEndFolder(sdir.Name);
+
+								//// 삭제된 폴더면 목록에서도 삭제하자.
+								deletedIdx.Add(idx);
 							}
 						}
 
@@ -617,7 +623,18 @@ namespace RimageMedicalSystemV2
                         }
 
                         patExists = false;
-                    }
+
+						idx++;
+					}
+
+					//// 삭제된 폴더가 있다면 목록에서 삭제
+					if (deletedIdx.Count > 0)
+					{
+						if (this.mediaType != MediaType.USB)
+						{
+							this.ucPatients21.RemoveAtList(deletedIdx);
+						}
+					}
                 }
                 else
                 {
@@ -677,8 +694,9 @@ namespace RimageMedicalSystemV2
 		/// 완료,삭제된 폴더인지 체크한다.
 		/// </summary>
 		/// <param name="patFolder"></param>
+		/// <param name="patFolderPullPath"></param>
 		/// <returns></returns>
-		private bool IsEndFolder(string patFolder)
+		private bool IsEndFolder(string patFolder, string patFolderPullPath = "")
 		{
 			bool retVal = false;
 
@@ -693,6 +711,24 @@ namespace RimageMedicalSystemV2
 					{
 						retVal = true;
 						break;
+					}
+				}
+
+				//// 폴더안에 파일이 존재하는지 체크
+				if (patFolderPullPath != "")
+				{
+					DirectoryInfo patDir = new DirectoryInfo(patFolderPullPath);
+					
+					if (patDir.Exists)
+					{
+						if (patDir.GetFiles().Count() == 0)
+						{
+							retVal = true;
+						}
+					}
+					else
+					{
+						retVal = true;
 					}
 				}
 			}
@@ -948,57 +984,75 @@ namespace RimageMedicalSystemV2
             //// 조회된 환자 목록을 돌면서 굽기 실행한다.///////////////////////////////////////////////
             int idx = 0;
             List<int> orderedIdx = new List<int>();
+			List<int> deltedIdx = new List<int>();
 
-            foreach (BurnOrderedInfoEntity orderInfo in this.ucPatients21.PatientInfoList)
-            {                
-                if (!autoExe)
-                {
-                    //// 수동모드일 경우 선택한 Row만 굽기 진행한다.                    
-                    if (!this.ucPatients21.gvPatientlist.IsRowSelected(idx))
-                    {
-                        continue;
-                    }
-                }
+			foreach (BurnOrderedInfoEntity orderInfo in this.ucPatients21.PatientInfoList)
+            {
+				try
+				{
+					if (!autoExe)
+					{
+						//// 수동모드일 경우 선택한 Row만 굽기 진행한다.                    
+						if (!this.ucPatients21.gvPatientlist.IsRowSelected(idx))
+						{
+							continue;
+						}
+					}
 
-                //// USB인 경우 선택된 한명만.
-                if (this.mediaType == MediaType.USB)
-                {
-                    if (!this.ucPatients21.gvPatientlist.IsRowSelected(idx))
-                    {
-                        continue;
-                    }
-                }
+					//// USB인 경우 선택된 한명만.
+					if (this.mediaType == MediaType.USB)
+					{
+						if (!this.ucPatients21.gvPatientlist.IsRowSelected(idx))
+						{
+							continue;
+						}
+					}
 
-                //// 자동일 경우 현재 진행중이거나 완료된 상태인건 건너뛴다.
-                if (autoExe)
-                {
-                    //// USB가 아닐 경우에만 체크
-                    if (this.mediaType != MediaType.USB)
-                    {
-                        //// 대기 목록에 동일한 환자가 있는지 체크
-                        if (this.ExistsPendingItem(orderInfo.patFolder))
-                            continue;
+					//// 자동일 경우 현재 진행중이거나 완료된 상태인건 건너뛴다.
+					if (autoExe)
+					{
+						//// USB가 아닐 경우에만 체크
+						if (this.mediaType != MediaType.USB)
+						{
+							//// 대기 목록에 동일한 환자가 있는지 체크
+							if (this.ExistsPendingItem(orderInfo.patFolder))
+								continue;
 
-                        //// 현재 굽기 실행중인지 체크한다.
-                        if (this._BurningList != null && this._BurningList.Count > 0)
-                        {
-                            if (this.ExistsBurningItem(orderInfo.patFolder))
-                                continue;
-                        }
+							//// 현재 굽기 실행중인지 체크한다.
+							if (this._BurningList != null && this._BurningList.Count > 0)
+							{
+								if (this.ExistsBurningItem(orderInfo.patFolder))
+									continue;
+							}
 
-                        //// 굽기완료된 폴더인지 체크(burn.end 파일체크)
-                        if (CheckFiles.CheckFileExists(new DirectoryInfo(orderInfo.patFolderFullPath), GlobalVar.BURN_CHK_FL_NM))
-                        {
-                            continue;
-                        }
-                    }
-                }
+							//// 굽기완료된 폴더인지 체크(burn.end 파일체크)
+							if (CheckFiles.CheckFileExists(new DirectoryInfo(orderInfo.patFolderFullPath), GlobalVar.BURN_CHK_FL_NM))
+							{
+								continue;
+							}
+						}
+					}
 
-                //// 굽기 시작
-                if (this.StartBurn(orderInfo))
-                {
-                    orderedIdx.Add(idx);
-                }
+					//// 아산병원일 경우 삭제된 폴더인지 체크하고 삭제된 폴더라면 목록에서도 삭제한다.
+					if (GlobalVar.configEntity.FolderPattern == "6" || GlobalVar.configEntity.FolderPattern == "7")
+					{
+						if (this.IsEndFolder(orderInfo.patFolder))
+						{
+							orderedIdx.Add(idx);
+							continue;
+						}
+					}
+
+					//// 굽기 시작
+					if (this.StartBurn(orderInfo))
+					{
+						orderedIdx.Add(idx);
+					}
+				}
+				catch (Exception ex)
+				{
+					ErrorLog.LogWrite(this, string.Format("burning error => {0}-{1} : {2}", orderInfo.patName, orderInfo.patFolder, ex.ToString()), Application.StartupPath);
+				}
 
                 idx++;
             }
