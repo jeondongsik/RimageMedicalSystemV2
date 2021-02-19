@@ -76,7 +76,24 @@ namespace RimageMedicalSystemV2
                     Dictionary<string, string> patList = null;
                     int patCount = 0;
 
-                    //// DicomDir 파일이 존재하는지 체크
+                    //// 먼저 DicomDir 파일이 존재하는지 체크
+                    if (GlobalVar.configEntity.ExistDicomDir == "Y")
+                    {                        
+                        if (File.Exists(Path.Combine(sdir.FullName, "DICOMDIR")))
+                        {
+                            existPatInfoFile = true;
+                        }
+                        else
+                        {
+                            existPatInfoFile = false;
+                        }
+
+                        //// 존재하지 않으면 Pass
+                        if (!existPatInfoFile)
+                            return null;
+                    }
+
+                    //// 다시 한번 체크 >> 환자정보가 담긴 파일이 존재하지 않을 경우 Pass 
                     if (GlobalVar.configEntity.ExistDicomDir == "Y")
                     {
                         //// 환자정보가 담긴 파일이 존재하지 않을 경우 Pass 
