@@ -1162,7 +1162,9 @@ namespace RimageKorea
         /// <param name="srcDir">소스폴더</param>
         /// <param name="trgDir">대상풀더</param>
         /// <param name="topSrcFolder"></param>
-        public static List<string> CopyFolderAndFiles(string srcDir, string trgDir, string topSrcFolder, List<string> addFiles)
+        /// <param name="addFiles">반환할 파일 목록</param>
+        /// <param name="incFiles">복사할 대상 폴더,파일목록</param>
+        public static List<string> CopyFolderAndFiles(string srcDir, string trgDir, string topSrcFolder, List<string> addFiles, List<string> incFiles = null)
         {
             if (addFiles == null)
                 addFiles = new List<string>();
@@ -1175,7 +1177,11 @@ namespace RimageKorea
                 DirectoryInfo[] dirs = srcFolder.GetDirectories();
 
                 foreach (FileInfo file in files)
-                { 
+                {
+                    //// 복사해야 할 대상이 포함되어 있지 않다면 skip
+                    if (!incFiles.Contains(file.FullName))
+                        continue;
+
                     string copyto = file.FullName.Replace(topSrcFolder, trgDir);                  
                     FileSystem.CopyFile(file.FullName, copyto, true);
 
@@ -1184,7 +1190,11 @@ namespace RimageKorea
                 }
 
                 foreach (DirectoryInfo dri in dirs)
-                {                    
+                {
+                    //// 복사해야 할 대상이 포함되어 있지 않다면 skip
+                    if (!incFiles.Contains(dri.FullName))
+                        continue;
+
                     //// 폴더가 없을 경우 생성한다.
                     string targetFolder = dri.FullName.Replace(topSrcFolder, trgDir);
                     if (!Directory.Exists(targetFolder))
@@ -1192,7 +1202,7 @@ namespace RimageKorea
                         FileSystem.CreateDirectory(targetFolder);
                     }
 
-                    CopyFolderAndFiles(dri.FullName, trgDir, topSrcFolder, addFiles);
+                    CopyFolderAndFiles(dri.FullName, trgDir, topSrcFolder, addFiles, incFiles);
                 }
             }
             catch { }

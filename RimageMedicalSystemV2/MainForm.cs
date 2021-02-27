@@ -1149,6 +1149,20 @@ namespace RimageMedicalSystemV2
                     frmCopy.SourceDirectory = GlobalVar.TOMTECH_VIEWR_FOLDER;
                     frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
 
+                    /*
+                     Viewer
+                     autorun.inf
+                     CD_VIEWER_LICENSE.rtf
+                     CDViewerHelp.chm
+                     README_VIEWER.txt 
+                     */
+                    frmCopy.IncList = new List<string>();
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "Viewer"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "autorun.inf"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CD_VIEWER_LICENSE.rtf"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CDViewerHelp.chm"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "README_VIEWER.txt"));
+
                     frmCopy.ShowDialog();
 
                     //// 다운로드 폴더의 상위 폴더
