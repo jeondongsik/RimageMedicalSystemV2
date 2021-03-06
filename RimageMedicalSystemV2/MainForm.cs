@@ -1158,6 +1158,7 @@ namespace RimageMedicalSystemV2
                      */
                     frmCopy.IncList = new List<string>();
                     frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "Viewer"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "Viewer", "t1fonts"));
                     frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "autorun.inf"));
                     frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CD_VIEWER_LICENSE.rtf"));
                     frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CDViewerHelp.chm"));
