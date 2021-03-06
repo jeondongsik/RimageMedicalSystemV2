@@ -1178,11 +1178,19 @@ namespace RimageKorea
 
                 foreach (FileInfo file in files)
                 {
-                    //// 복사해야 할 대상이 포함되어 있지 않다면 skip
-                    if (!incFiles.Contains(file.FullName))
-                        continue;
+                    if (srcDir == GlobalVar.TOMTECH_VIEWR_FOLDER)
+                    {
+                        //// 복사해야 할 대상이 포함되어 있지 않다면 skip
+                        if (!incFiles.Contains(file.FullName))
+                            continue;
+                    }
+                    else
+                    {
+                        if (!incFiles.Contains(srcFolder.FullName) && !incFiles.Contains(file.FullName))
+                            continue;
+                    }
 
-                    string copyto = file.FullName.Replace(topSrcFolder, trgDir);                  
+                    string copyto = file.FullName.Replace(topSrcFolder, trgDir);
                     FileSystem.CopyFile(file.FullName, copyto, true);
 
                     if (!addFiles.Contains(copyto))
@@ -1191,9 +1199,17 @@ namespace RimageKorea
 
                 foreach (DirectoryInfo dri in dirs)
                 {
-                    //// 복사해야 할 대상이 포함되어 있지 않다면 skip
-                    if (!incFiles.Contains(dri.FullName))
-                        continue;
+                    if (srcDir == GlobalVar.TOMTECH_VIEWR_FOLDER)
+                    {
+                        //// 복사해야 할 대상이 포함되어 있지 않다면 skip
+                        if (!incFiles.Contains(dri.FullName))
+                            continue;
+                    }
+                    else
+                    {
+                        if (!incFiles.Contains(srcFolder.FullName) && !incFiles.Contains(dri.FullName))
+                            continue;
+                    }
 
                     //// 폴더가 없을 경우 생성한다.
                     string targetFolder = dri.FullName.Replace(topSrcFolder, trgDir);
@@ -1201,7 +1217,7 @@ namespace RimageKorea
                     {
                         FileSystem.CreateDirectory(targetFolder);
                     }
-
+                    
                     CopyFolderAndFiles(dri.FullName, trgDir, topSrcFolder, addFiles, incFiles);
                 }
             }
