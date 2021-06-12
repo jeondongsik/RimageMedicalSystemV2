@@ -958,10 +958,15 @@ namespace RMDS
                         if (this.RetentionPeriod < 1)
                         {
 							//// 삭제된 폴더명 저장 (빈파일로 생성 - 여러 Process가 동시에 쓸수 있기 때문에)
-							FileControl.CreateTextFile(Path.Combine(GlobalVar.LOG_END_FLD, string.Format("DEL_{0}.txt", this.burnOrderInfo.patFolder)));
+							FileControl.CreateTextFile(Path.Combine(GlobalVar.LOG_END_FLD, string.Format("DEL_{0}_{1}.txt", this.burnOrderInfo.patFolder, Utils.GetNowTime())));
 
-							//// 폴더 삭제
-							FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
+                            //// 폴더 삭제
+                            Thread.Sleep(500);
+                            FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
+
+                            //// 폴더 삭제 다시 한번 시도
+                            Thread.Sleep(500);
+                            FileControl.DeleteFolder(this.burnOrderInfo.patFolderFullPath, false);
                         }
                     }
 

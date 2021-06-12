@@ -105,17 +105,14 @@ namespace RimageKorea
             }
             catch { }
 
-			//// 완료로그 파일 삭제            
+			//// 완료로그, 삭제로그 파일 삭제 
 			try
 			{
 				DirectoryInfo errDir = new DirectoryInfo(Path.Combine(folderLoot, GlobalVar.LOG_END_FLD));
 				foreach (FileInfo fi in errDir.GetFiles())
 				{
-					if (fi.CreationTime.Date <= DateTime.Now.AddDays(-1).Date)
-					{
-						FileControl.DeleteFile(fi.FullName, false);
-					}
-				}
+                    FileControl.DeleteFile(fi.FullName, false);
+                }
 			}
 			catch { }
 

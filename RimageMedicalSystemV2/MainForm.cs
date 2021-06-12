@@ -565,7 +565,7 @@ namespace RimageMedicalSystemV2
                         {
                             patExists = this.ExistsBurningItem(sdir.Name);
                         }
-
+                        
 						//// 아산병원일 경우 완료된 폴더, 삭제된 폴더 체크한다.
 						if (!patExists)
 						{
@@ -682,7 +682,7 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                if (this._BurningList.Any(o => o.patFolder == foldername && o.Finish != "Y"))
+                if (this._BurningList.Any(o => o.patFolder == foldername))    ////&& o.Finish != "Y"
                     return true;
             }
             catch { }
@@ -691,7 +691,7 @@ namespace RimageMedicalSystemV2
         }
 
 		/// <summary>
-		/// 완료,삭제된 폴더인지 체크한다.
+		/// 완료, 삭제된 폴더인지 체크한다.
 		/// </summary>
 		/// <param name="patFolder"></param>
 		/// <param name="patFolderPullPath"></param>
@@ -704,7 +704,8 @@ namespace RimageMedicalSystemV2
 			{
 				DirectoryInfo dirInfo = new DirectoryInfo(Path.Combine(Application.StartupPath, GlobalVar.LOG_END_FLD));
 
-				foreach (FileInfo fi in dirInfo.GetFiles())
+                //// 삭제된 폴더는 "DEL_{0}_yyyyMMddHHmmss.txt" 형태로 저장됨. 완료된 폴더는 "END_{0}.txt"형태로 저장됨.
+                foreach (FileInfo fi in dirInfo.GetFiles())
 				{
 					//// 환자폴더명이 존재하면..
 					if (fi.Name.Contains(patFolder))
@@ -737,12 +738,44 @@ namespace RimageMedicalSystemV2
 			return retVal;
 		}
 
-		/// <summary>
-		/// 굽기 대기 목록에 존재하는지 체크
-		/// </summary>
-		/// <param name="foldername"></param>
-		/// <returns></returns>
-		private bool ExistsPendingItem(string foldername)
+        /// <summary>
+        /// 삭제된 폴더인지 체크한다.
+        /// </summary>
+        /// <param name="patFolder"></param>
+        /// <param name="patFolderPullPath"></param>
+        /// <returns></returns>
+        private bool IsDelFolder(string patFolder, string patFolderPullPath = "")
+        {
+            bool retVal = false;
+
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(Path.Combine(Application.StartupPath, GlobalVar.LOG_END_FLD));
+
+                //// 삭제된 폴더는 "DEL_{0}_yyyyMMddHHmmss.txt" 형태로 저장됨
+                string delName = string.Format("DEL_{0}_{1}", patFolder, DateTime.Now.ToString("yyyyMMdd"));
+
+                foreach (FileInfo fi in dirInfo.GetFiles())
+                {
+                    //// 오늘 삭제한 환자폴더명이 존재하면..
+                    if (fi.Name.Contains(delName))
+                    {
+                        retVal = true;
+                        break;
+                    }
+                }
+            }
+            catch { }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// 굽기 대기 목록에 존재하는지 체크
+        /// </summary>
+        /// <param name="foldername"></param>
+        /// <returns></returns>
+        private bool ExistsPendingItem(string foldername)
         {
             try
             {
@@ -2546,6 +2579,9 @@ namespace RimageMedicalSystemV2
                         this.txtStatusView.AppendText(ret);
                     }
 
+                    //// 완료된 오더폴더에 종료파일 생성한다.
+                    FileControl.CreateTextFile(Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, orderInfo.DiscOrder.OrderID, GlobalVar.BURN_CHK_FL_NM));
+
                     //// EditList Xml파일삭제하자.
                     FileControl.DeleteFile(orderInfo.EditListPath);
 
@@ -2564,9 +2600,6 @@ namespace RimageMedicalSystemV2
                     }
 
                     this.txtStatusView.AppendText(orderInfo.patName + " : " + trace.StatusType + trace.State + " " + trace.DeviceCurrentState + " " + trace.PercentCompleted + "%" + "\r\n");
-
-                    //// 완료된 오더폴더에 종료파일 생성한다.
-                    FileControl.CreateTextFile(Path.Combine(GlobalVar.ProgramExecuteFolder, GlobalVar.ORDER_FOLDER, orderInfo.DiscOrder.OrderID, GlobalVar.BURN_CHK_FL_NM));
                     
                     //// RDMS가 정상종료되었는지 체크-> 아니라면 종료 처리
                     try
@@ -2577,7 +2610,7 @@ namespace RimageMedicalSystemV2
                     }
                     catch { }
 
-                    //// 오더 폴더 삭제
+                    //// 명령 정보 삭제
                     FileControl.DeleteBurnEndOrder(orderInfo.DiscOrder.OrderID);
 
                     this.txtStatusView.AppendText(string.Format("{0}[{1}] - {2}\r\n굽기가 완료되었습니다.", orderInfo.patNo, orderInfo.patName, trace.ResultMessage));
@@ -3657,7 +3690,7 @@ namespace RimageMedicalSystemV2
                         }
                         else if (cds.lpData.StartsWith("BURN_END"))
                         {
-                            //// 굽기 완료
+                            //// 굽기 완료 : 삭제된 폴더인지 다시 체크 후 삭제 실행
                         }
                         else if (cds.lpData.StartsWith("ERROR"))
                         {
