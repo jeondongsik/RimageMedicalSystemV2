@@ -368,7 +368,7 @@ namespace RimageMedicalSystemV2
 
                     orderInfo.patNo = Utils.ReplaceSpecialWord(orderInfo.patNo);
                     orderInfo.ImgFiles = FileControl.GetFolderLength(sdir.FullName);
-                    orderInfo.FolderSize = orderInfo.ImgFiles.FolderSize;                    
+                    orderInfo.FolderSize = orderInfo.ImgFiles.FolderSize;
 
                     long fldLen = orderInfo.FolderSize / 1024 / 1024;
                     orderInfo.mediSize = fldLen.ToString() + " Mbyte";

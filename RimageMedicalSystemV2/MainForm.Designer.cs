@@ -921,6 +921,7 @@
             this.btnCancelBurning.Size = new System.Drawing.Size(120, 43);
             this.btnCancelBurning.TabIndex = 9;
             this.btnCancelBurning.Text = "굽기취소";
+            this.btnCancelBurning.Visible = false;
             this.btnCancelBurning.Click += new System.EventHandler(this.btnCancelBurning_Click);
             // 
             // btnUSBCopy

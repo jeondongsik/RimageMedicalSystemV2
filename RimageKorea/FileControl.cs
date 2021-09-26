@@ -101,9 +101,13 @@ namespace RimageKorea
                 FileInfo[] files = dir.GetFiles();
                 foreach (FileInfo file in files)
                 {
-                    //end.txt 파일은 제외한다.
+                    //// .tmp 파일은 제외한다.
+                    if (file.Name.EndsWith(".tmp"))
+                        continue;
+
+                    //// end.txt 파일은 제외한다.
                     if (false == file.Name.Equals(GlobalVar.DOWN_CHK_FL_NM) && false == file.Name.Equals(GlobalVar.BURN_CHK_FL_NM))
-                    {
+                    {                        
                         fi.FolderSize += file.Length;
                         fi.EditList.Add(file.FullName);
                     }
@@ -129,6 +133,31 @@ namespace RimageKorea
         }
 
         /// <summary>
+        /// 환자 폴더에 있는 .tmp 파일을 삭제한다.
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        public static int DeleteTempFiles(DirectoryInfo dir)
+        {
+            int ret = 0;
+
+            try
+            {
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    if (file.Name.EndsWith(".tmp"))
+                    {
+                        file.Delete();
+                        ret++;
+                    }
+                }
+            }
+            catch { }
+
+            return ret;
+        }
+
+        /// <summary>
         /// 머지파일 생성
         /// </summary>
         /// <param name="MergeFileFolder">머지파일폴더</param>
@@ -144,7 +173,7 @@ namespace RimageKorea
         /// <param name="megPath">머지파일FullPath</param>
         /// <param name="studyDate"></param>
         public static void CreateMergeFile(string MergeFileFolder, string MergePrint, string patFolder, string patDate, string patNo, string patName, string patSex,
-            string studyModality, string modality = "", string patientName = "", string megPath = "", string studyDate = "", Dictionary<string, string> dbInfo = null)
+        string studyModality, string modality = "", string patientName = "", string megPath = "", string studyDate = "", Dictionary<string, string> dbInfo = null)
         {
             //string path = MergeFileFolder + patFolder + ".txt";
             string path = megPath;
@@ -400,7 +429,11 @@ namespace RimageKorea
                 FileInfo[] files = dir.GetFiles();
                 foreach (FileInfo file in files)
                 {
-                    //end.txt 파일은 제외한다.
+                    //// .tmp 파일은 제외한다.
+                    if (file.Name.EndsWith(".tmp"))
+                        continue;
+
+                    //// end.txt 파일은 제외한다.
                     if (false == file.Name.Equals(GlobalVar.DOWN_CHK_FL_NM) && false == file.Name.Equals(GlobalVar.BURN_CHK_FL_NM))
                     {
                         rtLen += file.Length;
@@ -412,7 +445,6 @@ namespace RimageKorea
                 {
                     rtLen += DirectoryLengthOnly(dri);
                 }
-
             }
             catch (Exception ex)
             {

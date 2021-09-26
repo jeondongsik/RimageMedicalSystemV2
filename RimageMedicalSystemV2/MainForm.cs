@@ -449,27 +449,35 @@ namespace RimageMedicalSystemV2
                 
                 if (orderInfo != null)
                 {
-                    orderInfo.DicomCDFolder = this.dicomCDFolder;
+                    //// 환자명 뒤에 '_job'이 있을 경우에는 파일 다운로드 중이므로 Skip한다.
+                    if (orderInfo.patName.EndsWith("_job"))
+                    {
+                        orderInfo = null;
+                    }
+                    else
+                    {
+                        orderInfo.DicomCDFolder = this.dicomCDFolder;
 
-                    this.ucPatients11.OrderInfo = orderInfo;
-                    this.ucPatients11.ShowPatientInfo();
+                        this.ucPatients11.OrderInfo = orderInfo;
+                        this.ucPatients11.ShowPatientInfo();
 
-                    this.txtStatusView.AppendText("폴더전체크기 : " + orderInfo.FolderSize.ToString() + "bytes\r\n");
+                        this.txtStatusView.AppendText("폴더전체크기 : " + orderInfo.FolderSize.ToString() + "bytes\r\n");
 
-                    ////Drive 용량 다시 체크
-                    this.SetDriveInfo();
-                    this.txtMessages.Text = "환자정보 조회 완료";
+                        ////Drive 용량 다시 체크
+                        this.SetDriveInfo();
+                        this.txtMessages.Text = "환자정보 조회 완료";
 
-                    retMessage = string.Format("{0}[{1}] 조회 완료", orderInfo.patName, orderInfo.patNo);
+                        retMessage = string.Format("{0}[{1}] 조회 완료", orderInfo.patName, orderInfo.patNo);
 
-                    StringBuilder sbTemp = new StringBuilder();
-                    sbTemp.AppendLine(string.Format("ID : {0}", orderInfo.patNo));
-                    sbTemp.AppendLine(string.Format("Name : {0}", orderInfo.patName));
-                    sbTemp.AppendLine(string.Format("Gender : {0}", orderInfo.patSex));
-                    sbTemp.AppendLine(string.Format("Age : {0}", orderInfo.patAge));
-                    sbTemp.AppendLine(string.Format("BirthDay : {0}", orderInfo.patBirtyDay));
-                    sbTemp.AppendLine(string.Format("Study : {0}", orderInfo.StudyModality.Replace("^^", "\r\n")));
-                    this.txtStatusView.AppendText(sbTemp.ToString() + "\r\n");
+                        StringBuilder sbTemp = new StringBuilder();
+                        sbTemp.AppendLine(string.Format("ID : {0}", orderInfo.patNo));
+                        sbTemp.AppendLine(string.Format("Name : {0}", orderInfo.patName));
+                        sbTemp.AppendLine(string.Format("Gender : {0}", orderInfo.patSex));
+                        sbTemp.AppendLine(string.Format("Age : {0}", orderInfo.patAge));
+                        sbTemp.AppendLine(string.Format("BirthDay : {0}", orderInfo.patBirtyDay));
+                        sbTemp.AppendLine(string.Format("Study : {0}", orderInfo.StudyModality.Replace("^^", "\r\n")));
+                        this.txtStatusView.AppendText(sbTemp.ToString() + "\r\n");
+                    }
                 }
                 else
                 {
@@ -587,6 +595,13 @@ namespace RimageMedicalSystemV2
                             if (orderInfo != null)
                             {
                                 bool found = false;
+
+                                //// 환자명 뒤에 '_job'이 있을 경우에는 파일 다운로드 중이므로 Skip한다.
+                                if (orderInfo.patName.EndsWith("_job"))
+                                {                                    
+                                    continue;
+                                }
+
                                 orderInfo.DicomCDFolder = sdir.FullName;
 
                                 if (this.ucPatients21.PatientInfoList.Count == 0)
@@ -1225,10 +1240,27 @@ namespace RimageMedicalSystemV2
                     frmCopy.Dispose();
                 }
             }
-            catch
-            {
+            catch { }
 
+            try
+            {
+                //// 환자 폴더에 있는 .tmp 파일들을 삭제한다.
+                int delCnt = FileControl.DeleteTempFiles(new DirectoryInfo(orderInfo.DicomCDFolder));
+
+                //// 삭제된 파일이 있을 경우 처리
+                if (delCnt > 0)
+                {
+                    orderInfo.FolderSize = FileControl.GetFolderLengthOnly(orderInfo.DicomCDFolder);
+
+                    //// 화면 출력용도 다시 계산
+                    long fldLen = orderInfo.FolderSize / 1024 / 1024;
+                    orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+
+                    if (GlobalVar.configEntity.programType == "1")
+                        ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+                }
             }
+            catch { }
 
             int j = 1;
 
