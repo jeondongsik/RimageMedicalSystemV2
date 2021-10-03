@@ -140,6 +140,11 @@ namespace RimageMedicalSystemV2
         string LastHostPort;
 
         /// <summary>
+        /// 자동굽기 설정값 : 전역환경변수 보완으로 사용
+        /// </summary>
+        string AutoExecute = "0";
+
+        /// <summary>
         /// 현재 선택한 서버 정보
         /// </summary>
         public ServerInfo NowSeletedServer = null;
@@ -183,7 +188,7 @@ namespace RimageMedicalSystemV2
 
             try
             {
-                ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm", "-- Program Initialize  -- ", Application.StartupPath);
+                ErrorLog.TraceWrite("MainForm", "-- Program Initialize  -- ", Application.StartupPath);
 
                 this.systemListenerDel = new SysExecption(GetSysExecption);
                 this.serverStatusDel = new ServerStatus(GetServerConfig);
@@ -199,10 +204,12 @@ namespace RimageMedicalSystemV2
 
                 //// 설정값 가져오기
                 this.GetConfig();
-
+                
                 //// 컨트롤 초기화
                 this.InitializeControlValues();
                 this.InitEnabledButton();
+
+                ErrorLog.TraceWrite("MainForm", "-- 컨트롤 초기화 완료.  -- ", Application.StartupPath);
 
                 ////환경설정 후에 정의
                 this.hookingComp = new HookingComplete(hooking_Complete);
@@ -241,6 +248,8 @@ namespace RimageMedicalSystemV2
                     }
                 }
 
+                ErrorLog.TraceWrite("MainForm", "-- Hooking 설정 초기화 완료.  -- ", Application.StartupPath);
+
                 //// 인피니티 팍스 실행 프로세스 죽인다.
                 KillProcess.DelProcess("SCDBurn");
                 KillProcess.DelProcess("CDBurner");
@@ -248,6 +257,10 @@ namespace RimageMedicalSystemV2
             catch (Exception ex)
             {
                 ErrorLog.LogWrite(this, ex.ToString(), Application.StartupPath);
+            }
+            finally
+            {
+                ErrorLog.TraceWrite("MainForm", string.Format(">> 자동굽기 설정 : {0} - {1}", GlobalVar.configEntity.AutoExecute, this.btnBurn.Enabled.ToString()), Environment.CurrentDirectory);
             }
         }
         
@@ -305,6 +318,9 @@ namespace RimageMedicalSystemV2
             finally
             {
                 KillProcess.DelProcess(GlobalVar.RIMAGE_ENTERANCE);
+
+                ErrorLog.TraceWrite("MainForm_Load", "-- Form load Complete.  -- ", Application.StartupPath);
+
                 this.grpPatInfo.Focus();
             }
         }
@@ -477,6 +493,8 @@ namespace RimageMedicalSystemV2
                         sbTemp.AppendLine(string.Format("BirthDay : {0}", orderInfo.patBirtyDay));
                         sbTemp.AppendLine(string.Format("Study : {0}", orderInfo.StudyModality.Replace("^^", "\r\n")));
                         this.txtStatusView.AppendText(sbTemp.ToString() + "\r\n");
+
+                        ErrorLog.TraceWrite("SearchPatient1", string.Format(">> 환자 조회 완료 : {0} - {1} - {2}", orderInfo.patNo, orderInfo.patName, orderInfo.patFolder), Environment.CurrentDirectory);
                     }
                 }
                 else
@@ -627,8 +645,8 @@ namespace RimageMedicalSystemV2
                                     this.ucPatients21.gcPatientlist.RefreshDataSource();
 
                                     this.ucPatients21.gvPatientlist.SelectRow(0);
-
-                                    ErrorLog.TraceWrite("SearchDownloadFolder", string.Format(">>Start>>환자조회완료 : {0}-{1}", orderInfo.patNo, orderInfo.patFolder), Environment.CurrentDirectory);
+                                                                        
+                                    ErrorLog.TraceWrite("SearchDownloadFolder", string.Format(">> 환자 조회 완료 : {0} - {1} - {2}", orderInfo.patNo, orderInfo.patName, orderInfo.patFolder), Environment.CurrentDirectory);
 
                                     this.txtStatusView.AppendText(string.Format("{0} {1} found.{2}", orderInfo.patNo, orderInfo.patName, Environment.NewLine));
 
@@ -1606,15 +1624,29 @@ namespace RimageMedicalSystemV2
         {
             this._SendingOrder = false;
             this.panelLoadingBurn.Visible = false;
+            this.btnBurn.Enabled = false;
 
-            if (GlobalVar.configEntity.AutoExecute == "2")
+            try
             {
-                //// 굽기까지 진행일 경우
-                this.btnBurn.Enabled = false;
+                if (GlobalVar.configEntity.AutoExecute == "2")
+                {
+                    //// 굽기까지 진행일 경우
+                    this.btnBurn.Enabled = false;
+                }
+                else
+                {
+                    this.btnBurn.Enabled = true;
+                }
+
+                if (this.AutoExecute == "2")
+                {
+                    this.btnBurn.Enabled = false;
+                }
             }
-            else
+            catch { }
+            finally
             {
-                this.btnBurn.Enabled = true;
+                ErrorLog.TraceWrite("UnlockBurn", string.Format(">> 자동굽기 설정 : {0} - {1}", GlobalVar.configEntity.AutoExecute, this.btnBurn.Enabled.ToString()), Environment.CurrentDirectory);
             }
         }
 
@@ -1697,7 +1729,7 @@ namespace RimageMedicalSystemV2
 
                     this.txtMessages.Text = string.Format("[{0}] 굽기 전송 실패", orderID);
 
-                    ErrorLog.TraceWrite("MainForm.RemoveBurningList", string.Format(">> 굽기 실패 (RDMS.exe 종료) : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
+                    ErrorLog.TraceWrite("RemoveBurningList", string.Format(">> 굽기 실패 (RDMS.exe 종료) : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
 
                     MessageBox.Show("굽기 명령 전송에 실패하였습니다.\r\n다시 시도해 주세요.", "Rimage Error");
                 }
@@ -1749,8 +1781,8 @@ namespace RimageMedicalSystemV2
                     }
 
                     this.txtStatusView.AppendText(string.Format("[{0}]으로 굽기주문 전송하였습니다.\r\n", orderInfo.TargetServer.IP));
-                    ErrorLog.TraceWrite("MainForm.AddBurningList", string.Format(">> 굽기 실행 (RDMS.exe 실행) : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
-                    ErrorLog.TraceWrite("MainForm.AddBurningList", string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Environment.CurrentDirectory);
+                    ErrorLog.TraceWrite("AddBurningList", string.Format(">> 굽기 실행 (RDMS.exe 실행) : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
+                    ErrorLog.TraceWrite("AddBurningList", string.Format("++ 전송대상 서버:[{0}]-{1}", orderInfo.TargetServer.No, orderInfo.TargetServer.IP), Environment.CurrentDirectory);
                 }
             }
             catch
@@ -2175,6 +2207,8 @@ namespace RimageMedicalSystemV2
                 GlobalVar.configEntity.RibbonRemainQty = Convert.ToInt32(cf._RibbonRemainQty);
                 GlobalVar.configEntity.BinCheckTime = Convert.ToInt32(cf._BinCheckTime);
                 GlobalVar.configEntity.AutoExecute = cf._AutoExecute;
+                this.AutoExecute = cf._AutoExecute;
+
                 GlobalVar.configEntity.AutoExecuteHookingType = cf._AutoExecuteHookingType;
                 GlobalVar.configEntity.ReportView = cf._ReportView;
                 GlobalVar.configEntity.DelType = cf._DelType;
@@ -2276,6 +2310,8 @@ namespace RimageMedicalSystemV2
                 {
                     this.SelectServerLabel(this.LastHostIP, false);
                 }
+
+                ErrorLog.TraceWrite("GetConfig", "-- 설정값 가져오기 완료.  -- ", Application.StartupPath);
             }
             catch (Exception ex)
             {
@@ -2593,7 +2629,7 @@ namespace RimageMedicalSystemV2
                     //// 굽기 진행 상태 업데이트
                     this.UpdateBurnState(orderInfo.patFolder, Enums.BurnState.Finish);
 
-                    ErrorLog.TraceWrite("MainForm.GetOrderStatus", string.Format(">> 굽기 완료 : {0}-{1}-{2}-{3}", orderInfo.OrderId, orderInfo.patNo, orderInfo.patName, orderInfo.patFolder), Environment.CurrentDirectory);
+                    ErrorLog.TraceWrite("GetOrderStatus", string.Format(">> 굽기 완료 : {0}-{1}-{2}-{3}", orderInfo.OrderId, orderInfo.patNo, orderInfo.patName, orderInfo.patFolder), Environment.CurrentDirectory);
 
                     //// 오른쪽 하단에 메시지를 보여준다.
                     if (GlobalVar.configEntity.PopUpAlamYN == "Y")
@@ -2935,16 +2971,22 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Error != null)
+            try
             {
-                RimageKorea.ErrorLog.LogWrite(this, e.Error.ToString(), Application.StartupPath);
+                if (e.Error != null)
+                {
+                    ErrorLog.LogWrite(this, e.Error.ToString(), Application.StartupPath);
+                }
+
+                this.backgroundWorker2.CancelAsync();
+
+                //폴더가 완전히 삭제되었는지 다시 한번 체크해보자.
+                this.txtStatusView.AppendText(GlobalVar.configEntity.RetentionPeriod.ToString() + "일 전의 로그와 데이터 삭제가 완료되었습니다." + Environment.NewLine);
+                ErrorLog.TraceWrite("backgroundWorker2_RunWorkerCompleted", "-- Log file 삭제 완료  -- ", Application.StartupPath);
+
+                this.CheckDeletePatientFolder();
             }
-
-            this.backgroundWorker2.CancelAsync();
-
-            //폴더가 완전히 삭제되었는지 다시 한번 체크해보자.
-            this.txtStatusView.AppendText(GlobalVar.configEntity.RetentionPeriod.ToString() + "일 전의 로그와 데이터 삭제가 완료되었습니다." + Environment.NewLine);
-            this.CheckDeletePatientFolder();
+            catch { }
         }
 
         /// <summary>
@@ -3958,7 +4000,7 @@ namespace RimageMedicalSystemV2
 
                     this.gvBurninglist.RefreshData();
 
-                    ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm.CancelOrder", "굽기취소 : " + file, GlobalVar.ProgramExecuteFolder);
+                    ErrorLog.TraceWrite("MainForm.CancelOrder", "굽기취소 : " + file, GlobalVar.ProgramExecuteFolder);
                 }
             }
             catch { }
@@ -4129,7 +4171,7 @@ namespace RimageMedicalSystemV2
                 this.ClearImgFiles();
                 this.KillBurnPrograms();
 
-                ErrorLog.TraceWrite("RimageMedicalSystemV2.MainForm.MainForm_FormClosing", "-- Program Exit --", Application.StartupPath);
+                ErrorLog.TraceWrite("MainForm_FormClosing", "-- Program Exit --", Application.StartupPath);
             }
             else
             {

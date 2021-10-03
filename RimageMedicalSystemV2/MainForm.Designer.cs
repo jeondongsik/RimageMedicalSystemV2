@@ -316,6 +316,7 @@
             this.btnBurn.AllowFocus = false;
             this.btnBurn.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnBurn.Appearance.Options.UseFont = true;
+            this.btnBurn.Enabled = false;
             this.btnBurn.ImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.dvd_burn1;
             this.btnBurn.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
             this.btnBurn.Location = new System.Drawing.Point(114, 3);
