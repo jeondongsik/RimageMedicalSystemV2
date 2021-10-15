@@ -710,13 +710,22 @@ namespace RimageMedicalSystemV2
         /// 굽기 목록에 존재하는지 동일환자 폴더가 체크
         /// </summary>
         /// <param name="foldername"></param>
+        /// <param name="retry">재굽기 여부</param>
         /// <returns></returns>
-        private bool ExistsBurningItem(string foldername)
+        private bool ExistsBurningItem(string foldername, bool retry = false)
         {
             try
             {
-                if (this._BurningList.Any(o => o.patFolder == foldername))    ////&& o.Finish != "Y"
-                    return true;
+                if (retry)
+                {
+                    if (this._BurningList.Any(o => o.patFolder == foldername && o.Finish != "Y"))    ////&& o.Finish != "Y"
+                        return true;
+                }
+                else
+                {
+                    if (this._BurningList.Any(o => o.patFolder == foldername))    ////&& o.Finish != "Y"
+                        return true;
+                }
             }
             catch { }
 
@@ -1173,9 +1182,9 @@ namespace RimageMedicalSystemV2
                 //// 현재 굽기 실행중인지 체크한다.
                 if (this._BurningList != null && this._BurningList.Count > 0)
                 {
-                    if (this.ExistsBurningItem(orderInfo.patFolder))
+                    if (this.ExistsBurningItem(orderInfo.patFolder, true))
                     {
-                        ////굽기 진행중임.
+                        //// 굽기 진행중임.
                         MessageBox.Show("이미 굽기진행중인 환자정보입니다.\r\n완료 후 다시 시도하세요.", "Rimage Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
