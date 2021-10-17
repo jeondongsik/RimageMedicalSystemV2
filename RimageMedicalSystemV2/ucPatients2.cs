@@ -176,6 +176,29 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
+        /// 조회된 폴더목록에서 제외되어야 할 폴더 삭제
+        /// </summary>
+        /// <param name="exceptList"></param>
+        public void RemoveAtList(List<string> exceptList)
+        {
+            if (exceptList.Count > 0)
+            {
+                try
+                {
+                    for (int j = this._patInfoList.Count - 1; j >= 0; j--)
+                    {
+                        if (exceptList.Contains(this._patInfoList[j].patFolder))
+                            this._patInfoList.RemoveAt(j);
+                    }
+
+                    this.gvPatientlist.RefreshData();
+                    this.gcPatientlist.RefreshDataSource();
+                }
+                catch { }
+            }
+        }
+
+        /// <summary>
         /// 환자폴더명으로 선택하여 조회된 목록에서 제외
         /// </summary>
         /// <param name="patFolder"></param>
