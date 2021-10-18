@@ -587,28 +587,44 @@ namespace RimageMedicalSystemV2
 
 					foreach (DirectoryInfo sdir in dri.GetDirectories())
                     {
-                        //// 현재 굽기 실행중인지 체크한다.
+                        //// 현재 굽기 실행중인지 체크한다.                         
                         if (this._BurningList != null && this._BurningList.Count > 0)
                         {
                             patExists = this.ExistsBurningItem(sdir.Name);
 
+                            if (patExists)
+                            {
+                                //// 굽기 실행 중이라면 ..
+                                if (!exceptPat.Contains(sdir.Name))
+                                    exceptPat.Add(sdir.Name);
+                            }
+                        }
+                        
+                        //// 대기 목록에 동일한 환자가 있는지 체크
+                        if (this.ExistsPendingItem(sdir.Name))
+                        {
+                            patExists = true;
+
                             if (!exceptPat.Contains(sdir.Name))
                                 exceptPat.Add(sdir.Name);
                         }
-                        
-						//// 굽기 진행중이 아니라면 
+
+                        //// 굽기 진행중이 아니라면 
                         //// 아산병원일 경우 완료된 폴더, 삭제된 폴더 체크한다.
-						if (!patExists)
+                        if (!patExists)
 						{
 							if (GlobalVar.configEntity.FolderPattern == "6" || GlobalVar.configEntity.FolderPattern == "7")
 							{
 								patExists = this.IsEndFolder(sdir.Name);
 
-								//// 삭제된 폴더면 목록에서도 삭제하자.
-								deletedIdx.Add(idx);
+                                if (patExists)
+                                {
+                                    //// 삭제된 폴더면 목록에서도 삭제하자.
+                                    //// deletedIdx.Add(idx);
 
-                                if (!exceptPat.Contains(sdir.Name))
-                                    exceptPat.Add(sdir.Name);
+                                    if (!exceptPat.Contains(sdir.Name))
+                                        exceptPat.Add(sdir.Name);
+                                }
                             }
 						}
 
@@ -681,13 +697,13 @@ namespace RimageMedicalSystemV2
                     }
 
 					//// 삭제된 폴더가 있다면 목록에서 삭제
-					if (deletedIdx.Count > 0)
-					{
-						if (this.mediaType != MediaType.USB)
-						{
-							this.ucPatients21.RemoveAtList(deletedIdx);
-						}
-					}
+					////if (deletedIdx.Count > 0)
+					////{
+					////	if (this.mediaType != MediaType.USB)
+					////	{
+					////		this.ucPatients21.RemoveAtList(deletedIdx);
+					////	}
+					////}
                 }
                 else
                 {
@@ -740,30 +756,11 @@ namespace RimageMedicalSystemV2
                 {
                     if (this._BurningList.Any(o => o.patFolder == foldername && o.Finish != "Y"))    ////&& o.Finish != "Y"
                         return true;
-
-                    //// 굽기 대기 목록에 들어가 있는 경우도 체크하자.
-                    if (this._BurnStateList != null)
-                    {
-                        if (this._BurnStateList.ContainsKey(foldername))
-                        {
-                            if (this._BurnStateList[foldername] != Enums.BurnState.Finish)
-                                return true;
-                        }
-                    }
                 }
                 else
                 {
                     if (this._BurningList.Any(o => o.patFolder == foldername))    ////&& o.Finish != "Y"
-                        return true;
-
-                    //// 굽기 대기 목록에 들어가 있는 경우도 체크하자.
-                    if (this._BurnStateList != null)
-                    {
-                        if (this._BurnStateList.ContainsKey(foldername))
-                        {
-                            return true;
-                        }
-                    }
+                        return true;                    
                 }
             }
             catch { }
