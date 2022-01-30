@@ -782,7 +782,7 @@ namespace RMDS
                 }
                 else
                 {
-                    ////xmlOrderStatus = xmlOrderStatus.Replace(CSystemManager.GetInstance().GetUncSystemFolder(), this.RimageSystemFolderPath);
+                    xmlOrderStatus = xmlOrderStatus.Replace(CSystemManager.GetInstance().GetUncSystemFolder(), this.RimageSystemFolderPath);
                 }
 
                 //// Parse status information

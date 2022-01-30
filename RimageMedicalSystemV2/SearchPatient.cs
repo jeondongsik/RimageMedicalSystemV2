@@ -351,6 +351,17 @@ namespace RimageMedicalSystemV2
                                 if (string.IsNullOrWhiteSpace(orderInfo.patName))
                                     orderInfo.patName = clsTT.Name;
                                 break;
+                            case "8":
+                                //// 원광대병원 dll 사용                                
+                                Dictionary<string, string> dllPatInfo = GetPatientNameFromDllImport.GetPatInfo("1", orderInfo.patNo);
+                                if (dllPatInfo != null)
+                                {                                    
+                                    orderInfo.patName = dllPatInfo["환자명"];
+                                    orderInfo.patSex = dllPatInfo["성별"];
+                                    orderInfo.patAge = dllPatInfo["나이"];
+                                    orderInfo.patBirtyDay = dllPatInfo["생년월일"];
+                                }
+                                break;
                             default:
                                 break;
                         }

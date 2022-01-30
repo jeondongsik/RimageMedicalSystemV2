@@ -1077,7 +1077,8 @@
             "4. Database 연결",
             "5. Socket 연결",
             "6. Tomtech(아산병원)",
-            "7. Tomtech(아산병원)_NEW"});
+            "7. Tomtech(아산병원)_NEW",
+            "8. wonmis"});
             this.comboBox_FolderPattern.Location = new System.Drawing.Point(181, 203);
             this.comboBox_FolderPattern.Name = "comboBox_FolderPattern";
             this.comboBox_FolderPattern.Size = new System.Drawing.Size(290, 23);
