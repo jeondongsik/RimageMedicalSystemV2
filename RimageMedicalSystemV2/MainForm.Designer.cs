@@ -146,12 +146,12 @@
             // ucPatients11
             // 
             this.ucPatients11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucPatients11.Location = new System.Drawing.Point(2, 23);
+            this.ucPatients11.Location = new System.Drawing.Point(2, 27);
             this.ucPatients11.LookAndFeel.SkinName = "Sharp Plus";
             this.ucPatients11.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients11.Name = "ucPatients11";
             this.ucPatients11.OrderInfo = null;
-            this.ucPatients11.Size = new System.Drawing.Size(800, 207);
+            this.ucPatients11.Size = new System.Drawing.Size(800, 203);
             this.ucPatients11.TabIndex = 1;
             this.ucPatients11.TabStop = false;
             this.ucPatients11.Visible = false;
@@ -160,12 +160,12 @@
             // 
             this.ucPatients21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucPatients21.FrmParent = null;
-            this.ucPatients21.Location = new System.Drawing.Point(2, 23);
+            this.ucPatients21.Location = new System.Drawing.Point(2, 27);
             this.ucPatients21.LookAndFeel.SkinName = "Sharp Plus";
             this.ucPatients21.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients21.Name = "ucPatients21";
             this.ucPatients21.PatientInfoList = null;
-            this.ucPatients21.Size = new System.Drawing.Size(800, 207);
+            this.ucPatients21.Size = new System.Drawing.Size(800, 203);
             this.ucPatients21.TabIndex = 0;
             this.ucPatients21.TabStop = false;
             this.ucPatients21.Visible = false;
@@ -412,12 +412,12 @@
             // gcBurninglist
             // 
             this.gcBurninglist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcBurninglist.Location = new System.Drawing.Point(2, 23);
+            this.gcBurninglist.Location = new System.Drawing.Point(2, 27);
             this.gcBurninglist.LookAndFeel.SkinName = "VS2010";
             this.gcBurninglist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcBurninglist.MainView = this.gvBurninglist;
             this.gcBurninglist.Name = "gcBurninglist";
-            this.gcBurninglist.Size = new System.Drawing.Size(980, 218);
+            this.gcBurninglist.Size = new System.Drawing.Size(980, 214);
             this.gcBurninglist.TabIndex = 2;
             this.gcBurninglist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvBurninglist});
@@ -637,7 +637,7 @@
             this.lblDriveStatus.Appearance.Options.UseForeColor = true;
             this.lblDriveStatus.Location = new System.Drawing.Point(15, 7);
             this.lblDriveStatus.Name = "lblDriveStatus";
-            this.lblDriveStatus.Size = new System.Drawing.Size(138, 12);
+            this.lblDriveStatus.Size = new System.Drawing.Size(159, 15);
             this.lblDriveStatus.TabIndex = 17;
             this.lblDriveStatus.Text = "Current Save Drive : ";
             // 
@@ -680,7 +680,7 @@
             this.txtBin2Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin2Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin2Discs.Properties.ReadOnly = true;
-            this.txtBin2Discs.Size = new System.Drawing.Size(84, 18);
+            this.txtBin2Discs.Size = new System.Drawing.Size(84, 23);
             this.txtBin2Discs.TabIndex = 135;
             this.txtBin2Discs.TabStop = false;
             // 
@@ -696,7 +696,7 @@
             this.txtBin4Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin4Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin4Discs.Properties.ReadOnly = true;
-            this.txtBin4Discs.Size = new System.Drawing.Size(84, 18);
+            this.txtBin4Discs.Size = new System.Drawing.Size(84, 23);
             this.txtBin4Discs.TabIndex = 134;
             this.txtBin4Discs.TabStop = false;
             // 
@@ -712,7 +712,7 @@
             this.txtBin1Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin1Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin1Discs.Properties.ReadOnly = true;
-            this.txtBin1Discs.Size = new System.Drawing.Size(84, 18);
+            this.txtBin1Discs.Size = new System.Drawing.Size(84, 23);
             this.txtBin1Discs.TabIndex = 133;
             this.txtBin1Discs.TabStop = false;
             // 
@@ -728,7 +728,7 @@
             this.txtBin3Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin3Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin3Discs.Properties.ReadOnly = true;
-            this.txtBin3Discs.Size = new System.Drawing.Size(84, 18);
+            this.txtBin3Discs.Size = new System.Drawing.Size(84, 23);
             this.txtBin3Discs.TabIndex = 132;
             this.txtBin3Discs.TabStop = false;
             // 
@@ -744,7 +744,7 @@
             this.txtRetansferRibbons.Properties.Appearance.Options.UseTextOptions = true;
             this.txtRetansferRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtRetansferRibbons.Properties.ReadOnly = true;
-            this.txtRetansferRibbons.Size = new System.Drawing.Size(84, 18);
+            this.txtRetansferRibbons.Size = new System.Drawing.Size(84, 23);
             this.txtRetansferRibbons.TabIndex = 131;
             this.txtRetansferRibbons.TabStop = false;
             // 
@@ -760,7 +760,7 @@
             this.txtCMYRibbons.Properties.Appearance.Options.UseTextOptions = true;
             this.txtCMYRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtCMYRibbons.Properties.ReadOnly = true;
-            this.txtCMYRibbons.Size = new System.Drawing.Size(84, 18);
+            this.txtCMYRibbons.Size = new System.Drawing.Size(84, 23);
             this.txtCMYRibbons.TabIndex = 130;
             this.txtCMYRibbons.TabStop = false;
             // 
@@ -772,7 +772,7 @@
             this.label7.ForeColor = System.Drawing.Color.Black;
             this.label7.Location = new System.Drawing.Point(268, 73);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(134, 12);
+            this.label7.Size = new System.Drawing.Size(158, 15);
             this.label7.TabIndex = 129;
             this.label7.Text = "· Bin4 Discs Remaining";
             // 
@@ -784,7 +784,7 @@
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(261, 107);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(142, 12);
+            this.label5.Size = new System.Drawing.Size(167, 15);
             this.label5.TabIndex = 128;
             this.label5.Text = "· ITS Ribbons Remaining";
             // 
@@ -796,7 +796,7 @@
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(9, 107);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(152, 12);
+            this.label4.Size = new System.Drawing.Size(178, 15);
             this.label4.TabIndex = 127;
             this.label4.Text = "· CMY Ribbons Remaining";
             // 
@@ -808,7 +808,7 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(9, 73);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(134, 12);
+            this.label3.Size = new System.Drawing.Size(158, 15);
             this.label3.TabIndex = 126;
             this.label3.Text = "· Bin3 Discs Remaining";
             // 
@@ -820,7 +820,7 @@
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(268, 40);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 12);
+            this.label2.Size = new System.Drawing.Size(158, 15);
             this.label2.TabIndex = 125;
             this.label2.Text = "· Bin2 Discs Remaining";
             // 
@@ -832,7 +832,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(9, 39);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 12);
+            this.label1.Size = new System.Drawing.Size(158, 15);
             this.label1.TabIndex = 124;
             this.label1.Text = "· Bin1 Discs Remaining";
             // 
@@ -854,7 +854,7 @@
             this.labelControl11.Appearance.Options.UseForeColor = true;
             this.labelControl11.Location = new System.Drawing.Point(788, 690);
             this.labelControl11.Name = "labelControl11";
-            this.labelControl11.Size = new System.Drawing.Size(205, 13);
+            this.labelControl11.Size = new System.Drawing.Size(268, 17);
             this.labelControl11.TabIndex = 16;
             this.labelControl11.Text = "(주)나시스 기술지원 ☎ 02-466-0745";
             // 
@@ -952,7 +952,7 @@
             this.hyperLinkEdit1.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.hyperLinkEdit1.Properties.Appearance.Options.UseFont = true;
             this.hyperLinkEdit1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.hyperLinkEdit1.Size = new System.Drawing.Size(198, 18);
+            this.hyperLinkEdit1.Size = new System.Drawing.Size(198, 20);
             this.hyperLinkEdit1.TabIndex = 19;
             this.hyperLinkEdit1.TabStop = false;
             this.hyperLinkEdit1.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.hyperLinkEdit1_OpenLink);
@@ -1002,7 +1002,7 @@
             this.labelControl1.Appearance.Options.UseFont = true;
             this.labelControl1.Location = new System.Drawing.Point(74, 31);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(328, 63);
+            this.labelControl1.Size = new System.Drawing.Size(406, 84);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "굽기 명령을 서버에 전송하고 있습니다.\r\n\r\n이 창이 없어질 때까지 잠시만 기다려 주세요.";
             // 

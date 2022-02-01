@@ -2602,6 +2602,100 @@ namespace RimageMedicalSystemV2
             }
         }
 
+        private void GetLocalServerConfig()
+        {
+            ////string sXml = "";
+            ////string strProdConfig = "";
+            ////txtStatusView.Clear();
+            ////CreateOrderXml createOrder = new CreateOrderXml();
+
+            ////if (CSystemManager.GetInstance().Connected)
+            ////{
+            ////    createOrder.SERVER = HostName.ToUpper();
+            ////    createOrder.SYSFOLDER = CSystemManager.GetInstance().GetUncSystemFolder();
+
+            ////    if (this.ServerType.Equals("R"))
+            ////        createOrder.SYSFOLDER = "\\\\" + this.HostIP + "\\Rimage";
+            ////    else
+            ////        createOrder.SYSFOLDER = this.RimageSystemFolderPath;    //CSystemManager.GetInstance().GetUncSystemFolder();
+
+            ////    createOrder.CLIENTID = ClientId;
+
+            ////    sXml = createOrder.GenerateProdRequestServeConfig();
+
+            ////    try
+            ////    {
+            ////        CSystemManager.GetInstance().SetSynchronousTimeout(30000);
+            ////        strProdConfig = CServerManager.GetInstance().ExecuteServerRequest(HostName.ToUpper() + "_PS01", sXml);
+
+            ////        if (this.ServerType.Equals("R"))
+            ////        {
+            ////            strProdConfig = strProdConfig.Replace("D:\\Rimage\\XML\\", "\\\\" + HostIP + "\\Rimage\\XML\\");
+            ////            strProdConfig = strProdConfig.Replace(this.HostName.ToUpper(), this.HostIP);
+            ////        }
+            ////        else
+            ////        {
+            ////            strProdConfig = strProdConfig.Replace(CSystemManager.GetInstance().GetUncSystemFolder(), this.RimageSystemFolderPath);
+            ////        }
+            ////    }
+            ////    catch (CBaseException ex)
+            ////    {
+            ////        txtStatusView.AppendText("Rimage Client API ExecuteServerRequest exception! " + ex.Message + "\r\n");
+            ////    }
+            ////}
+            ////else
+            ////{
+            ////    txtStatusView.AppendText("Not connected to a Messaging Server\r\n");
+            ////}
+        }
+
+        private void GetLocalServerStatus()
+        {
+            ////string sXml = "";
+            ////string strProdConfig = "";
+            ////txtStatusView.Clear();
+            ////CreateOrderXml createOrder = new CreateOrderXml();
+
+            ////if (CSystemManager.GetInstance().Connected)
+            ////{
+            ////    createOrder.SERVER = HostName.ToUpper();
+            ////    createOrder.SYSFOLDER = CSystemManager.GetInstance().GetUncSystemFolder();
+
+            ////    if (this.ServerType.Equals("R"))
+            ////        createOrder.SYSFOLDER = "\\\\" + this.HostIP + "\\Rimage";
+            ////    else
+            ////        createOrder.SYSFOLDER = this.RimageSystemFolderPath;
+
+            ////    createOrder.CLIENTID = ClientId;
+
+            ////    sXml = createOrder.GenerateProdRequestAutoloaderStatus();
+
+            ////    try
+            ////    {
+            ////        CSystemManager.GetInstance().SetSynchronousTimeout(60000);
+            ////        strProdConfig = CServerManager.GetInstance().ExecuteServerRequest(HostName.ToUpper() + "_PS01", sXml);
+
+            ////        if (this.ServerType.Equals("R"))
+            ////        {
+            ////            strProdConfig = strProdConfig.Replace("D:\\Rimage\\XML\\", "\\\\" + HostIP + "\\Rimage\\XML\\");
+            ////            strProdConfig = strProdConfig.Replace(this.HostName.ToUpper(), this.HostIP);
+            ////        }
+            ////        else
+            ////        {
+            ////            strProdConfig = strProdConfig.Replace(CSystemManager.GetInstance().GetUncSystemFolder(), this.RimageSystemFolderPath);
+            ////        }
+            ////    }
+            ////    catch (CBaseException ex)
+            ////    {
+            ////        txtStatusView.AppendText("Rimage Client API ExecuteServerRequest exception! " + ex.Message + "\r\n");
+            ////    }
+            ////}
+            ////else
+            ////{
+            ////    txtStatusView.AppendText("Not connected to a Messaging Server\r\n");
+            ////}
+        }
+
         /// <summary>
         /// 남은 수량 더하기
         /// </summary>
