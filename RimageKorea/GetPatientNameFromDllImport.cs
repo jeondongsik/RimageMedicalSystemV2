@@ -12,10 +12,9 @@ namespace RimageKorea
     /// </summary>
     public class GetPatientNameFromDllImport
     {
-        ////[DllImport("srxdll.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
-        ////public static extern string get_pat_info(string stype, string inputString, out string outputString);
-        [DllImport("wonsrx.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
-        [return: MarshalAs(UnmanagedType.AnsiBStr)]
+        //// C:/wonmis/dll/srxdll.dll 경로는 원광대학교병원 통합전산시스템 WONMIS 기본 dll 사용 폴더명 입니다. 
+        //// [DllImport("C:/wonmis/dll/srxdll.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
+        [DllImport("C:/wonmis/dll/srxdll.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]        
         public static extern string get_pat_info(string stype, string inputString, out string outputString);
 
         /// <summary>
