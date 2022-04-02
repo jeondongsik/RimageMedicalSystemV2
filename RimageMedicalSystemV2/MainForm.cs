@@ -135,6 +135,8 @@ namespace RimageMedicalSystemV2
         CheckDownImages hookChecker = null;                     //// 울산병원의 후킹 체크 객체
         CheckDownComplete hookChecker2 = null;                  //// 폴더사이즈 체크하여 다운로드 완료 체크
 
+        Dictionary<int, bool> CPSM_EEG = null;      //// Compumedics ProFusion Study Manager -  EEG 후킹 후 다운로드 종료 체크용
+
         string LastHostIP;
         string LastHostName;
         string LastHostPort;
@@ -3751,6 +3753,40 @@ namespace RimageMedicalSystemV2
             }
 
             return retVal;
+        }
+
+        /// <summary>
+        /// Compumedics ProFusion Study Manager -  EEG
+        /// </summary>
+        /// <returns></returns>
+        private bool AutoExec11()
+        {
+            // window class, caption
+            bool retVal = false;
+            
+            int hw = FindWindow("#32770", "Archive Studies");
+
+            if (hw != 0) // 프로그램이 실행한 경우 
+            {
+                //// 파일 다운로드가 시작됨. >> 전역변수에 저장
+            }
+
+            return retVal;
+        }
+
+        private bool CheckCPSM_EEGDownload(int hw)
+        {
+            try
+            {
+                if (this.CPSM_EEG == null)
+                    this.CPSM_EEG = new Dictionary<int, bool>();
+
+
+
+            }
+            catch { }
+
+            return false;
         }
 
         /// <summary>
