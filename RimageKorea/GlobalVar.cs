@@ -154,5 +154,10 @@ namespace RimageKorea
         /// 아산병원 Tomctech 뷰어 파일위치
         /// </summary>
         public const string TOMTECH_VIEWR_FOLDER = @"C:\TomtechV2";
+
+        /// <summary>
+        /// Compumedics ProFusion 뷰어 파일 위치
+        /// </summary>
+        public const string COMPUMEDICS_VIEWR_FOLDER = @"C:\ProFusionEEG";
     }
 }

@@ -135,7 +135,10 @@ namespace RimageMedicalSystemV2
         CheckDownImages hookChecker = null;                     //// 울산병원의 후킹 체크 객체
         CheckDownComplete hookChecker2 = null;                  //// 폴더사이즈 체크하여 다운로드 완료 체크
 
-        Dictionary<int, bool> CPSM_EEG = null;      //// Compumedics ProFusion Study Manager -  EEG 후킹 후 다운로드 종료 체크용
+        /// <summary>
+        /// Compumedics ProFusion Study Manager -  EEG 후킹 후 다운로드 진행중인 여부
+        /// </summary>
+        bool CPSM_EEG_Downloading = false;
 
         string LastHostIP;
         string LastHostName;
@@ -648,7 +651,7 @@ namespace RimageMedicalSystemV2
 
                                     continue;
                                 }
-
+                                
                                 orderInfo.DicomCDFolder = sdir.FullName;
 
                                 if (this.ucPatients21.PatientInfoList.Count == 0)
@@ -1155,7 +1158,7 @@ namespace RimageMedicalSystemV2
 							continue;
 						}
 					}
-
+                    
 					//// 굽기 시작
 					if (this.StartBurn(orderInfo))
 					{
@@ -1276,6 +1279,55 @@ namespace RimageMedicalSystemV2
                     frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CD_VIEWER_LICENSE.rtf"));
                     frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CDViewerHelp.chm"));
                     frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "README_VIEWER.txt"));
+
+                    frmCopy.ShowDialog();
+
+                    //// 다운로드 폴더의 상위 폴더
+                    string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
+
+                    ////EditList에 Viewr 파일 목록 넣어준다.
+                    if (frmCopy.EditList != null)
+                    {
+                        foreach (string fl in frmCopy.EditList)
+                        {
+                            //// download 폴더로 변경해줘야 함.
+                            orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
+                        }
+                    }
+
+                    //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
+                    orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
+
+                    //// 화면 출력용도 다시 계산
+                    long fldLen = orderInfo.FolderSize / 1024 / 1024;
+                    orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+
+                    if (GlobalVar.configEntity.programType == "1")
+                        ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+
+                    frmCopy.Dispose();
+                }
+            }
+            catch { }
+
+            //// Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사한다.
+            try
+            {
+                if (GlobalVar.configEntity.AutoExecuteHookingType == "13")
+                {
+                    frmCopyFolder frmCopy = new frmCopyFolder();
+                    frmCopy.SourceDirectory = GlobalVar.COMPUMEDICS_VIEWR_FOLDER;
+                    frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
+
+                    /*
+                     
+                     */
+                    frmCopy.IncList = new List<string>();
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "HTML"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "ProFusionEEG5"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "AUTORUN.INF"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.exe"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.ini"));
 
                     frmCopy.ShowDialog();
 
@@ -3416,6 +3468,7 @@ namespace RimageMedicalSystemV2
             bool retVal7 = false;
             bool retVal8 = false;
             bool retVal10 = false;
+            bool retVal13 = false;
 
             this.tmrHookChecker.Stop();
 
@@ -3450,11 +3503,14 @@ namespace RimageMedicalSystemV2
                     case "10":
                         retVal10 = AutoExec10();      //10.DCAS
                         break;
+                    case "13":
+                        retVal13 = AutoExec13();    //13.Compumedics ProFusion
+                        break;
                     default:
                         break;
                 }
 
-                if (retVal1 || retVal2 || retVal3 || retVal4 || retVal5 || retVal6 || retVal7 || retVal8 || retVal10)
+                if (retVal1 || retVal2 || retVal3 || retVal4 || retVal5 || retVal6 || retVal7 || retVal8 || retVal10 || retVal13)
                 {
                     Thread.Sleep(GlobalVar.configEntity.HookSleepTime2);
 
@@ -3759,7 +3815,7 @@ namespace RimageMedicalSystemV2
         /// Compumedics ProFusion Study Manager -  EEG
         /// </summary>
         /// <returns></returns>
-        private bool AutoExec11()
+        private bool AutoExec13()
         {
             // window class, caption
             bool retVal = false;
@@ -3769,26 +3825,24 @@ namespace RimageMedicalSystemV2
             if (hw != 0) // 프로그램이 실행한 경우 
             {
                 //// 파일 다운로드가 시작됨. >> 전역변수에 저장
+                //// 창이 계속 떠 있다는 것은 다운로드 중임.
+                this.CPSM_EEG_Downloading = true;
+            }
+            else
+            {
+                ////설정된 핸들값이 있다면 다운로드 진행중이라고 판단.
+                if (this.CPSM_EEG_Downloading == true)
+                {
+                    //// 창이 떠있었다는 의미로 현재상태는 다운로드 완료로 판단
+                    this.CPSM_EEG_Downloading = false;
+
+                    return true;
+                }
             }
 
             return retVal;
         }
-
-        private bool CheckCPSM_EEGDownload(int hw)
-        {
-            try
-            {
-                if (this.CPSM_EEG == null)
-                    this.CPSM_EEG = new Dictionary<int, bool>();
-
-
-
-            }
-            catch { }
-
-            return false;
-        }
-
+        
         /// <summary>
         /// 주기적으로 다운로드 완료된 폴더가 존재하는지 체크하자. - Type2
         /// </summary>

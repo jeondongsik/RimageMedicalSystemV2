@@ -38,6 +38,7 @@ namespace RimageMedicalSystemV2
                 bool isNoDicom = false;
                 bool isText = false;
                 bool isINI = false;
+                bool isXml = false;
 
                 //// root에 checkFile ("end.txt") 파일이 존재하는지 체크하자.
                 if (checkFile != "")
@@ -78,7 +79,7 @@ namespace RimageMedicalSystemV2
 
                     //// 먼저 DicomDir 파일이 존재하는지 체크
                     if (GlobalVar.configEntity.ExistDicomDir == "Y")
-                    {                        
+                    {
                         if (File.Exists(Path.Combine(sdir.FullName, "DICOMDIR")))
                         {
                             existPatInfoFile = true;
@@ -114,7 +115,7 @@ namespace RimageMedicalSystemV2
                         if (!existPatInfoFile)
                             return null;
                     }
-
+                    
                     //// MDB 파일이 존재하면 우선 MDB파일에서 정보를 가져온다.
                     isMdb = false;
                     if (File.Exists(Path.Combine(sdir.FullName, mdbFileName)))
@@ -213,7 +214,9 @@ namespace RimageMedicalSystemV2
                     else
                     {
                         //// DicomDir 파일이 없을 시 폴더명에서 환자아이디, 이름만 가져온다.
-                        if (sdir.Name.Contains("_"))
+                        //// 단 13. Compumedics가 아닌 경우 
+                        
+                        if (sdir.Name.Contains("_") && GlobalVar.configEntity.AutoExecuteHookingType != "13")
                         {
                             try
                             {
@@ -276,6 +279,24 @@ namespace RimageMedicalSystemV2
                             }
 
                             isINI = true;
+                        }
+                        catch { }
+                    }
+
+                    //// Compumedics EEG4PatientInfo.xml 에서 데이터 가져온다.
+                    if (File.Exists(Path.Combine(sdir.FullName, "EEG4PatientInfo.xml")))
+                    {
+                        try
+                        {
+                            GetPatientInfoFromEEG4Xml cls2 = new GetPatientInfoFromEEG4Xml();
+                            cls2.GetInfo(Path.Combine(sdir.FullName, "EEG4PatientInfo.xml"));
+
+                            orderInfo.patNo = cls2.ID;
+                            orderInfo.patName = cls2.Name;
+                            orderInfo.patSex = cls2.Sex;
+                            orderInfo.patAge = cls2.Age;
+
+                            isXml = true;
                         }
                         catch { }
                     }

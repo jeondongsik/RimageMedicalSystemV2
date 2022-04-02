@@ -748,7 +748,8 @@
             "9. TechHeim",
             "10. DCAS",
             "11. CheckFolderSize",
-            "12.TechHeim2"});
+            "12. TechHeim2",
+            "13. Compumedics"});
             this.comboBox_AutoExecuteHookingType.Location = new System.Drawing.Point(181, 261);
             this.comboBox_AutoExecuteHookingType.Name = "comboBox_AutoExecuteHookingType";
             this.comboBox_AutoExecuteHookingType.Size = new System.Drawing.Size(200, 23);

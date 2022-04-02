@@ -1113,6 +1113,7 @@ namespace RimageKorea
         {
             ////변경후폴더명
             string patientFolderName = string.Format("MC_{0}_{1}_{2}", DateTime.Now.ToString("yyyyMMdd"), patNo, patName);
+
             try
             {
                 string fld = Path.Combine(GlobalVar.configEntity.LocalShareFolder, patientFolderName);

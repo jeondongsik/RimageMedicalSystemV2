@@ -121,6 +121,7 @@
       <DependentUpon>FrmCheckPatientForMerge.cs</DependentUpon>
     </Compile>
     <Compile Include="GetMyIP.cs" />
+    <Compile Include="GetPatientInfoFromEEG4Xml.cs" />
     <Compile Include="GetPatientNameFromDllImport.cs" />
     <Compile Include="NetInfo.cs" />
     <Compile Include="GetPatientInfoFromMDB.cs" />
