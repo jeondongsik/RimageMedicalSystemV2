@@ -150,6 +150,9 @@ namespace RimageMedicalSystemV2
                 string series = "";
                 int imagecount = 0;
 
+                if (dt.Rows.Count == 0)
+                    return;
+
                 foreach (DataRow row in dt.Rows)
                 {
                     imagecount++;

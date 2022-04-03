@@ -32,7 +32,7 @@ namespace RimageMedicalSystemV2
         /// 복사해야할 폴더,파일 목록
         /// </summary>
         public List<string> IncList { get; set; }
-
+        
         public frmCopyFolder()
         {
             InitializeComponent();
@@ -51,8 +51,16 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                //// 톰텍뷰어폴더의 파일들을 환자폴더로 이동한다.
-                this.EditList = FileControl.CopyFolderAndFiles(this.SourceDirectory, this.TargetDirectory, this.SourceDirectory, null, this.IncList);
+                if (GlobalVar.configEntity.AutoExecuteHookingType == "13")
+                {
+                    //// Compumedics ProFusion EEG 경우에는 통째로 복사
+                    this.EditList = FileControl.CopyFolderAndFilesAll(this.SourceDirectory, this.TargetDirectory, null);
+                }
+                else
+                {
+                    //// 톰텍뷰어폴더의 파일들을 환자폴더로 이동한다.
+                    this.EditList = FileControl.CopyFolderAndFiles(this.SourceDirectory, this.TargetDirectory, this.SourceDirectory, null, this.IncList);
+                }                    
             }
             catch { }
         }

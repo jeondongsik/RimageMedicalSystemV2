@@ -1142,9 +1142,11 @@ namespace RimageKorea
                 }
                 else
                 {
+                    //// 다운로드안의 파일,폴더들을 신규 생성된 폴더로 이동
                     DirectoryInfo downFld = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
                     downFld.MoveTo(fld);
 
+                    //// 다운로드 폴더 비우거나 신규 생성
                     DirectoryInfo downFld2 = new DirectoryInfo(GlobalVar.configEntity.DicomDownloadFolder);
                     if (downFld2.Exists)
                     {
@@ -1252,6 +1254,52 @@ namespace RimageKorea
                     }
                     
                     CopyFolderAndFiles(dri.FullName, trgDir, topSrcFolder, addFiles, incFiles);
+                }
+            }
+            catch { }
+
+            return addFiles;
+        }
+
+        /// <summary>
+        /// 특정 폴더에서 다른 폴더로 전체 복사
+        /// </summary>
+        /// <param name="srcDir"></param>
+        /// <param name="trgDir"></param>
+        /// <param name="addFiles"></param>
+        /// <returns></returns>
+        public static List<string> CopyFolderAndFilesAll(string srcDir, string trgDir, List<string> addFiles)
+        {
+            if (addFiles == null)
+                addFiles = new List<string>();
+
+            try
+            {
+                DirectoryInfo srcFolder = new DirectoryInfo(srcDir);
+
+                FileInfo[] files = srcFolder.GetFiles();
+                DirectoryInfo[] dirs = srcFolder.GetDirectories();
+
+                foreach (FileInfo file in files)
+                {
+                    string copyto = Path.Combine(trgDir, file.Name);
+                    FileSystem.CopyFile(file.FullName, copyto, true);
+
+                    if (!addFiles.Contains(copyto))
+                        addFiles.Add(copyto);
+                }
+
+                foreach (DirectoryInfo dri in dirs)
+                {
+                    //// 폴더가 없을 경우 생성한다.
+                    string targetFolder = Path.Combine(trgDir, dri.Name);
+
+                    if (!Directory.Exists(targetFolder))
+                    {
+                        FileSystem.CreateDirectory(targetFolder);
+                    }
+
+                    CopyFolderAndFilesAll(dri.FullName, targetFolder, addFiles);
                 }
             }
             catch { }

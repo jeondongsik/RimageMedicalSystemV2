@@ -232,7 +232,7 @@ namespace RimageMedicalSystemV2
 
                     //// MDB파일에서 가져온 데이터가 있으면 대체.
                     if (isMdb == true)
-                    {                        
+                    {
                         orderInfo.patNo = (string.IsNullOrWhiteSpace(pID)) ? orderInfo.patNo : pID;
                         orderInfo.patName = (string.IsNullOrWhiteSpace(pName)) ? orderInfo.patName : pName;
                         orderInfo.patSex = (string.IsNullOrWhiteSpace(pSex)) ? orderInfo.patSex : pSex;
@@ -295,6 +295,11 @@ namespace RimageMedicalSystemV2
                             orderInfo.patName = cls2.Name;
                             orderInfo.patSex = cls2.Sex;
                             orderInfo.patAge = cls2.Age;
+
+                            orderInfo.Modality = "EGG";
+                            orderInfo.StudyDescription = "EGG";
+                            orderInfo.DicomDescription = "EGG";
+                            orderInfo.StudyModality = "EGG";
 
                             isXml = true;
                         }
