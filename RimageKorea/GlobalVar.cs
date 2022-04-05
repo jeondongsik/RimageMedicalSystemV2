@@ -158,6 +158,6 @@ namespace RimageKorea
         /// <summary>
         /// Compumedics ProFusion 뷰어 파일 위치
         /// </summary>
-        public const string COMPUMEDICS_VIEWR_FOLDER = @"D:\ProFusionEEG";
+        public const string COMPUMEDICS_VIEWR_FOLDER = @"C:\ProFusionEEG";
     }
 }
