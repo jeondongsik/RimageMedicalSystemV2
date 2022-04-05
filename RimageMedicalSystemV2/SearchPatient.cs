@@ -283,27 +283,39 @@ namespace RimageMedicalSystemV2
                         catch { }
                     }
 
-                    //// Compumedics EEG4PatientInfo.xml 에서 데이터 가져온다.
-                    if (File.Exists(Path.Combine(sdir.FullName, "EEG4PatientInfo.xml")))
+                    //// 13.Compumedics ProFusion 인 경우 EEG4PatientInfo.xml 에서 데이터 가져온다.
+                    //// 이 경우 ProgramType1이지만 Download 폴더 아래 환자정보 폴더가 생기고 그 안에 정보가 있음.
+                    if (GlobalVar.configEntity.FolderPattern == "9")
                     {
-                        try
+                        //// 하나의 폴더만 있다고 가정해야 함.
+                        string[] dirList = Directory.GetDirectories(sdir.FullName);
+                        if (dirList != null && dirList.Length > 0)
                         {
-                            GetPatientInfoFromEEG4Xml cls2 = new GetPatientInfoFromEEG4Xml();
-                            cls2.GetInfo(Path.Combine(sdir.FullName, "EEG4PatientInfo.xml"));
+                            if (File.Exists(Path.Combine(dirList[0], "EEG4PatientInfo.xml")))
+                            {
+                                try
+                                {
+                                    GetPatientInfoFromEEG4Xml cls2 = new GetPatientInfoFromEEG4Xml();
+                                    cls2.GetInfo(Path.Combine(dirList[0], "EEG4PatientInfo.xml"));
 
-                            orderInfo.patNo = cls2.ID;
-                            orderInfo.patName = cls2.Name;
-                            orderInfo.patSex = cls2.Sex;
-                            orderInfo.patAge = cls2.Age;
+                                    orderInfo.patNo = cls2.ID;
+                                    orderInfo.patName = cls2.Name;
+                                    orderInfo.patSex = cls2.Sex;
+                                    orderInfo.patAge = cls2.Age;
 
-                            orderInfo.Modality = "EGG";
-                            orderInfo.StudyDescription = "EGG";
-                            orderInfo.DicomDescription = "EGG";
-                            orderInfo.StudyModality = "EGG";
+                                    orderInfo.Modality = "EGG";
+                                    orderInfo.StudyDescription = "EGG";
+                                    orderInfo.DicomDescription = "EGG";
+                                    orderInfo.StudyModality = "EGG";
 
-                            isXml = true;
+                                    isXml = true;
+                                }
+                                catch { }
+                            }
                         }
-                        catch { }
+
+                        if (orderInfo.patList == null)
+                            orderInfo.patList = new Dictionary<string, string>();
                     }
 
                     //// DicomDir 없이 환자명을 가져온 경우에는 건너뛴다.

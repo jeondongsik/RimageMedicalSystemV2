@@ -51,7 +51,7 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                if (GlobalVar.configEntity.AutoExecuteHookingType == "13")
+                if (GlobalVar.configEntity.FolderPattern == "9")
                 {
                     //// Compumedics ProFusion EEG 경우에는 통째로 복사
                     this.EditList = FileControl.CopyFolderAndFilesAll(this.SourceDirectory, this.TargetDirectory, null);

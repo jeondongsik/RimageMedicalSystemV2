@@ -70,7 +70,7 @@ namespace RimageKorea
                 //// 나이 계산
                 //// 생일 형태가 14/08/1970 형태임
                 
-                if (string.IsNullOrEmpty(this._birthday) && this._birthday.Length > 9)
+                if (!string.IsNullOrEmpty(this._birthday) && this._birthday.Length > 9)
                 {
                     string bod = this._birthday.Substring(6, 4) + "-" + this._birthday.Substring(3, 2) + "-" + this._birthday.Substring(0, 2);
 

@@ -1313,22 +1313,12 @@ namespace RimageMedicalSystemV2
             //// Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사한다.
             try
             {
-                if (GlobalVar.configEntity.AutoExecuteHookingType == "13")
+                if (GlobalVar.configEntity.FolderPattern == "9")
                 {
                     frmCopyFolder frmCopy = new frmCopyFolder();
                     frmCopy.SourceDirectory = GlobalVar.COMPUMEDICS_VIEWR_FOLDER;
                     frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
-
-                    /*
-                     
-                     */
-                    frmCopy.IncList = new List<string>();
-                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "HTML"));
-                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "ProFusionEEG5"));
-                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "AUTORUN.INF"));
-                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.exe"));
-                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.ini"));
-
+                    
                     frmCopy.ShowDialog();
 
                     //// 다운로드 폴더의 상위 폴더
@@ -1407,8 +1397,11 @@ namespace RimageMedicalSystemV2
                 //// 다중 환자 체크
                 bool blContinue = true;
 
-                if (orderInfo.patList.ContainsKey(orderInfo.patNo) == true)
+                if (orderInfo.patList != null && orderInfo.patList.ContainsKey(orderInfo.patNo) == true)
                     orderInfo.patList[orderInfo.patNo] = orderInfo.patName;
+
+                if (orderInfo.patList == null)
+                    orderInfo.patList = new Dictionary<string, string>();
 
                 Dictionary<string, string> dicPatListMerge = orderInfo.patList;
                 //// 환자정보가 2개 이상일 때는 무조건 창을 띄운다. => 환경설정값 체크 추가
