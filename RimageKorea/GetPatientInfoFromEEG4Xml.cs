@@ -61,7 +61,7 @@ namespace RimageKorea
                 }
 
                 //// 이름정리
-                this._name = string.Format("{0} {1}", this._name, this._name2.Replace(this._id, ""));
+                this._name = string.Format("{0} {1}", this._name.Replace(this._id, ""), this._name2.Replace(this._id, ""));
 
                 //// 성별
                 if (this._sex == "Male")
