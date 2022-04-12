@@ -12,6 +12,7 @@ namespace RimageKorea
     public class GetPatientInfoFromEEG4Xml
     {
         string _name;
+        string _name2;
         string _id;
         string _sex;
         string _age;
@@ -52,14 +53,15 @@ namespace RimageKorea
 
                 foreach (XmlNode node in nodeList)
                 {
-                    this._id = node["GivenName"].InnerText;
+                    this._id = node["Reference"].InnerText;
                     this._name = node["Surname"].InnerText;
+                    this._name2 = node["GivenName"].InnerText;
                     this._sex = node["Sex"].InnerText;
                     this._birthday = node["DOB"].InnerText;
                 }
 
                 //// 이름정리
-                this._name = this._name.Replace(this._id, "").Replace(" ", "");
+                this._name = string.Format("{0} {1}", this._name, this._name2.Replace(this._id, ""));
 
                 //// 성별
                 if (this._sex == "Male")
@@ -69,10 +71,16 @@ namespace RimageKorea
 
                 //// 나이 계산
                 //// 생일 형태가 14/08/1970 형태임
-                
-                if (!string.IsNullOrEmpty(this._birthday) && this._birthday.Length > 9)
+                //// 5/07/1953
+
+                if (!string.IsNullOrEmpty(this._birthday))
                 {
-                    string bod = this._birthday.Substring(6, 4) + "-" + this._birthday.Substring(3, 2) + "-" + this._birthday.Substring(0, 2);
+                    string bod = "";
+
+                    if (this._birthday.Length == 9)
+                        bod = this._birthday.Substring(5, 4) + "-" + this._birthday.Substring(2, 2) + "-" + this._birthday.Substring(0, 1).PadLeft(2, '0');
+                    else
+                        bod = this._birthday.Substring(6, 4) + "-" + this._birthday.Substring(3, 2) + "-" + this._birthday.Substring(0, 2);
 
                     int Age = Utils.GetPatientAge(bod, this._id);
 
