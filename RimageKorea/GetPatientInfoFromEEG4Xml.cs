@@ -66,8 +66,10 @@ namespace RimageKorea
                 //// 성별
                 if (this._sex == "Male")
                     this._sex = "남";
-                else
+                else if (this._sex == "Female")
                     this._sex = "여";
+                else
+                    this._sex = "";
 
                 //// 나이 계산
                 //// 생일 형태가 14/08/1970 형태임
