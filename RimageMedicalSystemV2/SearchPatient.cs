@@ -287,21 +287,38 @@ namespace RimageMedicalSystemV2
                     //// 이 경우 ProgramType1이지만 Download 폴더 아래 환자정보 폴더가 생기고 그 안에 정보가 있음.
                     if (GlobalVar.configEntity.FolderPattern == "9")
                     {
-                        //// 하나의 폴더만 있다고 가정해야 함.
+                        //// 환자폴더의 패턴 >> { 포함
+                        //// HTML, ProFusionEEG5 폴더 제외
+                        
                         string[] dirList = Directory.GetDirectories(sdir.FullName);
+                        string patInfoFolder = string.Empty;        //// 환자 폴더
+
                         if (dirList != null && dirList.Length > 0)
                         {
-                            if (File.Exists(Path.Combine(dirList[0], "EEG4PatientInfo.xml")))
+                            foreach (string name in dirList)
+                            {
+                                if (name.StartsWith("HTML") || name.StartsWith("ProFusionEEG5"))
+                                    continue;
+
+                                if (name.Contains("{"))
+                                {
+                                    patInfoFolder = name;
+                                    break;
+                                }
+                            }
+
+                            if (File.Exists(Path.Combine(patInfoFolder, "EEG4PatientInfo.xml")))
                             {
                                 try
                                 {
                                     GetPatientInfoFromEEG4Xml cls2 = new GetPatientInfoFromEEG4Xml();
-                                    cls2.GetInfo(Path.Combine(dirList[0], "EEG4PatientInfo.xml"));
+                                    cls2.GetInfo(Path.Combine(patInfoFolder, "EEG4PatientInfo.xml"));
 
                                     orderInfo.patNo = cls2.ID;
                                     orderInfo.patName = cls2.Name;
                                     orderInfo.patSex = cls2.Sex;
                                     orderInfo.patAge = cls2.Age;
+                                    orderInfo.patBirtyDay = cls2.BirthDay;
 
                                     orderInfo.Modality = "EGG";
                                     orderInfo.StudyDescription = "EGG";

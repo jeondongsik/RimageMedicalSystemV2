@@ -38,6 +38,11 @@ namespace RimageKorea
             get { return _age; }
         }
 
+        public string BirthDay
+        {
+            get { return _birthday; }
+        }
+
         /// <summary>
         /// 환자 정보 읽기
         /// </summary>
@@ -97,53 +102,6 @@ namespace RimageKorea
                 this._age = string.Empty;
                 this._birthday = string.Empty;
             }
-
-            /*
-<EEG4PatientInformation>
-    <Surname>Seo jin-hyeok(서진혁) 00671857</Surname>
-    <GivenName>00671857</GivenName>
-    <Given2Name/>
-    <Title/>
-    <Reference>2021-0481</Reference>
-    <UR/>
-    <Sex>Male</Sex>
-    <Handedness/>
-    <DOB>14/08/1970</DOB>
-    <Status/>
-    <TestDate/>
-    <Weight>0</Weight>
-    <Height>0</Height>
-    <NeckSize>0</NeckSize>
-    <MartialStatus/>
-    <ReasonForStudy/>
-    <Diagnosis/>
-    <Medication/>
-    <Occupation/>
-    <ReferringPhysician/>
-    <Doctor/>
-    <Technician/>
-    <Hospital/>
-    <Address>
-    <Street/>
-    <Suburb/>
-    <State/>
-    <PostCode/>
-    <HomePhone/>
-    <BusinessPhone/>
-    </Address>
-    <Guardian>
-    <Name1/>
-    <Relationship1/>
-    <HomePhone1/>
-    <BusinessPhone1/>
-    <Name2/>
-    <Relationship2/>
-    <HomePhone2/>
-    <BusinessPhone2/>
-    </Guardian>
-    <PatientPhoto/>
-</EEG4PatientInformation>
-     */
         }
     }
 }

@@ -1310,44 +1310,46 @@ namespace RimageMedicalSystemV2
             }
             catch { }
 
+            #region Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사 (주석처리)
             //// Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사한다.
-            try
-            {
-                if (GlobalVar.configEntity.FolderPattern == "9")
-                {
-                    frmCopyFolder frmCopy = new frmCopyFolder();
-                    frmCopy.SourceDirectory = GlobalVar.COMPUMEDICS_VIEWR_FOLDER;
-                    frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
-                    
-                    frmCopy.ShowDialog();
+            ////try
+            ////{
+            ////    if (GlobalVar.configEntity.FolderPattern == "9")
+            ////    {
+            ////        frmCopyFolder frmCopy = new frmCopyFolder();
+            ////        frmCopy.SourceDirectory = GlobalVar.COMPUMEDICS_VIEWR_FOLDER;
+            ////        frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
 
-                    //// 다운로드 폴더의 상위 폴더
-                    string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
+            ////        frmCopy.ShowDialog();
 
-                    ////EditList에 Viewr 파일 목록 넣어준다.
-                    if (frmCopy.EditList != null)
-                    {
-                        foreach (string fl in frmCopy.EditList)
-                        {
-                            //// download 폴더로 변경해줘야 함.
-                            orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
-                        }
-                    }
+            ////        //// 다운로드 폴더의 상위 폴더
+            ////        string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
 
-                    //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
-                    orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
+            ////        ////EditList에 Viewr 파일 목록 넣어준다.
+            ////        if (frmCopy.EditList != null)
+            ////        {
+            ////            foreach (string fl in frmCopy.EditList)
+            ////            {
+            ////                //// download 폴더로 변경해줘야 함.
+            ////                orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
+            ////            }
+            ////        }
 
-                    //// 화면 출력용도 다시 계산
-                    long fldLen = orderInfo.FolderSize / 1024 / 1024;
-                    orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+            ////        //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
+            ////        orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
 
-                    if (GlobalVar.configEntity.programType == "1")
-                        ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+            ////        //// 화면 출력용도 다시 계산
+            ////        long fldLen = orderInfo.FolderSize / 1024 / 1024;
+            ////        orderInfo.mediSize = fldLen.ToString() + " Mbyte";
 
-                    frmCopy.Dispose();
-                }
-            }
-            catch { }
+            ////        if (GlobalVar.configEntity.programType == "1")
+            ////            ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+
+            ////        frmCopy.Dispose();
+            ////    }
+            ////}
+            ////catch { }
+            #endregion
 
             try
             {
