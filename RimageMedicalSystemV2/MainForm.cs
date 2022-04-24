@@ -3509,15 +3509,21 @@ namespace RimageMedicalSystemV2
                 {
                     Thread.Sleep(GlobalVar.configEntity.HookSleepTime2);
 
-                    // 실행
+                    //// 13.Compumedics ProFusion인 경우 실행중인 프로그램 죽인다.
+                    if (retVal13)
+                    {
+                        KillProcess.DelProcess("StudyManager");
+                    }
+
+                    //// 실행
                     if (GlobalVar.configEntity.AutoExecute == "1")
                     {
-                        //조회 실행
+                        ////조회 실행
                         this.Search();
                     }
                     else if (GlobalVar.configEntity.AutoExecute == "2")
                     {
-                        //조회 및 굽기까지 실행
+                        ////조회 및 굽기까지 실행
                         this.Search();
                         Thread.Sleep(200);
 
