@@ -184,7 +184,7 @@ namespace RimageMedicalSystemV2
                     if (File.Exists(Path.Combine(sdir.FullName, "DICOMDIR")))
                     {
                         #region -- DICOMDIR 파일에서 환자정보를 읽어온다. --
-                        //DICOMDIR에서 가져온다.
+                        //// DICOMDIR에서 가져온다.
                         dicomdirInfo = new Dictionary<string, string>();
                         List<string> dicImgList = null;
                         PatientList patInfor = null;
@@ -206,6 +206,12 @@ namespace RimageMedicalSystemV2
                             orderInfo.Count = Convert.ToInt32(dicomdirInfo["PatientCount"]);
                             orderInfo.patList = patList;
                             orderInfo.DicomImgList = dicImgList;
+
+                            //// 환자나이가 0이거나 빈값이면 생일로 나이 계산한다.
+                            if (string.IsNullOrWhiteSpace(orderInfo.patAge) || orderInfo.patAge.Trim() == "0")
+                            {
+                                orderInfo.patAge = Utils.GetPatientAge(orderInfo.patBirtyDay, orderInfo.patNo).ToString();
+                            }
 
                             isDicom = true;
                         }

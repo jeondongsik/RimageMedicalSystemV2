@@ -97,6 +97,7 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelLoadingBurn = new DevExpress.XtraEditors.PanelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.tmRetryCounter = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -1006,6 +1007,11 @@
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "굽기 명령을 서버에 전송하고 있습니다.\r\n\r\n이 창이 없어질 때까지 잠시만 기다려 주세요.";
             // 
+            // tmRetryCounter
+            // 
+            this.tmRetryCounter.Interval = 3000;
+            this.tmRetryCounter.Tick += new System.EventHandler(this.tmRetryCounter_Tick);
+            // 
             // MainForm
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -1142,6 +1148,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private DevExpress.XtraEditors.PanelControl panelLoadingBurn;
         private DevExpress.XtraEditors.LabelControl labelControl1;
+        private System.Windows.Forms.Timer tmRetryCounter;
     }
 }
 

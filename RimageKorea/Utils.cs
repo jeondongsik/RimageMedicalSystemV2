@@ -329,12 +329,35 @@ namespace RimageKorea
 
                         if (mm < 13 && dd < 32)
                         {
-                            DateTime chgNow = new DateTime(DateTime.Now.Year, Convert.ToInt32(patBirthDay.Substring(4, 2)), Convert.ToInt32(patBirthDay.Substring(6, 2)));
+                            try
+                            {
+                                DateTime chgNow = new DateTime(DateTime.Now.Year, Convert.ToInt32(patBirthDay.Substring(4, 2)), Convert.ToInt32(patBirthDay.Substring(6, 2)));
 
-                            if (DateTime.Now.Date.CompareTo(chgNow) == -1)
-                                result = c1 - 1;
-                            else
-                                result = c1;
+                                if (DateTime.Now.Date.CompareTo(chgNow) == -1)
+                                    result = c1 - 1;
+                                else
+                                    result = c1;
+                            }
+                            catch
+                            {
+                                //// 2월 29일 태생인 경우 오류 발생할 수 있음.
+                                int yy = Convert.ToInt32(patBirthDay.Substring(0, 4));
+                                if (mm < DateTime.Now.Month)
+                                {
+                                    result = c1;
+                                }
+                                else if (mm == DateTime.Now.Month)
+                                {
+                                    if (dd <= DateTime.Now.Day)
+                                        result = c1;
+                                    else
+                                        result = c1 - 1;
+                                }
+                                else
+                                {
+                                    result = c1 - 1;
+                                }
+                            }
                         }
                     }
                     else
