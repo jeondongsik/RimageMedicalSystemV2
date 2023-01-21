@@ -1377,20 +1377,20 @@ namespace RimageMedicalSystemV2
                 catch { }
             }
 
-            //// 4번까지만 재시도하자.
-            if (retryCount < 6)
+            //// 파일 다운로드 완료 후에 복사되는 파일이 있을 수 있으므로 용량 체크한다.
+            //// 수동 굽기할 경우에만 체크
+            if (GlobalVar.configEntity.AutoExecute != "2")
             {
-                if (retryCount == 5)
+                //// 4번까지만 재시도하자.
+                if (retryCount < 6)
                 {
-                    this.UnlockBurn();                    
-                    MessageBox.Show("구울 대상의 폴더 용량을 확인해 주세요!!", "Rimage Message : StartBurn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
+                    if (retryCount == 5)
+                    {
+                        this.UnlockBurn();
+                        MessageBox.Show("구울 대상의 폴더 용량을 확인한 후 다시 시도하세요!!", "Rimage Message : StartBurn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
 
-                //// 파일 다운로드 완료 후에 복사되는 파일이 있을 수 있으므로 용량 체크한다.
-                //// 수동 굽기할 경우에만 체크
-                if (GlobalVar.configEntity.AutoExecute != "2")
-                {
                     try
                     {
                         //// 1. 현 시점의 용량 체크
@@ -1404,7 +1404,7 @@ namespace RimageMedicalSystemV2
                             ErrorLog.TraceWrite("StartBurn", string.Format(">> 굽기 용량 체크를 다시 시도합니다. : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
 
                             Thread.Sleep(3000);
-                            StartBurn(orderInfo, reburn, retryCount++); 
+                            StartBurn(orderInfo, reburn, retryCount + 1);
                         }
                     }
                     catch { }
