@@ -928,6 +928,10 @@ namespace RimageMedicalSystemV2
                 }
             }
 
+            //// 용량 체크
+            if (this.CheckSize() != 0)
+                return;
+
             try
             {
                 DialogResult result = System.Windows.Forms.DialogResult.Yes;
@@ -1008,6 +1012,72 @@ namespace RimageMedicalSystemV2
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 다운로드 받는 용량 사이즈 체크
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        /// <param name="retryCount"></param>
+        /// <returns></returns>
+        private int CheckSize(int retryCount = 0, long fileLen = 0)
+        {
+            int ret = 0;
+
+            try
+            {
+                //// 파일 다운로드 완료 후에 복사되는 파일이 있을 수 있으므로 용량 체크한다.
+                //// 수동 굽기할 경우에만 체크
+                if (GlobalVar.configEntity.AutoExecute != "2")
+                {
+                    //// 4번까지만 재시도하자.
+                    if (retryCount < 6)
+                    {
+                        if (retryCount == 5)
+                        {
+                            this.UnlockBurn();
+                            MessageBox.Show("구울 대상의 폴더 용량을 확인한 후 다시 시도하세요!!", "Rimage Message : StartBurn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return 9;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                long lastLen = 0;
+                                //// 1. 현 시점의 용량 체크
+                                //// 2. 조회 시 용량과 비교 : 다를 경우 다시 다시 용량 체크                            
+                                long nowLen = FileControl.GetFolderLengthOnly(this.ucPatients11.OrderInfo.DicomCDFolder);
+
+                                if (fileLen == 0)
+                                    lastLen = this.ucPatients11.OrderInfo.FolderSize;
+                                else
+                                    lastLen = fileLen;
+
+                                if (lastLen < nowLen)
+                                {
+                                    //// 용량이 다를 경우 3초 지나서 다시 시도한다.
+                                    ErrorLog.TraceWrite("StartBurn", string.Format(">> 굽기 용량 체크를 다시 시도합니다. : {0}-{1}", this.ucPatients11.OrderInfo.OrderId, this.ucPatients11.OrderInfo.patFolder), Environment.CurrentDirectory);
+
+                                    Thread.Sleep(3000);
+                                    ret = CheckSize(retryCount + 1, nowLen);
+                                }
+                                else
+                                {
+                                    ret = CheckSize(7, 0);
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            catch { }
+
+            return ret;
         }
 
         /// <summary>
@@ -1249,168 +1319,127 @@ namespace RimageMedicalSystemV2
             catch { }
         }
 
-        
-
         /// <summary>
         /// CD / DVD 굽기
         /// </summary>
         /// <param name="orderInfo"></param>
         /// <param name="reburn">재굽기여부</param>
-        /// <param name="retryCount">굽기시도 횟수</param>
-        public bool StartBurn(BurnOrderedInfoEntity orderInfo, bool reburn = false, int retryCount = 0)
+        public bool StartBurn(BurnOrderedInfoEntity orderInfo, bool reburn = false)
         {
-            if (retryCount == 0)
-            { 
-                //// 아산병원Tomch_New 인 경우에 View관련 파일을 환자폴더에 복사해서 넣어준다.
-                try
-                {
-                    if (GlobalVar.configEntity.FolderPattern == "7")
-                    {
-                        frmCopyFolder frmCopy = new frmCopyFolder();
-                        frmCopy.SourceDirectory = GlobalVar.TOMTECH_VIEWR_FOLDER;
-                        frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
-
-                        /*
-                         Viewer
-                         autorun.inf
-                         CD_VIEWER_LICENSE.rtf
-                         CDViewerHelp.chm
-                         README_VIEWER.txt 
-                         */
-                        frmCopy.IncList = new List<string>();
-                        frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "Viewer"));
-                        frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "Viewer", "t1fonts"));
-                        frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "autorun.inf"));
-                        frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CD_VIEWER_LICENSE.rtf"));
-                        frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CDViewerHelp.chm"));
-                        frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "README_VIEWER.txt"));
-
-                        frmCopy.ShowDialog();
-
-                        //// 다운로드 폴더의 상위 폴더
-                        string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
-
-                        ////EditList에 Viewr 파일 목록 넣어준다.
-                        if (frmCopy.EditList != null)
-                        {
-                            foreach (string fl in frmCopy.EditList)
-                            {
-                                //// download 폴더로 변경해줘야 함.
-                                orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
-                            }
-                        }
-
-                        //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
-                        orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
-
-                        //// 화면 출력용도 다시 계산
-                        long fldLen = orderInfo.FolderSize / 1024 / 1024;
-                        orderInfo.mediSize = fldLen.ToString() + " Mbyte";
-
-                        if (GlobalVar.configEntity.programType == "1")
-                            ucPatients11.txtDataLength.Text = orderInfo.mediSize;
-
-                        frmCopy.Dispose();
-                    }
-                }
-                catch { }
-
-                #region Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사 (주석처리)
-                //// Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사한다.
-                ////try
-                ////{
-                ////    if (GlobalVar.configEntity.FolderPattern == "9")
-                ////    {
-                ////        frmCopyFolder frmCopy = new frmCopyFolder();
-                ////        frmCopy.SourceDirectory = GlobalVar.COMPUMEDICS_VIEWR_FOLDER;
-                ////        frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
-
-                ////        frmCopy.ShowDialog();
-
-                ////        //// 다운로드 폴더의 상위 폴더
-                ////        string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
-
-                ////        ////EditList에 Viewr 파일 목록 넣어준다.
-                ////        if (frmCopy.EditList != null)
-                ////        {
-                ////            foreach (string fl in frmCopy.EditList)
-                ////            {
-                ////                //// download 폴더로 변경해줘야 함.
-                ////                orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
-                ////            }
-                ////        }
-
-                ////        //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
-                ////        orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
-
-                ////        //// 화면 출력용도 다시 계산
-                ////        long fldLen = orderInfo.FolderSize / 1024 / 1024;
-                ////        orderInfo.mediSize = fldLen.ToString() + " Mbyte";
-
-                ////        if (GlobalVar.configEntity.programType == "1")
-                ////            ucPatients11.txtDataLength.Text = orderInfo.mediSize;
-
-                ////        frmCopy.Dispose();
-                ////    }
-                ////}
-                ////catch { }
-                #endregion
-
-                try
-                {
-                    //// 환자 폴더에 있는 .tmp 파일들을 삭제한다.
-                    int delCnt = FileControl.DeleteTempFiles(new DirectoryInfo(orderInfo.DicomCDFolder));
-
-                    //// 삭제된 파일이 있을 경우 처리
-                    if (delCnt > 0)
-                    {
-                        orderInfo.FolderSize = FileControl.GetFolderLengthOnly(orderInfo.DicomCDFolder);
-
-                        //// 화면 출력용도 다시 계산
-                        long fldLen = orderInfo.FolderSize / 1024 / 1024;
-                        orderInfo.mediSize = fldLen.ToString() + " Mbyte";
-
-                        if (GlobalVar.configEntity.programType == "1")
-                            ucPatients11.txtDataLength.Text = orderInfo.mediSize;
-                    }
-                }
-                catch { }
-            }
-
-            //// 파일 다운로드 완료 후에 복사되는 파일이 있을 수 있으므로 용량 체크한다.
-            //// 수동 굽기할 경우에만 체크
-            if (GlobalVar.configEntity.AutoExecute != "2")
+            //// 아산병원Tomch_New 인 경우에 View관련 파일을 환자폴더에 복사해서 넣어준다.
+            try
             {
-                //// 4번까지만 재시도하자.
-                if (retryCount < 6)
+                if (GlobalVar.configEntity.FolderPattern == "7")
                 {
-                    if (retryCount == 5)
-                    {
-                        this.UnlockBurn();
-                        MessageBox.Show("구울 대상의 폴더 용량을 확인한 후 다시 시도하세요!!", "Rimage Message : StartBurn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
+                    frmCopyFolder frmCopy = new frmCopyFolder();
+                    frmCopy.SourceDirectory = GlobalVar.TOMTECH_VIEWR_FOLDER;
+                    frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
 
-                    try
-                    {
-                        //// 1. 현 시점의 용량 체크
-                        //// 2. 조회 시 용량과 비교 : 다를 경우 다시 다시 용량 체크
-                        long startLen = orderInfo.FolderSize;
-                        long afterLen = FileControl.GetFolderLengthOnly(orderInfo.DicomCDFolder);
+                    /*
+                     Viewer
+                     autorun.inf
+                     CD_VIEWER_LICENSE.rtf
+                     CDViewerHelp.chm
+                     README_VIEWER.txt 
+                     */
+                    frmCopy.IncList = new List<string>();
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "Viewer"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "Viewer", "t1fonts"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "autorun.inf"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CD_VIEWER_LICENSE.rtf"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "CDViewerHelp.chm"));
+                    frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "README_VIEWER.txt"));
 
-                        if (startLen < afterLen)
+                    frmCopy.ShowDialog();
+
+                    //// 다운로드 폴더의 상위 폴더
+                    string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
+
+                    ////EditList에 Viewr 파일 목록 넣어준다.
+                    if (frmCopy.EditList != null)
+                    {
+                        foreach (string fl in frmCopy.EditList)
                         {
-                            //// 용량이 다를 경우 3초 지나서 다시 시도한다.
-                            ErrorLog.TraceWrite("StartBurn", string.Format(">> 굽기 용량 체크를 다시 시도합니다. : {0}-{1}", orderInfo.OrderId, orderInfo.patFolder), Environment.CurrentDirectory);
-
-                            Thread.Sleep(3000);
-                            StartBurn(orderInfo, reburn, retryCount + 1);
+                            //// download 폴더로 변경해줘야 함.
+                            orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
                         }
                     }
-                    catch { }
+
+                    //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
+                    orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
+
+                    //// 화면 출력용도 다시 계산
+                    long fldLen = orderInfo.FolderSize / 1024 / 1024;
+                    orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+
+                    if (GlobalVar.configEntity.programType == "1")
+                        ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+
+                    frmCopy.Dispose();
                 }
             }
+            catch { }
 
+            #region Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사 (주석처리)
+            //// Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사한다.
+            ////try
+            ////{
+            ////    if (GlobalVar.configEntity.FolderPattern == "9")
+            ////    {
+            ////        frmCopyFolder frmCopy = new frmCopyFolder();
+            ////        frmCopy.SourceDirectory = GlobalVar.COMPUMEDICS_VIEWR_FOLDER;
+            ////        frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
+
+            ////        frmCopy.ShowDialog();
+
+            ////        //// 다운로드 폴더의 상위 폴더
+            ////        string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
+
+            ////        ////EditList에 Viewr 파일 목록 넣어준다.
+            ////        if (frmCopy.EditList != null)
+            ////        {
+            ////            foreach (string fl in frmCopy.EditList)
+            ////            {
+            ////                //// download 폴더로 변경해줘야 함.
+            ////                orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
+            ////            }
+            ////        }
+
+            ////        //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
+            ////        orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
+
+            ////        //// 화면 출력용도 다시 계산
+            ////        long fldLen = orderInfo.FolderSize / 1024 / 1024;
+            ////        orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+
+            ////        if (GlobalVar.configEntity.programType == "1")
+            ////            ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+
+            ////        frmCopy.Dispose();
+            ////    }
+            ////}
+            ////catch { }
+            #endregion
+
+            try
+            {
+                //// 환자 폴더에 있는 .tmp 파일들을 삭제한다.
+                int delCnt = FileControl.DeleteTempFiles(new DirectoryInfo(orderInfo.DicomCDFolder));
+
+                //// 삭제된 파일이 있을 경우 처리
+                if (delCnt > 0)
+                {
+                    orderInfo.FolderSize = FileControl.GetFolderLengthOnly(orderInfo.DicomCDFolder);
+
+                    //// 화면 출력용도 다시 계산
+                    long fldLen = orderInfo.FolderSize / 1024 / 1024;
+                    orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+
+                    if (GlobalVar.configEntity.programType == "1")
+                        ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+                }
+            }
+            catch { }
 
             //// 굽기 작업 시작 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             int j = 1;
