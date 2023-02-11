@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigSetting));
             this.dataGridViewServerList = new System.Windows.Forms.DataGridView();
             this.ColumnNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -193,6 +193,7 @@
             this.checkBoxUseUSBCopy = new System.Windows.Forms.CheckBox();
             this.checkBoxDisableMultiPatient = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoPrintApp = new System.Windows.Forms.CheckBox();
+            this.checkboxIsSizeCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServerList)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -249,8 +250,8 @@
             // ColumnNo
             // 
             this.ColumnNo.DataPropertyName = "No";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColumnNo.HeaderText = "번호";
             this.ColumnNo.Name = "ColumnNo";
             this.ColumnNo.ReadOnly = true;
@@ -275,8 +276,8 @@
             // ColumnServerPort
             // 
             this.ColumnServerPort.DataPropertyName = "Port";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle4;
             this.ColumnServerPort.HeaderText = "Port";
             this.ColumnServerPort.Name = "ColumnServerPort";
             this.ColumnServerPort.ReadOnly = true;
@@ -1936,6 +1937,7 @@
             this.groupControl6.Appearance.Options.UseFont = true;
             this.groupControl6.AppearanceCaption.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.groupControl6.AppearanceCaption.Options.UseFont = true;
+            this.groupControl6.Controls.Add(this.checkboxIsSizeCheck);
             this.groupControl6.Controls.Add(this.checkBoxDisplayServeIP);
             this.groupControl6.Controls.Add(this.checkBoxUseUSBCopy);
             this.groupControl6.Controls.Add(this.checkBoxDisableMultiPatient);
@@ -2007,6 +2009,16 @@
             this.checkBoxAutoPrintApp.TabIndex = 55;
             this.checkBoxAutoPrintApp.Text = "굽기 완료 후 복사 신청서(발급내역) 자동 인쇄";
             this.checkBoxAutoPrintApp.UseVisualStyleBackColor = true;
+            // 
+            // checkboxIsSizeCheck
+            // 
+            this.checkboxIsSizeCheck.AutoSize = true;
+            this.checkboxIsSizeCheck.Location = new System.Drawing.Point(26, 366);
+            this.checkboxIsSizeCheck.Name = "checkboxIsSizeCheck";
+            this.checkboxIsSizeCheck.Size = new System.Drawing.Size(181, 24);
+            this.checkboxIsSizeCheck.TabIndex = 59;
+            this.checkboxIsSizeCheck.Text = "조회 시 용량체크 필요";
+            this.checkboxIsSizeCheck.UseVisualStyleBackColor = true;
             // 
             // ConfigSetting
             // 
@@ -2231,5 +2243,6 @@
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.CheckBox checkBoxUseUSBCopy;
         private System.Windows.Forms.CheckBox checkBoxDisplayServeIP;
+        private System.Windows.Forms.CheckBox checkboxIsSizeCheck;
     }
 }

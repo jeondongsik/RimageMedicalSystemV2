@@ -245,5 +245,11 @@ namespace RimageKorea
         /// 화면 서버 목록 IP로 표시
         /// </summary>
         public string DisplayServeIP { get; set; }
+
+        /// <summary>
+        /// 조회시 다운로드 폴더 용량 체크하기 여부 (Program Type 1일 경우)
+        /// </summary>
+        public string IsSizeCheck { get; set; }
+        
     }
 }

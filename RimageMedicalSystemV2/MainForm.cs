@@ -181,6 +181,11 @@ namespace RimageMedicalSystemV2
         /// </summary>
         public bool _SendingOrder = false;
         
+        /// <summary>
+        /// 이전 사이즈
+        /// </summary>
+        long preSize = 0;
+
         #endregion
 
         public MainForm()
@@ -442,7 +447,27 @@ namespace RimageMedicalSystemV2
         {
             if (GlobalVar.configEntity.programType == "1")
             {
-                this.SearchPatient1();
+                if (GlobalVar.configEntity.IsSizeCheck == "Y")
+                {
+                    ////this.fileSystemWatcher1.Path = this.dicomCDFolder;
+                    ////this.fileSystemWatcher1.EnableRaisingEvents = true;
+
+                    this.btnBurn.Enabled = false;
+                    this.lblSearchMessage.Visible = true;
+
+                    //// 먼저 다운로드 폴더크기 체크
+                    this.preSize = FileControl.GetFolderLengthOnly(this.dicomCDFolder);
+
+                    this.txtStatusView.AppendText(string.Format("{0} ==== size > {1}\r\n", DateTime.Now.ToString(), this.preSize.ToString()));
+
+                    //// 타이머 시작
+                    this.tmRetryCounter.Interval = GlobalVar.FolderSizeCheckTime * 1000;
+                    this.tmRetryCounter.Enabled = true;
+                }
+                else
+                {
+                    this.SearchPatient1();
+                }
             }
             else
             {
@@ -465,6 +490,8 @@ namespace RimageMedicalSystemV2
                 this.ucPatients11.Clear();
                 this.txtMessages.Text = "";
                 this.txtStatusView.AppendText("환자정보를 가져오고 있습니다.\r\n");
+
+                
 
                 BurnOrderedInfoEntity orderInfo = SearchPatient.Get(Application.StartupPath, new DirectoryInfo(this.dicomCDFolder), this.DBConnInfo, this.AutoLoaderMediaType);
                 
@@ -929,8 +956,8 @@ namespace RimageMedicalSystemV2
             }
 
             //// 용량 체크
-            if (this.CheckSize() != 0)
-                return;
+            //// if (this.CheckSize() != 0)
+            ////    return;
 
             try
             {
@@ -1770,7 +1797,58 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void tmRetryCounter_Tick(object sender, EventArgs e)
         {
+            CheckDirectorySize();
+        }
 
+        /// <summary>
+        /// 폴더사이즈 체크
+        /// </summary>
+        private void CheckDirectorySize()
+        {
+            try
+            {
+                if (Directory.Exists(this.dicomCDFolder))
+                {
+                    //// 사이즈 체크
+                    long nowSize = FileControl.GetFolderLengthOnly(this.dicomCDFolder);
+                    this.txtStatusView.AppendText(string.Format("{0} ==== size > {1}\r\n", DateTime.Now.ToString(), nowSize.ToString()));
+
+                    if (this.preSize != nowSize)
+                    {
+                        //// 다르면 계속 체크
+                        this.preSize = nowSize;
+                    }
+                    else
+                    {
+                        //// 사이즈가 같으면 완료
+                        this.tmRetryCounter.Stop();
+                        
+                        //// 이전사이즈 초기화
+                        this.preSize = 0;
+
+                        this.lblSearchMessage.Visible = false;
+                        this.btnBurn.Enabled = true;
+
+                        //// 조회 실행
+                        this.SearchPatient1();
+                    }
+                }
+                else
+                {
+                    this.tmRetryCounter.Stop();
+                    this.lblSearchMessage.Visible = false;
+                    this.btnBurn.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.tmRetryCounter.Stop();
+                this.preSize = 0;
+                this.lblSearchMessage.Visible = false;
+                this.btnBurn.Enabled = true;
+
+                ErrorLog.LogWrite("FileControl", ex.ToString(), Environment.CurrentDirectory);
+            }
         }
 
         /// <summary>
@@ -2420,6 +2498,8 @@ namespace RimageMedicalSystemV2
                 GlobalVar.configEntity.DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
                 GlobalVar.configEntity.UseUSBCopy = (string.IsNullOrWhiteSpace(cf._UseUSBCopy)) ? "N" : cf._UseUSBCopy;
                 GlobalVar.configEntity.DisplayServeIP = (string.IsNullOrWhiteSpace(cf._DisplayServeIP)) ? "N" : cf._DisplayServeIP;
+
+                GlobalVar.configEntity.IsSizeCheck = (string.IsNullOrWhiteSpace(cf._IsSizeCheck)) ? "N" : cf._IsSizeCheck;
 
                 if (cf._CDPrintYN == "N")
                     GlobalVar.configEntity.UseLabelPrint = false;
@@ -4825,6 +4905,14 @@ namespace RimageMedicalSystemV2
                 }
             }
             catch { }
+        }
+
+        private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (e.ChangeType != WatcherChangeTypes.Changed)
+                return;
+
+            ////this.txtStatusView.AppendText(DateTime.Now.ToString() + " 사이즈변경되고 있어요.\r\n");
         }
     }
 

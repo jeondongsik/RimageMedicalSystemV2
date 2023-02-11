@@ -97,6 +97,10 @@ namespace RimageConfigSetting
         /// 서버명을 IP로 표시
         /// </summary>
         string DisplayServeIP;
+        /// <summary>
+        /// 조회시 다운로드 폴더 용량 체크하기
+        /// </summary>
+        string IsSizeCheck;
 
         /// <summary>
         /// 1:다른 프로그램에서 실행
@@ -247,6 +251,8 @@ namespace RimageConfigSetting
                 DvdMaxSize = (string.IsNullOrWhiteSpace(cf._DvdMaxSize)) ? "4831838208" : cf._DvdMaxSize;
                 UseUSBCopy = (string.IsNullOrWhiteSpace(cf._UseUSBCopy)) ? "N" : cf._UseUSBCopy;
                 DisplayServeIP = (string.IsNullOrWhiteSpace(cf._DisplayServeIP)) ? "N" : cf._DisplayServeIP;
+
+                IsSizeCheck = (string.IsNullOrWhiteSpace(cf._IsSizeCheck)) ? "N" : cf._IsSizeCheck;
 
                 myIP = GetMyIP.MyIP();
                 setControl();
@@ -433,6 +439,8 @@ namespace RimageConfigSetting
             this.textBox_DvdMaxSize.Text = this.DvdMaxSize;
             this.checkBoxUseUSBCopy.Checked = this.UseUSBCopy.Equals("Y");
             this.checkBoxDisplayServeIP.Checked = this.DisplayServeIP.Equals("Y");
+
+            this.checkboxIsSizeCheck.Checked = this.IsSizeCheck.Equals("Y");
 
             this.SetServerType();
             this.SetControlByServerType();
@@ -673,6 +681,8 @@ namespace RimageConfigSetting
 
                     cf._UseUSBCopy = (this.checkBoxUseUSBCopy.Checked) ? "Y" : "N";
                     cf._DisplayServeIP = (this.checkBoxDisplayServeIP.Checked) ? "Y" : "N";
+
+                    cf._IsSizeCheck = (this.checkboxIsSizeCheck.Checked) ? "Y" : "N";
 
                     cf.setConfig("all");
                     cf.setServerType(this.ServerType);

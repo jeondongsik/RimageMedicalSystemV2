@@ -82,6 +82,10 @@ namespace RimageKorea
         /// 서버명을 IP로 표시
         /// </summary>
         string DisplayServeIP;
+        /// <summary>
+        /// 조회시 다운로드 폴더 용량 체크하기
+        /// </summary>
+        string IsSizeCheck;
 
         XmlDocument doc = new XmlDocument();
 
@@ -556,9 +560,19 @@ namespace RimageKorea
         /// </summary>
         public string _DisplayServeIP
         {
-            get { return DisplayServeIP; }
+            get { return getConfig("DisplayServeIP", ""); }
             set { this.DisplayServeIP = value; }
         }
+
+        /// <summary>
+        /// 조회시 다운로드 폴더 용량 체크하기
+        /// </summary>
+        public string _IsSizeCheck
+        {
+            get { return getConfig("IsSizeCheck", ""); }
+            set { this.IsSizeCheck = value; }
+        }
+        
         #endregion
 
         /// <summary>
@@ -683,6 +697,7 @@ namespace RimageKorea
                 updateConfigXml("DvdMaxSize", this.DvdMaxSize);
                 updateConfigXml("UseUSBCopy", this.UseUSBCopy);
                 updateConfigXml("DisplayServeIP", this.DisplayServeIP);
+                updateConfigXml("IsSizeCheck", this.IsSizeCheck);
             }
 
             //초기설정

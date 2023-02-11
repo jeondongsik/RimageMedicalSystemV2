@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.grpPatInfo = new DevExpress.XtraEditors.GroupControl();
+            this.lblSearchMessage = new System.Windows.Forms.Label();
             this.ucPatients11 = new RimageMedicalSystemV2.ucPatients1();
             this.ucPatients21 = new RimageMedicalSystemV2.ucPatients2();
             this.grpServerList = new DevExpress.XtraEditors.GroupControl();
@@ -81,23 +81,24 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
-            this.tmrBinCheker = new System.Windows.Forms.Timer(this.components);
-            this.tmrHookChecker = new System.Windows.Forms.Timer(this.components);
-            this.tmrDownloadChecker = new System.Windows.Forms.Timer(this.components);
+            this.tmrBinCheker = new System.Windows.Forms.Timer();
+            this.tmrHookChecker = new System.Windows.Forms.Timer();
+            this.tmrDownloadChecker = new System.Windows.Forms.Timer();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList();
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             this.btnCancelBurning = new DevExpress.XtraEditors.SimpleButton();
             this.btnUSBCopy = new DevExpress.XtraEditors.SimpleButton();
             this.hyperLinkEdit1 = new DevExpress.XtraEditors.HyperLinkEdit();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tmrConnectServer = new System.Windows.Forms.Timer(this.components);
+            this.tmrConnectServer = new System.Windows.Forms.Timer();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelLoadingBurn = new DevExpress.XtraEditors.PanelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.tmRetryCounter = new System.Windows.Forms.Timer(this.components);
+            this.tmRetryCounter = new System.Windows.Forms.Timer();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this.grpPatInfo)).BeginInit();
             this.grpPatInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerList)).BeginInit();
@@ -125,6 +126,7 @@
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelLoadingBurn)).BeginInit();
             this.panelLoadingBurn.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // grpPatInfo
@@ -134,6 +136,7 @@
             this.grpPatInfo.AppearanceCaption.Options.UseFont = true;
             this.grpPatInfo.AppearanceCaption.Options.UseForeColor = true;
             this.grpPatInfo.CaptionImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.forward_16x16;
+            this.grpPatInfo.Controls.Add(this.lblSearchMessage);
             this.grpPatInfo.Controls.Add(this.ucPatients11);
             this.grpPatInfo.Controls.Add(this.ucPatients21);
             this.grpPatInfo.Location = new System.Drawing.Point(12, 57);
@@ -143,6 +146,18 @@
             this.grpPatInfo.Size = new System.Drawing.Size(804, 232);
             this.grpPatInfo.TabIndex = 0;
             this.grpPatInfo.Text = "환자 정보";
+            // 
+            // lblSearchMessage
+            // 
+            this.lblSearchMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.lblSearchMessage.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.lblSearchMessage.Location = new System.Drawing.Point(7, 0);
+            this.lblSearchMessage.Name = "lblSearchMessage";
+            this.lblSearchMessage.Size = new System.Drawing.Size(286, 52);
+            this.lblSearchMessage.TabIndex = 18;
+            this.lblSearchMessage.Text = "환자 조회 준비중입니다. 잠시만 기다려주세요. ";
+            this.lblSearchMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSearchMessage.Visible = false;
             // 
             // ucPatients11
             // 
@@ -1009,8 +1024,16 @@
             // 
             // tmRetryCounter
             // 
-            this.tmRetryCounter.Interval = 3000;
+            this.tmRetryCounter.Interval = 5000;
             this.tmRetryCounter.Tick += new System.EventHandler(this.tmRetryCounter_Tick);
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.IncludeSubdirectories = true;
+            this.fileSystemWatcher1.NotifyFilter = System.IO.NotifyFilters.Size;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
             // 
             // MainForm
             // 
@@ -1074,6 +1097,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelLoadingBurn)).EndInit();
             this.panelLoadingBurn.ResumeLayout(false);
             this.panelLoadingBurn.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1149,6 +1173,8 @@
         private DevExpress.XtraEditors.PanelControl panelLoadingBurn;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private System.Windows.Forms.Timer tmRetryCounter;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.Label lblSearchMessage;
     }
 }
 
