@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigSetting));
             this.dataGridViewServerList = new System.Windows.Forms.DataGridView();
             this.ColumnNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -189,11 +189,11 @@
             this.label45 = new System.Windows.Forms.Label();
             this.xtraTabPageSetProgramConfig2 = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl6 = new DevExpress.XtraEditors.GroupControl();
+            this.checkboxIsSizeCheck = new System.Windows.Forms.CheckBox();
             this.checkBoxDisplayServeIP = new System.Windows.Forms.CheckBox();
             this.checkBoxUseUSBCopy = new System.Windows.Forms.CheckBox();
             this.checkBoxDisableMultiPatient = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoPrintApp = new System.Windows.Forms.CheckBox();
-            this.checkboxIsSizeCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServerList)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -250,8 +250,8 @@
             // ColumnNo
             // 
             this.ColumnNo.DataPropertyName = "No";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnNo.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColumnNo.HeaderText = "번호";
             this.ColumnNo.Name = "ColumnNo";
             this.ColumnNo.ReadOnly = true;
@@ -276,8 +276,8 @@
             // ColumnServerPort
             // 
             this.ColumnServerPort.DataPropertyName = "Port";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColumnServerPort.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColumnServerPort.HeaderText = "Port";
             this.ColumnServerPort.Name = "ColumnServerPort";
             this.ColumnServerPort.ReadOnly = true;
@@ -750,7 +750,8 @@
             "10. DCAS",
             "11. CheckFolderSize",
             "12. TechHeim2",
-            "13. Compumedics"});
+            "13. Compumedics",
+            "14. EGG-뇌파"});
             this.comboBox_AutoExecuteHookingType.Location = new System.Drawing.Point(181, 261);
             this.comboBox_AutoExecuteHookingType.Name = "comboBox_AutoExecuteHookingType";
             this.comboBox_AutoExecuteHookingType.Size = new System.Drawing.Size(200, 28);
@@ -1970,6 +1971,16 @@
             this.groupControl6.TabIndex = 2;
             this.groupControl6.Text = "프로그램 설정 (2)";
             // 
+            // checkboxIsSizeCheck
+            // 
+            this.checkboxIsSizeCheck.AutoSize = true;
+            this.checkboxIsSizeCheck.Location = new System.Drawing.Point(26, 366);
+            this.checkboxIsSizeCheck.Name = "checkboxIsSizeCheck";
+            this.checkboxIsSizeCheck.Size = new System.Drawing.Size(181, 24);
+            this.checkboxIsSizeCheck.TabIndex = 59;
+            this.checkboxIsSizeCheck.Text = "조회 시 용량체크 필요";
+            this.checkboxIsSizeCheck.UseVisualStyleBackColor = true;
+            // 
             // checkBoxDisplayServeIP
             // 
             this.checkBoxDisplayServeIP.AutoSize = true;
@@ -2009,16 +2020,6 @@
             this.checkBoxAutoPrintApp.TabIndex = 55;
             this.checkBoxAutoPrintApp.Text = "굽기 완료 후 복사 신청서(발급내역) 자동 인쇄";
             this.checkBoxAutoPrintApp.UseVisualStyleBackColor = true;
-            // 
-            // checkboxIsSizeCheck
-            // 
-            this.checkboxIsSizeCheck.AutoSize = true;
-            this.checkboxIsSizeCheck.Location = new System.Drawing.Point(26, 366);
-            this.checkboxIsSizeCheck.Name = "checkboxIsSizeCheck";
-            this.checkboxIsSizeCheck.Size = new System.Drawing.Size(181, 24);
-            this.checkboxIsSizeCheck.TabIndex = 59;
-            this.checkboxIsSizeCheck.Text = "조회 시 용량체크 필요";
-            this.checkboxIsSizeCheck.UseVisualStyleBackColor = true;
             // 
             // ConfigSetting
             // 

@@ -3625,6 +3625,7 @@ namespace RimageMedicalSystemV2
             bool retVal8 = false;
             bool retVal10 = false;
             bool retVal13 = false;
+            bool retVal14 = false;
 
             this.tmrHookChecker.Stop();
 
@@ -3657,16 +3658,19 @@ namespace RimageMedicalSystemV2
                         retVal8 = AutoExec8();      //8. DEITPACS
                         break;
                     case "10":
-                        retVal10 = AutoExec10();      //10.DCAS
+                        retVal10 = AutoExec10();    //10.DCAS
                         break;
                     case "13":
                         retVal13 = AutoExec13();    //13.Compumedics ProFusion
+                        break;
+                    case "14":
+                        retVal14 = AutoExec14();    //14.EGG-뇌파
                         break;
                     default:
                         break;
                 }
 
-                if (retVal1 || retVal2 || retVal3 || retVal4 || retVal5 || retVal6 || retVal7 || retVal8 || retVal10 || retVal13)
+                if (retVal1 || retVal2 || retVal3 || retVal4 || retVal5 || retVal6 || retVal7 || retVal8 || retVal10 || retVal13 || retVal14)
                 {
                     Thread.Sleep(GlobalVar.configEntity.HookSleepTime2);
 
@@ -4004,7 +4008,29 @@ namespace RimageMedicalSystemV2
 
             return retVal;
         }
-        
+
+        /// <summary>
+        /// EGG-뇌파
+        /// </summary>
+        /// <returns></returns>
+        private bool AutoExec14()
+        {
+            // window class, caption
+            bool retVal = false;
+
+            int hw = FindWindow(null, "Archiving Done");
+
+            if (hw != 0) // 프로그램이 실행한 경우 
+            {
+                Thread.Sleep(200);
+                retVal = true;
+                // kill dialog.
+                SendMessage((IntPtr)hw, WM_CLOSE, 0, 0);
+            }
+
+            return retVal;
+        }
+
         /// <summary>
         /// 주기적으로 다운로드 완료된 폴더가 존재하는지 체크하자. - Type2
         /// </summary>

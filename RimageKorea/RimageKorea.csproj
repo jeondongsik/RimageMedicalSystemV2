@@ -78,6 +78,7 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -121,6 +122,7 @@
       <DependentUpon>FrmCheckPatientForMerge.cs</DependentUpon>
     </Compile>
     <Compile Include="GetMyIP.cs" />
+    <Compile Include="GetPatientInfoFromEAI.cs" />
     <Compile Include="GetPatientInfoFromEEG4Xml.cs" />
     <Compile Include="GetPatientNameFromDllImport.cs" />
     <Compile Include="NetInfo.cs" />

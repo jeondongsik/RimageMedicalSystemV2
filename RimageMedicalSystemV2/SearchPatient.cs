@@ -220,19 +220,29 @@ namespace RimageMedicalSystemV2
                     else
                     {
                         //// DicomDir 파일이 없을 시 폴더명에서 환자아이디, 이름만 가져온다.
-                        //// 단 13. Compumedics가 아닌 경우 
-                        
+                        //// 단 13. Compumedics가 아닌 경우                        
                         if (sdir.Name.Contains("_") && GlobalVar.configEntity.AutoExecuteHookingType != "13")
                         {
                             try
                             {
                                 string[] arrStr = sdir.Name.Split('_');
-                                orderInfo.patNo = arrStr[1];
-                                orderInfo.patName = arrStr[2];
+                                if (arrStr.Length > 2)
+                                {
+                                    orderInfo.patNo = arrStr[1];
+                                    orderInfo.patName = arrStr[2];
+                                }
 
                                 isNoDicom = true;
                             }
                             catch { }
+                        }
+
+                        //// 14.EGG-뇌파의 경우
+                        if (GlobalVar.configEntity.AutoExecuteHookingType == "14")
+                        {
+                            //// 병원서버에서 환자정보 읽어온다.
+
+                            isNoDicom = true;
                         }
                     }
 
