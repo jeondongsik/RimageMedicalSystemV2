@@ -23,6 +23,7 @@ namespace RimageConfigSetting
         string LocalShareFolder;
         string CDLabelFile;
         string DVDLabelFile;
+        string DVDDLLabelFile;
         string MergeFileFolder;
         string MergeFileServerFolder;
         string ServerNetworkDrive;
@@ -56,6 +57,7 @@ namespace RimageConfigSetting
         string ServerType;
         string CDLabelFolder;
         string DVDLabelFolder;
+        string DVDDLLabelFolder;
         string AutoExecute;
         string AutoExecuteHookingType;
         string ProgramCaption;
@@ -181,6 +183,8 @@ namespace RimageConfigSetting
                 LocalShareFolder = cf._LocalShareFolder;
                 CDLabelFile = cf._CDLabelFile;
                 DVDLabelFile = cf._DVDLabelFile;
+                DVDDLLabelFile = cf._DVDDLLabelFile;
+
                 MergeFileFolder = cf._MergeFileFolder;
                 MergeFileServerFolder = cf._MergeFileServerFolder;
                 ServerNetworkDrive = cf._ServerNetworkDrive;
@@ -278,6 +282,7 @@ namespace RimageConfigSetting
 
             int index1 = CDLabelFile.LastIndexOf("\\");
             int index2 = DVDLabelFile.LastIndexOf("\\");
+            int index3 = DVDDLLabelFile.LastIndexOf("\\");
 
             if (index1 > 0)
             {
@@ -301,8 +306,20 @@ namespace RimageConfigSetting
                 this.textBox_DVDLabelFolder.Text = "\\\\ServerIP\\Rimage\\Labels\\";
             }
 
+            if (index3 > 0)
+            {
+                this.textBox_DVD_DLLabelFile.Text = DVDDLLabelFile.Substring(index1 + 1);
+                this.textBox_DVD_DLLabelFolder.Text = DVDDLLabelFile.Substring(0, index1 + 1);
+            }
+            else
+            {
+                this.textBox_DVD_DLLabelFile.Text = "";
+                this.textBox_DVD_DLLabelFolder.Text = "\\\\ServerIP\\Rimage\\Labels\\";
+            }
+
             this.CDLabelFolder = textBox_CDLabelFolder.Text;
             this.DVDLabelFolder = textBox_DVDLabelFolder.Text;
+            this.DVDDLLabelFolder = textBox_DVD_DLLabelFolder.Text;
 
             this.textBox_MergeFileServerFolder.Text = MergeFileServerFolder;
             this.textBox_ServerNetworkDrive.Text = ServerNetworkDrive;
@@ -620,6 +637,7 @@ namespace RimageConfigSetting
                     cf._LocalShareFolder = textBox_LocalShareFolder.Text;
                     cf._CDLabelFile = this.textBox_CDLabelFolder.Text + textBox_CDLabelFile.Text;
                     cf._DVDLabelFile = this.textBox_DVDLabelFolder.Text + textBox_DVDLabelFile.Text;
+                    cf._DVDDLLabelFile = this.textBox_DVD_DLLabelFolder.Text + textBox_DVD_DLLabelFile.Text;
                     cf._MergeFileFolder = MergeFileFolder;
                     cf._MergeFileServerFolder = MergeFileServerFolder;
                     cf._ServerNetworkDrive = ServerNetworkDrive;
@@ -694,7 +712,6 @@ namespace RimageConfigSetting
                     {
                         Application.Exit();
                     }
-                    //}
                 }
             }
             catch (Exception ex)
@@ -722,24 +739,7 @@ namespace RimageConfigSetting
                 textBox_HostIP.Focus();
                 result = false;
             }
-            //if (textBox_HostIP.Text.Length < 8)
-            //{
-            //    MessageBox.Show("서버 IP를 입력하세요.");
-            //    textBox_HostIP.Focus();
-            //    result = false;
-            //}
-            //if (textBox_HostName.Text == "")
-            //{
-            //    MessageBox.Show("서버명을 입력하세요.");
-            //    textBox_HostName.Focus();
-            //    result = false;
-            //}
-            //if (textBox_HostPort.Text == "")
-            //{
-            //    MessageBox.Show("접속포트를 입력하세요.");
-            //    textBox_HostPort.Focus();
-            //    result = false;
-            //}
+            
             if (textBox_DicomDownloadFolder.Text == "")
             {
                 MessageBox.Show("다운로드 폴더경로를 입력하세요.");
@@ -772,8 +772,15 @@ namespace RimageConfigSetting
             if (textBox_DVDLabelFile.Text == "")
             {
                 MessageBox.Show("DVD Label 파일 경로를 입력하세요.");
+                this.xtraTabControl1.SelectedTabPage = this.xtraTabPageSetFolder; 
+                textBox_DVDLabelFile.Focus();
+                result = false;
+            }
+            if (textBox_DVD_DLLabelFile.Text == "")
+            {
+                MessageBox.Show("DVD-DL Label 파일 경로를 입력하세요.");
                 this.xtraTabControl1.SelectedTabPage = this.xtraTabPageSetFolder;
-                textBox_HostName.Focus();
+                textBox_DVD_DLLabelFile.Focus();
                 result = false;
             }
             if (textBox_MergeFileServerFolder.Text == "")
@@ -814,6 +821,7 @@ namespace RimageConfigSetting
             {
                 this.textBox_CDLabelFolder.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Labels") + "\\";
                 this.textBox_DVDLabelFolder.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Labels") + "\\";
+                this.textBox_DVD_DLLabelFile.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Labels") + "\\";
                 this.textBox_MergeFileServerFolder.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Merge") + "\\";
             }
         }
@@ -976,6 +984,7 @@ namespace RimageConfigSetting
             {
                 this.textBox_CDLabelFolder.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Labels") + "\\";
                 this.textBox_DVDLabelFolder.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Labels") + "\\";
+                this.textBox_DVD_DLLabelFolder.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Labels") + "\\";
                 this.textBox_MergeFileServerFolder.Text = "\\\\" + Path.Combine("ServerIP", "Rimage\\Merge") + "\\";
             }
 
@@ -1105,6 +1114,7 @@ namespace RimageConfigSetting
 
                 this.textBox_CDLabelFolder.Text = this.CDLabelFolder;
                 this.textBox_DVDLabelFolder.Text = this.DVDLabelFolder;
+                this.textBox_DVD_DLLabelFolder.Text = this.DVDDLLabelFolder;
                 this.textBox_MergeFileServerFolder.Text = this.MergeFileFolder;
             }
             else
@@ -1114,6 +1124,7 @@ namespace RimageConfigSetting
 
                 this.textBox_CDLabelFolder.Text = "\\\\ServerIP\\Rimage\\Labels\\";
                 this.textBox_DVDLabelFolder.Text = "\\\\ServerIP\\Rimage\\Labels\\";
+                this.textBox_DVD_DLLabelFolder.Text = "\\\\ServerIP\\Rimage\\Labels\\";
                 this.textBox_MergeFileServerFolder.Text = "\\\\ServerIP\\rimage\\Merge\\";
             }
         }
@@ -1135,20 +1146,24 @@ namespace RimageConfigSetting
             {
                 this.buttonCDLabelSearch.Enabled = true;
                 this.buttonDVDLabelSearch.Enabled = true;
+                this.buttonDVDDLLabelSearch.Enabled = true;
                 this.buttonMergeFolderSearch.Enabled = true;
 
                 this.buttonCDLabelSearch.Visible = true;
                 this.buttonDVDLabelSearch.Visible = true;
+                this.buttonDVDDLLabelSearch.Visible = true;
                 this.buttonMergeFolderSearch.Visible = true;
             }
             else
             {
                 this.buttonCDLabelSearch.Enabled = false;
                 this.buttonDVDLabelSearch.Enabled = false;
+                this.buttonDVDDLLabelSearch.Enabled = false;
                 this.buttonMergeFolderSearch.Enabled = false;
 
                 this.buttonCDLabelSearch.Visible = false;
                 this.buttonDVDLabelSearch.Visible = false;
+                this.buttonDVDDLLabelSearch.Visible = false;
                 this.buttonMergeFolderSearch.Visible = false;
             }
         }
@@ -1360,6 +1375,23 @@ namespace RimageConfigSetting
             }
 
             this.pictureAppBottomImage.Tag = null;
+        }
+
+        /// <summary>
+        /// DVD-DL 파일 선택
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonDVDDLLabelSearch_Click(object sender, EventArgs e)
+        {
+            if (this.openFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                string dvdLabel = this.openFileDialog2.FileName;
+                FileInfo fi = new FileInfo(dvdLabel);
+
+                this.textBox_DVD_DLLabelFolder.Text = fi.DirectoryName + "\\";
+                this.textBox_DVD_DLLabelFile.Text = fi.Name;
+            }
         }
     }
 }

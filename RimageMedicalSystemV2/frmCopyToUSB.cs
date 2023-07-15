@@ -676,7 +676,7 @@ namespace RimageMedicalSystemV2
                         worker.ReportProgress(100, state);
                     }
                 }
-                catch (Exception ex)
+                catch 
                 {
                     state.retCode = -1;
                     state.retMessage = "파일복사 중 에러발생.\r\n";

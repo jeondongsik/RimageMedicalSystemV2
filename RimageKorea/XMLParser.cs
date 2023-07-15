@@ -43,7 +43,7 @@ namespace RimageKorea
                     discStatus.ClientID = xmlAttributes.GetNamedItem("ClientId").Value;
                     discStatus.xml = xmlAttributes.GetNamedItem("OriginalOrder").Value;
                 }
-                catch (Exception ex)
+                catch 
                 {
                     ////ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
                 }
@@ -63,7 +63,7 @@ namespace RimageKorea
                         discStatus.DeviceCurrentState = xmlAttributes.GetNamedItem("CurrentOperation").Value;
                     }
                 }
-                catch (Exception ex)
+                catch 
                 {
                     ////ErrorLog.LogWrite("XMLParser", ex.ToString(), Environment.CurrentDirectory);
                 }

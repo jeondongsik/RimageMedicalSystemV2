@@ -26,6 +26,10 @@ namespace RimageKorea
         /// </summary>
         public string DVDLabelFile { get; set; }
         /// <summary>
+        /// DVD 라벨 파일 경로
+        /// </summary>
+        public string DVD_DLLabelFile { get; set; }
+        /// <summary>
         /// 머지파일이 생성될 폴더(서버쪽)
         /// </summary>
         public string MergeFileFolder { get; set; }

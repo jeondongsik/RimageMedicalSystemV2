@@ -68,7 +68,7 @@ namespace RimageKorea
                     //// txtStatusView.AppendText(string.Format("{0} Input {1}\r\n", PatientName, response));
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 //
             }

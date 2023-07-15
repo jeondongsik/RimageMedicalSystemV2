@@ -1695,15 +1695,19 @@ namespace RimageMedicalSystemV2
                     {
                         if (orderInfo.mediType.Equals("CDR"))
                             labelFileName = GlobalVar.configEntity.CDLabelFile.Replace("ServerIP", orderInfo.TargetServer.IP);
-                        else
+                        else if (orderInfo.mediType.Equals("DVDR"))
                             labelFileName = GlobalVar.configEntity.DVDLabelFile.Replace("ServerIP", orderInfo.TargetServer.IP);
+                        else
+                            labelFileName = GlobalVar.configEntity.DVD_DLLabelFile.Replace("ServerIP", orderInfo.TargetServer.IP);
                     }
                     else
                     {
                         if (orderInfo.mediType.Equals("CDR"))
                             labelFileName = GlobalVar.configEntity.CDLabelFile;
-                        else
+                        else if (orderInfo.mediType.Equals("DVDR"))
                             labelFileName = GlobalVar.configEntity.DVDLabelFile;
+                        else
+                            labelFileName = GlobalVar.configEntity.DVD_DLLabelFile;
                     }
 
                     //// Multi 환자일 경우
@@ -2432,6 +2436,7 @@ namespace RimageMedicalSystemV2
                 GlobalVar.configEntity.LocalShareFolder = cf._LocalShareFolder;
                 GlobalVar.configEntity.CDLabelFile = cf._CDLabelFile;
                 GlobalVar.configEntity.DVDLabelFile = cf._DVDLabelFile;
+                GlobalVar.configEntity.DVD_DLLabelFile = cf._DVDDLLabelFile;
                 GlobalVar.configEntity.MergeFileFolder = cf._MergeFileFolder;
                 GlobalVar.configEntity.MergeFileServerFolder = cf._MergeFileServerFolder;
                 GlobalVar.configEntity.ServerNetworkDrive = cf._ServerNetworkDrive;

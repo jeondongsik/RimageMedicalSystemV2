@@ -6,6 +6,7 @@
   <LocalShareFolder>C:\cd_share</LocalShareFolder>
   <CDLabelFile>\\ServerIP\Rimage\Labels\SMC_CD.btw</CDLabelFile>
   <DVDLabelFile>\\ServerIP\Rimage\Labels\SMC_CD.btw</DVDLabelFile>
+  <DVD_DLLabelFile>\\ServerIP\Rimage\Labels\ajoumc DVD_DL.btw</DVD_DLLabelFile>
   <MergeFileFolder>\\ServerIP\Rimage\Merge\</MergeFileFolder>
   <MergeFileServerFolder>\\ServerIP\Rimage\Merge\</MergeFileServerFolder>
   <ServerNetworkDrive>\\10.209.79.211\cd_share\</ServerNetworkDrive>

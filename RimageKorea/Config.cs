@@ -14,6 +14,7 @@ namespace RimageKorea
         string LocalShareFolder;
         string CDLabelFile;
         string DVDLabelFile;
+        string DVDDLLabelFile;
         string MergeFileFolder;
         string MergeFileServerFolder;
         string ServerNetworkDrive;
@@ -145,6 +146,14 @@ namespace RimageKorea
         {
             get { return getConfig("DVDLabelFile", ""); }
             set { this.DVDLabelFile = value; }
+        }
+        /// <summary>
+        /// DVD-DL 라벨 파일 경로
+        /// </summary>
+        public string _DVDDLLabelFile
+        {
+            get { return getConfig("DVD_DLLabelFile", ""); }
+            set { this.DVDDLLabelFile = value; }
         }
         /// <summary>
         /// 머지파일이 생성될 폴더(서버쪽)
@@ -651,6 +660,7 @@ namespace RimageKorea
                 updateConfigXml("LocalShareFolder", this.LocalShareFolder);
                 updateConfigXml("CDLabelFile", this.CDLabelFile);
                 updateConfigXml("DVDLabelFile", this.DVDLabelFile);
+                updateConfigXml("DVD_DLLabelFile", this.DVDDLLabelFile);
                 updateConfigXml("MergeFileFolder", this.MergeFileFolder);
                 updateConfigXml("MergeFileServerFolder", this.MergeFileServerFolder);
                 updateConfigXml("ServerNetworkDrive", this.ServerNetworkDrive);
