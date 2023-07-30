@@ -11,43 +11,112 @@ namespace RimageKorea
 {
     public static class GetPatientInfoFromEAI
     {
-
-        public static Dictionary<string, string> GetName(string patID)
+        /// <summary>
+        /// 환자정보 가져오기 (PatId, PatName:이름, Age:나이)
+        /// </summary>
+        /// <param name="patID"></param>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetPatInfo(string patID)
         {
+            Dictionary<string, string> patInfo = null;
+
             try
             {
-                Dictionary<string, string> patInfo = new Dictionary<string, string>();
-
-
-
+                patInfo = RequestEAI(patID);
             }
             catch { }
 
-            return null;
+            return patInfo;
+        }
+
+        /// <summary>
+        /// Http Request Header 생성
+        /// </summary>
+        /// <returns></returns>
+        public static HttpWebRequest CreateHeader()
+        {
+            try
+            {
+                string url = "http://10.90.40.22:27000/indigo/routeService";
+
+                //// 개발 : http://10.90.40.22:27000/indigo/routeService
+                //// 실습 : http://10.90.50.70:27000/indigo/routeService
+                //// 운영 : http://10.90.30.26:27000/indigo/routeService
+                /*
+                 TxId 는 고정값인지? 아니면 유니크한 값을 생성해야 하는지?
+                 ip 는 호출하는 컴퓨터의 값을 보내면 되나?
+                 */
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencode";
+                request.Headers.Add("IfId", "IF_P04_L02_A03_101");
+                request.Headers.Add("TxId", "20230708331882200000007");             //// 20230708331882 200 000007
+                request.Headers.Add("Param", "WWAWP0051R");
+                request.Headers.Add("sourceLocale", "UTF-8");
+                request.Headers.Add("reqDt", DateTime.Now.ToString("yyyyMMddHHmmssfff"));      //// 20230708131010 001
+                request.Headers.Add("serviceName", "WWAWP0051R");
+
+                return request;
+            }
+            catch { throw; }            
+        }
+
+        /// <summary>
+        /// 전송할 파라미터 생성
+        /// </summary>
+        /// <param name="patID"></param>
+        /// <returns></returns>
+        public static string CreateReqParam(string patID)
+        {
+            try
+            {
+                ReqRoot reqParams = new ReqRoot();
+                reqParams.header = new ReqHeader();
+                reqParams.header.systemid = "IMR";
+                reqParams.header.user = "";
+                reqParams.header.ip = GetMyIP.MyIP();
+                reqParams.header.dataFlag = "Y";
+                reqParams.header.version = 1;
+                reqParams.header.source = "WA";
+                reqParams.header.bizCode = "";
+                reqParams.header.debug = 1;
+                reqParams.header.customerMessage = "";
+                reqParams.header.messageId = "";
+                reqParams.header.resultCode = "";
+                reqParams.header.guid = "";
+                reqParams.header.reqdt = "";
+                reqParams.header.resdt = "";
+                reqParams.header.trno = 0;
+                reqParams.header.encToken = "";
+                reqParams.header.sid = "";
+                reqParams.header.className = "kr.amc.amis.wa.wp";
+                reqParams.header.dbName = "";
+                reqParams.header.server = "";
+                reqParams.header.service = "WWAWP0051R";
+                reqParams.header.issingle = 1;
+
+                reqParams.preDatas = new ReqPreDatas();
+                reqParams.preDatas.ipd = new Ipd();
+                reqParams.preDatas.ipd.paid = new Paid();
+                reqParams.preDatas.ipd.paid.type = "S";
+                reqParams.preDatas.ipd.paid.value = patID;
+
+                string jsBody = JsonParser.ConvertToJsonString(reqParams);
+
+                return jsBody;
+            }
+            catch { throw; }
         }
 
         public static Dictionary<string, string> RequestEAI(string patID)
         {
             try
             {
-                Dictionary<string, string> patInfo = new Dictionary<string, string>();
+                Dictionary<string, string> patInfo = null;
 
-                //// 개발 : http://10.90.40.22:27000/indigo/routeService
-                //// 실습 : http://10.90.50.70:27000/indigo/routeService
-                //// 운영 : http://10.90.30.26:27000/indigo/routeService
-                
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://10.90.40.22:27000/indigo/routeService");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencode";
-                request.Headers.Add("IfId", "IF_P04_L02_A03_101");
-                request.Headers.Add("TxId", "20230708331882200000007");
-                request.Headers.Add("Param", "WWAWP0051R");
-                request.Headers.Add("sourceLocale", "UTF-8");
-                request.Headers.Add("reqDt", "20230708131010001");
-                request.Headers.Add("serviceName", "WWAWP0051R");
+                HttpWebRequest request = CreateHeader();
 
-                ReqRoot root = new ReqRoot();
-                string jsBody = JsonParser.ConvertToJsonString(root);
+                string jsBody = CreateReqParam(patID);
 
                 StreamWriter reqStream = new StreamWriter(request.GetRequestStream());
                 reqStream.Write(jsBody); //http body에 data 쓰기
@@ -60,9 +129,21 @@ namespace RimageKorea
 
                 //// 응답값
                 RespRoot ret = JsonConvert.DeserializeObject<RespRoot>(resp); 
+                if (ret != null)
+                {
+                    if ("S" == ret.header.resultCode)
+                    {
+                        patInfo = new Dictionary<string, string>();
+                        patInfo.Add("PatId", ret.preDatas.opd.paid.value);
+                        patInfo.Add("PatName", ret.preDatas.opd.panm.value);
+                        
+                        ////주민등록번호로 나이 계산하기
+                        int age = Utils.CalcuAgeWithRgn(ret.preDatas.opd.rgn1.value, ret.preDatas.opd.rgn2.value, ret.preDatas.opd.paid.value);
+                        patInfo.Add("Age", age.ToString());
+                    }
+                }
 
-
-
+                return patInfo;
                 /*
                  IfId: IF_P04_L02_A03_101
 TxId: 20230708331882200000007

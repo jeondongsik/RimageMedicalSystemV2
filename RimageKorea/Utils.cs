@@ -375,6 +375,41 @@ namespace RimageKorea
             return result;
         }
 
+        public static int CalcuAgeWithRgn(string rgn1, string rgn2, string patId)
+        {
+            int result = 0;
+
+            try
+            {
+                //// 주민번호 (내국인), 외국인등록번호 (외국인)
+                //// 뒷 첫째자리가 1,2,5,6 은 1900년대 : 3,4,7,8은 2000년대생임
+                if (rgn1.Length == 8 && rgn2.Length > 0)
+                {
+                    string birthday = string.Empty;
+                    string fstr = rgn2.Substring(0, 1);
+
+                    if (fstr == "1" || fstr == "2" || fstr == "5" || fstr == "6")
+                    {
+                        birthday = string.Format("19{0}", rgn1);
+                    }
+                    else
+                    {
+                        birthday = string.Format("20{0}", rgn1);
+                    }
+
+                    return GetPatientAge(birthday, patId);
+                }
+
+            }
+            catch
+            {
+                result = 0;
+                //
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// 환자목록을 Generic으로 받아 String 로 반환
         /// </summary>

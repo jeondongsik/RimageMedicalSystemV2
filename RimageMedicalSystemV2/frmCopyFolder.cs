@@ -60,7 +60,7 @@ namespace RimageMedicalSystemV2
                 {
                     //// 톰텍뷰어폴더의 파일들을 환자폴더로 이동한다.
                     this.EditList = FileControl.CopyFolderAndFiles(this.SourceDirectory, this.TargetDirectory, this.SourceDirectory, null, this.IncList);
-                }                    
+                }
             }
             catch { }
         }
