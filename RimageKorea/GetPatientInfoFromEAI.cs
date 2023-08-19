@@ -9,6 +9,9 @@ using System.IO;
 
 namespace RimageKorea
 {
+    /// <summary>
+    /// 아산병원 EGG 뇌파 환자 정보 EAI 통해서 가져오기
+    /// </summary>
     public static class GetPatientInfoFromEAI
     {
         /// <summary>
@@ -136,7 +139,8 @@ namespace RimageKorea
                         patInfo = new Dictionary<string, string>();
                         patInfo.Add("PatId", ret.preDatas.opd.paid.value);
                         patInfo.Add("PatName", ret.preDatas.opd.panm.value);
-                        
+                        patInfo.Add("PatSex", Utils.GetGenderWithRgn(ret.preDatas.opd.rgn1.value, ret.preDatas.opd.rgn2.value));
+
                         ////주민등록번호로 나이 계산하기
                         int age = Utils.CalcuAgeWithRgn(ret.preDatas.opd.rgn1.value, ret.preDatas.opd.rgn2.value, ret.preDatas.opd.paid.value);
                         patInfo.Add("Age", age.ToString());

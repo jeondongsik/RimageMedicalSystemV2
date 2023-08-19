@@ -399,7 +399,6 @@ namespace RimageKorea
 
                     return GetPatientAge(birthday, patId);
                 }
-
             }
             catch
             {
@@ -409,6 +408,39 @@ namespace RimageKorea
 
             return result;
         }
+
+        /// <summary>
+        /// 성별 가져오기
+        /// </summary>
+        /// <param name="rgn1"></param>
+        /// <param name="rgn2"></param>
+        /// <returns></returns>
+        public static string GetGenderWithRgn(string rgn1, string rgn2)
+        {
+            try
+            {
+                //// 주민번호 (내국인), 외국인등록번호 (외국인)
+                //// 뒷 첫째자리가 1,3,5,7 은 남자 외는 여자
+                if (rgn1.Length == 8 && rgn2.Length > 0)
+                {
+                    string fstr = rgn2.Substring(0, 1);
+
+                    if (fstr == "1" || fstr == "3" || fstr == "5" || fstr == "7")
+                    {
+                        return "남";    
+                    }
+                    else
+                    {
+                        return "여";
+                    }
+                }
+            }
+            catch
+            { }
+
+            return string.Empty;
+        }
+
 
         /// <summary>
         /// 환자목록을 Generic으로 받아 String 로 반환

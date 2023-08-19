@@ -221,7 +221,7 @@ namespace RimageMedicalSystemV2
                     {
                         //// DicomDir 파일이 없을 시 폴더명에서 환자아이디, 이름만 가져온다.
                         //// 단 13. Compumedics가 아닌 경우                        
-                        if (sdir.Name.Contains("_") && GlobalVar.configEntity.AutoExecuteHookingType != "13")
+                        if (sdir.Name.Contains("_") && GlobalVar.configEntity.AutoExecuteHookingType != "13" && GlobalVar.configEntity.AutoExecuteHookingType != "14")
                         {
                             try
                             {
@@ -241,6 +241,37 @@ namespace RimageMedicalSystemV2
                         if (GlobalVar.configEntity.AutoExecuteHookingType == "14")
                         {
                             //// 병원서버에서 환자정보 읽어온다.
+                            if (sdir.Name.Contains("("))
+                            {
+                                string ppid = sdir.Name.Substring(0, sdir.Name.IndexOf("("));
+                                Dictionary<string, string> eggInfo = GetPatientInfoFromEAI.GetPatInfo(ppid);
+                                if (eggInfo != null)
+                                {
+                                    orderInfo.patNo = eggInfo["PatId"];
+                                    orderInfo.patName = eggInfo["PatName"];
+                                    orderInfo.patSex = eggInfo["PatSex"];
+                                    orderInfo.patAge = eggInfo["Age"];
+                                    orderInfo.patBirtyDay = "";
+
+                                    orderInfo.Modality = "EGG";
+                                    orderInfo.StudyDescription = "EGG";
+                                    orderInfo.DicomDescription = "EGG";
+                                    orderInfo.StudyModality = "EGG";
+                                }
+                                else
+                                {
+                                    orderInfo.patNo = ppid;
+                                    orderInfo.patName = "테스트";
+                                    orderInfo.patSex = "남";
+                                    orderInfo.patAge = "50";
+                                    orderInfo.patBirtyDay = "";
+
+                                    orderInfo.Modality = "EGG";
+                                    orderInfo.StudyDescription = "EGG";
+                                    orderInfo.DicomDescription = "EGG";
+                                    orderInfo.StudyModality = "EGG";
+                                }
+                            }
 
                             isNoDicom = true;
                         }

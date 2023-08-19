@@ -37,12 +37,13 @@
             // labelControl1
             // 
             this.labelControl1.Appearance.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.labelControl1.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.labelControl1.Appearance.ForeColor = System.Drawing.Color.Blue;
             this.labelControl1.Appearance.Options.UseFont = true;
             this.labelControl1.Appearance.Options.UseForeColor = true;
-            this.labelControl1.Location = new System.Drawing.Point(186, 53);
+            this.labelControl1.Location = new System.Drawing.Point(213, 68);
+            this.labelControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(250, 63);
+            this.labelControl1.Size = new System.Drawing.Size(310, 84);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "Viewer 파일을 복사하고 있습니다.\r\n\r\n잠시 기다려 주세요.";
             // 
@@ -52,8 +53,9 @@
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.LookAndFeel.SkinName = "Sharp";
             this.panelControl1.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.panelControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(606, 33);
+            this.panelControl1.Size = new System.Drawing.Size(693, 42);
             this.panelControl1.TabIndex = 1;
             // 
             // backgroundWorker1
@@ -65,14 +67,15 @@
             // 
             // frmCopyFolder
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(606, 151);
+            this.ClientSize = new System.Drawing.Size(693, 194);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.labelControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.LookAndFeel.SkinName = "Office 2010 Silver";
             this.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmCopyFolder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmCopyFolder";

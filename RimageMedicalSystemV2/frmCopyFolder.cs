@@ -51,9 +51,9 @@ namespace RimageMedicalSystemV2
         {
             try
             {
-                if (GlobalVar.configEntity.FolderPattern == "9")
+                if (GlobalVar.configEntity.FolderPattern == "9" || GlobalVar.configEntity.FolderPattern == "10")
                 {
-                    //// Compumedics ProFusion EEG 경우에는 통째로 복사
+                    //// Compumedics ProFusion EEG, 아산병원 EGG 경우에는 통째로 복사
                     this.EditList = FileControl.CopyFolderAndFilesAll(this.SourceDirectory, this.TargetDirectory, null);
                 }
                 else

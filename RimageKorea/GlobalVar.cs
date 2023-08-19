@@ -159,5 +159,10 @@ namespace RimageKorea
         /// Compumedics ProFusion 뷰어 파일 위치
         /// </summary>
         public const string COMPUMEDICS_VIEWR_FOLDER = @"C:\ProFusionEEG";
+
+        /// <summary>
+        /// 아산병원 EGG XLExchange 뷰어 파일 위치
+        /// </summary>
+        public const string EGG_XLExchange_FOLDER = @"C:\XLExchange";
     }
 }

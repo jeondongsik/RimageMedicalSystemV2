@@ -603,7 +603,7 @@ namespace RimageMedicalSystemV2
 
             try
             {
-                DirectoryInfo dri = new DirectoryInfo(GlobalVar.configEntity.LocalShareFolder);                
+                DirectoryInfo dri = new DirectoryInfo(GlobalVar.configEntity.LocalShareFolder);
                 bool patExists = false;
 
                 if (dri.Exists)
@@ -695,9 +695,16 @@ namespace RimageMedicalSystemV2
                                     }
                                 }
 
+                                //// 환자조회 완료 처리
                                 if (found)
                                 {
-									this.ucPatients21.gcPatientlist.DataSource = null;
+                                    //// 아산병원 뇌파인 경우 Viewer file 복사하여 넣는다.
+                                    if (GlobalVar.configEntity.FolderPattern == "10")
+                                    {
+                                        this.CopyEggViewerFiles(orderInfo);
+                                    }
+
+                                    this.ucPatients21.gcPatientlist.DataSource = null;
 									this.ucPatients21.gcPatientlist.DataSource = this.ucPatients21.PatientInfoList;
 
 									this.ucPatients21.gvPatientlist.RefreshData();
@@ -727,15 +734,6 @@ namespace RimageMedicalSystemV2
                             this.ucPatients21.RemoveAtList(exceptPat);
                         }
                     }
-
-					//// 삭제된 폴더가 있다면 목록에서 삭제
-					////if (deletedIdx.Count > 0)
-					////{
-					////	if (this.mediaType != MediaType.USB)
-					////	{
-					////		this.ucPatients21.RemoveAtList(deletedIdx);
-					////	}
-					////}
                 }
                 else
                 {
@@ -772,6 +770,86 @@ namespace RimageMedicalSystemV2
                     this.NotifyBurningResult(retMessage);
                 }
             }
+        }
+
+        /// <summary>
+        /// 아산병원 EGG 뷰어파일 복사하여 환자폴더에 넣기
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        /// <returns></returns>
+        private bool CopyEggViewerFiles(BurnOrderedInfoEntity orderInfo)
+        {
+            try
+            {
+                //// 이미 폴더에 복사가 된 상태라면 그냥 Skip
+                bool exsist = false;
+                string targetDir = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
+                foreach (string dri in Directory.GetDirectories(targetDir))
+                {
+                    if (dri.EndsWith("XLExchange"))
+                    {
+                        exsist = true;
+                        break;
+                    }
+                }
+
+                if (exsist)
+                    return true;
+
+                //// 파일 복사 시작
+                frmCopyFolder frmCopy = new frmCopyFolder();
+                frmCopy.SourceDirectory = GlobalVar.EGG_XLExchange_FOLDER;
+                frmCopy.TargetDirectory = targetDir;
+                
+                frmCopy.IncList = new List<string>();
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "log"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "0x0409.ini"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "data1.cab"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "data1.hdr"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "data2.cab"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "EmptyDir.txt"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "ISSetup.dll"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "layout.bin"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.bmp"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.exe"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.ini"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.inx"));
+
+                frmCopy.ShowDialog();
+
+                //// 다운로드 폴더의 상위 폴더
+                string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
+
+                ////EditList에 Viewr 파일 목록 넣어준다.
+                if (frmCopy.EditList != null)
+                {
+                    foreach (string fl in frmCopy.EditList)
+                    {
+                        //// download 폴더로 변경해줘야 함.
+                        orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
+                    }
+                }
+
+                //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
+                orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
+
+                //// 화면 출력용도 다시 계산
+                long fldLen = orderInfo.FolderSize / 1024 / 1024;
+                orderInfo.mediSize = fldLen.ToString() + " Mbyte";
+
+                if (GlobalVar.configEntity.programType == "1")
+                    ucPatients11.txtDataLength.Text = orderInfo.mediSize;
+
+                frmCopy.Dispose();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrMsgShow("XlExchange 뷰어파일을 복사하는 중 오류가 발생하였습니다.\r\n수기로 복사하여 처리해 주세요.\r\n\r\n" + ex.Message, "Rimage Message : searchDownloadFolder", ex);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -1406,47 +1484,6 @@ namespace RimageMedicalSystemV2
                 }
             }
             catch { }
-
-            #region Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사 (주석처리)
-            //// Compumedics ProFusion 뷰어 파일을 환자폴더 안에 복사한다.
-            ////try
-            ////{
-            ////    if (GlobalVar.configEntity.FolderPattern == "9")
-            ////    {
-            ////        frmCopyFolder frmCopy = new frmCopyFolder();
-            ////        frmCopy.SourceDirectory = GlobalVar.COMPUMEDICS_VIEWR_FOLDER;
-            ////        frmCopy.TargetDirectory = Path.Combine(GlobalVar.configEntity.LocalShareFolder, orderInfo.patFolder);
-
-            ////        frmCopy.ShowDialog();
-
-            ////        //// 다운로드 폴더의 상위 폴더
-            ////        string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
-
-            ////        ////EditList에 Viewr 파일 목록 넣어준다.
-            ////        if (frmCopy.EditList != null)
-            ////        {
-            ////            foreach (string fl in frmCopy.EditList)
-            ////            {
-            ////                //// download 폴더로 변경해줘야 함.
-            ////                orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
-            ////            }
-            ////        }
-
-            ////        //// 폴더 사이즈가 바뀌었으므로 다시 용량 체크해서 넣어준다.
-            ////        orderInfo.FolderSize = FileControl.GetFolderLengthOnly(frmCopy.TargetDirectory);
-
-            ////        //// 화면 출력용도 다시 계산
-            ////        long fldLen = orderInfo.FolderSize / 1024 / 1024;
-            ////        orderInfo.mediSize = fldLen.ToString() + " Mbyte";
-
-            ////        if (GlobalVar.configEntity.programType == "1")
-            ////            ucPatients11.txtDataLength.Text = orderInfo.mediSize;
-
-            ////        frmCopy.Dispose();
-            ////    }
-            ////}
-            ////catch { }
-            #endregion
 
             try
             {
