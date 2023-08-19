@@ -40,7 +40,7 @@ namespace RimageKorea
         {
             try
             {
-                string url = "http://10.90.40.22:27000/indigo/routeService";
+                string url = "http://10.90.30.26:27000/indigo/routeService";    //// 운영적용
 
                 //// 개발 : http://10.90.40.22:27000/indigo/routeService
                 //// 실습 : http://10.90.50.70:27000/indigo/routeService
@@ -61,7 +61,7 @@ namespace RimageKorea
 
                 return request;
             }
-            catch { throw; }            
+            catch { throw; }
         }
 
         /// <summary>
@@ -157,7 +157,13 @@ reqDt: 20230708131010001
 serviceName: WWAWP0051R
                  */
             }
-            catch { }
+            catch (Exception ex)
+            {
+                StringBuilder sbObject = new StringBuilder();
+                sbObject.Append("RimageKorea.GetPatientInfoFromEAI");
+
+                ErrorLog.LogWrite(sbObject, ex.ToString(), Environment.CurrentDirectory);
+            }
 
             return null;
         }
