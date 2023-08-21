@@ -802,31 +802,33 @@ namespace RimageMedicalSystemV2
                 frmCopy.TargetDirectory = targetDir;
                 
                 frmCopy.IncList = new List<string>();
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "log"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "0x0409.ini"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "data1.cab"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "data1.hdr"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "data2.cab"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "EmptyDir.txt"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "ISSetup.dll"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "layout.bin"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.bmp"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.exe"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.ini"));
-                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "setup.inx"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "log"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "0x0409.ini"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "data1.cab"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "data1.hdr"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "data2.cab"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "EmptyDir.txt"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "ISSetup.dll"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "layout.bin"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "setup.bmp"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "setup.exe"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "setup.ini"));
+                frmCopy.IncList.Add(Path.Combine(frmCopy.SourceDirectory, "XLExchange", "setup.inx"));
 
                 frmCopy.ShowDialog();
 
                 //// 다운로드 폴더의 상위 폴더
-                string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
+                //// string parentFolderPath = Path.Combine(new DirectoryInfo(orderInfo.DicomCDFolder).Parent.FullName, orderInfo.patFolder);
 
-                ////EditList에 Viewr 파일 목록 넣어준다.
+                ////EditList에 Viewer 파일 목록 넣어준다.
                 if (frmCopy.EditList != null)
                 {
                     foreach (string fl in frmCopy.EditList)
                     {
                         //// download 폴더로 변경해줘야 함.
-                        orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
+                        //// orderInfo.ImgFiles.EditList.Add(fl.Replace(parentFolderPath, GlobalVar.configEntity.DicomDownloadFolder));
+                        //// Editlist에 넣어준다.
+                        orderInfo.ImgFiles.EditList.Add(fl);
                     }
                 }
 
@@ -836,9 +838,6 @@ namespace RimageMedicalSystemV2
                 //// 화면 출력용도 다시 계산
                 long fldLen = orderInfo.FolderSize / 1024 / 1024;
                 orderInfo.mediSize = fldLen.ToString() + " Mbyte";
-
-                if (GlobalVar.configEntity.programType == "1")
-                    ucPatients11.txtDataLength.Text = orderInfo.mediSize;
 
                 frmCopy.Dispose();
 
@@ -4060,7 +4059,7 @@ namespace RimageMedicalSystemV2
             // window class, caption
             bool retVal = false;
 
-            int hw = FindWindow(null, "Archiving Done");
+            int hw = FindWindow("#32770", "Archiving Done");
 
             if (hw != 0) // 프로그램이 실행한 경우 
             {

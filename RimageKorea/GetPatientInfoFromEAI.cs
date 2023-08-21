@@ -113,6 +113,9 @@ namespace RimageKorea
 
         public static Dictionary<string, string> RequestEAI(string patID)
         {
+            StringBuilder sbObject = new StringBuilder();
+            sbObject.Append("RimageKorea.GetPatientInfoFromEAI");
+
             try
             {
                 Dictionary<string, string> patInfo = null;
@@ -130,6 +133,8 @@ namespace RimageKorea
                 string resp = respStream.ReadToEnd();   // 결과를 string으로 읽기
                 respStream.Close();
 
+                ErrorLog.TraceWrite(sbObject, resp, Environment.CurrentDirectory);
+
                 //// 응답값
                 RespRoot ret = JsonConvert.DeserializeObject<RespRoot>(resp); 
                 if (ret != null)
@@ -144,6 +149,8 @@ namespace RimageKorea
                         ////주민등록번호로 나이 계산하기
                         int age = Utils.CalcuAgeWithRgn(ret.preDatas.opd.rgn1.value, ret.preDatas.opd.rgn2.value, ret.preDatas.opd.paid.value);
                         patInfo.Add("Age", age.ToString());
+
+                        ErrorLog.TraceWrite(sbObject, string.Format("{0}-{1}-{2}-{3}", patInfo["PatId"], patInfo["PatName"], patInfo["PatSex"], patInfo["Age"]), Environment.CurrentDirectory);
                     }
                 }
 
@@ -159,9 +166,6 @@ serviceName: WWAWP0051R
             }
             catch (Exception ex)
             {
-                StringBuilder sbObject = new StringBuilder();
-                sbObject.Append("RimageKorea.GetPatientInfoFromEAI");
-
                 ErrorLog.LogWrite(sbObject, ex.ToString(), Environment.CurrentDirectory);
             }
 

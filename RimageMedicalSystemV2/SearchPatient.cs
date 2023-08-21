@@ -260,18 +260,16 @@ namespace RimageMedicalSystemV2
                                 }
                                 else
                                 {
-                                    ////orderInfo.patNo = ppid;
-                                    ////orderInfo.patName = "오류발생";
-                                    ////orderInfo.patSex = "남";
-                                    ////orderInfo.patAge = "50";
-                                    ////orderInfo.patBirtyDay = "";
+                                    orderInfo.patNo = ppid;
+                                    orderInfo.patName = "오류발생";
+                                    orderInfo.patSex = "남";
+                                    orderInfo.patAge = "50";
+                                    orderInfo.patBirtyDay = "";
 
-                                    ////orderInfo.Modality = "EGG";
-                                    ////orderInfo.StudyDescription = "EGG";
-                                    ////orderInfo.DicomDescription = "EGG";
-                                    ////orderInfo.StudyModality = "EGG";
-
-                                    return null;
+                                    orderInfo.Modality = "EGG";
+                                    orderInfo.StudyDescription = "EGG";
+                                    orderInfo.DicomDescription = "EGG";
+                                    orderInfo.StudyModality = "EGG";                                    
                                 }
                             }
 

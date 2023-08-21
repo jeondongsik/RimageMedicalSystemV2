@@ -421,13 +421,13 @@ namespace RimageKorea
             {
                 //// 주민번호 (내국인), 외국인등록번호 (외국인)
                 //// 뒷 첫째자리가 1,3,5,7 은 남자 외는 여자
-                if (rgn1.Length == 8 && rgn2.Length > 0)
+                if (rgn2.Length > 0)
                 {
                     string fstr = rgn2.Substring(0, 1);
 
                     if (fstr == "1" || fstr == "3" || fstr == "5" || fstr == "7")
                     {
-                        return "남";    
+                        return "남";
                     }
                     else
                     {
