@@ -3705,7 +3705,7 @@ namespace RimageMedicalSystemV2
                         retVal13 = AutoExec13();    //13.Compumedics ProFusion
                         break;
                     case "14":
-                        retVal14 = AutoExec14();    //14.EGG-뇌파
+                        retVal14 = AutoExec14();    //14.Natus
                         break;
                     default:
                         break;
