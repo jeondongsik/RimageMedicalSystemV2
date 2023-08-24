@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RimageMedicalSystemV2</RootNamespace>
-    <AssemblyName>RimageMedicalSystemV2</AssemblyName>
+    <AssemblyName>RimageMedicalSystemV25</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

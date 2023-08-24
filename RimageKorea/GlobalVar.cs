@@ -30,16 +30,16 @@ namespace RimageKorea
         public const string SOCKET_CON_FILE = "CONTPSVR.DAT";
 
         //// 프로그램 실행파일 3으로 바꿀 경우 수정 >>>>>>>>>>>>>>>>>>>>>>>
-        public const string PRODUCT_NAME = "Rimage Medical Disc System";
-        public const string RIMAGE_MEDICAL_CLIENT = "RimageMedicalSystemV2";
-        public const string RIMAGE_CONFIG_SETTING = "RimageConfigSetting";
-        public const string RIMAGE_ENTERANCE = "RimageEnterance";
-        public const string RMDS_PROG = "RMDS";
+        public const string PRODUCT_NAME = "Rimage Medical Disc System5";
+        public const string RIMAGE_MEDICAL_CLIENT = "RimageMedicalSystemV25";
+        public const string RIMAGE_CONFIG_SETTING = "RimageConfigSetting5";
+        public const string RIMAGE_ENTERANCE = "RimageEnterance5";
+        public const string RMDS_PROG = "RMDS5";
 
         /// <summary>
         /// 굽기 프로그램명
         /// </summary>
-        public static string BURM_PROGRAM = "RMDS.exe";
+        public static string BURM_PROGRAM = "RMDS5.exe";
 
         //// 프로그램 실행파일 3으로 바꿀 경우 수정 >>>>>>>>>>>>>>>>>>>>>>>
 

@@ -4807,16 +4807,6 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
-        /// 홈페이지 클릭
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lblHomepage_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// USB 복사
         /// </summary>
         /// <param name="sender"></param>
