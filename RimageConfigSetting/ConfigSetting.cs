@@ -1009,6 +1009,9 @@ namespace RimageConfigSetting
             }
         }
 
+        /// <summary>
+        /// 서버 추가하기
+        /// </summary>
         private void AddServer()
         {
             bool CheckData = false;
@@ -1031,6 +1034,12 @@ namespace RimageConfigSetting
             }
             else
             {
+                if (this.dsServerList.Tables[0].Rows.Count >= 7)
+                {
+                    MessageBox.Show("서버는 최대 7개까지만 등록 가능합니다.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 DataRow nRow = this.dsServerList.Tables[0].NewRow();
                 nRow["No"] = this.MaxNumber() + 1;
                 nRow["IP"] = this.textBox_HostIP.Text.Trim();
