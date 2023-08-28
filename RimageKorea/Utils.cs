@@ -375,6 +375,13 @@ namespace RimageKorea
             return result;
         }
 
+        /// <summary>
+        /// 나이 계산하기
+        /// </summary>
+        /// <param name="rgn1">YYMMDD</param>
+        /// <param name="rgn2">주민번호뒷자리</param>
+        /// <param name="patId"></param>
+        /// <returns></returns>
         public static int CalcuAgeWithRgn(string rgn1, string rgn2, string patId)
         {
             int result = 0;
@@ -383,7 +390,7 @@ namespace RimageKorea
             {
                 //// 주민번호 (내국인), 외국인등록번호 (외국인)
                 //// 뒷 첫째자리가 1,2,5,6 은 1900년대 : 3,4,7,8은 2000년대생임
-                if (rgn1.Length == 8 && rgn2.Length > 0)
+                if (rgn1.Length > 5 && rgn2.Length > 0)
                 {
                     string birthday = string.Empty;
                     string fstr = rgn2.Substring(0, 1);
