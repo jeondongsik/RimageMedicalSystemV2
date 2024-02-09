@@ -153,6 +153,7 @@ namespace RimageMedicalSystemV2
         /// 현재 선택한 서버 정보
         /// </summary>
         public ServerInfo NowSeletedServer = null;
+        string RebbonCheckedServerIP;
 
         BurnProgressChecker burnProcessChecker = null;
         private int nowRemainDVD_DL_Qty;
@@ -256,6 +257,14 @@ namespace RimageMedicalSystemV2
                             this.tmrHookChecker.Enabled = true;
                         }
                     }
+                }
+
+                //// CMY 리본 수량 체크하도록 설정되어 있을 경우
+                if (GlobalVar.configEntity.MsgBoxShow == "2")
+                {
+                    this.tmrBinCheker.Interval = 1000 * 60 * GlobalVar.configEntity.BinCheckTime; //// 분단위로
+                    this.tmrBinCheker.Enabled = true;
+                    this.tmrBinCheker.Start();
                 }
 
                 ErrorLog.TraceWrite("MainForm", "-- Hooking 설정 초기화 완료.  -- ", Application.StartupPath);
@@ -2420,7 +2429,7 @@ namespace RimageMedicalSystemV2
         }
 
         /// <summary>
-        /// 서버 설정값 가져오기
+        /// 환경 설정값 가져오기
         /// </summary>
         public void GetConfig()
         {
@@ -2843,6 +2852,9 @@ namespace RimageMedicalSystemV2
                             this.nowRemainTransferRibbon_Qty = Convert.ToInt32(Utils.CheckNull(dt2.Rows[0]["RetransferSheetPanelsRemaining"], "0"));
                         else
                             this.nowRemainTransferRibbon_Qty = 0;
+
+
+                        this.ShowMessageCMYRibbonWarning();
                     }
                     catch { }
                 }
@@ -3072,6 +3084,9 @@ namespace RimageMedicalSystemV2
                     FileControl.DeleteBurnEndOrder(orderInfo.DiscOrder.OrderID);
 
                     this.txtStatusView.AppendText(string.Format("{0}[{1}] - {2}\r\n굽기가 완료되었습니다.", orderInfo.patNo, orderInfo.patName, trace.ResultMessage));
+
+                    //// 상태값 읽어오기
+                    
                 }
             }
             catch (Exception ex)
@@ -4185,7 +4200,37 @@ namespace RimageMedicalSystemV2
         /// <param name="e"></param>
         private void tmrBinCheker_Tick(object sender, EventArgs e)
         {
+            this.ShowMessageCMYRibbonWarning();
+        }
 
+        /// <summary>
+        /// 리본 (CMY) 수량이 기준수량 밑으로 내려가면 알람 Panel 띄워줌
+        /// </summary>
+        private void ShowMessageCMYRibbonWarning()
+        {
+            try
+            {
+                //// 리본 (CMY) 수량이 기준수량 밑으로 내려가면 알람
+                //// this.NowSeletedServer 
+                if (GlobalVar.configEntity.MsgBoxShow == "2")
+                {
+                    //// 설정된 수량보다 현재 리본의 수량이 작으면 메시지 띄운다.
+                    if (this.nowRemainCMYRibbon_Qty < GlobalVar.configEntity.RibbonRemainQty)
+                    {
+                        if (this.RebbonCheckedServerIP != "")
+                            this.RebbonCheckedServerIP = this.NowSeletedServer.IP;
+
+                        if (this.RebbonCheckedServerIP != this.NowSeletedServer.IP)
+                            this.lblCMYRibbonServer.Text = string.Format("[서버 : {0}]", this.RebbonCheckedServerIP);
+                        else
+                            this.lblCMYRibbonServer.Text = string.Format("[서버 : {0}]", this.NowSeletedServer.IP);
+
+                        this.panelMsgCMYQty.Visible = true;
+                        this.RebbonCheckedServerIP = this.NowSeletedServer.IP;
+                    }
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -4222,7 +4267,7 @@ namespace RimageMedicalSystemV2
                         }
                         else if (cds.lpData.StartsWith("BURN_END"))
                         {
-                            //// 굽기 완료 : 삭제된 폴더인지 다시 체크 후 삭제 실행
+                            //// 굽기완료 처리는 타이머로 지속 체크한다.
                         }
                         else if (cds.lpData.StartsWith("ERROR"))
                         {
@@ -4970,6 +5015,11 @@ namespace RimageMedicalSystemV2
                 return;
 
             ////this.txtStatusView.AppendText(DateTime.Now.ToString() + " 사이즈변경되고 있어요.\r\n");
+        }
+
+        private void btnCmyMsgClose_Click(object sender, EventArgs e)
+        {
+            this.panelMsgCMYQty.Visible = false;
         }
     }
 

@@ -69,6 +69,11 @@
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.lblDriveStatus = new DevExpress.XtraEditors.LabelControl();
             this.grpServerState = new DevExpress.XtraEditors.GroupControl();
+            this.panelMsgCMYQty = new DevExpress.XtraEditors.PanelControl();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.btnCmyMsgClose = new DevExpress.XtraEditors.SimpleButton();
+            this.lblCMYRibbonServer = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.txtBin2Discs = new DevExpress.XtraEditors.TextEdit();
             this.txtBin4Discs = new DevExpress.XtraEditors.TextEdit();
             this.txtBin1Discs = new DevExpress.XtraEditors.TextEdit();
@@ -116,6 +121,9 @@
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grpServerState)).BeginInit();
             this.grpServerState.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelMsgCMYQty)).BeginInit();
+            this.panelMsgCMYQty.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBin2Discs.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBin4Discs.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBin1Discs.Properties)).BeginInit();
@@ -164,12 +172,12 @@
             // ucPatients11
             // 
             this.ucPatients11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucPatients11.Location = new System.Drawing.Point(2, 27);
+            this.ucPatients11.Location = new System.Drawing.Point(2, 23);
             this.ucPatients11.LookAndFeel.SkinName = "Sharp Plus";
             this.ucPatients11.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients11.Name = "ucPatients11";
             this.ucPatients11.OrderInfo = null;
-            this.ucPatients11.Size = new System.Drawing.Size(800, 203);
+            this.ucPatients11.Size = new System.Drawing.Size(800, 207);
             this.ucPatients11.TabIndex = 1;
             this.ucPatients11.TabStop = false;
             this.ucPatients11.Visible = false;
@@ -178,12 +186,12 @@
             // 
             this.ucPatients21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucPatients21.FrmParent = null;
-            this.ucPatients21.Location = new System.Drawing.Point(2, 27);
+            this.ucPatients21.Location = new System.Drawing.Point(2, 23);
             this.ucPatients21.LookAndFeel.SkinName = "Sharp Plus";
             this.ucPatients21.LookAndFeel.UseDefaultLookAndFeel = false;
             this.ucPatients21.Name = "ucPatients21";
             this.ucPatients21.PatientInfoList = null;
-            this.ucPatients21.Size = new System.Drawing.Size(800, 203);
+            this.ucPatients21.Size = new System.Drawing.Size(800, 207);
             this.ucPatients21.TabIndex = 0;
             this.ucPatients21.TabStop = false;
             this.ucPatients21.Visible = false;
@@ -452,12 +460,12 @@
             // gcBurninglist
             // 
             this.gcBurninglist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcBurninglist.Location = new System.Drawing.Point(2, 27);
+            this.gcBurninglist.Location = new System.Drawing.Point(2, 23);
             this.gcBurninglist.LookAndFeel.SkinName = "VS2010";
             this.gcBurninglist.LookAndFeel.UseDefaultLookAndFeel = false;
             this.gcBurninglist.MainView = this.gvBurninglist;
             this.gcBurninglist.Name = "gcBurninglist";
-            this.gcBurninglist.Size = new System.Drawing.Size(980, 214);
+            this.gcBurninglist.Size = new System.Drawing.Size(980, 218);
             this.gcBurninglist.TabIndex = 2;
             this.gcBurninglist.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvBurninglist});
@@ -677,7 +685,7 @@
             this.lblDriveStatus.Appearance.Options.UseForeColor = true;
             this.lblDriveStatus.Location = new System.Drawing.Point(15, 7);
             this.lblDriveStatus.Name = "lblDriveStatus";
-            this.lblDriveStatus.Size = new System.Drawing.Size(159, 15);
+            this.lblDriveStatus.Size = new System.Drawing.Size(138, 12);
             this.lblDriveStatus.TabIndex = 17;
             this.lblDriveStatus.Text = "Current Save Drive : ";
             // 
@@ -688,6 +696,7 @@
             this.grpServerState.AppearanceCaption.Options.UseFont = true;
             this.grpServerState.AppearanceCaption.Options.UseForeColor = true;
             this.grpServerState.CaptionImageOptions.Image = global::RimageMedicalSystemV2.Properties.Resources.documentmap_16x16;
+            this.grpServerState.Controls.Add(this.panelMsgCMYQty);
             this.grpServerState.Controls.Add(this.txtBin2Discs);
             this.grpServerState.Controls.Add(this.txtBin4Discs);
             this.grpServerState.Controls.Add(this.txtBin1Discs);
@@ -708,6 +717,63 @@
             this.grpServerState.TabIndex = 4;
             this.grpServerState.Text = "서버 상태 정보";
             // 
+            // panelMsgCMYQty
+            // 
+            this.panelMsgCMYQty.Controls.Add(this.pictureBox2);
+            this.panelMsgCMYQty.Controls.Add(this.btnCmyMsgClose);
+            this.panelMsgCMYQty.Controls.Add(this.lblCMYRibbonServer);
+            this.panelMsgCMYQty.Controls.Add(this.labelControl2);
+            this.panelMsgCMYQty.Location = new System.Drawing.Point(168, 26);
+            this.panelMsgCMYQty.LookAndFeel.SkinName = "Sharp Plus";
+            this.panelMsgCMYQty.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.panelMsgCMYQty.Name = "panelMsgCMYQty";
+            this.panelMsgCMYQty.Size = new System.Drawing.Size(330, 104);
+            this.panelMsgCMYQty.TabIndex = 3;
+            this.panelMsgCMYQty.Visible = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(10, 29);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(63, 49);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
+            // 
+            // btnCmyMsgClose
+            // 
+            this.btnCmyMsgClose.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCmyMsgClose.Appearance.Options.UseFont = true;
+            this.btnCmyMsgClose.Location = new System.Drawing.Point(293, 8);
+            this.btnCmyMsgClose.LookAndFeel.SkinName = "McSkin";
+            this.btnCmyMsgClose.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.btnCmyMsgClose.Name = "btnCmyMsgClose";
+            this.btnCmyMsgClose.Size = new System.Drawing.Size(32, 28);
+            this.btnCmyMsgClose.TabIndex = 3;
+            this.btnCmyMsgClose.Text = "X";
+            this.btnCmyMsgClose.Click += new System.EventHandler(this.btnCmyMsgClose_Click);
+            // 
+            // lblCMYRibbonServer
+            // 
+            this.lblCMYRibbonServer.Appearance.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblCMYRibbonServer.Appearance.Options.UseFont = true;
+            this.lblCMYRibbonServer.Location = new System.Drawing.Point(79, 57);
+            this.lblCMYRibbonServer.Name = "lblCMYRibbonServer";
+            this.lblCMYRibbonServer.Size = new System.Drawing.Size(180, 21);
+            this.lblCMYRibbonServer.TabIndex = 2;
+            this.lblCMYRibbonServer.Text = "[서버 : 255.255.255.255]";
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Appearance.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.labelControl2.Appearance.Options.UseFont = true;
+            this.labelControl2.Location = new System.Drawing.Point(79, 29);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(185, 21);
+            this.labelControl2.TabIndex = 1;
+            this.labelControl2.Text = "CMY 리본을 확인하세요!!";
+            // 
             // txtBin2Discs
             // 
             this.txtBin2Discs.EditValue = "0";
@@ -720,7 +786,7 @@
             this.txtBin2Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin2Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin2Discs.Properties.ReadOnly = true;
-            this.txtBin2Discs.Size = new System.Drawing.Size(84, 23);
+            this.txtBin2Discs.Size = new System.Drawing.Size(84, 18);
             this.txtBin2Discs.TabIndex = 135;
             this.txtBin2Discs.TabStop = false;
             // 
@@ -736,7 +802,7 @@
             this.txtBin4Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin4Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin4Discs.Properties.ReadOnly = true;
-            this.txtBin4Discs.Size = new System.Drawing.Size(84, 23);
+            this.txtBin4Discs.Size = new System.Drawing.Size(84, 18);
             this.txtBin4Discs.TabIndex = 134;
             this.txtBin4Discs.TabStop = false;
             // 
@@ -752,7 +818,7 @@
             this.txtBin1Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin1Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin1Discs.Properties.ReadOnly = true;
-            this.txtBin1Discs.Size = new System.Drawing.Size(84, 23);
+            this.txtBin1Discs.Size = new System.Drawing.Size(84, 18);
             this.txtBin1Discs.TabIndex = 133;
             this.txtBin1Discs.TabStop = false;
             // 
@@ -768,7 +834,7 @@
             this.txtBin3Discs.Properties.Appearance.Options.UseTextOptions = true;
             this.txtBin3Discs.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtBin3Discs.Properties.ReadOnly = true;
-            this.txtBin3Discs.Size = new System.Drawing.Size(84, 23);
+            this.txtBin3Discs.Size = new System.Drawing.Size(84, 18);
             this.txtBin3Discs.TabIndex = 132;
             this.txtBin3Discs.TabStop = false;
             // 
@@ -784,7 +850,7 @@
             this.txtRetansferRibbons.Properties.Appearance.Options.UseTextOptions = true;
             this.txtRetansferRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtRetansferRibbons.Properties.ReadOnly = true;
-            this.txtRetansferRibbons.Size = new System.Drawing.Size(84, 23);
+            this.txtRetansferRibbons.Size = new System.Drawing.Size(84, 18);
             this.txtRetansferRibbons.TabIndex = 131;
             this.txtRetansferRibbons.TabStop = false;
             // 
@@ -800,7 +866,7 @@
             this.txtCMYRibbons.Properties.Appearance.Options.UseTextOptions = true;
             this.txtCMYRibbons.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.txtCMYRibbons.Properties.ReadOnly = true;
-            this.txtCMYRibbons.Size = new System.Drawing.Size(84, 23);
+            this.txtCMYRibbons.Size = new System.Drawing.Size(84, 18);
             this.txtCMYRibbons.TabIndex = 130;
             this.txtCMYRibbons.TabStop = false;
             // 
@@ -812,7 +878,7 @@
             this.label7.ForeColor = System.Drawing.Color.Black;
             this.label7.Location = new System.Drawing.Point(268, 73);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(158, 15);
+            this.label7.Size = new System.Drawing.Size(134, 12);
             this.label7.TabIndex = 129;
             this.label7.Text = "· Bin4 Discs Remaining";
             // 
@@ -824,7 +890,7 @@
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(261, 107);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(167, 15);
+            this.label5.Size = new System.Drawing.Size(142, 12);
             this.label5.TabIndex = 128;
             this.label5.Text = "· ITS Ribbons Remaining";
             // 
@@ -836,7 +902,7 @@
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(9, 107);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(178, 15);
+            this.label4.Size = new System.Drawing.Size(152, 12);
             this.label4.TabIndex = 127;
             this.label4.Text = "· CMY Ribbons Remaining";
             // 
@@ -848,7 +914,7 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(9, 73);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(158, 15);
+            this.label3.Size = new System.Drawing.Size(134, 12);
             this.label3.TabIndex = 126;
             this.label3.Text = "· Bin3 Discs Remaining";
             // 
@@ -860,7 +926,7 @@
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(268, 40);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(158, 15);
+            this.label2.Size = new System.Drawing.Size(134, 12);
             this.label2.TabIndex = 125;
             this.label2.Text = "· Bin2 Discs Remaining";
             // 
@@ -872,7 +938,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(9, 39);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 15);
+            this.label1.Size = new System.Drawing.Size(134, 12);
             this.label1.TabIndex = 124;
             this.label1.Text = "· Bin1 Discs Remaining";
             // 
@@ -894,7 +960,7 @@
             this.labelControl11.Appearance.Options.UseForeColor = true;
             this.labelControl11.Location = new System.Drawing.Point(788, 690);
             this.labelControl11.Name = "labelControl11";
-            this.labelControl11.Size = new System.Drawing.Size(268, 17);
+            this.labelControl11.Size = new System.Drawing.Size(205, 13);
             this.labelControl11.TabIndex = 16;
             this.labelControl11.Text = "(주)나시스 기술지원 ☎ 02-466-0745";
             // 
@@ -992,7 +1058,7 @@
             this.hyperLinkEdit1.Properties.Appearance.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.hyperLinkEdit1.Properties.Appearance.Options.UseFont = true;
             this.hyperLinkEdit1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.hyperLinkEdit1.Size = new System.Drawing.Size(198, 20);
+            this.hyperLinkEdit1.Size = new System.Drawing.Size(198, 18);
             this.hyperLinkEdit1.TabIndex = 19;
             this.hyperLinkEdit1.TabStop = false;
             this.hyperLinkEdit1.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.hyperLinkEdit1_OpenLink);
@@ -1042,7 +1108,7 @@
             this.labelControl1.Appearance.Options.UseFont = true;
             this.labelControl1.Location = new System.Drawing.Point(74, 31);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(406, 84);
+            this.labelControl1.Size = new System.Drawing.Size(328, 63);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "굽기 명령을 서버에 전송하고 있습니다.\r\n\r\n이 창이 없어질 때까지 잠시만 기다려 주세요.";
             // 
@@ -1108,6 +1174,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.grpServerState)).EndInit();
             this.grpServerState.ResumeLayout(false);
             this.grpServerState.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelMsgCMYQty)).EndInit();
+            this.panelMsgCMYQty.ResumeLayout(false);
+            this.panelMsgCMYQty.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBin2Discs.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBin4Discs.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBin1Discs.Properties)).EndInit();
@@ -1200,6 +1270,11 @@
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Label lblSearchMessage;
         private DevExpress.XtraEditors.LabelControl Server6;
+        private DevExpress.XtraEditors.PanelControl panelMsgCMYQty;
+        private DevExpress.XtraEditors.LabelControl lblCMYRibbonServer;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraEditors.SimpleButton btnCmyMsgClose;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 
