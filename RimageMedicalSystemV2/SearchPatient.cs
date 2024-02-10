@@ -472,6 +472,14 @@ namespace RimageMedicalSystemV2
                     orderInfo.patName = Utils.ReplaceSpecialWord(orderInfo.patName);
                     orderInfo.patName = orderInfo.patName.Replace(",", ".");
 
+                    //// 환자명 마지막에 '.job' 문자가 있다면 삭제한다.
+                    if (orderInfo.patName.ToUpper().EndsWith(".JOB"))
+                    {
+                        orderInfo.patName = orderInfo.patName.Replace(".job", "");
+                        orderInfo.patName = orderInfo.patName.Replace(".JOB", "");
+                        orderInfo.patName = orderInfo.patName.Replace(".Job", "");
+                    }
+
                     //// 연구용 자료일 경우
                     if (orderInfo.patNo.Contains("UNKNOWN") || string.IsNullOrWhiteSpace(orderInfo.patNo))
                     {
