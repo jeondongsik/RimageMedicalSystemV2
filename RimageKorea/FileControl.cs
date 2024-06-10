@@ -1306,5 +1306,27 @@ namespace RimageKorea
 
             return addFiles;
         }
+
+        /// <summary>
+        /// Xml 파일 생성
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <param name="fileName"></param>
+        public static void createXmlFile(string xml, string fileName)
+        {
+            try
+            {                
+                FileStream fs = new FileStream(fileName, FileMode.Create);
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                sw.Write(xml);
+                sw.Dispose();
+                fs.Close();
+                fs.Dispose();
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.LogWrite("FileControl", ex.ToString(), Environment.CurrentDirectory);
+            }
+        }
     }
 }

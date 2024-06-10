@@ -221,6 +221,7 @@ namespace RimageMedicalSystemV2
                 this.InitEnabledButton();
 
                 ErrorLog.TraceWrite("MainForm", "-- 컨트롤 초기화 완료.  -- ", Application.StartupPath);
+                               
 
                 ////환경설정 후에 정의
                 this.hookingComp = new HookingComplete(hooking_Complete);
@@ -291,7 +292,7 @@ namespace RimageMedicalSystemV2
         private void MainForm_Load(object sender, EventArgs e)
         {
             try
-            {
+            {                
                 if (string.IsNullOrWhiteSpace(GlobalVar.configEntity.ProgramCaption) == true)
                     this.Text = GlobalVar.PRODUCT_NAME;
                 else
@@ -329,6 +330,13 @@ namespace RimageMedicalSystemV2
                 //// 로그 체크 시작
                 this.burnProcessChecker = new BurnProgressChecker(this);
                 this.burnProcessChecker.StartTimer();
+
+                //Dictionary<string, string> returnValue = GetPatientNameFromCallUrl.GetPatInfo("1", "01500206");
+
+                //this.txtStatusView.AppendText(returnValue["환자명"] + "\r\n");
+                //this.txtStatusView.AppendText(returnValue["성별"] + "\r\n");
+                //this.txtStatusView.AppendText(returnValue["나이"] + "\r\n");
+                //this.txtStatusView.AppendText(returnValue["생년월일"] + "\r\n");
             }
             catch (Exception ex)
             {

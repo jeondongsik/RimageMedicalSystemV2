@@ -454,8 +454,9 @@ namespace RimageMedicalSystemV2
                                     orderInfo.patName = clsTT.Name;
                                 break;
                             case "8":
-                                //// 원광대병원 dll 사용                                
-                                Dictionary<string, string> dllPatInfo = GetPatientNameFromDllImport.GetPatInfo("1", orderInfo.patNo);
+                                //// 원광대병원 dll 사용  >>  Url호출로 바꿈 (2024.06.10)
+                                //// Dictionary<string, string> dllPatInfo = GetPatientNameFromDllImport.GetPatInfo("1", orderInfo.patNo);
+                                Dictionary<string, string> dllPatInfo = GetPatientNameFromCallUrl.GetPatInfo("1", orderInfo.patNo);
                                 if (dllPatInfo != null)
                                 {                                    
                                     orderInfo.patName = dllPatInfo["환자명"];

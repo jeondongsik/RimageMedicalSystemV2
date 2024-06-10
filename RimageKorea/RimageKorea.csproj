@@ -124,6 +124,7 @@
     <Compile Include="GetMyIP.cs" />
     <Compile Include="GetPatientInfoFromEAI.cs" />
     <Compile Include="GetPatientInfoFromEEG4Xml.cs" />
+    <Compile Include="GetPatientNameFromCallUrl.cs" />
     <Compile Include="GetPatientNameFromDllImport.cs" />
     <Compile Include="NetInfo.cs" />
     <Compile Include="GetPatientInfoFromMDB.cs" />
