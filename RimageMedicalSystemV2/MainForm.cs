@@ -331,7 +331,8 @@ namespace RimageMedicalSystemV2
                 this.burnProcessChecker = new BurnProgressChecker(this);
                 this.burnProcessChecker.StartTimer();
 
-                //Dictionary<string, string> returnValue = GetPatientNameFromCallUrl.GetPatInfo("1", "01500206");
+                //// 원광대 테스트용
+                //Dictionary<string, string> returnValue = GetPatientNameFromCallUrl.GetPatInfo("1", "00845946");
 
                 //this.txtStatusView.AppendText(returnValue["환자명"] + "\r\n");
                 //this.txtStatusView.AppendText(returnValue["성별"] + "\r\n");

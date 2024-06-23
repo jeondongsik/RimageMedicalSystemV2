@@ -32,8 +32,9 @@ namespace RimageKorea
                 //// 126 의대병원 기관코드
                 //// 127 한방병원 기관코드
                 //// 128 치대병원 기관코드
+                //// 교육서버 테스트용 string pUrl = @"https://edu126.wkuh.org/cmcnu/.live";
 
-                string pUrl = @"https://edu126.wkuh.org/cmcnu/.live";
+                string pUrl = @"https://emr126.wkuh.org/cmcnu/.live";
                 string pParam = string.Format("submit_id=DRAZZ00403&business_id=al&pid={0}&instcd={1}", inputString, "126");
 
                 string xmlText = GetPatientNameFromCallUrl.HttpCall(pUrl, pParam, "GET");
@@ -84,8 +85,7 @@ namespace RimageKorea
 
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(xmlStr);
-                                
-                //// CDATA 안의 쓸데없는 문제열 없애기 위함.
+               
                 XmlDocument xml = new XmlDocument();
                 xml.LoadXml(xmlDoc.OuterXml);
 
