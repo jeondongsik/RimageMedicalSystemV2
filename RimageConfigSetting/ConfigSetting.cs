@@ -140,6 +140,32 @@ namespace RimageConfigSetting
 
             KillProcess.DelProcess(GlobalVar.RIMAGE_ENTERANCE);
 
+            ///설정값 가져오기 전 설정파일 이름, 암호화되었는지 확인
+            if (!File.Exists(Path.Combine(Application.StartupPath, "RMDS_Settings.xml")))
+            {
+                frmCheckEnc frmEnc = new frmCheckEnc();
+                DialogResult req = frmEnc.ShowDialog();
+                
+                if (req == DialogResult.OK)
+                {
+                    DialogResult ask = MessageBox.Show("설정파일이 암호화되었습니다.\r\n프로그램을 다시 실행하세요.", "Rimage Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (ask.ToString().ToLower().Equals("ok"))
+                    {
+                        Application.Exit();
+                        Environment.Exit(0);
+                    }
+                }
+                else
+                {
+                    DialogResult ask = MessageBox.Show("설정파일이 암호화되었습니다.\r\n프로그램을 다시 실행하세요.", "Rimage Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (ask.ToString().ToLower().Equals("ok"))
+                    {
+                        Application.Exit();
+                        Environment.Exit(0);
+                    }
+                }
+            }
+
             //설정값 가져오기
             this.getConfig();
 

@@ -617,6 +617,7 @@ namespace RimageMedicalSystemV2
         private void SearchDownloadFolder(string checkFile = "")
         {
             string retMessage = string.Empty;
+            string retMessage2 = string.Empty;
             int i = 0;
 
             try
@@ -634,8 +635,9 @@ namespace RimageMedicalSystemV2
 					int idx = 0;
 					List<int> deletedIdx = new List<int>();
                     List<string> exceptPat = new List<string>();    //// 조회된 목록에서 제외되어야 할 폴더명 목록
+                    Dictionary<string, string> delPat = new Dictionary<string, string>();  //// DicomDir 에 있는 이미지가 실제경로에 없을 경우 조회 후 삭제할 폴더
 
-					foreach (DirectoryInfo sdir in dri.GetDirectories())
+                    foreach (DirectoryInfo sdir in dri.GetDirectories())
                     {
                         //// 현재 굽기 실행중인지 체크한다.                         
                         if (this._BurningList != null && this._BurningList.Count > 0)
@@ -696,7 +698,35 @@ namespace RimageMedicalSystemV2
 
                                     continue;
                                 }
-                                
+
+                                //// DicomDir 파일에 있는 이미지목록이 실제 폴더에 있는지 체크한다.
+                                //// 설정 - 굽기 전 Image 파일 존재여부 체크 true 이고, DicomDir 파일을 잘 읽었을 경우
+                                //// 이미지 파일이 없는 경우 Skip한다. =>>
+                                if (GlobalVar.configEntity.IsImgCheck == "Y")
+                                {
+                                    if (orderInfo.IsDicomDirRead)
+                                    {
+                                        if (orderInfo.PatInfor != null && orderInfo.PatInfor.Base != null && orderInfo.PatInfor.Base.Count > 0)
+                                        {
+                                            if (orderInfo.PatInfor.Base[0].RecordList != null && orderInfo.PatInfor.Base[0].RecordList.Count > 0)
+                                            {
+                                                List<string> retExistFiles = FileControl.ExistImageFiles(orderInfo.PatInfor.Base[0].RecordList, orderInfo.patFolderFullPath);
+
+                                                if (retExistFiles != null && retExistFiles.Count > 0)
+                                                {
+                                                    if (!exceptPat.Contains(sdir.Name))
+                                                        exceptPat.Add(sdir.Name);
+
+                                                    if (!delPat.ContainsKey(string.Format("[{0}]-[{1}]", orderInfo.patNo, orderInfo.patName)))
+                                                        delPat.Add(string.Format("[{0}]-[{1}]", orderInfo.patNo, orderInfo.patName), sdir.FullName);
+                                                    
+                                                    continue;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                                 orderInfo.DicomCDFolder = sdir.FullName;
 
                                 if (this.ucPatients21.PatientInfoList.Count == 0)
@@ -752,6 +782,24 @@ namespace RimageMedicalSystemV2
                             this.ucPatients21.RemoveAtList(exceptPat);
                         }
                     }
+
+                    //// Dicomdir 이미지 파일과 안 맞는 폴더 메시지 보여주고 삭제
+                    if (delPat.Count > 0)
+                    {
+                        if (this.mediaType != MediaType.USB)
+                        {
+                            txtStatusView.AppendText("📢 DicomDir에 기록한 이미지가 존재하지 않는 환자가 존재합니다.\r\n아래 환자의 폴더는 삭제됩니다. \r\n다시 다운로드 후 조회해 주세요.\r\n");
+
+                            foreach(var dp in delPat)
+                            {
+                                txtStatusView.AppendText(string.Format("  ▶ {0}\r\n", dp.Key));
+                                //// 폴더삭제
+                                FileControl.DeleteFolder(dp.Value);
+                            }
+
+                            retMessage2 = "📢 이미지 파일이 없는 환자가 존재합니다.\r\n좌측 하단의 메시지를 확인하세요.";
+                        }
+                    }
                 }
                 else
                 {
@@ -786,6 +834,9 @@ namespace RimageMedicalSystemV2
                 if (GlobalVar.configEntity.AutoExecute == "1" && GlobalVar.configEntity.PopUpAlamYN == "Y")
                 {
                     this.NotifyBurningResult(retMessage);
+
+                    if (!string.IsNullOrEmpty(retMessage2))
+                        this.NotifyBurningResult(retMessage2);
                 }
             }
         }
@@ -1293,7 +1344,7 @@ namespace RimageMedicalSystemV2
             int idx = 0;
             List<int> orderedIdx = new List<int>();
 			List<int> deltedIdx = new List<int>();
-            StringBuilder notiMessage = new StringBuilder();
+            ////StringBuilder notiMessage = new StringBuilder();
 
 			foreach (BurnOrderedInfoEntity orderInfo in this.ucPatients21.PatientInfoList)
             {
@@ -1354,25 +1405,25 @@ namespace RimageMedicalSystemV2
 
                     //// DicomDir 파일에 있는 이미지목록이 실제 폴더에 있는지 체크한다.
                     //// 설정 - 굽기 전 Image 파일 존재여부 체크 true 이고, DicomDir 파일을 잘 읽었을 경우
-                    if (GlobalVar.configEntity.IsImgCheck == "Y")
-                    {
-                        if (orderInfo.IsDicomDirRead)
-                        {
-                            if (orderInfo.PatInfor != null && orderInfo.PatInfor.Base != null && orderInfo.PatInfor.Base.Count > 0)
-                            {
-                                if (orderInfo.PatInfor.Base[0].RecordList != null && orderInfo.PatInfor.Base[0].RecordList.Count > 0)
-                                {
-                                    List<string> retExistFiles = FileControl.ExistImageFiles(orderInfo.PatInfor.Base[0].RecordList, orderInfo.patFolderFullPath);
+                    ////if (GlobalVar.configEntity.IsImgCheck == "Y")
+                    ////{
+                    ////    if (orderInfo.IsDicomDirRead)
+                    ////    {
+                    ////        if (orderInfo.PatInfor != null && orderInfo.PatInfor.Base != null && orderInfo.PatInfor.Base.Count > 0)
+                    ////        {
+                    ////            if (orderInfo.PatInfor.Base[0].RecordList != null && orderInfo.PatInfor.Base[0].RecordList.Count > 0)
+                    ////            {
+                    ////                List<string> retExistFiles = FileControl.ExistImageFiles(orderInfo.PatInfor.Base[0].RecordList, orderInfo.patFolderFullPath);
 
-                                    if (retExistFiles != null && retExistFiles.Count > 0)
-                                    {                                        
-                                        notiMessage.AppendLine(string.Format("환자:[{0}]{1} ▶ 이미지파일 {2}개가 존재하지 않아 굽기가 실행되지 않았습니다.\r\n", orderInfo.patNo, orderInfo.patName, retExistFiles.Count.ToString()));
-                                        continue;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    ////                if (retExistFiles != null && retExistFiles.Count > 0)
+                    ////                {                                        
+                    ////                    notiMessage.AppendLine(string.Format("환자:[{0}]{1} ▶ 이미지파일 {2}개가 존재하지 않아 굽기가 실행되지 않았습니다.\r\n", orderInfo.patNo, orderInfo.patName, retExistFiles.Count.ToString()));
+                    ////                    continue;
+                    ////                }
+                    ////            }
+                    ////        }
+                    ////    }
+                    ////}
                     
 					//// 굽기 시작
 					if (this.StartBurn(orderInfo))

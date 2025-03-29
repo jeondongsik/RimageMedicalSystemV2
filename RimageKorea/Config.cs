@@ -618,17 +618,31 @@ namespace RimageKorea
             }
         }
 
-        public void EncryptXml()
+        public void EncryptXml(string filename = "RMDS_Settings.xml")
         {
-            XmlDocument doc = new XmlDocument();
-            string xmlPath = Path.Combine(FilePath, "RMDS_Settings.xml");
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                if (string.IsNullOrEmpty(FilePath))
+                    doc.Load(filename);
+                else
+                    doc.Load(Path.Combine(FilePath, filename));
 
-            doc.Load(xmlPath);
+                CryptographyXml.EncryptXml(doc, AesKey, AesIV);
 
-            CryptographyXml.EncryptXml(doc, AesKey, AesIV);
+                string xmlPath = string.Empty;
+                if (string.IsNullOrEmpty(FilePath))
+                    xmlPath = "RMDS_Settings.xml";
+                else
+                    xmlPath = Path.Combine(FilePath, "RMDS_Settings.xml");
 
-            ////암호화 파일 저장
-            doc.Save(xmlPath);
+                ////암호화 파일 저장
+                doc.Save(xmlPath);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -836,21 +850,25 @@ namespace RimageKorea
         /// </summary>
         public void setConfigServerInfo(string hostIP, string hostName, string hostPort)
         {
-            string xmlPath = Path.Combine(this.FilePath, "RMDS_Settings.xml");
-            //// xml 복호화
-            DecryptXml();
+            try
+            {
+                string xmlPath = Path.Combine(this.FilePath, "RMDS_Settings.xml");
+                //// xml 복호화
+                DecryptXml();
 
-            doc.LoadXml(loadedDoc.OuterXml);
+                doc.LoadXml(loadedDoc.OuterXml);
 
-            //공통
-            updateConfigXml("HostIP", hostIP);
-            updateConfigXml("HostName", hostName);
-            updateConfigXml("HostPort", hostPort);
+                //공통
+                updateConfigXml("HostIP", hostIP);
+                updateConfigXml("HostName", hostName);
+                updateConfigXml("HostPort", hostPort);
 
-            doc.Save(xmlPath);
+                doc.Save(xmlPath);
 
-            ////xml 암호화하여 저장
-            EncryptXml();
+                ////xml 암호화하여 저장
+                EncryptXml();
+            }
+            catch { }
         }
 
         /// <summary>
@@ -859,16 +877,20 @@ namespace RimageKorea
         /// <param name="serverType"></param>
         public void setServerType(string serverType)
         {
-            string xmlPath = Path.Combine(this.FilePath, "RMDS_Settings.xml");
-            //// xml 복호화
-            DecryptXml();
-            doc.LoadXml(loadedDoc.OuterXml);
+            try
+            {
+                string xmlPath = Path.Combine(this.FilePath, "RMDS_Settings.xml");
+                //// xml 복호화
+                DecryptXml();
+                doc.LoadXml(loadedDoc.OuterXml);
 
-            updateConfigXml("ServerType", serverType);
-            doc.Save(xmlPath);
+                updateConfigXml("ServerType", serverType);
+                doc.Save(xmlPath);
 
-            ////xml 암호화하여 저장
-            EncryptXml();
+                ////xml 암호화하여 저장
+                EncryptXml();
+            }
+            catch { }
         }
     }
 }

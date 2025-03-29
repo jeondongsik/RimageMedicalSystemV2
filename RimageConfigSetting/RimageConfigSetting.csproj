@@ -125,6 +125,12 @@
     <Compile Include="ConfigSetting.Designer.cs">
       <DependentUpon>ConfigSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCheckEnc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCheckEnc.Designer.cs">
+      <DependentUpon>frmCheckEnc.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCheckFiles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     </Compile>
     <EmbeddedResource Include="ConfigSetting.resx">
       <DependentUpon>ConfigSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCheckEnc.resx">
+      <DependentUpon>frmCheckEnc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCheckFiles.resx">
       <DependentUpon>frmCheckFiles.cs</DependentUpon>
