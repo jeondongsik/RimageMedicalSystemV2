@@ -1328,5 +1328,34 @@ namespace RimageKorea
                 ErrorLog.LogWrite("FileControl", ex.ToString(), Environment.CurrentDirectory);
             }
         }
+
+        /// <summary>
+        /// 환자의 Dicomdir에 기록된 이미지 파일이 실제 존재하는지 체크한다.
+        /// </summary>
+        /// <param name="RecordList"></param>
+        /// <param name="patfolder"></param>
+        /// <returns></returns>
+        public static List<string> ExistImageFiles(List<PatientRecordInfo> RecordList, string patfolder)
+        {
+            try
+            {
+                List<string> retExistFiles = new List<string>();
+
+                foreach (PatientRecordInfo patInfo in RecordList)
+                {
+                    if (!File.Exists(Path.Combine(patfolder, patInfo.ImageFilePath)))
+                    {
+                        //// 존재하지 않는 이미지 파일을 추가한다.
+                        retExistFiles.Add(patInfo.ImageFilePath);
+                    }
+                }
+
+                return retExistFiles;
+            }
+            catch 
+            {
+                return null;
+            }
+        }
     }
 }

@@ -206,6 +206,7 @@ namespace RimageMedicalSystemV2
                             orderInfo.Count = Convert.ToInt32(dicomdirInfo["PatientCount"]);
                             orderInfo.patList = patList;
                             orderInfo.DicomImgList = dicImgList;
+                            orderInfo.IsDicomDirRead = true;
 
                             //// 환자나이가 0이거나 빈값이면 생일로 나이 계산한다.
                             if (string.IsNullOrWhiteSpace(orderInfo.patAge) || orderInfo.patAge.Trim() == "0")

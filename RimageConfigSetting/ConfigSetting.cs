@@ -103,6 +103,10 @@ namespace RimageConfigSetting
         /// 조회시 다운로드 폴더 용량 체크하기
         /// </summary>
         string IsSizeCheck;
+        /// <summary>
+        /// 굽기 전 이미지 파일 존재여부 체크하기
+        /// </summary>
+        string IsImgCheck;
 
         /// <summary>
         /// 1:다른 프로그램에서 실행
@@ -174,6 +178,8 @@ namespace RimageConfigSetting
         public void getConfig()
         {
             Config cf = new Config(Application.StartupPath);
+            //// xml 복호화
+            cf.DecryptXml();
 
             if (cf._Message == "정상")
             {
@@ -257,6 +263,7 @@ namespace RimageConfigSetting
                 DisplayServeIP = (string.IsNullOrWhiteSpace(cf._DisplayServeIP)) ? "N" : cf._DisplayServeIP;
 
                 IsSizeCheck = (string.IsNullOrWhiteSpace(cf._IsSizeCheck)) ? "N" : cf._IsSizeCheck;
+                IsImgCheck = (string.IsNullOrWhiteSpace(cf._IsImgCheck)) ? "N" : cf._IsImgCheck;
 
                 myIP = GetMyIP.MyIP();
                 setControl();
@@ -458,6 +465,7 @@ namespace RimageConfigSetting
             this.checkBoxDisplayServeIP.Checked = this.DisplayServeIP.Equals("Y");
 
             this.checkboxIsSizeCheck.Checked = this.IsSizeCheck.Equals("Y");
+            this.checkboxIsImgCheck.Checked = this.IsImgCheck.Equals("Y");
 
             this.SetServerType();
             this.SetControlByServerType();
@@ -534,6 +542,7 @@ namespace RimageConfigSetting
         private void button_save_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
+
             string labelPrint = "N";
             string mergePrint = "";
             string progType = "1";
@@ -550,7 +559,7 @@ namespace RimageConfigSetting
                     //IP 체크
                     //if (textBox_HostIP_PingCheck())
                     //{
-                    Config cf = new Config(Application.StartupPath);
+                    Config cf = new Config(Application.StartupPath);                    
 
                     if (checkBox_LabelPrint.Checked)
                         labelPrint = "Y";
@@ -701,10 +710,17 @@ namespace RimageConfigSetting
                     cf._DisplayServeIP = (this.checkBoxDisplayServeIP.Checked) ? "Y" : "N";
 
                     cf._IsSizeCheck = (this.checkboxIsSizeCheck.Checked) ? "Y" : "N";
+                    cf._IsImgCheck = (this.checkboxIsImgCheck.Checked) ? "Y" : "N";
+
+                    //// xml 복호화
+                    cf.DecryptXml();
 
                     cf.setConfig("all");
-                    cf.setServerType(this.ServerType);
+                    ////xml 암호화하여 저장
+                    cf.EncryptXml();
 
+                    cf.setServerType(this.ServerType);
+                                        
                     getConfig();
 
                     DialogResult ask = MessageBox.Show("프로그램을 다시 실행해야 변경된 설정이 적용됩니다.", "Rimage Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1400,6 +1416,22 @@ namespace RimageConfigSetting
 
                 this.textBox_DVD_DLLabelFolder.Text = fi.DirectoryName + "\\";
                 this.textBox_DVD_DLLabelFile.Text = fi.Name;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Config cf = new Config(Application.StartupPath);
+
+            try
+            {
+                cf.EncryptXml();
+
+                MessageBox.Show("암호화 완료");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }

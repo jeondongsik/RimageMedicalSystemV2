@@ -474,8 +474,8 @@ namespace RMDS
                         }
 
                         //// 설정파일에 저장
-                        Config cf = new Config(Application.StartupPath);
-                        cf.setConfigServerInfo(this.serverIP, this.serverName, this.serverPort);
+                        Config cf = new Config(Application.StartupPath);                         
+                        cf.setConfigServerInfo(this.serverIP, this.serverName, this.serverPort);  
                         cf = null;
 
                         RimageKorea.ErrorLog.TraceWrite("RMDS.frmMain.ConnectServer", string.Format("-- [{0}] Connected -- systemfolder:{1}", this.serverIP, this.RimageSystemFolderPath), Application.StartupPath);

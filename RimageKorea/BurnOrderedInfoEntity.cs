@@ -170,9 +170,13 @@ namespace RimageKorea
         public string DicomCDFolder { get; set; }
 
         /// <summary>
-        /// DicomDir에 포함된 환장 정보
+        /// DicomDir에 포함된 환자 정보
         /// </summary>
         public PatientList PatInfor { get; set; }
+        /// <summary>
+        /// DicomDir에서 제대로 정보를 읽었을 때 = true
+        /// </summary>
+        public bool IsDicomDirRead { get; set; }
 
         /// <summary>
         /// 진행상태

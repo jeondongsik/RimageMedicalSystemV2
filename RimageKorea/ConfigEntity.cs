@@ -254,6 +254,10 @@ namespace RimageKorea
         /// 조회시 다운로드 폴더 용량 체크하기 여부 (Program Type 1일 경우)
         /// </summary>
         public string IsSizeCheck { get; set; }
-        
+
+        /// <summary>
+        /// 굽기 전 Image 파일 존재여부 체크 여부
+        /// </summary>
+        public string IsImgCheck { get; set; }
     }
 }
