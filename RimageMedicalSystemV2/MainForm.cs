@@ -471,6 +471,7 @@ namespace RimageMedicalSystemV2
                     ////this.fileSystemWatcher1.EnableRaisingEvents = true;
 
                     this.btnBurn.Enabled = false;
+                    this.lblSearchImgErrMsg.Visible = false;
                     this.lblSearchMessage.Visible = true;
 
                     //// 먼저 다운로드 폴더크기 체크
@@ -717,8 +718,8 @@ namespace RimageMedicalSystemV2
                                                     if (!exceptPat.Contains(sdir.Name))
                                                         exceptPat.Add(sdir.Name);
 
-                                                    if (!delPat.ContainsKey(string.Format("[{0}]-[{1}]", orderInfo.patNo, orderInfo.patName)))
-                                                        delPat.Add(string.Format("[{0}]-[{1}]", orderInfo.patNo, orderInfo.patName), sdir.FullName);
+                                                    if (!delPat.ContainsKey(string.Format("[{0}]-[{1}][{2}]", orderInfo.patNo, orderInfo.patName, orderInfo.patFolder)))
+                                                        delPat.Add(string.Format("[{0}]-[{1}][{2}]", orderInfo.patNo, orderInfo.patName, orderInfo.patFolder), sdir.FullName);
                                                     
                                                     continue;
                                                 }
@@ -789,6 +790,7 @@ namespace RimageMedicalSystemV2
                         if (this.mediaType != MediaType.USB)
                         {
                             txtStatusView.AppendText("📢 DicomDir에 기록한 이미지가 존재하지 않는 환자가 존재합니다.\r\n아래 환자의 폴더는 삭제됩니다. \r\n다시 다운로드 후 조회해 주세요.\r\n");
+                            this.lblSearchImgErrMsg.Visible = true;
 
                             foreach(var dp in delPat)
                             {
@@ -1447,10 +1449,10 @@ namespace RimageMedicalSystemV2
             }
 
             //// 이미지 체크하여 존재하지 않는 환자 발생한 경우 메시지 띄워줌
-            if (notiMessage.ToString().Length > 2)
-            {
-                MessageBox.Show(notiMessage.ToString(), "[확인필요] 파일이 존재하지 않는 환자가 있습니다.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            ////if (notiMessage.ToString().Length > 2)
+            ////{
+            ////    MessageBox.Show(notiMessage.ToString(), "[확인필요] 파일이 존재하지 않는 환자가 있습니다.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            ////}
         }
 
         /// <summary>
@@ -5112,6 +5114,11 @@ namespace RimageMedicalSystemV2
         private void btnCmyMsgClose_Click(object sender, EventArgs e)
         {
             this.panelMsgCMYQty.Visible = false;
+        }
+        
+        private void lblSearchImgErrMsg_Click(object sender, EventArgs e)
+        {
+            this.lblSearchImgErrMsg.Visible = false;
         }
     }
 
