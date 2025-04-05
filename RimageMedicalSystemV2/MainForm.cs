@@ -1405,28 +1405,6 @@ namespace RimageMedicalSystemV2
 						}
 					}
 
-                    //// DicomDir 파일에 있는 이미지목록이 실제 폴더에 있는지 체크한다.
-                    //// 설정 - 굽기 전 Image 파일 존재여부 체크 true 이고, DicomDir 파일을 잘 읽었을 경우
-                    ////if (GlobalVar.configEntity.IsImgCheck == "Y")
-                    ////{
-                    ////    if (orderInfo.IsDicomDirRead)
-                    ////    {
-                    ////        if (orderInfo.PatInfor != null && orderInfo.PatInfor.Base != null && orderInfo.PatInfor.Base.Count > 0)
-                    ////        {
-                    ////            if (orderInfo.PatInfor.Base[0].RecordList != null && orderInfo.PatInfor.Base[0].RecordList.Count > 0)
-                    ////            {
-                    ////                List<string> retExistFiles = FileControl.ExistImageFiles(orderInfo.PatInfor.Base[0].RecordList, orderInfo.patFolderFullPath);
-
-                    ////                if (retExistFiles != null && retExistFiles.Count > 0)
-                    ////                {                                        
-                    ////                    notiMessage.AppendLine(string.Format("환자:[{0}]{1} ▶ 이미지파일 {2}개가 존재하지 않아 굽기가 실행되지 않았습니다.\r\n", orderInfo.patNo, orderInfo.patName, retExistFiles.Count.ToString()));
-                    ////                    continue;
-                    ////                }
-                    ////            }
-                    ////        }
-                    ////    }
-                    ////}
-                    
 					//// 굽기 시작
 					if (this.StartBurn(orderInfo))
 					{

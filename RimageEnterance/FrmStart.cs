@@ -36,6 +36,8 @@ namespace RimageEnterance
             {
                 AppDirectory = Application.StartupPath;
                 Config cf = new Config(AppDirectory);
+                //// 복호화
+                cf.DecryptXml();
 
                 this.HostIP = cf._HostIP;
                 this.HostName = cf._HostName;
