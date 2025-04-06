@@ -403,6 +403,8 @@ namespace RMDS
             {
                 this.AppDirectory = Application.StartupPath;
                 Config cf = new Config(this.AppDirectory);
+                //// 복호화
+                cf.DecryptXml();
 
                 this.MergeFileFolder = cf._MergeFileFolder;
                 this.DeleteAfterBurn = (String.IsNullOrWhiteSpace(cf._DeleteAfterBurn)) ? "0" : cf._DeleteAfterBurn;

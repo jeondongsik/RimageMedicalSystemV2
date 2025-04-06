@@ -1067,18 +1067,26 @@ namespace RimageMedicalSystemV2
         /// </summary>
         private void Burn()
         {
-            if (!this.EnableServerConnect())
-                return;
-
-            this.mediaType = MediaType.CD_DVD;
-
-            if (GlobalVar.configEntity.programType == "1")
+            try
             {
-                this.ReadyBurn1();
+                if (!this.EnableServerConnect())
+                    return;
+
+                this.mediaType = MediaType.CD_DVD;
+
+                if (GlobalVar.configEntity.programType == "1")
+                {
+                    this.ReadyBurn1();
+                }
+                else
+                {
+                    this.ReadyBurn2();
+                }
             }
-            else
+            catch
             {
-                this.ReadyBurn2();
+                //// 굽기 시작이 안됨
+                this.UnlockBurn();
             }
         }
 
@@ -1425,12 +1433,6 @@ namespace RimageMedicalSystemV2
             {
                 this.ucPatients21.RemoveAtList(orderedIdx);
             }
-
-            //// 이미지 체크하여 존재하지 않는 환자 발생한 경우 메시지 띄워줌
-            ////if (notiMessage.ToString().Length > 2)
-            ////{
-            ////    MessageBox.Show(notiMessage.ToString(), "[확인필요] 파일이 존재하지 않는 환자가 있습니다.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            ////}
         }
 
         /// <summary>
